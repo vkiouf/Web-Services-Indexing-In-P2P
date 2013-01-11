@@ -90,7 +90,7 @@ public class WSDLDocumentHandler extends XMLHandler
 	{
 		//Vector<String[]> complexTypes;	// Complex types
 		Vector<String> complexTypeElements;	// Complex type as an array of element
-		String complexTypeName;			// Name of complex type element
+		String complexTypeName="";			// Name of complex type element
 		String systemType;				// Single element type ( e.g. string)
 		
 		int i=0,j=0,k=0;
@@ -111,33 +111,41 @@ public class WSDLDocumentHandler extends XMLHandler
 		for(i=0;i<numComplexTypes;i++)
 		{
 			complexTypeNode = complexTypeList.item(i);
-			if(complexTypeNode.getNodeType()==Node.ELEMENT_NODE)
+			if(complexTypeNode.getNodeType()==Node.ELEMENT_NODE) //
 			{
-				complexTypeName = complexTypeNode.getParentNode().getAttributes().getNamedItem("name").getNodeValue(); // complex element name 
-				// After complexType, follows sequence node. Get children of sequence node as elements
-				complexTypeChildrenList = complexTypeNode.getChildNodes();// .getChildNodes(); // sequence node
-				
-				for(j=0;j<complexTypeChildrenList.getLength();j++)
+				if(complexTypeNode.getParentNode().getNodeName().contains("element"))	// part of element and not array complex type
 				{
-					complexTypeChildNode = complexTypeChildrenList.item(j);
-					if(complexTypeChildNode.getNodeType() == Node.ELEMENT_NODE)
+					complexTypeName = complexTypeNode.getParentNode().getAttributes().getNamedItem("name").getNodeValue(); // complex element name 
+					// After complexType, follows sequence node. Get children of sequence node as elements
+					complexTypeChildrenList = complexTypeNode.getChildNodes();// .getChildNodes(); // sequence node
+					
+					for(j=0;j<complexTypeChildrenList.getLength();j++)
 					{
-						elementNodeList=complexTypeChildNode.getChildNodes();
-						numElements = elementNodeList.getLength();
-						complexTypeElements = new Vector<String>(numElements);
-						for(k=0;k<numElements;k++)
+						complexTypeChildNode = complexTypeChildrenList.item(j);
+						if(complexTypeChildNode.getNodeType() == Node.ELEMENT_NODE)
 						{
-							elementNode = elementNodeList.item(k);
-							if(elementNode.getNodeType()== Node.ELEMENT_NODE)
+							elementNodeList=complexTypeChildNode.getChildNodes();
+							numElements = elementNodeList.getLength();
+							complexTypeElements = new Vector<String>(numElements);
+							for(k=0;k<numElements;k++)
 							{
-								systemType =  elementNode.getAttributes().getNamedItem("type").getNodeValue();	// get single type
-								if(systemType.contains(":"))	// if system type contains namespace remove it
-									systemType = systemType.split(":")[1];
-								complexTypeElements.add(systemType);
+								elementNode = elementNodeList.item(k);
+								if(elementNode.getNodeType()== Node.ELEMENT_NODE)
+								{
+									systemType =  elementNode.getAttributes().getNamedItem("type").getNodeValue();	// get single type
+									if(systemType.contains(":"))	// if system type contains namespace remove it
+										if(systemType.split(":")[0]=="tns")	// theoroume oti to namespace tns periexei onomata pinakwn
+											systemType = "Array";
+										else
+											systemType = systemType.split(":")[1];
+									
+									complexTypeElements.add(systemType);
+								}
 							}
+							
+							complexTypes.put(complexTypeName,complexTypeElements.toArray(new String[complexTypeElements.size()]));
 						}
 						
-						complexTypes.put(complexTypeName,complexTypeElements.toArray(new String[complexTypeElements.size()]));
 					}
 				}
 			}
