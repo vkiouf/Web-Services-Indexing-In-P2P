@@ -1,12 +1,25 @@
-import edu.sussex.nlp.jws.*;
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Vector;
 
-import net.billylieurance.azuresearch.*;
+import net.billylieurance.azuresearch.AzureSearchCompositeQuery;
+import edu.sussex.nlp.jws.JWS;
+import edu.sussex.nlp.jws.Lin;
+import edu.mit.jwi.morph.WordnetStemmer;
+//import edu.sussex.nlp.jws.WuAndPalmer;
 
 /**
- * 
- * Static methods about words (e.g. similarity)
+ *  Provides similarity methods for word based on wordnet database or in google/bing search engine.
+ *  Holds information about number of hits of a word in a search engine
  */
 public class WordDatabase
 {
@@ -15,23 +28,33 @@ public class WordDatabase
 	 *=========================================================================*/
 	
 	// Use wordnet for similarity
-	private String dir;
-	private JWS	ws;
+	private static String dir="database/WordNet";
+	private static JWS	ws= new JWS(dir, "3.0","ic-treebank-resnik.dat");
 	private Lin lin;
+	//private WuAndPalmer wuPalmer;
+	private static WordnetStemmer stemmer= new WordnetStemmer(ws.getDictionary());;
 	
 	// Word hits
-	private String bingHitsFile = "hits.dat";
-	private String googleHitsFile = "ghits.dat";		// holds a list of words search in bing and their corresponding hits in each line
-	private String hitsFile;						// hits list based on search engine selection
-	Hashtable<String,Long> hits;		// number of hits for each word
+	private String bingHitsFile = "hits.dat";			// holds a list of words search in google and their corresponding hits 
+	private String googleHitsFile = "ghits.dat";		// holds a list of words search in bing and their corresponding hits 
+	private String hitsFile;							// hits list based on search engine selection
+	Hashtable<String,Long> hits;						// number of hits for each word
+	private static Hashtable<String,String> compositeWords=new Hashtable<String,String>();	// composite words separated by _
+	
+	// Function Words
+	private String functionWordsFile = "function_words.dat";	// Function words filename
+	private String[] functionWords;								// Array of function words
+
 	
 	SimilarityType simType;			// Type of  word similarity computation
 	SearchEngine searchEngine;		// Selected search engine
 	
 	WebSearch webSearch;					// Web Search engine
-	AzureSearchCompositeQuery  aq;	// Search in Bing
+	AzureSearchCompositeQuery  aq;			// Search in Bing
 	
-	long M = (long) 13.96e9;
+	long M = (long) 10e9;				// Total pages inddexed by search engine
+	
+	BufferedWriter out;					// Writer of word hits
 
 	/*=========================================================================
 	 *					Constructors
@@ -49,9 +72,11 @@ public class WordDatabase
 		
 		if(simType == SimilarityType.NGD)
 		{
+			// Set search engine and storage of word resuls number file
 			webSearch = new WebSearch(searchEngine);
 			if(searchEngine == SearchEngine.BING)
 			{
+		        hitsFile = bingHitsFile;
 				/*aq = new AzureSearchCompositeQuery();
 				aq.setSources(new AZURESEARCH_QUERYTYPE[] {
 		       	     AZURESEARCH_QUERYTYPE.WEB
@@ -59,22 +84,51 @@ public class WordDatabase
 				aq.setBingApi(AZURESEARCH_API.BINGSEARCH);
 				aq.setMarket("el-GR");
 		        aq.setAppid("rDmZjn0iKtQ6aJRfb38kKY2Al7CswpekLuCDzJ5xDvo=");*/
-		        hitsFile = bingHitsFile;
+
 			}
 			else
-			{
-				
 				hitsFile = googleHitsFile;
-			}
 	       
+			// Read number of hits for each word from file
 	        readHitsFile();
+	        
+	        // Open file to write new words
+			FileWriter fstream;
+			try
+			{
+				fstream = new FileWriter(hitsFile,true);
+				out = new BufferedWriter(fstream);
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 
 		}
-		else
+		else	// Initialise lin metric distance for each pair of words
 		{
-			dir = "database/WordNet";
-			ws = new JWS(dir, "3.0"); 
 			lin = ws.getLin();
+			//wuPalmer = ws.getWuAndPalmer();
 		}
+	}
+	
+	protected void finalize() throws Throwable
+	{
+		out.close();
+	  super.finalize(); //not necessary if extending Object.
+	}
+	
+	/*=========================================================================
+	 *					Getters
+	 *=========================================================================*/
+	
+	/**
+	 * @return the functionWords
+	 */
+	public String[] getFunctionWords()
+	{
+		return functionWords;
 	}
 	
 	/*=========================================================================
@@ -93,7 +147,65 @@ public class WordDatabase
 	 */
 	private double wordNetsimilarity(String word1,String word2)
 	{
-		return lin.max(word1, word2, "n");
+		List<String> stemWords1 = stemmer.findStems(word1);	// list of stem words  for first word 
+		List<String> stemWords2 = stemmer.findStems(word2); // list of stem words  for second word
+		String stemWord1;
+		String stemWord2;
+		
+		// For each word, check if stem words contains any stemmed word. If true, get first occurence
+		// otherwise check if related to composite word ( which will be split by underscore)
+		// If no of above conditions apply, get the original word ( returned from getWordNetCompositeWord)
+		stemWord1 = stemWords1.size()>0?stemWords1.get(0):getWordNetCompositeWord(word1);
+		stemWord2 = stemWords2.size()>0?stemWords2.get(0):getWordNetCompositeWord(word2);
+		
+		double val = lin.max(stemWord1, stemWord2,"n");
+		return val;
+	}
+	
+	/**
+	 * Return the stem of word as contained in wordnet corpus. (e.g.) For word "bodies" , "body" will be returned and not "bodi".
+	 * @param Word Word to reduce to base
+	 * @return Stem of word
+	 */
+	public static String getWordNetStemWord(String word)
+	{
+		List<String> stemmedWords = stemmer.findStems(word);	// List of word stems
+		String stemmedWord =  stemmedWords.size()>0?stemmedWords.get(0):word;	// Return the first one if exists. Otherwise, the original word
+		
+		return stemmedWord;
+	}
+	
+	/**
+	 * Find the composite word as contained in word net 
+	 * @param word
+	 * @return
+	 */
+	private static String getWordNetCompositeWord(String word)
+	{
+		StringBuffer wordBuff=new StringBuffer(word);
+		List<String> stemWords;
+		
+		// Get composite word as contained in word net database ( separate simple words with underscore)
+		if(compositeWords.containsKey(word))
+			return compositeWords.get(word);
+		
+		// Put underscore in i-th place of word and test if this is contained in word net database
+		// (using stemmer)
+		for(int i=1;i<word.length();i++)
+		{
+			wordBuff = new StringBuffer(word);
+			wordBuff.insert(i, "_");
+			
+			stemWords = stemmer.findStems(word);
+			if(stemWords.size()>0)
+			{
+				compositeWords.put(word, stemWords.get(0));
+				return stemWords.get(0);
+			}
+		}
+		
+		// Not found in wordnet. Return word as it is
+		return word;
 	}
 	
 	/**
@@ -113,8 +225,8 @@ public class WordDatabase
 				(Math.log10(M)-Math.min(Math.log10(word1Hits), Math.log10(word2Hits)));
 		
 		if(NGD<0)
-			NGD = 0;
-		
+			NGD=0;
+	
 		return NGD;
 	}
 	
@@ -127,11 +239,19 @@ public class WordDatabase
 	public double similarity(String word1,String word2)
 	{
 		double sim= 0.0;
+		double distance=0.0;
 		
 		if(simType==SimilarityType.WordNet)
 			sim = wordNetsimilarity(word1, word2);
 		else
-			sim = 1-NormalizedGoogleDistance(word1, word2);
+		{
+			distance = NormalizedGoogleDistance(word1, word2);
+			
+			if(distance>1)
+				sim=0;
+			else
+				sim = 1-NormalizedGoogleDistance(word1, word2);
+		}
 			
 		return sim;
 	}
@@ -204,7 +324,7 @@ public class WordDatabase
 		if( Double.isInfinite(diffWordHits))
 			return 0.0;
 		
-		return diffWordHits;
+		return (double)diffWordHits/singleWordHits;
 	}
 	
 	/*-----------------------------------------------------------------------
@@ -253,8 +373,8 @@ public class WordDatabase
 	}
 	
 	/**
-	 * Get number of hits for word. First check in hits map if word exists else
-	 * search in bing search engine. In second case, insert new word in file
+	 * Get number of hits for word. First check if word exists in hits map , otherwise do a query
+	 * to search engine and store result to hits file and map.
 	 * @param word Word 
 	 */
 	public long getHits(String word)
@@ -264,9 +384,15 @@ public class WordDatabase
 		
 		// if word not exist, search in bing search engine
 		long numHits=0;
-		FileWriter fstream;
+		
 		try
 		{
+			Thread.sleep(1000);// do search every second
+			numHits = webSearch.search(word.split(" "));	// If more than one words, split them based on whitespace
+			
+			out.write(word+"\t"+numHits);
+			out.newLine();
+			out.flush();
 		
 //			if(searchEngine == SearchEngine.BING)
 //			{
@@ -279,18 +405,14 @@ public class WordDatabase
 //			}
 //			else if(searchEngine == SearchEngine.GOOGLE)
 //			{
-				Thread.sleep(100);// do search every second
-				numHits = webSearch.search(word.split(" "));	// If more than one words, split them based on whitespace
+			//java.util.Date date=new java.util.Date();
+			//System.out.println("Search "+word+" "+date.toString());
 				
+			//	System.out.println("Search Finished "+word+" "+date.toString());	
 //			}
 		
-			fstream = new FileWriter(hitsFile,true);
-			BufferedWriter out = new BufferedWriter(fstream);
-			
-			out.write(word+"\t"+numHits);
-			out.newLine();
-			
-			out.close();
+
+			//out.close();
 		}
 		catch (IOException | InterruptedException e)
 		{
@@ -301,6 +423,59 @@ public class WordDatabase
 		hits.put(word, numHits);
 		
 		return numHits;
+	}
+	
+	/*-----------------------------------------------------------------------
+	 *					Function Words
+	 *-----------------------------------------------------------------------*/
+	
+	/**
+	 * Read the file of function words
+	 * @return Array of function words
+	 * @throws IOException 
+	 */
+	public String[] readFunctionWords() 
+	{
+		int numFunctionWords=0;						// number of function words contained in file
+		LineNumberReader lineNumberReader=null;		// reader of line number 
+		BufferedReader br=null;						// function word file reader
+		FileInputStream fstream = null;
+		
+		try
+		{
+			// Open the file
+			fstream = new FileInputStream(functionWordsFile);
+			// Get the object of DataInputStream
+			DataInputStream in = new DataInputStream(fstream);
+			br = new BufferedReader(new InputStreamReader(in));
+			 
+			// Get number of function words equal to number of lines
+			lineNumberReader = new LineNumberReader(br);
+			while(lineNumberReader.readLine()!=null);
+			numFunctionWords = lineNumberReader.getLineNumber();
+			
+			// Initialise function words
+			this.functionWords = new String[numFunctionWords];
+			
+			// Reset stream and read each function word
+			fstream.getChannel().position(0);
+			br = new BufferedReader(new InputStreamReader(in));
+			for(int i=0;i<numFunctionWords;i++)
+				functionWords[i] = br.readLine().trim();
+			
+			lineNumberReader.close();
+			
+			fstream.close();
+			br.close();
+		}
+		catch(IOException ioex)
+		{
+			ioex.printStackTrace();
+			
+			return null;
+		}
+		
+		return this.functionWords;
 	}
 }
 

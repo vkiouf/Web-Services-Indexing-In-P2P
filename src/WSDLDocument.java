@@ -1,15 +1,26 @@
-import java.util.*;
 import java.io.*;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
-import org.tartarus.martin.Stemmer;	// stemmer
+import org.tartarus.martin.Stemmer;
 
-// WV Tools
-import edu.udo.cs.wvtool.main.*;
-import edu.udo.cs.wvtool.config.*;
-import edu.udo.cs.wvtool.generic.stemmer.*;
-import edu.udo.cs.wvtool.generic.tokenizer.*;
+import edu.udo.cs.wvtool.config.WVTConfiguration;
+import edu.udo.cs.wvtool.config.WVTConfigurationFact;
+import edu.udo.cs.wvtool.generic.stemmer.DummyStemmer;
+import edu.udo.cs.wvtool.generic.tokenizer.SimpleTokenizer;
+import edu.udo.cs.wvtool.generic.tokenizer.WVTTokenizer;
+import edu.udo.cs.wvtool.main.WVTDocumentInfo;
+import edu.udo.cs.wvtool.main.WVTFileInputList;
+import edu.udo.cs.wvtool.main.WVTool;
 import edu.udo.cs.wvtool.util.WVToolException;
-import edu.udo.cs.wvtool.wordlist.*;
+import edu.udo.cs.wvtool.wordlist.WVTWordList;
+// stemmer
+// WV Tools
 
 /**
  * Attributes of a wsdl document
@@ -23,9 +34,10 @@ public class WSDLDocument
 	String name;			// Name of wsdl document
 	String extension;		// Extension of wsdl document
 	String path;			// Full path of wsdl document
+	URL url;				// Online document url
 	Vector<String> tokens;	// Tokens separated by white space
 	Vector<String> words;		// Content words extracted from document ( may contain same strings)
-	Hashtable<String,Integer> baseWords;	//	Content base words extracted from document
+	Hashtable<String,Integer> stemmedWords;	//	Content words reduced to their base the extracted from document
 											// Key=Word, Value= Number of occurences in document
 	
 	/*=========================================================================
@@ -48,8 +60,9 @@ public class WSDLDocument
 		// Initialize lists
 		tokens = new Vector<String>();
 		words = new Vector<String>();
-		baseWords = new Hashtable<String,Integer>();
+		stemmedWords = new Hashtable<String,Integer>();
 	}
+
 	
 	/*=========================================================================
 	 *					Getters
@@ -88,28 +101,32 @@ public class WSDLDocument
 	}
 	
 	/**
+	 * @param isStemmed True if is desired to get stemmed words
 	 * @return Content words extracted from document ( may contain same strings)
 	 */
-	public Vector<String> getWords()
+	public Vector<String> getWords(boolean isStemmed)
 	{
-		return words;
+		if(!isStemmed)
+			return words;
+		else
+			return  new Vector<String>(stemmedWords.keySet());
 	}
 
 	/**
 	 * @return Content words extracted from document reduced to their base pair with the number of occurrences in document
 	 */
-	public Hashtable<String, Integer> getBaseWordsWithOccurrences()
+	public Hashtable<String, Integer> getWordsWithOccurrences()
 	{
-		return baseWords;
+		return stemmedWords;
 	}
 	
 	/**
 	 * @return Content words extracted from document reduced to their base 
 	 */
-	public Vector<String> getBaseWords()
+	/*public Vector<String> getBaseWords()
 	{
 		return new Vector<String>( baseWords.keySet());
-	}
+	}*/
 
 	/*=========================================================================
 	 *					Setters
@@ -134,9 +151,9 @@ public class WSDLDocument
 	/**
 	 * @param words Content words reduced to their base with number of occurrences in document
 	 */
-	public void setBaseWords(Hashtable<String, Integer> baseWords)
+	public void setStemmedWords(Hashtable<String, Integer> stemmedWords)
 	{
-		this.baseWords = baseWords;
+		this.stemmedWords = stemmedWords;
 	}
 	
 	
@@ -147,12 +164,30 @@ public class WSDLDocument
 	/**
 	 * Extract words from wsdl document without xml tags,split compound words 
 	 * and reduce them to their base words
+	 * @param wordListFile Contains result of wvtool
 	 */
-	public void parse()
+	public void parse(String wordListFile)
 	{
 		/*--------------------------------------------------------------------------
 		 * 				WVTOOL - Extract words from wsdl document without xml tags
 		 *-------------------------------------------------------------------------*/
+		
+		// if file empty, then wordListFile has predefined name "wordlist.dat"
+		if(wordListFile.isEmpty())
+			wordListFile = "wordlist.dat";
+		
+		// get from WSDL document handler the general computing words
+		//try
+		//{
+			if(WSDLDocumentHandler.generalComputingWords==null)
+				WSDLDocumentHandler.readGeneralComputingWords();
+		//}
+//		catch (IOException e1)
+//		{
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		
 		WVTool wvt = new WVTool(false);
 		
 		// Initialize the configuration
@@ -167,14 +202,14 @@ public class WSDLDocument
 		WVTFileInputList list = new WVTFileInputList(0);
 		
 		// Add entries
-		list.addEntry(new WVTDocumentInfo(path, "txt", "", "english", 0));
+		list.addEntry(new WVTDocumentInfo(this.path, "txt", "", "english", 0));
 		WVTWordList wordList ;
 		try
 		{
 			 wordList = wvt.createWordList(list, config);
 							 
 			// Store the word list in a file
-		    wordList.storePlain(new FileWriter("wordlist.txt"));
+		    wordList.storePlain(new FileWriter(wordListFile));
 		}
 		catch (IOException e)
 		{
@@ -186,6 +221,7 @@ public class WSDLDocument
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
 		
 		/*--------------------------------------------------------------------------
 		 * 			Store in vector
@@ -196,7 +232,7 @@ public class WSDLDocument
 		try
 		{
 			// Open the file 
-			FileInputStream fstream = new FileInputStream("wordlist.txt");
+			FileInputStream fstream = new FileInputStream(wordListFile);
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
   
@@ -209,9 +245,15 @@ public class WSDLDocument
 			{
 				while((strLine = br.readLine())!=null)
 				{
+					if(WSDLDocumentHandler.generalComputingWords.contains(strLine.toLowerCase()))
+						continue;
+						
 					words = strLine.toString().split("(?=\\p{Upper})");	// split words based on upper cases
 					for(String word:words)
-						this.words.add(word.toLowerCase());			// add word from file to words list of document
+						if(!WSDLDocumentHandler.generalComputingWords.contains(word.toLowerCase())
+								&& !this.words.contains(word.toLowerCase()) && !word.trim().isEmpty()
+								&& word.length()!=1)
+							this.words.add(word.toLowerCase());			// add word from file to words list of document
 				}
 			}	
 			
@@ -231,8 +273,29 @@ public class WSDLDocument
 		{
 			stemmer.add(word.toLowerCase().toCharArray(),word.length());
 			stemmer.stem();
-			addBaseWord(stemmer.toString());
+			addStemmedWord(word);
 		}
+		
+		FileWriter fstream;
+		try
+		{
+			fstream = new FileWriter("document_words/"+getNameWithoutExtension()+"_words.dat");
+			BufferedWriter out = new BufferedWriter(fstream);
+			
+			for(String word:this.words)
+			{
+				out.write(word);
+				out.newLine();
+			}
+			
+			out.close();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 	}
 	
 	/**
@@ -252,36 +315,37 @@ public class WSDLDocument
 	public void addWord(String word)
 	{
 		words.add(word);
+		addStemmedWord(WordDatabase.getWordNetStemWord(word));
 	}
 	
 	/**
 	 * Add base word in base words vector. 
 	 * If word already exists, increment the occurrences number of word in document
 	 * 
-	 * @param baseWord Content word reduced to its base 
+	 * @param stemmedWord Content word reduced to its base 
 	 */
-	public void addBaseWord(String baseWord)
+	public void addStemmedWord(String stemmedWord)
 	{
-		if(baseWord.isEmpty()) // if word is empty , return
+		if(stemmedWord.isEmpty()) // if word is empty , return
 			return;
 		
-		if(baseWord.length()==1)	// letter
+		if(stemmedWord.length()==1)	// letter
 			return;
 		
-		if(!getBaseWords().contains(baseWord))
-			baseWords.put(baseWord,1);
+		if(!stemmedWords.contains(stemmedWord))
+			stemmedWords.put(stemmedWord,1);
 		else
-			baseWords.put(baseWord,baseWords.get(baseWord)+1);
+			stemmedWords.put(stemmedWord,stemmedWords.get(stemmedWord)+1);
 	}
 	
 	/**
-	 * Remove baseWord word from baseWord words vector
-	 * @param baseWord Base word to remove
+	 * Remove stemmed word word from stemmedWord words vector
+	 * @param stemmedWord Base word to remove
 	 */
-	public void removeBaseWord(String baseWord)
+	public void removeStemmedWord(String stemmedWord)
 	{
-		if(baseWords.contains(baseWord))
-			baseWords.remove(baseWord);
+		if(stemmedWords.contains(stemmedWord))
+			stemmedWords.remove(stemmedWord);
 	}
 	
 	/**

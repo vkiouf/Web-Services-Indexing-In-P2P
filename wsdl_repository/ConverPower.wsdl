@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.webserviceX.NET/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.webserviceX.NET/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.webserviceX.NET/">
+      <s:element name="ChangePowerUnit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PowerValue" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromPowerUnit" type="tns:Powers" />
+            <s:element minOccurs="1" maxOccurs="1" name="toPowerUnit" type="tns:Powers" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="Powers">
+        <s:restriction base="s:string">
+          <s:enumeration value="ergsPersec" />
+          <s:enumeration value="milliwatts" />
+          <s:enumeration value="watts" />
+          <s:enumeration value="kiloCaloriesPermin" />
+          <s:enumeration value="kiloCaloriesPersec" />
+          <s:enumeration value="BTUPerhour" />
+          <s:enumeration value="footlbsPersec" />
+          <s:enumeration value="horsepower" />
+          <s:enumeration value="kilowatts" />
+          <s:enumeration value="megawatts" />
+          <s:enumeration value="gigawatts" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ChangePowerUnitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangePowerUnitResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="double" type="s:double" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ChangePowerUnitSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangePowerUnit" />
+  </wsdl:message>
+  <wsdl:message name="ChangePowerUnitSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangePowerUnitResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangePowerUnitHttpGetIn">
+    <wsdl:part name="PowerValue" type="s:string" />
+    <wsdl:part name="fromPowerUnit" type="s:string" />
+    <wsdl:part name="toPowerUnit" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangePowerUnitHttpGetOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:message name="ChangePowerUnitHttpPostIn">
+    <wsdl:part name="PowerValue" type="s:string" />
+    <wsdl:part name="fromPowerUnit" type="s:string" />
+    <wsdl:part name="toPowerUnit" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangePowerUnitHttpPostOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:portType name="PowerUnitSoap">
+    <wsdl:operation name="ChangePowerUnit">
+      <wsdl:input message="tns:ChangePowerUnitSoapIn" />
+      <wsdl:output message="tns:ChangePowerUnitSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PowerUnitHttpGet">
+    <wsdl:operation name="ChangePowerUnit">
+      <wsdl:input message="tns:ChangePowerUnitHttpGetIn" />
+      <wsdl:output message="tns:ChangePowerUnitHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PowerUnitHttpPost">
+    <wsdl:operation name="ChangePowerUnit">
+      <wsdl:input message="tns:ChangePowerUnitHttpPostIn" />
+      <wsdl:output message="tns:ChangePowerUnitHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PowerUnitSoap" type="tns:PowerUnitSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ChangePowerUnit">
+      <soap:operation soapAction="http://www.webserviceX.NET/ChangePowerUnit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PowerUnitSoap12" type="tns:PowerUnitSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ChangePowerUnit">
+      <soap12:operation soapAction="http://www.webserviceX.NET/ChangePowerUnit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PowerUnitHttpGet" type="tns:PowerUnitHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="ChangePowerUnit">
+      <http:operation location="/ChangePowerUnit" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PowerUnitHttpPost" type="tns:PowerUnitHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="ChangePowerUnit">
+      <http:operation location="/ChangePowerUnit" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PowerUnit">
+    <wsdl:port name="PowerUnitSoap" binding="tns:PowerUnitSoap">
+      <soap:address location="http://www.webservicex.net/ConverPower.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PowerUnitSoap12" binding="tns:PowerUnitSoap12">
+      <soap12:address location="http://www.webservicex.net/ConverPower.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PowerUnitHttpGet" binding="tns:PowerUnitHttpGet">
+      <http:address location="http://www.webservicex.net/ConverPower.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PowerUnitHttpPost" binding="tns:PowerUnitHttpPost">
+      <http:address location="http://www.webservicex.net/ConverPower.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

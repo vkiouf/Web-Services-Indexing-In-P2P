@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 /**
  *
@@ -87,5 +89,19 @@ public class WebServicesCluster
 	public void add(WSDLDocument document)
 	{
 		this.documents.add(document);
+	}
+	
+	/**
+	 * Get  names of clustered documents
+	 * @return  A vector of names
+	 */
+	public Vector<String> getDocumentNames()
+	{
+		Vector<String> docNames=new Vector<String>(documents.size());
+		
+		for(WSDLDocument document:documents)
+			docNames.add(document.getNameWithoutExtension());
+		
+		return docNames;
 	}
 }

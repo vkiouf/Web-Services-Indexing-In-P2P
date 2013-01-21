@@ -5,6 +5,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+/**
+ * Searches for keyword in google or bing search engine.
+ */
 public class WebSearch
 {
 	SearchEngine searchEngine ;
@@ -15,11 +18,12 @@ public class WebSearch
 	}
 	
 	/**
-     * The main entry point of the program.
+     * Search for a keyword in search engine and get number of hits
      *
      * @param args
-     *            The command-line arguments. These arguments are encoded as a
+     *            These arguments are encoded as a
      *            Google search query.
+     *            @return Number of hits
      */
     public long search(final String[] args) 
     {
@@ -115,11 +119,11 @@ public class WebSearch
      *             Thrown if there is an error downloading the content.
      */
     private static String downloadString(final URL url) throws IOException {
-        final String agent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0";
+        final String agent = "	Mozilla/5.0 (Windows NT 6.1; WOW64; rv:18.0) Gecko/20100101 Firefox/18.0";
         final URLConnection connection = url.openConnection();
         connection.setRequestProperty("User-Agent", agent);
-       // connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-        //connection.setRequestProperty("Accept-Language", "el-gr,el;q=0.8,en-us;q=0.5,en;q=0.3");
+        connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+        connection.setRequestProperty("Accept-Language", "el-gr,el;q=0.8,en-us;q=0.5,en;q=0.3");
         final InputStream stream = connection.getInputStream();
         return downloadString(stream);
     }
@@ -145,7 +149,7 @@ public class WebSearch
             }
     
             if(searchEngine == SearchEngine.GOOGLE)
-            	return new URL("http", "www.google.com", localAddress.toString());
+            	return new URL("http", "www.google.gr", localAddress.toString());
             else
             	return new URL("http", "www.bing.com", localAddress.toString());
 

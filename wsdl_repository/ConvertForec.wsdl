@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.webserviceX.NET/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.webserviceX.NET/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.webserviceX.NET/">
+      <s:element name="ChangeForceUnit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ForceValue" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromForceUnit" type="tns:Forces" />
+            <s:element minOccurs="1" maxOccurs="1" name="toForceUnit" type="tns:Forces" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="Forces">
+        <s:restriction base="s:string">
+          <s:enumeration value="dyne" />
+          <s:enumeration value="gramforce" />
+          <s:enumeration value="poundals" />
+          <s:enumeration value="newtons" />
+          <s:enumeration value="pounds" />
+          <s:enumeration value="kilopondkgmforce" />
+          <s:enumeration value="Kip" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ChangeForceUnitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangeForceUnitResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="double" type="s:double" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ChangeForceUnitSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeForceUnit" />
+  </wsdl:message>
+  <wsdl:message name="ChangeForceUnitSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeForceUnitResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeForceUnitHttpGetIn">
+    <wsdl:part name="ForceValue" type="s:string" />
+    <wsdl:part name="fromForceUnit" type="s:string" />
+    <wsdl:part name="toForceUnit" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeForceUnitHttpGetOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:message name="ChangeForceUnitHttpPostIn">
+    <wsdl:part name="ForceValue" type="s:string" />
+    <wsdl:part name="fromForceUnit" type="s:string" />
+    <wsdl:part name="toForceUnit" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeForceUnitHttpPostOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:portType name="ForceUnitSoap">
+    <wsdl:operation name="ChangeForceUnit">
+      <wsdl:input message="tns:ChangeForceUnitSoapIn" />
+      <wsdl:output message="tns:ChangeForceUnitSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ForceUnitHttpGet">
+    <wsdl:operation name="ChangeForceUnit">
+      <wsdl:input message="tns:ChangeForceUnitHttpGetIn" />
+      <wsdl:output message="tns:ChangeForceUnitHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ForceUnitHttpPost">
+    <wsdl:operation name="ChangeForceUnit">
+      <wsdl:input message="tns:ChangeForceUnitHttpPostIn" />
+      <wsdl:output message="tns:ChangeForceUnitHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ForceUnitSoap" type="tns:ForceUnitSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ChangeForceUnit">
+      <soap:operation soapAction="http://www.webserviceX.NET/ChangeForceUnit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ForceUnitSoap12" type="tns:ForceUnitSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ChangeForceUnit">
+      <soap12:operation soapAction="http://www.webserviceX.NET/ChangeForceUnit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ForceUnitHttpGet" type="tns:ForceUnitHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="ChangeForceUnit">
+      <http:operation location="/ChangeForceUnit" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ForceUnitHttpPost" type="tns:ForceUnitHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="ChangeForceUnit">
+      <http:operation location="/ChangeForceUnit" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ForceUnit">
+    <wsdl:port name="ForceUnitSoap" binding="tns:ForceUnitSoap">
+      <soap:address location="http://www.webservicex.net/ConvertForec.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ForceUnitSoap12" binding="tns:ForceUnitSoap12">
+      <soap12:address location="http://www.webservicex.net/ConvertForec.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ForceUnitHttpGet" binding="tns:ForceUnitHttpGet">
+      <http:address location="http://www.webservicex.net/ConvertForec.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ForceUnitHttpPost" binding="tns:ForceUnitHttpPost">
+      <http:address location="http://www.webservicex.net/ConvertForec.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
