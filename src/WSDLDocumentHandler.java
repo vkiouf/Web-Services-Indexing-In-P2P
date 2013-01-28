@@ -10,8 +10,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.Vector;
 
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -51,14 +55,22 @@ public class WSDLDocumentHandler extends XMLHandler
 	public static Vector<String> generalComputingWords;							// Vector of general computing words
 	
 	// Features extracted from wsdl
-	private HashMap<String,String[]> complexTypes;	// Key: Name of complex type 
-													// Value: Data Array of element types
-	private HashMap<String,String[]> messages;	// Key: Name of message
-												// Value: Parameters types
+	private HashMap<String,Vector<String>> complexTypes;	// Key: Name of complex type 
+													// Value: Data Array of complex types
+	private HashMap<String,Vector<String>> elementTypes;	// Key: Name of element
+															// Value: Data Array of element types
+	private HashMap<String,Integer> primitiveTypes;	// Key: Name of primitive type
+													// Value: Number of apperances in all complex types
 	
-	private HashMap<String,String[]> portMessagesSequence;			// Key: Name of port
+	private HashMap<String,Vector<String>> messages;	// Key: Name of message
+												// Value: Parameters types
+	private HashMap<String,Vector<String>> messagesInSimpleTypes;	// Key:Name of message
+																	// Value: Paramaeters in simple types
+
+
+	private HashMap<String,Vector<String>> portMessagesSequence;			// Key: Name of port
 															// Value: Type of message ( input,output)
-	private HashMap<String,String[]> portMessagesStructure;		// Key: Name of port
+	private HashMap<String,Vector<String>> portMessagesStructure;		// Key: Name of port
 											    			// Value: List of messages 
 	
 	/*=========================================================================
@@ -81,32 +93,78 @@ public class WSDLDocumentHandler extends XMLHandler
 	/**
 	 * @return complexTypes field
 	 */
-	public HashMap<String,String[]> getComplexTypes()
+	public HashMap<String,Vector<String>> getComplexTypes()
 	{
+		if(complexTypes==null)
+			parseComplexTypes();
+		
 		return complexTypes;
+	}
+	
+	/**
+	 * @return the elementTypes
+	 */
+	public HashMap<String,Vector<String>> getElementTypes()
+	{
+		if(elementTypes==null)
+			parseComplexTypes();
+		
+		return elementTypes;
+	}
+
+	/**
+	 * @return the primitiveTypes
+	 */
+	public HashMap<String, Integer> getPrimitiveTypes()
+	{
+		if(primitiveTypes==null)
+			parseComplexTypes();
+		
+		return primitiveTypes;
 	}
 	
 	/**
 	 * @return the messages
 	 */
-	public HashMap<String,String[]> getMessages()
+	public HashMap<String,Vector<String>> getMessages()
 	{
+		if(messages==null)
+			parseMessages();
+		
 		return messages;
+	}
+	
+	/**
+	 * @return the messagesInSimpleTypes
+	 */
+	public HashMap<String, Vector<String>> getMessagesInSimpleTypes()
+	{
+		if(messages==null)
+			parseMessages();
+		
+		return messagesInSimpleTypes;
 	}
 	
 	/**
 	 * @return the portMessagesSequence
 	 */
-	public HashMap<String, String[]> getPortMessagesSequence()
+	public HashMap<String, Vector<String>> getPortMessagesSequence()
 	{
+		if(portMessagesSequence==null)
+			getPortSequences();
+		
 		return portMessagesSequence;
 	}
 
 	/**
 	 * @return the portMessagesStructure
 	 */
-	public HashMap<String, String[]> getPortMessagesStructure()
+	public HashMap<String,Vector<String>> getPortMessagesStructure()
 	{
+		if(portMessagesStructure==null)
+			getPortSequences();
+		
+		
 		return portMessagesStructure;
 	}
 	
@@ -135,22 +193,34 @@ public class WSDLDocumentHandler extends XMLHandler
 		}
 	}
 	
+	/**
+	 * Get name of node, split in multiple words separated by capital letters and add them
+	 * to document word vector
+	 * @param node Node to get name
+	 */
 	private void getNodeName(Node node)
 	{
 		NamedNodeMap attrs;
 		String name;	// node name
-		String[] simpleWordsName;	// composite name in its part names splitted by Upper case or underscore
+		Vector<String> simpleWords;	// composite name in its part names splitted by Upper case or underscore
 		
 		attrs = node.getAttributes();
 		if(attrs.getNamedItem("name")!=null)
 		{
 			name = attrs.getNamedItem("name").getNodeValue();
-			simpleWordsName = name.split("(?=\\p{Upper})");
-			for(String simpleWord:simpleWordsName)
+			simpleWords = WordDatabase.splitWord(name);// name.split("(?=\\p{Upper})");
+			
+			for(String simpleWord:simpleWords)
+				this.wsdlDocument.addWord(simpleWord.toLowerCase());
+			/*for(String simpleWord:simpleWordsName)
+			{
+				if(simpleWord.matches(".*\\d.*")) // if word contains number remove
+					simpleWord = simpleWord.replaceAll("\\d","");
+				
 				if(!simpleWord.isEmpty() && simpleWord.length()>1 && !simpleWord.contains("_"))
 					this.wsdlDocument.addWord(simpleWord.toLowerCase());
+			}*/
 		}
-		
 	}
 	
 	/**
@@ -194,25 +264,9 @@ public class WSDLDocumentHandler extends XMLHandler
 	public String[] getWebServiceNameSplit()
 	{
 		String webServiceName = getWebServiceName();		
-		String[] webServiceNameSegmentWords = webServiceName.split("(?=\\p{Upper})");
-		String splitWord;
-		
-		// remove empty strings
-		List<String> namesL = new ArrayList<String>(webServiceNameSegmentWords.length);
-		Collections.addAll(namesL, webServiceNameSegmentWords);
-		Iterator<String> namesLIter = namesL.iterator();
-		while(namesLIter.hasNext())
-		{
-			splitWord = namesLIter.next();
-			if(splitWord.isEmpty() || splitWord.length()==1)
-				namesLIter.remove();
-		}
+		Vector<String> simpleWords = WordDatabase.splitWord(webServiceName);
 				
-		// all letters are capital
-		if(namesL.size()==0)
-			return new String[]{ webServiceName.toLowerCase()};
-				
-		return namesL.toArray(new String[namesL.size()]);
+		return simpleWords.toArray(new String[simpleWords.size()]);
 	}
 	
 	/**
@@ -220,7 +274,7 @@ public class WSDLDocumentHandler extends XMLHandler
 	 * value an array of element types.
 	 * @return complexTypes map
 	 */
-	public HashMap<String,String[]> getComplexTypesMap()
+	public void parseComplexTypes() // HashMap<String,String[]> getComplexTypesMap()
 	{
 		//Vector<String[]> complexTypes;	// Complex types
 		Vector<String> complexTypeElements=new Vector<String>();	// Complex type as an array of element
@@ -237,7 +291,6 @@ public class WSDLDocumentHandler extends XMLHandler
 		NodeList elementsNodeList;	// elements under each node
 		NodeList elementChildrenNodeList;	// elements under each node
 		
-	
 		Node wsdlNode;
 		Node schemaNode;
 		Node elementNode;
@@ -246,13 +299,16 @@ public class WSDLDocumentHandler extends XMLHandler
 		Node typeNode;
 		Node attr;
 		
-		complexTypes = new HashMap<String,String[]>();
+		elementTypes = new HashMap<String,Vector<String>>();
+		complexTypes = new HashMap<String,Vector<String>>();
+		primitiveTypes = new HashMap<String,Integer>();
 		
 		for(i=0;i<wsdlTypeList.getLength();i++)
 		{
 			wsdlNode = wsdlTypeList.item(i);
 			if(wsdlNode.getNodeType()!= Node.ELEMENT_NODE)
 				continue;
+			
 			schemaNodeList = wsdlNode.getChildNodes();
 			for(j=0;j<schemaNodeList.getLength();j++)
 			{
@@ -262,7 +318,7 @@ public class WSDLDocumentHandler extends XMLHandler
 				elementsNodeList =schemaNode.getChildNodes();
 				for(k=0;k<elementsNodeList.getLength();k++)
 				{
-					complexTypeElements.clear();
+					//complexTypeElements.clear();
 					elementNode = elementsNodeList.item(k);
 					if(elementNode.getNodeType()!= Node.ELEMENT_NODE)
 						continue;
@@ -271,115 +327,118 @@ public class WSDLDocumentHandler extends XMLHandler
 					if(elementNode.getNodeName()=="s:complexType")
 					{
 						complexTypeElements = getComplexElements(elementNode);
-						complexTypes.put(elementNode.getAttributes().getNamedItem("name").getNodeValue(),complexTypeElements.toArray(new String[complexTypeElements.size()]));
+						complexTypes.put(elementNode.getAttributes().getNamedItem("name").getNodeValue(),complexTypeElements);
 						continue;
 					}
-					
-					elementChildrenNodeList = elementNode.getChildNodes();
-					
-					if(elementChildrenNodeList.getLength()==0)
-						continue;
-					
-					for(l=0;l<elementChildrenNodeList.getLength();l++)
+					else if(elementNode.getNodeName()=="s:element")
 					{
+						elementChildrenNodeList = elementNode.getChildNodes();
 						
-						if(elementChildrenNodeList.item(l).getNodeName()=="s:complexType")
+						if(elementChildrenNodeList.getLength()==0)	// simple element node
 						{
-							complexTypeNode = elementChildrenNodeList.item(l);
-							if(complexTypeNode.getNodeType()!= Node.ELEMENT_NODE)
-								continue;
+							complexTypeElements =new Vector<String>();
+							complexTypeElements.add( elementNode.getAttributes().getNamedItem("type").getNodeValue());
+							elementTypes.put(elementNode.getAttributes().getNamedItem("name").getNodeValue(),complexTypeElements);
 							
-							complexTypeElements = getComplexElements(complexTypeNode);
 						}
-					}
+						else
+						{
+							for(l=0;l<elementChildrenNodeList.getLength();l++)
+							{
+							
+								if(elementChildrenNodeList.item(l).getNodeName()=="s:complexType")
+								{
+									complexTypeNode = elementChildrenNodeList.item(l);
+									if(complexTypeNode.getNodeType()!= Node.ELEMENT_NODE)
+										continue;
+								
+									complexTypeElements = getComplexElements(complexTypeNode);
+								}
+							}
+						}
 					
-					if(complexTypeElements!=null)
-					complexTypes.put(elementNode.getAttributes().getNamedItem("name").getNodeValue(),complexTypeElements.toArray(new String[complexTypeElements.size()]));
+						if(complexTypeElements!=null)
+							elementTypes.put(elementNode.getAttributes().getNamedItem("name").getNodeValue(),complexTypeElements);
+					}
 					
 				}
+					
 			}
 		}
 		
-		/*Iterator<String> keysIter = complexTypes.keySet().iterator();
-		String key;
-		String[] vals;
+		// replace element types with complex types primitive types
+		Set<String> elementTypesNames = elementTypes.keySet();
+		Vector<String> typesInElement;
+		Vector<String> primitiveTypes=new Vector<String>();
+		Iterator<String>  curTypeIter;
+		String curType;
+		boolean containsOnlySimpleTypes=false; 
 		
-		String[] arrayVal;
-		
-		while(keysIter.hasNext())
+		//get primitive types from complex types and elements
+		for(String elementTypeName: elementTypesNames)
 		{
-			key  = keysIter.next();
-			vals = complexTypes.get(key);
-			System.out.print(key+"-->");
-			for(i=0;i<vals.length;i++)
-				System.out.print(" "+vals[i]);
-			System.out.println();
-		}*/
+			typesInElement = elementTypes.get(elementTypeName);
+			for(String _curType:typesInElement)
+				if(_curType.startsWith("s:"))
+				{
+					type = _curType.split(":")[1];
+					if(this.primitiveTypes.containsKey(type))
+						this.primitiveTypes.put(type, this.primitiveTypes.get(type)+1);
+					else
+						this.primitiveTypes.put(type, 1);
+				}
+		}
 		
-		return complexTypes;
+		elementTypesNames = complexTypes.keySet();
+		for(String complexType: elementTypesNames)
+		{
+			typesInElement = complexTypes.get(complexType);
+			for(String _curType:typesInElement)
+				if(_curType.startsWith("s:"))
+				{
+					type = _curType.split(":")[1];
+					if(this.primitiveTypes.containsKey(type))
+						this.primitiveTypes.put(type, this.primitiveTypes.get(type)+1);
+					else
+						this.primitiveTypes.put(type, 1);
+				}
+		}
 		
-//		NodeList complexTypeList = doc.getElementsByTagName(complexTypeTag);	// Nodes of complex type tag
-//		NodeList complexTypeChildrenList;
-//		NodeList elementNodeList;										// Nodes of element tag
-//		
-//		Node complexTypeNode;
-//		Node complexTypeChildNode;
-//		Node elementNode;
-//		Node attribute;
-//		
-//		numComplexTypes=complexTypeList.getLength();
-//		complexTypes = new HashMap<String,String[]>(numComplexTypes);
-//		for(i=0;i<numComplexTypes;i++)
-//		{
-//			complexTypeNode = complexTypeList.item(i);
-//			if(complexTypeNode.getNodeType()==Node.ELEMENT_NODE) //
-//			{
-//				if(complexTypeNode.getParentNode().getNodeName().contains("element"))	// part of element and not array complex type
-//				{
-//					complexTypeName = complexTypeNode.getParentNode().getAttributes().getNamedItem("name").getNodeValue(); // complex element name 
-//					// After complexType, follows sequence node. Get children of sequence node as elements
-//					complexTypeChildrenList = complexTypeNode.getChildNodes();// .getChildNodes(); // sequence node
-//					
-//					for(j=0;j<complexTypeChildrenList.getLength();j++)
-//					{
-//						complexTypeChildNode = complexTypeChildrenList.item(j);
-//						if(complexTypeChildNode.getNodeType() == Node.ELEMENT_NODE)
-//						{
-//							elementNodeList=complexTypeChildNode.getChildNodes();
-//							numElements = elementNodeList.getLength();
-//							complexTypeElements = new Vector<String>(numElements);
-//							for(k=0;k<numElements;k++)
-//							{
-//								elementNode = elementNodeList.item(k);
-//								if(elementNode.getNodeType()== Node.ELEMENT_NODE)
-//								{
-//									attribute= elementNode.getAttributes().getNamedItem("type");
-//									if(attribute==null)
-//										systemType="mixed";
-//									else
-//									{
-//										systemType =  attribute.getNodeValue();	// get single type
-//										if(systemType.contains(":"))	// if system type contains namespace remove it
-//											if(systemType.split(":")[0]=="tns")	// theoroume oti to namespace tns periexei onomata pinakwn
-//												systemType = "Array";
-//											else
-//												systemType = systemType.split(":")[1];
-//									}
-//									
-//									complexTypeElements.add(systemType);
-//								}
-//							}
-//							
-//							complexTypes.put(complexTypeName,complexTypeElements.toArray(new String[complexTypeElements.size()]));
-//						}
-//						
-//					}
-//				}
-//			}
-//		}
-	
+		elementTypesNames = elementTypes.keySet();
+		while(!containsOnlySimpleTypes)
+		{
+			containsOnlySimpleTypes=true;
+			for(String elementTypeName: elementTypesNames)
+			{
+				typesInElement = elementTypes.get(elementTypeName);
+				
+				curTypeIter = typesInElement.iterator();
+				primitiveTypes=new Vector<String>();
+				while(curTypeIter.hasNext())
+				{
+					curType = curTypeIter.next();
+					if(curType.startsWith("tns:"))
+					{
+						containsOnlySimpleTypes=false;
+						curTypeIter.remove();
+						//typesInElement.remove(curType);	// remove complex type as reference from element 
+						if(complexTypes.containsKey(curType.split(":")[1]))	// check if name is contained in complex types
+							primitiveTypes.addAll(complexTypes.get(curType.split(":")[1]));
+						else
+							primitiveTypes.add("enum");
+					}
+				}
+				
+				typesInElement.addAll(primitiveTypes);
+			}
+		}
 	}
 	
+	/**
+	 * Get elements of a complex element
+	 * @param complexTypeNode Complex type
+	 * @return Simple elements of complex element
+	 */
 	public Vector<String> getComplexElements(Node complexTypeNode)
 	{
 		NodeList typeNodeList;	// type elements of complex type
@@ -404,69 +463,63 @@ public class WSDLDocumentHandler extends XMLHandler
 			if(attr!=null)
 			{
 				type = attr.getNodeValue();
-				
-				if(type.startsWith("s:"))
-				{
-					complexTypeElements.add(type);
-				}
-				else if(type.toLowerCase().contains("array"))
-					complexTypeElements.add("array");
-				else 
-					complexTypeElements.add("other");
+				complexTypeElements.add(type);
 			}
+			else
+				complexTypeElements.add("null");
 		}
 		
 		return complexTypeElements;
 	}
-	
-	public Vector<String> getEnumerationValues()
-	{
-		Vector<String> enumerationValues = new Vector<String>();
-		Document doc = createParser();
-		NodeList enumerationNodeList = doc.getElementsByTagName("s:enumeration");
 
-		if(enumerationNodeList.getLength()>0)
-			for(int i=0;i<enumerationNodeList.getLength();i++)
-				enumerationValues.add(enumerationNodeList.item(i).getAttributes().getNamedItem("value").getNodeValue());
-			
-		return enumerationValues;
-	}
-	
-	public String getDescriptions()
-	{
-		StringBuffer descriptions = new StringBuffer();
-		Document doc = createParser();
-		NodeList descriptionNodeList = doc.getElementsByTagName("wsdl:documentation");
-
-		if(descriptionNodeList.getLength()>0)
-			for(int i=0;i<descriptionNodeList.getLength();i++)
-				descriptions.append(descriptionNodeList.item(i).getTextContent());
-			
-		return descriptions.toString();
-	}
-	
 	/**
-	 * Get only complex types as a list of arrays of elements
-	 * @return List where each position store a complex type
+	 * Parses messages and replaces its one with primitive types by replacing complex elements with simple types
 	 */
-	public List<String[]> getComplexArrayTypes()
+	public void parseMessages()
 	{
-		List<String[]> complexTypesArrays;
+		getMessagesStructures();
+		Iterator<Entry<String,Vector<String>>> messageIter =this.messages.entrySet().iterator();	// iterator for messages
+		String currentMessage;			// current message
+		Iterator<String> parameters;	// iterator for messages of each parameter
+		String curParameter;			// current parameter in iteration
+		Vector<String> primitiveTypes;	// primitive types for current parameter
 		
-		if(complexTypes==null)
-			getComplexTypesMap();
+		this.messagesInSimpleTypes = new HashMap<String,Vector<String>>();
 		
-		complexTypesArrays = new ArrayList<String[]>(complexTypes.values());
+		while(messageIter.hasNext())
+		{
+			currentMessage = messageIter.next().getKey();
+			primitiveTypes=new Vector<String>();
+			parameters = this.messages.get(currentMessage).iterator();	//	Get iterator of current message's parameter
+			while(parameters.hasNext())
+			{
+				curParameter = parameters.next();
+				if(curParameter.startsWith("tns:"))	// parameter is element. Replace each element with primitive types
+				{
+					//parameters.remove();	// remove current parameter
+					//if(this.elementTypes!=null)
+					if(this.elementTypes.containsKey(curParameter.split(":")[1]))
+						primitiveTypes.addAll(this.elementTypes.get(curParameter.split(":")[1]));
+						
+						if(primitiveTypes.isEmpty())
+							primitiveTypes.add("null");
+				}
+				else
+					primitiveTypes.add(curParameter);
+			}
+			
+			if(!primitiveTypes.isEmpty())
+				this.messagesInSimpleTypes.put(currentMessage, primitiveTypes);
+		}
 		
-		return complexTypesArrays;
+
 	}
-	
 	
 	/**
 	 * Updates messages map where key is name of message and value an array of parameters types
 	 * @return Messages map
 	 */
-	public HashMap<String,String[]> getMessagesStructures()
+	public HashMap<String,Vector<String>> getMessagesStructures()
 	{
 		Vector<String> parametersTypes;		// Types of message parameters
 		String messageName;					// Name of message
@@ -485,7 +538,7 @@ public class WSDLDocumentHandler extends XMLHandler
 		int numMessages,numParameters;
 		
 		numMessages=messagesNodeList.getLength();
-		messages = new HashMap<String,String[]>(numMessages);
+		messages = new HashMap<String,Vector<String>>(numMessages);
 		for(i=0;i<numMessages;i++)
 		{
 			messageNode = messagesNodeList.item(i);
@@ -496,29 +549,36 @@ public class WSDLDocumentHandler extends XMLHandler
 				parametersNodeList = messageNode.getChildNodes();	// get parameter nodes
 				numParameters = parametersNodeList.getLength();
 				parametersTypes = new Vector<String>(numParameters);
-				for(j=0;j<numParameters;j++)
+				
+				if(numParameters==0)
+					parametersTypes.add("null");
+				else
 				{
-					parameterNode = parametersNodeList.item(j);
 					
-					if(parameterNode.getNodeType() == Node.ELEMENT_NODE)
+					for(j=0;j<numParameters;j++)
 					{
-						parameterTypeNode =parameterNode.getAttributes().getNamedItem("element");
-						if(parameterTypeNode==null)
-							parameterTypeNode =parameterNode.getAttributes().getNamedItem("type");
-						if(parameterTypeNode!=null)
+						parameterNode = parametersNodeList.item(j);
+						
+						if(parameterNode.getNodeType() == Node.ELEMENT_NODE)
 						{
-							parameterType = parameterTypeNode.getNodeValue();
-							if(parameterType.contains(":"))	// remove namespace from parameter name
-								parameterType = parameterType.split(":")[1];
-							
-						}
-						else
-							parameterType = "empty";
-							
+							parameterTypeNode =parameterNode.getAttributes().getNamedItem("element");
+							if(parameterTypeNode==null)
+								parameterTypeNode =parameterNode.getAttributes().getNamedItem("type");
+							if(parameterTypeNode!=null)
+							{
+								parameterType = parameterTypeNode.getNodeValue();
+								//if(parameterType.contains(":"))	// remove namespace from parameter name
+									//parameterType = parameterType.split(":")[1];
+								
+							}
+							else
+								parameterType = "empty";
+								
 							parametersTypes.add(parameterType);
+						}
 					}
 				}
-				messages.put(messageName,parametersTypes.toArray(new String[parametersTypes.size()]));
+				messages.put(messageName,parametersTypes);
 			}
 		}
 		
@@ -529,7 +589,7 @@ public class WSDLDocumentHandler extends XMLHandler
 	 * Get port messages structures and sequences
 	 * @return Port message sequences
 	 */
-	public HashMap<String,String[]> getPortSequences()
+	public HashMap<String,Vector<String>> getPortSequences()
 	{
 		Vector<String> messagesTypes;		// Type of message(input or output)
 		Vector<String> messagesNames;		// Sequence of messages based on name
@@ -551,8 +611,8 @@ public class WSDLDocumentHandler extends XMLHandler
 		Node messageNode;
 		
 		numPortTypes = portTypeList.getLength();
-		portMessagesSequence = new HashMap<String,String[]>(numPortTypes);
-		portMessagesStructure = new HashMap<String,String[]>(numPortTypes);
+		portMessagesSequence = new HashMap<String,Vector<String>>(numPortTypes);
+		portMessagesStructure = new HashMap<String,Vector<String>>(numPortTypes);
 		for(i=0;i<numPortTypes;i++)
 		{
 			portTypeNode = portTypeList.item(i);
@@ -593,14 +653,48 @@ public class WSDLDocumentHandler extends XMLHandler
 							}
 						}
 						
-						portMessagesStructure.put(portTypeName, messagesTypes.toArray(new String[messagesTypes.size()]));
-						portMessagesSequence.put(portTypeName, messagesNames.toArray(new String[messagesTypes.size()]));
+						portMessagesStructure.put(portTypeName, messagesTypes);
+						portMessagesSequence.put(portTypeName, messagesNames);
 					}
 				}
 			}
 		}
 		
 		return portMessagesSequence;
+	}
+	
+	/**
+	 * Get values from enumeration types
+	 * @return Values of all enumerations
+	 */
+	public Vector<String> getEnumerationValues()
+	{
+		Vector<String> enumerationValues = new Vector<String>();
+		Document doc = createParser();
+		NodeList enumerationNodeList = doc.getElementsByTagName("s:enumeration");
+
+		if(enumerationNodeList.getLength()>0)
+			for(int i=0;i<enumerationNodeList.getLength();i++)
+				enumerationValues.add(enumerationNodeList.item(i).getAttributes().getNamedItem("value").getNodeValue());
+			
+		return enumerationValues;
+	}
+	
+	/**
+	 * Get all description in one text
+	 * @return Descriptions of wsdl document
+	 */
+	public String getDescriptions()
+	{
+		StringBuffer descriptions = new StringBuffer();
+		Document doc = createParser();
+		NodeList descriptionNodeList = doc.getElementsByTagName("wsdl:documentation");
+
+		if(descriptionNodeList.getLength()>0)
+			for(int i=0;i<descriptionNodeList.getLength();i++)
+				descriptions.append(descriptionNodeList.item(i).getTextContent());
+			
+		return descriptions.toString();
 	}
 	
 	/*//////////////////////////////////////////////////////////////////////////
@@ -704,16 +798,21 @@ public class WSDLDocumentHandler extends XMLHandler
 	}
 	
 	/**
-	 * Get general computing words from generalCompWordsFile file
-	 * and store them in generalComputingWords vector
-	 * @throws IOException 
+	 * Update database with general computing words reading corresponding file
 	 */
-	public static void readGeneralComputingWords()
+	public static void updateGeneralComputingWordsDB()
 	{
 		
 		int numGeneralCompWords=0;	// number of function words contained in file
 		LineNumberReader lineNumberReader=null;	// reader of line number 
 		BufferedReader br=null;		// function word file reader
+		
+		// delete all entries
+		WebServicesClusterer.em.getTransaction().begin();
+		Query query = WebServicesClusterer.em.createQuery(
+			      "DELETE FROM GeneralComputingWord");
+		query.executeUpdate();
+				
 		try
 		{
 			// Open the file that is the first 
@@ -737,6 +836,9 @@ public class WSDLDocumentHandler extends XMLHandler
 			for(int i=0;i<numGeneralCompWords;i++)
 				generalComputingWords.add(br.readLine().trim().toLowerCase());
 			
+			WebServicesClusterer.em.persist(new GeneralComputingWord(generalComputingWords));
+			WebServicesClusterer.em.getTransaction().commit();
+			
 			if(lineNumberReader!=null)
 				lineNumberReader.close();
 			
@@ -748,6 +850,20 @@ public class WSDLDocumentHandler extends XMLHandler
 		{
 			ioex.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Get general computing words from database
+	 * and store them in generalComputingWords vector
+	 * @throws IOException 
+	 */
+	public static void readGeneralComputingWords()
+	{
+		TypedQuery<GeneralComputingWord> query = WebServicesClusterer.em.createQuery(
+			      "SELECT gcw FROM GeneralComputingWord AS gcw ", GeneralComputingWord.class);
+		GeneralComputingWord generalComputingWord = query.getResultList().get(0);
+		
+		generalComputingWords = generalComputingWord.getWords();
 	}
 	
 }

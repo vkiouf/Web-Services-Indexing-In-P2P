@@ -106,10 +106,28 @@ public class WSDLDocument
 	 */
 	public Vector<String> getWords(boolean isStemmed)
 	{
+		Vector<String> mulStemmedWords = new Vector<String>();
+		String word;
+		int count;
+		Vector<String> keys = new Vector<String>(stemmedWords.keySet());
+		
 		if(!isStemmed)
 			return words;
 		else
-			return  new Vector<String>(stemmedWords.keySet());
+		{
+			
+			for(String key:keys)
+			{
+				count = stemmedWords.get(key);
+				for(int i=0;i<count;i++)
+					mulStemmedWords.add(key);
+			}
+			
+			return mulStemmedWords;
+			
+			//return new Vector<String>(stemmedWords.keySet());
+			//return  new Vector<String>(stemmedWords.keySet());
+		}
 	}
 
 	/**
@@ -332,7 +350,7 @@ public class WSDLDocument
 		if(stemmedWord.length()==1)	// letter
 			return;
 		
-		if(!stemmedWords.contains(stemmedWord))
+		if(!stemmedWords.containsKey(stemmedWord))
 			stemmedWords.put(stemmedWord,1);
 		else
 			stemmedWords.put(stemmedWord,stemmedWords.get(stemmedWord)+1);

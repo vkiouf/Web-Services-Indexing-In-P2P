@@ -11,6 +11,9 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import net.billylieurance.azuresearch.AzureSearchCompositeQuery;
 import edu.sussex.nlp.jws.JWS;
 import edu.sussex.nlp.jws.Lin;
@@ -40,11 +43,10 @@ public class WordDatabase
 	private String hitsFile;							// hits list based on search engine selection
 	Hashtable<String,Long> hits;						// number of hits for each word
 	private static Hashtable<String,String> compositeWords=new Hashtable<String,String>();	// composite words separated by _
-	
-	// Function Words
-	private String functionWordsFile = "function_words.dat";	// Function words filename
-	private String[] functionWords;								// Array of function words
 
+	// Function Words
+	private transient String functionWordsFile = "function_words.dat";	// Function words filename
+	private transient String[] functionWords;								// Array of function words
 	
 	SimilarityType simType;			// Type of  word similarity computation
 	SearchEngine searchEngine;		// Selected search engine
@@ -52,7 +54,7 @@ public class WordDatabase
 	WebSearch webSearch;					// Web Search engine
 	AzureSearchCompositeQuery  aq;			// Search in Bing
 	
-	long M = (long) 10e9;				// Total pages inddexed by search engine
+	long M = (long) 47e9;				// Total pages inddexed by search engine
 	
 	BufferedWriter out;					// Writer of word hits
 
@@ -65,32 +67,22 @@ public class WordDatabase
 	 * @param simType Similarity Measure ( NGD or WordNet based)
 	 * @param searchEngine In case of NGD, select search Engine Bing or Google
 	 */
-	public WordDatabase(SimilarityType simType,SearchEngine searchEngine)
+	public WordDatabase(SimilarityType simType)//,SearchEngine searchEngine)
 	{
 		this.simType = simType;
-		this.searchEngine = searchEngine;
+		this.searchEngine = SearchEngine.GOOGLE;
 		
 		if(simType == SimilarityType.NGD)
 		{
 			// Set search engine and storage of word resuls number file
 			webSearch = new WebSearch(searchEngine);
-			if(searchEngine == SearchEngine.BING)
-			{
+			/*if(searchEngine == SearchEngine.BING)
 		        hitsFile = bingHitsFile;
-				/*aq = new AzureSearchCompositeQuery();
-				aq.setSources(new AZURESEARCH_QUERYTYPE[] {
-		       	     AZURESEARCH_QUERYTYPE.WEB
-		      	});
-				aq.setBingApi(AZURESEARCH_API.BINGSEARCH);
-				aq.setMarket("el-GR");
-		        aq.setAppid("rDmZjn0iKtQ6aJRfb38kKY2Al7CswpekLuCDzJ5xDvo=");*/
-
-			}
-			else
-				hitsFile = googleHitsFile;
+			else*/
+			hitsFile = googleHitsFile;
 	       
 			// Read number of hits for each word from file
-	        readHitsFile();
+			loadHits();
 	        
 	        // Open file to write new words
 			FileWriter fstream;
@@ -116,7 +108,7 @@ public class WordDatabase
 	protected void finalize() throws Throwable
 	{
 		out.close();
-	  super.finalize(); //not necessary if extending Object.
+		super.finalize(); //not necessary if extending Object.
 	}
 	
 	/*=========================================================================
@@ -169,6 +161,9 @@ public class WordDatabase
 	 */
 	public static String getWordNetStemWord(String word)
 	{
+		if(word.equals("sms"))
+			return word;
+			
 		List<String> stemmedWords = stemmer.findStems(word);	// List of word stems
 		String stemmedWord =  stemmedWords.size()>0?stemmedWords.get(0):word;	// Return the first one if exists. Otherwise, the original word
 		
@@ -245,12 +240,15 @@ public class WordDatabase
 			sim = wordNetsimilarity(word1, word2);
 		else
 		{
-			distance = NormalizedGoogleDistance(word1, word2);
+			if(!word1.contentEquals(word2))
+				distance = NormalizedGoogleDistance(word1, word2);
+			else
+				distance = 0;
 			
 			if(distance>1)
 				sim=0;
 			else
-				sim = 1-NormalizedGoogleDistance(word1, word2);
+				sim = 1-distance;
 		}
 			
 		return sim;
@@ -332,15 +330,21 @@ public class WordDatabase
 	 *-----------------------------------------------------------------------*/
 	
 	/**
-	 * Reads hits file where each line store the keyword and its number of hits in bing search engine
+	 *	Update word hits database read from file
 	 */
-	private void readHitsFile()
+	public void updateHitsDBFromFile()
 	{
 		String word;	// current word
 		long numHits;	// hits
 		String strLine; // line read
-		hits = new Hashtable<String,Long>();
+	//	hits = new Hashtable<String,Long>();
 		
+		// delete all entries
+		WebServicesClusterer.em.getTransaction().begin();
+		Query query = WebServicesClusterer.em.createQuery(
+			      "DELETE FROM WordHits");
+		query.executeUpdate();
+				
 		try
 		{
 			FileInputStream fstream = new FileInputStream(hitsFile);
@@ -354,8 +358,11 @@ public class WordDatabase
 		   {
 			  word =strLine.split("\t")[0];
 			  numHits = Long.parseLong(strLine.split("\t")[1]);
-			  this.hits.put(word, numHits);
+			  WebServicesClusterer.em.persist(new WordHits(word,numHits));
+			 // this.hits.put(word, numHits);
 		   }
+		   
+		   WebServicesClusterer.em.getTransaction().commit();
 		   
 		   //Close the input stream
 		   in.close();
@@ -373,6 +380,19 @@ public class WordDatabase
 	}
 	
 	/**
+	 * Load all words with hits from database
+	 */
+	public void loadHits()
+	{
+		TypedQuery<WordHits> query = WebServicesClusterer.em.createQuery("SELECT wordhits FROM WordHits wordhits", WordHits.class);
+		List<WordHits> wordsHits = query.getResultList();
+		
+		this.hits = new Hashtable<String,Long>();
+		for(WordHits wordHits:wordsHits)
+			this.hits.put(wordHits.getWord(), wordHits.getHits());
+	}
+	
+	/**
 	 * Get number of hits for word. First check if word exists in hits map , otherwise do a query
 	 * to search engine and store result to hits file and map.
 	 * @param word Word 
@@ -381,6 +401,10 @@ public class WordDatabase
 	{	
 		if(hits.keySet().contains(word))
 			return hits.get(word);
+		/*TypedQuery<Long> query = WebServicesClusterer.em.createQuery(
+			      "SELECT wordhits.hits  FROM WordHits wordhits, Long.class);
+		if( query.getResultList().size()>0)
+			return query.getResultList().get(0);*/
 		
 		// if word not exist, search in bing search engine
 		long numHits=0;
@@ -390,29 +414,20 @@ public class WordDatabase
 			Thread.sleep(1000);// do search every second
 			numHits = webSearch.search(word.split(" "));	// If more than one words, split them based on whitespace
 			
+			// update db
+			if(!WebServicesClusterer.em.getTransaction().isActive())
+			{
+				WebServicesClusterer.em.getTransaction().begin();
+				WebServicesClusterer.em.persist(new WordHits(word,numHits));
+				WebServicesClusterer.em.getTransaction().commit();
+			}
+			else
+				WebServicesClusterer.em.persist(new WordHits(word,numHits));
+			
+			// update file
 			out.write(word+"\t"+numHits);
 			out.newLine();
 			out.flush();
-		
-//			if(searchEngine == SearchEngine.BING)
-//			{
-//				/*aq.setQuery(word);
-//				aq.doQuery();
-//				AzureSearchResultSet<AbstractAzureSearchResult> ars = aq.getQueryResult();
-//				numHits = ars.getWebTotal();*/
-//				Thread.sleep(100);// do search every second
-//				numHits = gs.bingSearch(word.split(" "));	// If more than one words, split them based on whitespace
-//			}
-//			else if(searchEngine == SearchEngine.GOOGLE)
-//			{
-			//java.util.Date date=new java.util.Date();
-			//System.out.println("Search "+word+" "+date.toString());
-				
-			//	System.out.println("Search Finished "+word+" "+date.toString());	
-//			}
-		
-
-			//out.close();
 		}
 		catch (IOException | InterruptedException e)
 		{
@@ -430,16 +445,22 @@ public class WordDatabase
 	 *-----------------------------------------------------------------------*/
 	
 	/**
-	 * Read the file of function words
+	 * Read the file of function words and stores them in database( rewrite table)
 	 * @return Array of function words
 	 * @throws IOException 
 	 */
-	public String[] readFunctionWords() 
+	public void updateFunctionWordsDBFromFile() 
 	{
 		int numFunctionWords=0;						// number of function words contained in file
 		LineNumberReader lineNumberReader=null;		// reader of line number 
 		BufferedReader br=null;						// function word file reader
 		FileInputStream fstream = null;
+		
+		// delete all entries
+		WebServicesClusterer.em.getTransaction().begin();
+		Query query = WebServicesClusterer.em.createQuery(
+			      "DELETE FROM FunctionWord");
+		query.executeUpdate();
 		
 		try
 		{
@@ -461,7 +482,13 @@ public class WordDatabase
 			fstream.getChannel().position(0);
 			br = new BufferedReader(new InputStreamReader(in));
 			for(int i=0;i<numFunctionWords;i++)
+			{
 				functionWords[i] = br.readLine().trim();
+			//	WebServicesClusterer.em.persist(functionWords[i] );
+			}
+			
+			WebServicesClusterer.em.persist(new FunctionWord(functionWords));
+			WebServicesClusterer.em.getTransaction().commit();
 			
 			lineNumberReader.close();
 			
@@ -471,11 +498,96 @@ public class WordDatabase
 		catch(IOException ioex)
 		{
 			ioex.printStackTrace();
-			
-			return null;
 		}
 		
+	}
+	
+	/**
+	 * Read function words from database
+	 * @return Array of function words
+	 */
+	public String[] readFunctionWords()
+	{
+		TypedQuery<FunctionWord> query = WebServicesClusterer.em.createQuery(
+			      "SELECT fw FROM FunctionWord AS fw ", FunctionWord.class);
+		FunctionWord functionWord = query.getResultList().get(0);
+		
+		this.functionWords = functionWord.getWords();
+		
 		return this.functionWords;
+	}
+	
+	/*-----------------------------------------------------------------------
+	 *					Word Manipulation
+	 *-----------------------------------------------------------------------*/
+	
+	/**
+	 * Split composite word in multiple words based on the assumption that a capital
+	 * letter indicates the start of a new word
+	 * @param word
+	 * @return
+	 */
+	public static Vector<String> splitWord(String word)
+	{
+		Vector<String> words = new Vector<String>();				// simple words
+		Vector<String> abbreviations = findWordsInCapitals(word);	// words composed of capital letters
+		StringBuffer wordBuffer = new StringBuffer(word);			// remove abbreviations
+		String[] simpleWords;						// words without abbreviations
+		
+		// remove all abbreviations from word
+		for(int i=0;i<abbreviations.size();i++)
+			word = word.replaceAll(abbreviations.get(i), "");
+		
+		words.addAll(abbreviations);	// add abbreviations in words set
+		
+		// add words separated by capital letters
+		simpleWords = wordBuffer.toString().split("(?=\\p{Upper})");
+		for(String simpleWord:simpleWords)
+		{
+			if(simpleWord.matches(".*\\d.*")) // if word contains number, remove number
+				simpleWord = simpleWord.replaceAll("\\d","");
+			
+			simpleWord = simpleWord.trim();
+			if(!simpleWord.isEmpty() && simpleWord.length()>1 && !simpleWord.contains("_"))
+				words.add(simpleWord);
+		}
+		
+		return words;
+	}
+	
+	/**
+	 * Searches in a string for continuous capitals  
+	 * @param word Word to check
+	 * @return Words in capitals
+	 */
+	public static Vector<String> findWordsInCapitals(String word)
+	{
+		Vector<String> wordsInCapitals = new Vector<String>();
+		StringBuffer wordBuff=new StringBuffer();
+		
+		for(int i=0;i<word.length();i++)
+		{
+			if(Character.isUpperCase(word.charAt(i)))
+				wordBuff.append(word.charAt(i));
+			
+			if(Character.isLowerCase(word.charAt(i)) || Character.isDigit(word.charAt(i))
+					|| i==word.length()-1)
+			{
+				if(wordBuff.length()>0)
+				{
+					if(wordBuff.length()>1)
+						if(Character.isLowerCase(word.charAt(i)))
+							wordsInCapitals.add(wordBuff.substring(0,wordBuff.length()-1));
+						else
+							wordsInCapitals.add(wordBuff.substring(0,wordBuff.length()));
+			
+					wordBuff = new StringBuffer();
+				}
+			}
+	
+		}
+		
+		return wordsInCapitals;
 	}
 }
 

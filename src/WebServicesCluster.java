@@ -2,10 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.persistence.*;
+
 /**
  *
  * A cluster of web services with similar functionality
  */
+@Entity 
 public class WebServicesCluster
 {
 	/*=========================================================================
@@ -13,13 +16,14 @@ public class WebServicesCluster
 	 *=========================================================================*/
 	
 	private int index;				// Index of cluster 
-	private String name;			// Name of cluster
-	private List<WSDLDocument> documents;	// Collection of wsdl documents
+	private transient String name;			// Name of cluster
+	private transient List<WSDLDocument> documents;	// Collection of wsdl documents
+	private List<String> documentNames;		// Names of documents
 	
 	/*=========================================================================
 	 *					Constructors
 	 *=========================================================================*/
-	
+
 	/**
 	 * @param index A number which distinguish this cluster from others 
 	 * @param name Tag name of cluster
@@ -28,6 +32,7 @@ public class WebServicesCluster
 	{
 		this.index = index;
 		documents = new ArrayList<WSDLDocument>();
+		documentNames = new ArrayList<String>();
 	}
 	
 	/*=========================================================================
@@ -56,6 +61,15 @@ public class WebServicesCluster
 	public List<WSDLDocument> getDocuments()
 	{
 		return documents;
+	}
+	
+	
+	/**
+	 * @return the documentNames
+	 */
+	public List<String> getDocumentNames()
+	{
+		return documentNames;
 	}
 
 	/*=========================================================================
@@ -89,19 +103,7 @@ public class WebServicesCluster
 	public void add(WSDLDocument document)
 	{
 		this.documents.add(document);
+		this.documentNames.add(document.getNameWithoutExtension());
 	}
 	
-	/**
-	 * Get  names of clustered documents
-	 * @return  A vector of names
-	 */
-	public Vector<String> getDocumentNames()
-	{
-		Vector<String> docNames=new Vector<String>(documents.size());
-		
-		for(WSDLDocument document:documents)
-			docNames.add(document.getNameWithoutExtension());
-		
-		return docNames;
-	}
 }
