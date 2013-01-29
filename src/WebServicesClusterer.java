@@ -739,7 +739,7 @@ public class WebServicesClusterer
 				// Find minimum similarity factor between current document and each document from cluster
 				// If minimum similarity factor is greater than threshold, insert document in cluster
 				minTheta = minSimilarityFactor(cluster,wSDLDocument);
-				System.out.println("......Min �: "+minTheta);
+				System.out.println("......Min Θ: "+minTheta);
 				if(minTheta>=similarityFactorThreshold)
 				{
 					cluster.add(wSDLDocument);
