@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.xignite.com/services/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://www.xignite.com/services/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This web service provides company logo images.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.xignite.com/services/">
+      <s:element name="GetLogo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="tns:IdentifierTypes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="IdentifierTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="Symbol" />
+          <s:enumeration value="CIK" />
+          <s:enumeration value="CUSIP" />
+          <s:enumeration value="ISIN" />
+          <s:enumeration value="Valoren" />
+          <s:enumeration value="SEDOL" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetLogoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLogoResult" type="tns:Logo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Logo">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Security" type="tns:Security" />
+              <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:ImageTypes" />
+              <s:element minOccurs="0" maxOccurs="1" name="URL" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Common">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Outcome" type="tns:OutcomeTypes" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Identity" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Delay" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="OutcomeTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="Success" />
+          <s:enumeration value="SystemError" />
+          <s:enumeration value="RequestError" />
+          <s:enumeration value="RegistrationError" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="Security">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CIK" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Cusip" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ISIN" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Valoren" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Market" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CategoryOrIndustry" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="ImageTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="GIF" />
+          <s:enumeration value="JPG" />
+          <s:enumeration value="EPS" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="Header" type="tns:Header" />
+      <s:complexType name="Header">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Tracer" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="Logo" nillable="true" type="tns:Logo" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetLogoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLogo" />
+  </wsdl:message>
+  <wsdl:message name="GetLogoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLogoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLogoHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetLogoHttpGetIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLogoHttpGetOut">
+    <wsdl:part name="Body" element="tns:Logo" />
+  </wsdl:message>
+  <wsdl:message name="GetLogoHttpPostIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLogoHttpPostOut">
+    <wsdl:part name="Body" element="tns:Logo" />
+  </wsdl:message>
+  <wsdl:portType name="XigniteLogosSoap">
+    <wsdl:operation name="GetLogo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Save an archive.</wsdl:documentation>
+      <wsdl:input message="tns:GetLogoSoapIn" />
+      <wsdl:output message="tns:GetLogoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="XigniteLogosHttpGet">
+    <wsdl:operation name="GetLogo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Save an archive.</wsdl:documentation>
+      <wsdl:input message="tns:GetLogoHttpGetIn" />
+      <wsdl:output message="tns:GetLogoHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="XigniteLogosHttpPost">
+    <wsdl:operation name="GetLogo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Save an archive.</wsdl:documentation>
+      <wsdl:input message="tns:GetLogoHttpPostIn" />
+      <wsdl:output message="tns:GetLogoHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="XigniteLogosSoap" type="tns:XigniteLogosSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLogo">
+      <soap:operation soapAction="http://www.xignite.com/services/GetLogo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetLogoHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteLogosSoap12" type="tns:XigniteLogosSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLogo">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetLogo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetLogoHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteLogosHttpGet" type="tns:XigniteLogosHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetLogo">
+      <http:operation location="/GetLogo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteLogosHttpPost" type="tns:XigniteLogosHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetLogo">
+      <http:operation location="/GetLogo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="XigniteLogos">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This web service provides company logo images.</wsdl:documentation>
+    <wsdl:port name="XigniteLogosSoap" binding="tns:XigniteLogosSoap">
+      <soap:address location="http://www.xignite.com/xLogos.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteLogosSoap12" binding="tns:XigniteLogosSoap12">
+      <soap12:address location="http://www.xignite.com/xLogos.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteLogosHttpGet" binding="tns:XigniteLogosHttpGet">
+      <http:address location="http://www.xignite.com/xLogos.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteLogosHttpPost" binding="tns:XigniteLogosHttpPost">
+      <http:address location="http://www.xignite.com/xLogos.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

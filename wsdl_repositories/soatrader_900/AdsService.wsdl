@@ -1,0 +1,480 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://api-adcenter.looksmart.com/api/v3"
+             xmlns:typens="http://api-adcenter.looksmart.com/api/v3"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             name="Ads"
+             targetNamespace="http://api-adcenter.looksmart.com/api/v3">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://api-adcenter.looksmart.com/api/v3">
+         <xsd:complexType name="AdStruct">
+            <xsd:all>
+               <xsd:element name="destination_url" type="xsd:string"/>
+               <xsd:element name="ad_state" type="xsd:string"/>
+               <xsd:element name="name" type="xsd:string"/>
+               <xsd:element name="is_adult" type="xsd:boolean"/>
+               <xsd:element name="display_url" type="xsd:string"/>
+               <xsd:element name="description" type="xsd:string"/>
+               <xsd:element name="ad_id" type="xsd:int"/>
+               <xsd:element name="campaign_id" type="xsd:int"/>
+               <xsd:element name="title" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="IntegerArray">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute wsdl:arrayType="xsd:int[]" ref="soapenc:arrayType"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="AdStructArray">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute wsdl:arrayType="typens:AdStruct[]" ref="soapenc:arrayType"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+      </xsd:schema>
+      <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://api-adcenter.looksmart.com/api/v3">
+         <xsd:complexType name="AdStruct">
+            <xsd:all>
+               <xsd:element name="destination_url" type="xsd:string"/>
+               <xsd:element name="ad_state" type="xsd:string"/>
+               <xsd:element name="name" type="xsd:string"/>
+               <xsd:element name="is_adult" type="xsd:boolean"/>
+               <xsd:element name="display_url" type="xsd:string"/>
+               <xsd:element name="description" type="xsd:string"/>
+               <xsd:element name="ad_id" type="xsd:int"/>
+               <xsd:element name="campaign_id" type="xsd:int"/>
+               <xsd:element name="title" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="IntegerArray">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute wsdl:arrayType="xsd:int[]" ref="soapenc:arrayType"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="AdStructArray">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute wsdl:arrayType="typens:AdStruct[]" ref="soapenc:arrayType"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+      </xsd:schema>
+  </types>
+  <message name="GetNumAdPages">
+      <part name="token" type="xsd:string"/>
+      <part name="campaign_id" type="xsd:int"/>
+  </message>
+  <message name="GetNumAdPagesResponse">
+      <part name="return" type="xsd:int"/>
+  </message>
+  <message name="UpdateAdState">
+      <part name="token" type="xsd:string"/>
+      <part name="ad" type="typens:AdStruct"/>
+  </message>
+  <message name="UpdateAdStateResponse">
+      <part name="return" type="typens:AdStruct"/>
+  </message>
+  <message name="GetAd">
+      <part name="token" type="xsd:string"/>
+      <part name="ad_id" type="xsd:int"/>
+  </message>
+  <message name="GetAdResponse">
+      <part name="return" type="typens:AdStruct"/>
+  </message>
+  <message name="UpdateAdStates">
+      <part name="token" type="xsd:string"/>
+      <part name="ads" type="typens:AdStructArray"/>
+  </message>
+  <message name="UpdateAdStatesResponse">
+      <part name="return" type="typens:AdStructArray"/>
+  </message>
+  <message name="GetAllAds">
+      <part name="token" type="xsd:string"/>
+      <part name="account_id" type="xsd:int"/>
+  </message>
+  <message name="GetAllAdsResponse">
+      <part name="return" type="typens:AdStructArray"/>
+  </message>
+  <message name="AddAds">
+      <part name="token" type="xsd:string"/>
+      <part name="ads" type="typens:AdStructArray"/>
+  </message>
+  <message name="AddAdsResponse">
+      <part name="return" type="typens:AdStructArray"/>
+  </message>
+  <message name="GetAdList">
+      <part name="token" type="xsd:string"/>
+      <part name="ad_ids" type="typens:IntegerArray"/>
+  </message>
+  <message name="GetAdListResponse">
+      <part name="return" type="typens:AdStructArray"/>
+  </message>
+  <message name="GetAllAdsByPage">
+      <part name="token" type="xsd:string"/>
+      <part name="account_id" type="xsd:int"/>
+      <part name="page" type="xsd:int"/>
+  </message>
+  <message name="GetAllAdsByPageResponse">
+      <part name="return" type="typens:AdStructArray"/>
+  </message>
+  <message name="GetNumAllAdPages">
+      <part name="token" type="xsd:string"/>
+      <part name="account_id" type="xsd:int"/>
+  </message>
+  <message name="GetNumAllAdPagesResponse">
+      <part name="return" type="xsd:int"/>
+  </message>
+  <message name="GetAds">
+      <part name="token" type="xsd:string"/>
+      <part name="campaign_id" type="xsd:int"/>
+  </message>
+  <message name="GetAdsResponse">
+      <part name="return" type="typens:AdStructArray"/>
+  </message>
+  <message name="UpdateAd">
+      <part name="token" type="xsd:string"/>
+      <part name="ad" type="typens:AdStruct"/>
+  </message>
+  <message name="UpdateAdResponse">
+      <part name="return" type="typens:AdStruct"/>
+  </message>
+  <message name="AddAd">
+      <part name="token" type="xsd:string"/>
+      <part name="ad" type="typens:AdStruct"/>
+  </message>
+  <message name="AddAdResponse">
+      <part name="return" type="typens:AdStruct"/>
+  </message>
+  <message name="UpdateAds">
+      <part name="token" type="xsd:string"/>
+      <part name="ads" type="typens:AdStructArray"/>
+  </message>
+  <message name="UpdateAdsResponse">
+      <part name="return" type="typens:AdStructArray"/>
+  </message>
+  <message name="GetAdsByPage">
+      <part name="token" type="xsd:string"/>
+      <part name="campaign_id" type="xsd:int"/>
+      <part name="page" type="xsd:int"/>
+  </message>
+  <message name="GetAdsByPageResponse">
+      <part name="return" type="typens:AdStructArray"/>
+  </message>
+  <portType name="AdsAdsPort">
+      <operation name="GetNumAdPages">
+         <input message="typens:GetNumAdPages"/>
+         <output message="typens:GetNumAdPagesResponse"/>
+      </operation>
+      <operation name="UpdateAdState">
+         <input message="typens:UpdateAdState"/>
+         <output message="typens:UpdateAdStateResponse"/>
+      </operation>
+      <operation name="GetAd">
+         <input message="typens:GetAd"/>
+         <output message="typens:GetAdResponse"/>
+      </operation>
+      <operation name="UpdateAdStates">
+         <input message="typens:UpdateAdStates"/>
+         <output message="typens:UpdateAdStatesResponse"/>
+      </operation>
+      <operation name="GetAllAds">
+         <input message="typens:GetAllAds"/>
+         <output message="typens:GetAllAdsResponse"/>
+      </operation>
+      <operation name="AddAds">
+         <input message="typens:AddAds"/>
+         <output message="typens:AddAdsResponse"/>
+      </operation>
+      <operation name="GetAdList">
+         <input message="typens:GetAdList"/>
+         <output message="typens:GetAdListResponse"/>
+      </operation>
+      <operation name="GetAllAdsByPage">
+         <input message="typens:GetAllAdsByPage"/>
+         <output message="typens:GetAllAdsByPageResponse"/>
+      </operation>
+      <operation name="GetNumAllAdPages">
+         <input message="typens:GetNumAllAdPages"/>
+         <output message="typens:GetNumAllAdPagesResponse"/>
+      </operation>
+      <operation name="GetAds">
+         <input message="typens:GetAds"/>
+         <output message="typens:GetAdsResponse"/>
+      </operation>
+      <operation name="UpdateAd">
+         <input message="typens:UpdateAd"/>
+         <output message="typens:UpdateAdResponse"/>
+      </operation>
+      <operation name="AddAd">
+         <input message="typens:AddAd"/>
+         <output message="typens:AddAdResponse"/>
+      </operation>
+      <operation name="UpdateAds">
+         <input message="typens:UpdateAds"/>
+         <output message="typens:UpdateAdsResponse"/>
+      </operation>
+      <operation name="GetAdsByPage">
+         <input message="typens:GetAdsByPage"/>
+         <output message="typens:GetAdsByPageResponse"/>
+      </operation>
+  </portType>
+  <binding name="AdsAdsBinding" type="typens:AdsAdsPort">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+      <operation name="GetNumAdPages">
+         <soap:operation soapAction="/ads/api/GetNumAdPages"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="UpdateAdState">
+         <soap:operation soapAction="/ads/api/UpdateAdState"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetAd">
+         <soap:operation soapAction="/ads/api/GetAd"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="UpdateAdStates">
+         <soap:operation soapAction="/ads/api/UpdateAdStates"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetAllAds">
+         <soap:operation soapAction="/ads/api/GetAllAds"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="AddAds">
+         <soap:operation soapAction="/ads/api/AddAds"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetAdList">
+         <soap:operation soapAction="/ads/api/GetAdList"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetAllAdsByPage">
+         <soap:operation soapAction="/ads/api/GetAllAdsByPage"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetNumAllAdPages">
+         <soap:operation soapAction="/ads/api/GetNumAllAdPages"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetAds">
+         <soap:operation soapAction="/ads/api/GetAds"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="UpdateAd">
+         <soap:operation soapAction="/ads/api/UpdateAd"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="AddAd">
+         <soap:operation soapAction="/ads/api/AddAd"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="UpdateAds">
+         <soap:operation soapAction="/ads/api/UpdateAds"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetAdsByPage">
+         <soap:operation soapAction="/ads/api/GetAdsByPage"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://api-adcenter.looksmart.com/api/v3"
+                       use="encoded"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="AdsService">
+      <port name="AdsAdsPort" binding="typens:AdsAdsBinding">
+         <soap:address location="http://ws.soatrader.com/looksmart.com/0.1/AdsService"/>
+      </port>
+  </service>
+</definitions>

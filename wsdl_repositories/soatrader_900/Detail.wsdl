@@ -1,0 +1,489 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="CultuurNet"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="CultuurNet">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="CultuurNet">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="getEvent">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="languageId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="eventId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="relatedEventIds" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="getEventResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getEventResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="result">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Authentication" type="tns:Authentication"/>
+         <s:complexType name="Authentication">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="partnerId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="privateKey" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="publicKeys" type="tns:ArrayOfKey"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Transformation" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfKey">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Key" nillable="true" type="tns:Key"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Key">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="partnerId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="getEventType">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="eventId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getEventTypeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getEventTypeResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="eventType" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getOrganization">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="languageId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="organizationId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getOrganizationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getOrganizationResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="organization">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getPerson">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="languageId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="personId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getPersonResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getPersonResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="person">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContentFE">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="languageId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="objectId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContentFEResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getContentFEResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="contentFE">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="hitLink">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="linkId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="hitLinkResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="hitLinkResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getLink">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="languageId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="linkId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getLinkResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getLinkResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="link">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getPSA">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="languageId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="objectId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getPSAResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getPSAResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="result">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getName">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="languageId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="objectId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getNameResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getNameResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getEventSoapIn">
+      <wsdl:part name="parameters" element="tns:getEvent"/>
+  </wsdl:message>
+  <wsdl:message name="getEventSoapOut">
+      <wsdl:part name="parameters" element="tns:getEventResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getEventAuthentication">
+      <wsdl:part name="Authentication" element="tns:Authentication"/>
+  </wsdl:message>
+  <wsdl:message name="getEventTypeSoapIn">
+      <wsdl:part name="parameters" element="tns:getEventType"/>
+  </wsdl:message>
+  <wsdl:message name="getEventTypeSoapOut">
+      <wsdl:part name="parameters" element="tns:getEventTypeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getEventTypeAuthentication">
+      <wsdl:part name="Authentication" element="tns:Authentication"/>
+  </wsdl:message>
+  <wsdl:message name="getOrganizationSoapIn">
+      <wsdl:part name="parameters" element="tns:getOrganization"/>
+  </wsdl:message>
+  <wsdl:message name="getOrganizationSoapOut">
+      <wsdl:part name="parameters" element="tns:getOrganizationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getOrganizationAuthentication">
+      <wsdl:part name="Authentication" element="tns:Authentication"/>
+  </wsdl:message>
+  <wsdl:message name="getPersonSoapIn">
+      <wsdl:part name="parameters" element="tns:getPerson"/>
+  </wsdl:message>
+  <wsdl:message name="getPersonSoapOut">
+      <wsdl:part name="parameters" element="tns:getPersonResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getPersonAuthentication">
+      <wsdl:part name="Authentication" element="tns:Authentication"/>
+  </wsdl:message>
+  <wsdl:message name="getContentFESoapIn">
+      <wsdl:part name="parameters" element="tns:getContentFE"/>
+  </wsdl:message>
+  <wsdl:message name="getContentFESoapOut">
+      <wsdl:part name="parameters" element="tns:getContentFEResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getContentFEAuthentication">
+      <wsdl:part name="Authentication" element="tns:Authentication"/>
+  </wsdl:message>
+  <wsdl:message name="hitLinkSoapIn">
+      <wsdl:part name="parameters" element="tns:hitLink"/>
+  </wsdl:message>
+  <wsdl:message name="hitLinkSoapOut">
+      <wsdl:part name="parameters" element="tns:hitLinkResponse"/>
+  </wsdl:message>
+  <wsdl:message name="hitLinkAuthentication">
+      <wsdl:part name="Authentication" element="tns:Authentication"/>
+  </wsdl:message>
+  <wsdl:message name="getLinkSoapIn">
+      <wsdl:part name="parameters" element="tns:getLink"/>
+  </wsdl:message>
+  <wsdl:message name="getLinkSoapOut">
+      <wsdl:part name="parameters" element="tns:getLinkResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getLinkAuthentication">
+      <wsdl:part name="Authentication" element="tns:Authentication"/>
+  </wsdl:message>
+  <wsdl:message name="getPSASoapIn">
+      <wsdl:part name="parameters" element="tns:getPSA"/>
+  </wsdl:message>
+  <wsdl:message name="getPSASoapOut">
+      <wsdl:part name="parameters" element="tns:getPSAResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getPSAAuthentication">
+      <wsdl:part name="Authentication" element="tns:Authentication"/>
+  </wsdl:message>
+  <wsdl:message name="getNameSoapIn">
+      <wsdl:part name="parameters" element="tns:getName"/>
+  </wsdl:message>
+  <wsdl:message name="getNameSoapOut">
+      <wsdl:part name="parameters" element="tns:getNameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getNameAuthentication">
+      <wsdl:part name="Authentication" element="tns:Authentication"/>
+  </wsdl:message>
+  <wsdl:portType name="DetailSoap">
+      <wsdl:operation name="getEvent">
+         <wsdl:input message="tns:getEventSoapIn"/>
+         <wsdl:output message="tns:getEventSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getEventType">
+         <wsdl:input message="tns:getEventTypeSoapIn"/>
+         <wsdl:output message="tns:getEventTypeSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getOrganization">
+         <wsdl:input message="tns:getOrganizationSoapIn"/>
+         <wsdl:output message="tns:getOrganizationSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPerson">
+         <wsdl:input message="tns:getPersonSoapIn"/>
+         <wsdl:output message="tns:getPersonSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContentFE">
+         <wsdl:input message="tns:getContentFESoapIn"/>
+         <wsdl:output message="tns:getContentFESoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="hitLink">
+         <wsdl:input message="tns:hitLinkSoapIn"/>
+         <wsdl:output message="tns:hitLinkSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getLink">
+         <wsdl:input message="tns:getLinkSoapIn"/>
+         <wsdl:output message="tns:getLinkSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPSA">
+         <wsdl:input message="tns:getPSASoapIn"/>
+         <wsdl:output message="tns:getPSASoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getName">
+         <wsdl:input message="tns:getNameSoapIn"/>
+         <wsdl:output message="tns:getNameSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DetailSoap" type="tns:DetailSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="getEvent">
+         <soap:operation soapAction="CultuurNet/getEvent" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:getEventAuthentication" part="Authentication" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getEventType">
+         <soap:operation soapAction="CultuurNet/getEventType" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:getEventTypeAuthentication" part="Authentication" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getOrganization">
+         <soap:operation soapAction="CultuurNet/getOrganization" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:getOrganizationAuthentication" part="Authentication" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPerson">
+         <soap:operation soapAction="CultuurNet/getPerson" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:getPersonAuthentication" part="Authentication" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContentFE">
+         <soap:operation soapAction="CultuurNet/getContentFE" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:getContentFEAuthentication" part="Authentication" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="hitLink">
+         <soap:operation soapAction="CultuurNet/hitLink" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:hitLinkAuthentication" part="Authentication" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getLink">
+         <soap:operation soapAction="CultuurNet/getLink" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:getLinkAuthentication" part="Authentication" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPSA">
+         <soap:operation soapAction="CultuurNet/getPSA" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:getPSAAuthentication" part="Authentication" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getName">
+         <soap:operation soapAction="CultuurNet/getName" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:getNameAuthentication" part="Authentication" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Detail">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/"/>
+      <wsdl:port name="DetailSoap" binding="tns:DetailSoap">
+         <soap:address location="http://ws.soatrader.com/cultuurweb.be/0.1/Detail"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

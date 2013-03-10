@@ -1,0 +1,332 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.smsender.co.il"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.smsender.co.il">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.smsender.co.il">
+         <s:import namespace="http://tempuri.org/SMSTables.xsd"/>
+         <s:import schemaLocation="https://www.cardcom.co.il/SendSMS/SMSWebSerivce.asmx?schema=SMSTables"
+                   namespace="http://tempuri.org/SMSTables.xsd"/>
+         <s:element name="SendSMS">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="msg" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="from" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="to" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendSMSResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SendSMSResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendSMSToVendor">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="msg" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="from" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="to" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ForceVendor" type="tns:VenderType"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="VenderType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Pelefon"/>
+               <s:enumeration value="Cellcom"/>
+               <s:enumeration value="Oreng"/>
+               <s:enumeration value="Mirce"/>
+               <s:enumeration value="Empty"/>
+               <s:enumeration value="Invalid"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="SendSMSToVendorResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SendSMSToVendorResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMonthUse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMonthUseResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetMonthUseResult" type="tns:ReturnResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ReturnResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Result" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetSMSLeftInBank">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSMSLeftInBankResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetSMSLeftInBankResult"
+                             type="tns:ReturnResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BulkSMSByTime">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="From" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DataToSend" type="s:dateTime"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SMSMassgeList">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="http://tempuri.org/SMSTables.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BulkSMSByTimeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="BulkSMSByTimeResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="http://tempuri.org/SMSTables.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendSMSByTime">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="msg" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="from" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="to" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="dt" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ForceVendor" type="tns:VenderType"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendSMSByTimeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SendSMSByTimeResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSMSList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="SMSSendOK" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="From" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="To" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSMSListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSMSListResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="http://tempuri.org/SMSTables.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendSMSSoapIn">
+      <wsdl:part name="parameters" element="tns:SendSMS"/>
+  </wsdl:message>
+  <wsdl:message name="SendSMSSoapOut">
+      <wsdl:part name="parameters" element="tns:SendSMSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendSMSToVendorSoapIn">
+      <wsdl:part name="parameters" element="tns:SendSMSToVendor"/>
+  </wsdl:message>
+  <wsdl:message name="SendSMSToVendorSoapOut">
+      <wsdl:part name="parameters" element="tns:SendSMSToVendorResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMonthUseSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMonthUse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMonthUseSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMonthUseResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSMSLeftInBankSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSMSLeftInBank"/>
+  </wsdl:message>
+  <wsdl:message name="GetSMSLeftInBankSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSMSLeftInBankResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BulkSMSByTimeSoapIn">
+      <wsdl:part name="parameters" element="tns:BulkSMSByTime"/>
+  </wsdl:message>
+  <wsdl:message name="BulkSMSByTimeSoapOut">
+      <wsdl:part name="parameters" element="tns:BulkSMSByTimeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendSMSByTimeSoapIn">
+      <wsdl:part name="parameters" element="tns:SendSMSByTime"/>
+  </wsdl:message>
+  <wsdl:message name="SendSMSByTimeSoapOut">
+      <wsdl:part name="parameters" element="tns:SendSMSByTimeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSMSListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSMSList"/>
+  </wsdl:message>
+  <wsdl:message name="GetSMSListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSMSListResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="SMSSerivceSoap" type="tns:SMSSerivceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="SendSMS">
+         <soap:operation soapAction="http://www.smsender.co.il/SendSMS" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendSMSToVendor">
+         <soap:operation soapAction="http://www.smsender.co.il/SendSMSToVendor" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMonthUse">
+         <soap:operation soapAction="http://www.smsender.co.il/GetMonthUse" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSMSLeftInBank">
+         <soap:operation soapAction="http://www.smsender.co.il/GetSMSLeftInBank" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="BulkSMSByTime">
+         <soap:operation soapAction="http://www.smsender.co.il/BulkSMSByTime" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendSMSByTime">
+         <soap:operation soapAction="http://www.smsender.co.il/SendSMSByTime" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSMSList">
+         <soap:operation soapAction="http://www.smsender.co.il/GetSMSList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="SMSSerivce">
+      <wsdl:port name="SMSSerivceSoap" binding="tns:SMSSerivceSoap">
+         <soap:address location="http://ws.soatrader.com/cardcom.co.il/0.1/SMSSerivce"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

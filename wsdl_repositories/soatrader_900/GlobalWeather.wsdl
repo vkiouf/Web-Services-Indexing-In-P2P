@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.webserviceX.NET" xmlns:tns="http://www.webserviceX.NET" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.webserviceX.NET">
+      <s:element name="GetWeather">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CityName" type="s:string"/>
+            <s:element maxOccurs="1" minOccurs="0" name="CountryName" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWeatherResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetWeatherResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCitiesByCountry">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CountryName" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCitiesByCountryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetCitiesByCountryResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string"/>
+    </s:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ws.soatrader.com/" xmlns:soat="http://ws.soatrader.com/"><xs:element name="SOATraderLicense" type="xs:string"/><xs:element name="SOATraderUsageStatistics" type="soat:SOATraderUsageStatistics"/><xs:complexType name="SOATraderUsageStatistics"><xs:sequence><xs:element name="HitsMade" type="xs:decimal"/><xs:element name="HitsLeft" type="xs:decimal"/></xs:sequence></xs:complexType></xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCitiesByCountrySoapOut">
+    <wsdl:part name="parameters" element="tns:GetCitiesByCountryResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountrySoapIn">
+    <wsdl:part name="parameters" element="tns:GetCitiesByCountry">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderLicense">
+    <wsdl:part name="SOATraderLicense" element="soat:SOATraderLicense">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderUsageStatistics">
+    <wsdl:part name="SOATraderUsageStatistics" element="soat:SOATraderUsageStatistics">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWeather">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWeatherResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="GlobalWeatherSoap">
+    <wsdl:operation name="GetWeather">
+<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get weather report for all major cities around the world.</documentation>
+      <wsdl:input message="tns:GetWeatherSoapIn">
+    </wsdl:input>
+      <wsdl:output message="tns:GetWeatherSoapOut">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+<documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get all major cities by country name(full / part).</documentation>
+      <wsdl:input message="tns:GetCitiesByCountrySoapIn">
+    </wsdl:input>
+      <wsdl:output message="tns:GetCitiesByCountrySoapOut">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GlobalWeatherSoap" type="tns:GlobalWeatherSoap">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetCitiesByCountry">
+      <soap:operation soapAction="http://www.webserviceX.NET/GetCitiesByCountry" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </soap:header>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWeather">
+      <soap:operation soapAction="http://www.webserviceX.NET/GetWeather" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </soap:header>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GlobalWeather">
+    <wsdl:port name="GlobalWeatherSoap" binding="tns:GlobalWeatherSoap">
+      <soap:address location="http://ws.soatrader.com/webservicex.net/1.0/GlobalWeather"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

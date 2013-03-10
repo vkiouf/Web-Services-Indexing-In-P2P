@@ -1,0 +1,192 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:element name="HelloWorld">
+            <s:complexType/>
+         </s:element>
+         <s:element name="HelloWorldResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="changeState">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="changeStateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="changeStateResult"
+                             type="tns:ArrayOfAjaxResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAjaxResponse">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AjaxResponse" nillable="true"
+                          type="tns:AjaxResponse"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AjaxResponse">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="receiver" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="data" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="setStates">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="setStatesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="setStatesResult"
+                             type="tns:ArrayOfAjaxResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="string" nillable="true" type="s:string"/>
+         <s:element name="ArrayOfAjaxResponse" nillable="true" type="tns:ArrayOfAjaxResponse"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+      <wsdl:part name="parameters" element="tns:HelloWorld"/>
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+      <wsdl:part name="parameters" element="tns:HelloWorldResponse"/>
+  </wsdl:message>
+  <wsdl:message name="changeStateSoapIn">
+      <wsdl:part name="parameters" element="tns:changeState"/>
+  </wsdl:message>
+  <wsdl:message name="changeStateSoapOut">
+      <wsdl:part name="parameters" element="tns:changeStateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="setStatesSoapIn">
+      <wsdl:part name="parameters" element="tns:setStates"/>
+  </wsdl:message>
+  <wsdl:message name="setStatesSoapOut">
+      <wsdl:part name="parameters" element="tns:setStatesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="HelloWorldHttpGetIn"/>
+  <wsdl:message name="HelloWorldHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="changeStateHttpGetIn">
+      <wsdl:part name="state" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="changeStateHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfAjaxResponse"/>
+  </wsdl:message>
+  <wsdl:message name="setStatesHttpGetIn">
+      <wsdl:part name="state" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="setStatesHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfAjaxResponse"/>
+  </wsdl:message>
+  <wsdl:message name="HelloWorldHttpPostIn"/>
+  <wsdl:message name="HelloWorldHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="changeStateHttpPostIn">
+      <wsdl:part name="state" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="changeStateHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfAjaxResponse"/>
+  </wsdl:message>
+  <wsdl:message name="setStatesHttpPostIn">
+      <wsdl:part name="state" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="setStatesHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfAjaxResponse"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="AjaxServiceSoap" type="tns:AjaxServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="HelloWorld">
+         <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="changeState">
+         <soap:operation soapAction="http://tempuri.org/changeState" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setStates">
+         <soap:operation soapAction="http://tempuri.org/setStates" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="AjaxService">
+      <wsdl:port name="AjaxServiceSoap" binding="tns:AjaxServiceSoap">
+         <soap:address location="http://ws.soatrader.com/camping.com/0.1/AjaxService"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

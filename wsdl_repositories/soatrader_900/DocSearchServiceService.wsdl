@@ -1,0 +1,377 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="https://soap.successfactors.com/axis/services/DocSearchService"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="https://soap.successfactors.com/axis/services/DocSearchService"
+                  xmlns:intf="https://soap.successfactors.com/axis/services/DocSearchService"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="urn:DocSearchService"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="https://soap.successfactors.com/axis/services/DocSearchService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.2
+Built on May 03, 2005 (02:20:24 EDT)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:DocSearchService">
+         <import namespace="http://xml.apache.org/xml-soap"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="SFCredential">
+            <sequence>
+               <element name="callerHash" nillable="true" type="xsd:string"/>
+               <element name="clientIP" nillable="true" type="xsd:string"/>
+               <element name="companyId" nillable="true" type="xsd:string"/>
+               <element name="expire" nillable="true" type="xsd:string"/>
+               <element name="partnerId" nillable="true" type="xsd:string"/>
+               <element name="password" nillable="true" type="xsd:string"/>
+               <element name="requestURL" nillable="true" type="xsd:string"/>
+               <element name="timezone" nillable="true" type="xsd:string"/>
+               <element name="tkloginKey" nillable="true" type="xsd:string"/>
+               <element name="username" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://xml.apache.org/xml-soap">
+         <import namespace="urn:DocSearchService"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Vector">
+            <sequence>
+               <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:anyType"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="addBatchRequest">
+
+      <wsdl:part name="data2add" type="xsd:hexBinary"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="initResponse">
+
+      <wsdl:part name="initReturn" type="xsd:int"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addBatchResponse">
+
+      <wsdl:part name="addBatchReturn" type="apachesoap:Vector"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="isValidSessionRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="logoutResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="formatDocSearchDetailsRequest">
+
+      <wsdl:part name="resultEntries" type="apachesoap:Vector"/>
+
+      <wsdl:part name="format" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="documentSearchResponse">
+
+      <wsdl:part name="documentSearchReturn" type="apachesoap:Vector"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="isValidSessionResponse">
+
+      <wsdl:part name="isValidSessionReturn" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="logoutRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="formatDocSearchDetailsResponse">
+
+      <wsdl:part name="formatDocSearchDetailsReturn" type="apachesoap:Vector"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="initRequest">
+
+      <wsdl:part name="credential" type="tns1:SFCredential"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="documentSearchRequest">
+
+      <wsdl:part name="exportFormat" type="xsd:string"/>
+
+      <wsdl:part name="getMetaFirst" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="DocSearchService">
+
+      <wsdl:operation name="init" parameterOrder="credential">
+
+         <wsdl:input message="impl:initRequest" name="initRequest"/>
+
+         <wsdl:output message="impl:initResponse" name="initResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addBatch" parameterOrder="data2add">
+
+         <wsdl:input message="impl:addBatchRequest" name="addBatchRequest"/>
+
+         <wsdl:output message="impl:addBatchResponse" name="addBatchResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="documentSearch" parameterOrder="exportFormat getMetaFirst">
+
+         <wsdl:input message="impl:documentSearchRequest" name="documentSearchRequest"/>
+
+         <wsdl:output message="impl:documentSearchResponse" name="documentSearchResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="formatDocSearchDetails" parameterOrder="resultEntries format">
+
+         <wsdl:input message="impl:formatDocSearchDetailsRequest"
+                     name="formatDocSearchDetailsRequest"/>
+
+         <wsdl:output message="impl:formatDocSearchDetailsResponse"
+                      name="formatDocSearchDetailsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="logout">
+
+         <wsdl:input message="impl:logoutRequest" name="logoutRequest"/>
+
+         <wsdl:output message="impl:logoutResponse" name="logoutResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isValidSession">
+
+         <wsdl:input message="impl:isValidSessionRequest" name="isValidSessionRequest"/>
+
+         <wsdl:output message="impl:isValidSessionResponse" name="isValidSessionResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="DocSearchServiceSoapBinding" type="impl:DocSearchService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="init">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="initRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.docSearch.axis.sfv4.sf.com"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="initResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="https://soap.successfactors.com/axis/services/DocSearchService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addBatch">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addBatchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.docSearch.axis.sfv4.sf.com"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addBatchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="https://soap.successfactors.com/axis/services/DocSearchService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="documentSearch">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="documentSearchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.docSearch.axis.sfv4.sf.com"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="documentSearchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="https://soap.successfactors.com/axis/services/DocSearchService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="formatDocSearchDetails">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="formatDocSearchDetailsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.docSearch.axis.sfv4.sf.com"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="formatDocSearchDetailsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="https://soap.successfactors.com/axis/services/DocSearchService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="logout">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="logoutRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.axis.sfv4.sf.com"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="logoutResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="https://soap.successfactors.com/axis/services/DocSearchService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isValidSession">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="isValidSessionRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.axis.sfv4.sf.com"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="isValidSessionResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="https://soap.successfactors.com/axis/services/DocSearchService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="DocSearchServiceService">
+
+      <wsdl:port binding="impl:DocSearchServiceSoapBinding" name="DocSearchService">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/successfactors.com/0.1/DocSearchServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

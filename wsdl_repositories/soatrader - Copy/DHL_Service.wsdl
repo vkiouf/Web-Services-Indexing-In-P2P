@@ -1,0 +1,178 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://service.ecocoma.com/shipping/dhl"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://service.ecocoma.com/shipping/dhl">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Cocoma DHL Shipping Web Services.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://service.ecocoma.com/shipping/dhl">
+         <s:element name="GetDHLRate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="KeyID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="DomainID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SenderAddress" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SenderCity" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SenderState" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SenderPostalCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SenderCountry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReceiverCity" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReceiverState" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReceiverPostalCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReceiverCountry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Weight" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ProtectionValue" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDHLRateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetDHLRateResult" type="tns:Shipping"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Shipping">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Package" type="tns:ArrayOfPostage"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfPostage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Postage" nillable="true"
+                          type="tns:Postage"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Postage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MailService" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rate" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetExtendedDHLRate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="KeyID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="DomainID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SenderAddress" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SenderCity" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SenderState" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SenderPostalCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SenderCountry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReceiverCity" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReceiverState" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReceiverPostalCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReceiverCountry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Weight" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ProtectionValue" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Options" type="tns:Options"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Options">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ShipDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ShipmentType1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ShipmentType2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Length" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Width" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Height" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AdditionalProtectionCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SpecialService" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CODPaymentCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CODPaymentValue" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OverrideCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TransactionTrace" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ContentDesc" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DutiableFlag" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CustomsValue" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Mode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sort" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetExtendedDHLRateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetExtendedDHLRateResult" type="tns:Shipping"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetDHLRateSoapIn">
+      <wsdl:part name="parameters" element="tns:GetDHLRate"/>
+  </wsdl:message>
+  <wsdl:message name="GetDHLRateSoapOut">
+      <wsdl:part name="parameters" element="tns:GetDHLRateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetExtendedDHLRateSoapIn">
+      <wsdl:part name="parameters" element="tns:GetExtendedDHLRate"/>
+  </wsdl:message>
+  <wsdl:message name="GetExtendedDHLRateSoapOut">
+      <wsdl:part name="parameters" element="tns:GetExtendedDHLRateResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="DHL_ServiceSoap" type="tns:DHL_ServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetDHLRate">
+         <soap:operation soapAction="http://service.ecocoma.com/shipping/dhl/GetDHLRate"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetExtendedDHLRate">
+         <soap:operation soapAction="http://service.ecocoma.com/shipping/dhl/GetExtendedDHLRate"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="DHL_Service">
+      <wsdl:documentation>Cocoma DHL Shipping Web Services.</wsdl:documentation>
+      <wsdl:port name="DHL_ServiceSoap" binding="tns:DHL_ServiceSoap">
+         <soap:address location="http://ws.soatrader.com/ecocoma.com/0.1/DHL_Service"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

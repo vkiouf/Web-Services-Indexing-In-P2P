@@ -1,0 +1,957 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://rightaddress.simplicitycrm.com"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://rightaddress.simplicitycrm.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://rightaddress.simplicitycrm.com">
+         <s:element name="Diagnostics">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DiagnosticsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DiagnosticsResult"
+                             type="tns:DiagnosticInformation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="DiagnosticInformation">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ApplicationStartTime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ApplicationInitialisedTime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CurrentTime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DatabaseConnectionValidated" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SessionCount" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastError" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastErrorTime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DataQueueLength" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SessionManagerInitialised" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DataManagerInitialised" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PAFLinkManagerInitialised" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ProcessManagerInitialised" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LibraryClassificationInitialised"
+                          type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RapidKeyingInitialised" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastSessionCleanupTime" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AsHTML" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Login">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LoginResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Logout">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LogoutResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetSessionOptions">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSessionOptionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSessionOptionsResult"
+                             type="tns:SessionOptions"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SessionOptions">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="AddressFormat" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AddressSearch" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MeshBlock" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="XYCoordinates" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StatBoundary" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Diagnostics" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorReason" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SetSessionOptions">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Options" type="tns:SessionOptions"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SetSessionOptionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SetSessionOptionsResult"
+                             type="tns:SessionOptions"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddress">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="KeyCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line6" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line7" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FormatAddressResult" type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Address">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line6" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line7" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DPID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetTypeSuffix" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Suburb" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TownOrCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalDeliveryType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalDeliveryNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RuralDeliveryNumber" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MeshBlock" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Longitude" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Latitude" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MapGrid_X" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MapGrid_Y" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RegionCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RegionName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AreaUnitCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AreaUnitName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TerritoryCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TerritoryName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="FormatFlag" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorReason" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CorrectionCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatementOfAccuracyCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatementOfAccuracyReason" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="FormatAddressWithCredentials">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="KeyCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line6" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line7" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressWithCredentialsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FormatAddressWithCredentialsResult"
+                             type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CanonicalFormatAddress">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="KeyCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line6" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line7" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CanonicalFormatAddressResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CanonicalFormatAddressResult"
+                             type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CanonicalFormatAddressWithCredentials">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="KeyCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line6" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line7" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CanonicalFormatAddressWithCredentialsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CanonicalFormatAddressWithCredentialsResult"
+                             type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddressSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddressSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddressSearchResult"
+                             type="tns:ArrayOfAddressSearchResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAddressSearchResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressSearchResult" nillable="true"
+                          type="tns:AddressSearchResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressSearchResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="RowID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddressSearchWithCredentials">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddressSearchWithCredentialsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddressSearchWithCredentialsResult"
+                             type="tns:ArrayOfAddressSearchResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressByRowID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RowID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressByRowIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FormatAddressByRowIDResult"
+                             type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressByRowIDWithCredentials">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RowID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressByRowIDWithCredentialsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FormatAddressByRowIDWithCredentialsResult"
+                             type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://rightaddress.simplicitycrm.com">
+         <s:element name="Diagnostics">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DiagnosticsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DiagnosticsResult"
+                             type="tns:DiagnosticInformation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="DiagnosticInformation">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ApplicationStartTime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ApplicationInitialisedTime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CurrentTime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DatabaseConnectionValidated" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SessionCount" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastError" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastErrorTime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DataQueueLength" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SessionManagerInitialised" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DataManagerInitialised" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PAFLinkManagerInitialised" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ProcessManagerInitialised" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LibraryClassificationInitialised"
+                          type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RapidKeyingInitialised" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastSessionCleanupTime" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AsHTML" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Login">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LoginResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Logout">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LogoutResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetSessionOptions">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSessionOptionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSessionOptionsResult"
+                             type="tns:SessionOptions"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SessionOptions">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="AddressFormat" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AddressSearch" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MeshBlock" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="XYCoordinates" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StatBoundary" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Diagnostics" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorReason" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SetSessionOptions">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Options" type="tns:SessionOptions"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SetSessionOptionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SetSessionOptionsResult"
+                             type="tns:SessionOptions"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddress">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="KeyCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line6" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line7" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FormatAddressResult" type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Address">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line6" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line7" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DPID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetTypeSuffix" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Suburb" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TownOrCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalDeliveryType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalDeliveryNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RuralDeliveryNumber" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MeshBlock" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Longitude" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Latitude" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MapGrid_X" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MapGrid_Y" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RegionCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RegionName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AreaUnitCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AreaUnitName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TerritoryCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TerritoryName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="FormatFlag" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorReason" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CorrectionCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatementOfAccuracyCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatementOfAccuracyReason" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="FormatAddressWithCredentials">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="KeyCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line6" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line7" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressWithCredentialsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FormatAddressWithCredentialsResult"
+                             type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CanonicalFormatAddress">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="KeyCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line6" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line7" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CanonicalFormatAddressResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CanonicalFormatAddressResult"
+                             type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CanonicalFormatAddressWithCredentials">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="KeyCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line6" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Line7" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CanonicalFormatAddressWithCredentialsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CanonicalFormatAddressWithCredentialsResult"
+                             type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddressSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddressSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddressSearchResult"
+                             type="tns:ArrayOfAddressSearchResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAddressSearchResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressSearchResult" nillable="true"
+                          type="tns:AddressSearchResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressSearchResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="RowID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line4" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Line5" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddressSearchWithCredentials">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddressSearchWithCredentialsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddressSearchWithCredentialsResult"
+                             type="tns:ArrayOfAddressSearchResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressByRowID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RowID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressByRowIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FormatAddressByRowIDResult"
+                             type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressByRowIDWithCredentials">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RowID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FormatAddressByRowIDWithCredentialsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FormatAddressByRowIDWithCredentialsResult"
+                             type="tns:Address"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="DiagnosticsSoapIn">
+      <wsdl:part name="parameters" element="tns:Diagnostics"/>
+  </wsdl:message>
+  <wsdl:message name="DiagnosticsSoapOut">
+      <wsdl:part name="parameters" element="tns:DiagnosticsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LoginSoapIn">
+      <wsdl:part name="parameters" element="tns:Login"/>
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+      <wsdl:part name="parameters" element="tns:LoginResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapIn">
+      <wsdl:part name="parameters" element="tns:Logout"/>
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapOut">
+      <wsdl:part name="parameters" element="tns:LogoutResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSessionOptionsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSessionOptions"/>
+  </wsdl:message>
+  <wsdl:message name="GetSessionOptionsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSessionOptionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SetSessionOptionsSoapIn">
+      <wsdl:part name="parameters" element="tns:SetSessionOptions"/>
+  </wsdl:message>
+  <wsdl:message name="SetSessionOptionsSoapOut">
+      <wsdl:part name="parameters" element="tns:SetSessionOptionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FormatAddressSoapIn">
+      <wsdl:part name="parameters" element="tns:FormatAddress"/>
+  </wsdl:message>
+  <wsdl:message name="FormatAddressSoapOut">
+      <wsdl:part name="parameters" element="tns:FormatAddressResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FormatAddressWithCredentialsSoapIn">
+      <wsdl:part name="parameters" element="tns:FormatAddressWithCredentials"/>
+  </wsdl:message>
+  <wsdl:message name="FormatAddressWithCredentialsSoapOut">
+      <wsdl:part name="parameters" element="tns:FormatAddressWithCredentialsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CanonicalFormatAddressSoapIn">
+      <wsdl:part name="parameters" element="tns:CanonicalFormatAddress"/>
+  </wsdl:message>
+  <wsdl:message name="CanonicalFormatAddressSoapOut">
+      <wsdl:part name="parameters" element="tns:CanonicalFormatAddressResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CanonicalFormatAddressWithCredentialsSoapIn">
+      <wsdl:part name="parameters" element="tns:CanonicalFormatAddressWithCredentials"/>
+  </wsdl:message>
+  <wsdl:message name="CanonicalFormatAddressWithCredentialsSoapOut">
+      <wsdl:part name="parameters" element="tns:CanonicalFormatAddressWithCredentialsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddressSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:AddressSearch"/>
+  </wsdl:message>
+  <wsdl:message name="AddressSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:AddressSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddressSearchWithCredentialsSoapIn">
+      <wsdl:part name="parameters" element="tns:AddressSearchWithCredentials"/>
+  </wsdl:message>
+  <wsdl:message name="AddressSearchWithCredentialsSoapOut">
+      <wsdl:part name="parameters" element="tns:AddressSearchWithCredentialsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FormatAddressByRowIDSoapIn">
+      <wsdl:part name="parameters" element="tns:FormatAddressByRowID"/>
+  </wsdl:message>
+  <wsdl:message name="FormatAddressByRowIDSoapOut">
+      <wsdl:part name="parameters" element="tns:FormatAddressByRowIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FormatAddressByRowIDWithCredentialsSoapIn">
+      <wsdl:part name="parameters" element="tns:FormatAddressByRowIDWithCredentials"/>
+  </wsdl:message>
+  <wsdl:message name="FormatAddressByRowIDWithCredentialsSoapOut">
+      <wsdl:part name="parameters" element="tns:FormatAddressByRowIDWithCredentialsResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="RightAddressSvcSoap" type="tns:RightAddressSvcSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="Diagnostics">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/Diagnostics" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Login">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/Login" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Logout">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/Logout" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSessionOptions">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/GetSessionOptions"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SetSessionOptions">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/SetSessionOptions"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="FormatAddress">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/FormatAddress"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="FormatAddressWithCredentials">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/FormatAddressWithCredentials"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CanonicalFormatAddress">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/CanonicalFormatAddress"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CanonicalFormatAddressWithCredentials">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/CanonicalFormatAddressWithCredentials"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddressSearch">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/AddressSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddressSearchWithCredentials">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/AddressSearchWithCredentials"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="FormatAddressByRowID">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/FormatAddressByRowID"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="FormatAddressByRowIDWithCredentials">
+         <soap:operation soapAction="http://rightaddress.simplicitycrm.com/FormatAddressByRowIDWithCredentials"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="RightAddressSvc">
+      <wsdl:port name="RightAddressSvcSoap" binding="tns:RightAddressSvcSoap">
+         <soap:address location="http://ws.soatrader.com/simplicitycrm.com/0.1/RightAddressSvc"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

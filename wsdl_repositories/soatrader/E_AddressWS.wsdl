@@ -1,0 +1,357 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://medsi.org/analysis"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://medsi.org/analysis">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://medsi.org/analysis">
+         <s:element name="get">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="iiID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getResult" type="tns:E_AddressDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="E_AddressDetail">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PlaceName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetInfo" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="POBox" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Region" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="add">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ioDetail" type="tns:E_AddressDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="addResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="addResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="modify">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ioDetail" type="tns:E_AddressDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="modifyResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="delete">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="iiID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="deleteResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="getCityList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="isFilter" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getCityListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getCityListResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getRegionList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="isFilter" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getRegionListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getRegionListResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getCountryList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="getCountryListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getCountryListResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="E_AddressDetail" nillable="true" type="tns:E_AddressDetail"/>
+         <s:element name="string" nillable="true" type="s:string"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getSoapIn">
+      <wsdl:part name="parameters" element="tns:get"/>
+  </wsdl:message>
+  <wsdl:message name="getSoapOut">
+      <wsdl:part name="parameters" element="tns:getResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addSoapIn">
+      <wsdl:part name="parameters" element="tns:add"/>
+  </wsdl:message>
+  <wsdl:message name="addSoapOut">
+      <wsdl:part name="parameters" element="tns:addResponse"/>
+  </wsdl:message>
+  <wsdl:message name="modifySoapIn">
+      <wsdl:part name="parameters" element="tns:modify"/>
+  </wsdl:message>
+  <wsdl:message name="modifySoapOut">
+      <wsdl:part name="parameters" element="tns:modifyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="deleteSoapIn">
+      <wsdl:part name="parameters" element="tns:delete"/>
+  </wsdl:message>
+  <wsdl:message name="deleteSoapOut">
+      <wsdl:part name="parameters" element="tns:deleteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getCityListSoapIn">
+      <wsdl:part name="parameters" element="tns:getCityList"/>
+  </wsdl:message>
+  <wsdl:message name="getCityListSoapOut">
+      <wsdl:part name="parameters" element="tns:getCityListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getRegionListSoapIn">
+      <wsdl:part name="parameters" element="tns:getRegionList"/>
+  </wsdl:message>
+  <wsdl:message name="getRegionListSoapOut">
+      <wsdl:part name="parameters" element="tns:getRegionListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getCountryListSoapIn">
+      <wsdl:part name="parameters" element="tns:getCountryList"/>
+  </wsdl:message>
+  <wsdl:message name="getCountryListSoapOut">
+      <wsdl:part name="parameters" element="tns:getCountryListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getHttpGetIn">
+      <wsdl:part name="iiID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getHttpGetOut">
+      <wsdl:part name="Body" element="tns:E_AddressDetail"/>
+  </wsdl:message>
+  <wsdl:message name="deleteHttpGetIn">
+      <wsdl:part name="iiID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="deleteHttpGetOut"/>
+  <wsdl:message name="getCityListHttpGetIn">
+      <wsdl:part name="isFilter" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getCityListHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getRegionListHttpGetIn">
+      <wsdl:part name="isFilter" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getRegionListHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getCountryListHttpGetIn"/>
+  <wsdl:message name="getCountryListHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getHttpPostIn">
+      <wsdl:part name="iiID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getHttpPostOut">
+      <wsdl:part name="Body" element="tns:E_AddressDetail"/>
+  </wsdl:message>
+  <wsdl:message name="deleteHttpPostIn">
+      <wsdl:part name="iiID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="deleteHttpPostOut"/>
+  <wsdl:message name="getCityListHttpPostIn">
+      <wsdl:part name="isFilter" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getCityListHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getRegionListHttpPostIn">
+      <wsdl:part name="isFilter" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getRegionListHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getCountryListHttpPostIn"/>
+  <wsdl:message name="getCountryListHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:portType name="E_AddressWSSoap">
+      <wsdl:operation name="get">
+         <wsdl:input message="tns:getSoapIn"/>
+         <wsdl:output message="tns:getSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="add">
+         <wsdl:input message="tns:addSoapIn"/>
+         <wsdl:output message="tns:addSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="modify">
+         <wsdl:input message="tns:modifySoapIn"/>
+         <wsdl:output message="tns:modifySoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="delete">
+         <wsdl:input message="tns:deleteSoapIn"/>
+         <wsdl:output message="tns:deleteSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getCityList">
+         <wsdl:input message="tns:getCityListSoapIn"/>
+         <wsdl:output message="tns:getCityListSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getRegionList">
+         <wsdl:input message="tns:getRegionListSoapIn"/>
+         <wsdl:output message="tns:getRegionListSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getCountryList">
+         <wsdl:input message="tns:getCountryListSoapIn"/>
+         <wsdl:output message="tns:getCountryListSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="E_AddressWSSoap" type="tns:E_AddressWSSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="get">
+         <soap:operation soapAction="http://medsi.org/analysis/get" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="add">
+         <soap:operation soapAction="http://medsi.org/analysis/add" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="modify">
+         <soap:operation soapAction="http://medsi.org/analysis/modify" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="delete">
+         <soap:operation soapAction="http://medsi.org/analysis/delete" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getCityList">
+         <soap:operation soapAction="http://medsi.org/analysis/getCityList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getRegionList">
+         <soap:operation soapAction="http://medsi.org/analysis/getRegionList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getCountryList">
+         <soap:operation soapAction="http://medsi.org/analysis/getCountryList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="E_AddressWS">
+      <wsdl:port name="E_AddressWSSoap" binding="tns:E_AddressWSSoap">
+         <soap:address location="http://ws.soatrader.com/medsi.cz/0.1/E_AddressWS"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

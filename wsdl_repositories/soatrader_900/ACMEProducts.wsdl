@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.ACMEDistribution.com/Products"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.ACMEDistribution.com/Products">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.ACMEDistribution.com/Products">
+         <s:element name="CheckStock">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="productID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CheckStockResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckStockResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetOrders">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetOrdersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetOrdersResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetProductByName">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="productName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetProductByNameResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetProductByNameResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetProductByID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetProductByIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetProductByIDResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetProducts">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetProductsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetProductsResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DataSet" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:element ref="s:schema"/>
+                  <s:any/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="CheckStockSoapIn">
+      <wsdl:part name="parameters" element="tns:CheckStock"/>
+  </wsdl:message>
+  <wsdl:message name="CheckStockSoapOut">
+      <wsdl:part name="parameters" element="tns:CheckStockResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetOrdersSoapIn">
+      <wsdl:part name="parameters" element="tns:GetOrders"/>
+  </wsdl:message>
+  <wsdl:message name="GetOrdersSoapOut">
+      <wsdl:part name="parameters" element="tns:GetOrdersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByNameSoapIn">
+      <wsdl:part name="parameters" element="tns:GetProductByName"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByNameSoapOut">
+      <wsdl:part name="parameters" element="tns:GetProductByNameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByIDSoapIn">
+      <wsdl:part name="parameters" element="tns:GetProductByID"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByIDSoapOut">
+      <wsdl:part name="parameters" element="tns:GetProductByIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetProducts"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetProductsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CheckStockHttpGetIn">
+      <wsdl:part name="productID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="CheckStockHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetOrdersHttpGetIn">
+      <wsdl:part name="CustomerID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetOrdersHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByNameHttpGetIn">
+      <wsdl:part name="productName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByNameHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByIDHttpGetIn">
+      <wsdl:part name="id" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByIDHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductsHttpGetIn"/>
+  <wsdl:message name="GetProductsHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="CheckStockHttpPostIn">
+      <wsdl:part name="productID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="CheckStockHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetOrdersHttpPostIn">
+      <wsdl:part name="CustomerID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetOrdersHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByNameHttpPostIn">
+      <wsdl:part name="productName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByNameHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByIDHttpPostIn">
+      <wsdl:part name="id" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductByIDHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductsHttpPostIn"/>
+  <wsdl:message name="GetProductsHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="ACMEProductsSoap" type="tns:ACMEProductsSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="CheckStock">
+         <soap:operation soapAction="http://www.ACMEDistribution.com/Products/CheckStock"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetOrders">
+         <soap:operation soapAction="http://www.ACMEDistribution.com/Products/GetOrders"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetProductByName">
+         <soap:operation soapAction="http://www.ACMEDistribution.com/Products/GetProductByName"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetProductByID">
+         <soap:operation soapAction="http://www.ACMEDistribution.com/Products/GetProductByID"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetProducts">
+         <soap:operation soapAction="http://www.ACMEDistribution.com/Products/GetProducts"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="ACMEProducts">
+      <wsdl:port name="ACMEProductsSoap" binding="tns:ACMEProductsSoap">
+         <soap:address location="http://ws.soatrader.com/xmlforasp.net/0.1/ACMEProducts"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

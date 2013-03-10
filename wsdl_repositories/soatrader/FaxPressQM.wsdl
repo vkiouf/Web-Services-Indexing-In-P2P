@@ -1,0 +1,3326 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://soap.castelle.com/FaxPressQM/wsdl/"
+             xmlns:wsdlns="http://soap.castelle.com/FaxPressQM/wsdl/"
+             xmlns:typens="http://soap.castelle.com/FaxPressQM/type/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:stk="http://schemas.microsoft.com/soap-toolkit/wsdl-extension"
+             xmlns:dime="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+             xmlns:ref="http://schemas.xmlsoap.org/ws/2002/04/reference/"
+             xmlns:content="http://schemas.xmlsoap.org/ws/2002/04/content-type/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="FaxPressQM"
+             targetNamespace="http://soap.castelle.com/FaxPressQM/wsdl/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+	  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+              targetNamespace="http://soap.castelle.com/FaxPressQM/type/"
+              elementFormDefault="qualified">
+
+			      <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			      <import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+			      <import namespace="http://schemas.xmlsoap.org/ws/2002/04/reference/"/>
+			      <import namespace="http://schemas.xmlsoap.org/ws/2002/04/content-type/"/>
+
+			      <complexType name="ArrayOfint">
+				        <complexContent>
+					          <restriction base="SOAP-ENC:Array">
+						            <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="int[]"/>
+					          </restriction>
+				        </complexContent>
+			      </complexType>
+
+			      <complexType name="ArrayOfstring">
+				        <complexContent>
+					          <restriction base="SOAP-ENC:Array">
+						            <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="string[]"/>
+					          </restriction>
+				        </complexContent>
+			      </complexType>
+
+			      <complexType name="ArrayOfshort">
+				        <complexContent>
+					          <restriction base="SOAP-ENC:Array">
+						            <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="short[]"/>
+					          </restriction>
+				        </complexContent>
+			      </complexType>
+
+			      <complexType name="timeDateDef">
+				        <sequence>
+					          <element name="minute" type="short"/>
+					          <element name="hour" type="short"/>
+					          <element name="day" type="short"/>
+					          <element name="month" type="short"/>
+					          <element name="year" type="short"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="cpiIncomeDefWs">
+				        <sequence>
+					          <element name="jobID" type="int"/>
+					          <element name="jobStat" type="short"/>
+					          <element name="fileType" type="short"/>
+					          <element name="resolution" type="short"/>
+					          <element name="received" type="typens:timeDateDef"/>
+					          <element name="isRouted" type="short"/>
+					          <element name="Npages" type="short"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="cpiPrintStreamDefWs">
+				        <sequence>
+					          <element name="port" type="short"/>
+					          <element name="paper_size" type="short"/>
+					          <element name="copies" type="short"/>
+					          <element name="fax_resolution" type="short"/>
+					          <element name="printer_type" type="short"/>
+					          <element name="scale" type="short"/>
+					          <element name="queue_name" type="string"/>
+					          <element name="server_name" type="string"/>
+					          <element name="login_name" type="string"/>
+					          <element name="login_password" type="string"/>
+					          <element name="ip_address" type="base64Binary"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="cpiOutgoDefExWs">
+				        <sequence>
+					          <element name="jobID" type="int"/>
+					          <element name="jobStat" type="short"/>
+					          <element name="fileType" type="short"/>
+					          <element name="resolution" type="short"/>
+					          <element name="Nretry" type="short"/>
+					          <element name="retryInterval" type="short"/>
+					          <element name="defer" type="short"/>
+					          <element name="scheduled" type="typens:timeDateDef"/>
+					          <element name="submitted" type="typens:timeDateDef"/>
+					          <element name="phone" type="string"/>
+					          <element name="recipient" type="string"/>
+					          <element name="sender" type="string"/>
+					          <element name="Comment" type="string"/>
+					          <element name="company" type="string"/>
+					          <element name="retryLimit" type="short"/>
+					          <element name="failDesc" type="string"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="ArrayOfcpiOutgoDefExWs">
+				        <complexContent>
+					          <restriction base="SOAP-ENC:Array">
+						            <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="typens:cpiOutgoDefExWs[]"/>
+					          </restriction>
+				        </complexContent>
+			      </complexType>
+
+			      <complexType name="cpiFaxCommonParamDefWs">
+				        <sequence>
+					          <element name="sender" type="string"/>
+					          <element name="Comment" type="string"/>
+					          <element name="coverMsg" type="string"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="cpiDestinationParamDefExWs">
+				        <sequence>
+					          <element name="ds_defer" type="short"/>
+					          <element name="defer" type="short"/>
+					          <element name="target_timdat" type="typens:timeDateDef"/>
+					          <element name="ds_fax_resolution" type="short"/>
+					          <element name="fax_resolution" type="short"/>
+					          <element name="ds_retry_count" type="short"/>
+					          <element name="retry_count" type="short"/>
+					          <element name="ds_retry_interval" type="short"/>
+					          <element name="retry_interval" type="short"/>
+					          <element name="ds_cover_page" type="short"/>
+					          <element name="cover_page" type="short"/>
+					          <element name="szCoverPageName" type="string"/>
+					          <element name="ds_baud_rate" type="short"/>
+					          <element name="baud_rate" type="short"/>
+					          <element name="ds_polling_type" type="short"/>
+					          <element name="polling_type" type="short"/>
+					          <element name="ds_bill_back_code" type="short"/>
+					          <element name="bill_back_code" type="string"/>
+					          <element name="bill_back_matter" type="string"/>
+					          <element name="ds_ecm_trans" type="short"/>
+					          <element name="ecm_trans" type="short"/>
+					          <element name="enforce_bill_back" type="short"/>
+					          <element name="print_option" type="short"/>
+					          <element name="uLineEnable" type="short"/>
+					          <element name="Priority" type="short"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="ArrayOfcpiDestinationParamDefExWs">
+				        <complexContent>
+					          <restriction base="SOAP-ENC:Array">
+						            <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="typens:cpiDestinationParamDefExWs[]"/>
+					          </restriction>
+				        </complexContent>
+			      </complexType>
+
+			      <complexType name="cpiNamePhoneDefExWs">
+				        <sequence>
+					          <element name="name" type="string"/>
+					          <element name="name2" type="string"/>
+					          <element name="name3" type="string"/>
+					          <element name="name4" type="string"/>
+					          <element name="name5" type="string"/>
+					          <element name="faxPhone" type="string"/>
+					          <element name="company" type="string"/>
+					          <element name="settingsIndex" type="short"/>
+					          <element name="BillBackCode" type="string"/>
+					          <element name="voicePhone" type="string"/>
+					          <element name="email" type="string"/>
+					          <element name="emailPrecedence" type="int"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="ArrayOfcpiNamePhoneDefExWs">
+				        <complexContent>
+					          <restriction base="SOAP-ENC:Array">
+						            <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="typens:cpiNamePhoneDefExWs[]"/>
+					          </restriction>
+				        </complexContent>
+			      </complexType>
+
+			      <complexType name="cpiNoticeDefExtWs">
+				        <sequence>
+					          <element name="noteID" type="int"/>
+					          <element name="jobID" type="int"/>
+					          <element name="completed" type="typens:timeDateDef"/>
+					          <element name="caption" type="string"/>
+					          <element name="srcName" type="string"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="ArrayOfcpiNoticeDefExtWs">
+				        <complexContent>
+					          <restriction base="SOAP-ENC:Array">
+						            <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="typens:cpiNoticeDefExtWs[]"/>
+					          </restriction>
+				        </complexContent>
+			      </complexType>
+
+			      <complexType name="cpiAutoCleanupInfoDefWs">
+				        <sequence>
+					          <element name="nMode" type="short"/>
+					          <element name="nDaysOld" type="short"/>
+					          <element name="nMonthsOld" type="short"/>
+					          <element name="nStartHour" type="short"/>
+					          <element name="nStartMinute" type="short"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="CpiServerFaxLineDefExWs">
+				        <sequence>
+					          <element name="iLineDirection" type="short"/>
+					          <element name="iDialingType" type="short"/>
+					          <element name="iRoutingType" type="short"/>
+					          <element name="szLocalFaxNumber" type="string"/>
+					          <element name="szLocalPbxPredialNumber" type="string"/>
+					          <element name="szLDPbxPredialNumber" type="string"/>
+					          <element name="szIntlPbxPredialNumber" type="string"/>
+					          <element name="szRemoteID" type="string"/>
+					          <element name="szImprintID" type="string"/>
+					          <element name="szAssignedUser" type="string"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="AlertRecWs">
+				        <sequence>
+					          <element name="SessionID" type="int"/>
+					          <element name="AlertType" type="int"/>
+					          <element name="NoticeInfo" type="typens:cpiNoticeDefExtWs"/>
+					          <element name="NoticeMessage" type="string"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="InQueueRecWs">
+				        <sequence>
+					          <element name="jobID" type="int"/>
+					          <element name="OriginatingJobID" type="int"/>
+					          <element name="UserID" type="int"/>
+					          <element name="Status" type="int"/>
+					          <element name="Channel" type="short"/>
+					          <element name="RecdTime" type="int"/>
+					          <element name="RTI" type="string"/>
+					          <element name="resolution" type="short"/>
+					          <element name="Duration" type="short"/>
+					          <element name="BaudRate" type="int"/>
+					          <element name="LineNoise" type="short"/>
+					          <element name="SigStrength" type="short"/>
+					          <element name="SigQuality" type="short"/>
+					          <element name="BaudCapable" type="int"/>
+					          <element name="ECMCapable" type="int"/>
+					          <element name="ECMUsed" type="int"/>
+					          <element name="MRCapable" type="int"/>
+					          <element name="MRUsed" type="int"/>
+					          <element name="G4Capable" type="int"/>
+					          <element name="G4Used" type="int"/>
+					          <element name="ErrorCode" type="short"/>
+					          <element name="PagesRecd" type="short"/>
+					          <element name="FilePath" type="string"/>
+					          <element name="UserField" type="string"/>
+					          <element name="Flags" type="int"/>
+					          <element name="Comment" type="string"/>
+					          <element name="Archived" type="int"/>
+					          <element name="Reserved" type="typens:ArrayOfint"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="OutQueueRecWs">
+				        <sequence>
+					          <element name="jobID" type="int"/>
+					          <element name="OriginatingJobID" type="int"/>
+					          <element name="UserID" type="int"/>
+					          <element name="Status" type="int"/>
+					          <element name="PostConvStatus" type="int"/>
+					          <element name="Priority" type="int"/>
+					          <element name="JobGroupID" type="int"/>
+					          <element name="CoverInfo" type="string"/>
+					          <element name="CoverPath" type="string"/>
+					          <element name="FilePath" type="string"/>
+					          <element name="TransType" type="int"/>
+					          <element name="RTI" type="string"/>
+					          <element name="Imprint" type="string"/>
+					          <element name="Npages" type="short"/>
+					          <element name="CompletedAttempts" type="int"/>
+					          <element name="CDTimeout" type="short"/>
+					          <element name="SubmitTime" type="int"/>
+					          <element name="NextAttemptTime" type="int"/>
+					          <element name="CompletedTime" type="int"/>
+					          <element name="SentLineNumber" type="short"/>
+					          <element name="Duration" type="short"/>
+					          <element name="PagesSent" type="short"/>
+					          <element name="ReceivedRTI" type="string"/>
+					          <element name="ErrorCode" type="short"/>
+					          <element name="LineNoise" type="short"/>
+					          <element name="SignalQuality" type="short"/>
+					          <element name="SignalStrength" type="short"/>
+					          <element name="BaudCapable" type="int"/>
+					          <element name="SentBaudRate" type="int"/>
+					          <element name="ECMCapable" type="int"/>
+					          <element name="ECMUsed" type="int"/>
+					          <element name="MRCapable" type="int"/>
+					          <element name="MRUsed" type="int"/>
+					          <element name="G4Capable" type="int"/>
+					          <element name="G4Used" type="int"/>
+					          <element name="ReceivedNSF" type="string"/>
+					          <element name="sender" type="string"/>
+					          <element name="recipient" type="string"/>
+					          <element name="Comment" type="string"/>
+					          <element name="company" type="string"/>
+					          <element name="StartTime" type="int"/>
+					          <element name="FaxResolution" type="int"/>
+					          <element name="TransmissionAttempts" type="int"/>
+					          <element name="RetryDelay" type="int"/>
+					          <element name="EnforceBillBack" type="int"/>
+					          <element name="BillBackCode" type="string"/>
+					          <element name="BillBackMatter" type="string"/>
+					          <element name="PrintOutFax" type="int"/>
+					          <element name="UseLineNumber" type="short"/>
+					          <element name="UseBaudRate" type="int"/>
+					          <element name="AllowableHours" type="base64Binary"/>
+					          <element name="FaxNumber" type="string"/>
+					          <element name="LogFaxNumber" type="string"/>
+					          <element name="DialedFaxNumber" type="string"/>
+					          <element name="CanonicalFaxNumber" type="string"/>
+					          <element name="CIFVersion" type="int"/>
+					          <element name="CIFTask" type="short"/>
+					          <element name="CIFStatus" type="short"/>
+					          <element name="ReferenceJobID" type="int"/>
+					          <element name="IPAddress" type="string"/>
+					          <element name="JCFPath" type="string"/>
+					          <element name="QueueRecNumber" type="short"/>
+					          <element name="InternalQueueRecNumber" type="short"/>
+					          <element name="Flags" type="int"/>
+					          <element name="Archived" type="int"/>
+					          <element name="CallType" type="int"/>
+					          <element name="Reserved" type="typens:ArrayOfint"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="LineStatWs">
+				        <sequence>
+					          <element name="line_number" type="int"/>
+					          <element name="Status" type="int"/>
+					          <element name="active_jobID" type="int"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="ArrayOfLineStatWs">
+				        <complexContent>
+					          <restriction base="SOAP-ENC:Array">
+						            <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="typens:LineStatWs[]"/>
+					          </restriction>
+				        </complexContent>
+			      </complexType>
+
+			      <complexType name="NoticeRecWs">
+				        <sequence>
+					          <element name="noteID" type="int"/>
+					          <element name="jobID" type="int"/>
+					          <element name="CompletedTime" type="int"/>
+					          <element name="NoteType" type="int"/>
+					          <element name="UserID" type="int"/>
+					          <element name="Param0" type="string"/>
+					          <element name="Param1" type="string"/>
+					          <element name="Param2" type="string"/>
+					          <element name="Param3" type="string"/>
+					          <element name="Param4" type="string"/>
+					          <element name="Param5" type="string"/>
+					          <element name="Param6" type="string"/>
+					          <element name="Param7" type="string"/>
+					          <element name="Param8" type="string"/>
+					          <element name="Param9" type="string"/>
+					          <element name="SourceName" type="string"/>
+					          <element name="Flags" type="int"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="cpiPrintDefExWs">
+				        <sequence>
+					          <element name="jobID" type="int"/>
+					          <element name="PrintJobID" type="int"/>
+					          <element name="PrintJobStatus" type="int"/>
+					          <element name="submitted" type="typens:timeDateDef"/>
+					          <element name="Position" type="int"/>
+					          <element name="TotalPages" type="int"/>
+					          <element name="JobSize" type="int"/>
+					          <element name="User" type="string"/>
+					          <element name="FileName" type="string"/>
+				        </sequence>
+			      </complexType>
+
+			      <complexType name="ArrayOfcpiPrintDefExWs">
+				        <complexContent>
+					          <restriction base="SOAP-ENC:Array">
+						            <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="typens:cpiPrintDefExWs[]"/>
+					          </restriction>
+				        </complexContent>
+			      </complexType>
+
+		    </schema>
+	  </types>
+
+	  <message name="wsQMClient.QMOpenSession">
+		    <part name="UserName" type="xsd:string"/>
+		    <part name="Password" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMOpenSessionResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpSession" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMCloseSession">
+		    <part name="Session" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMCloseSessionResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingCount">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="Filter" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingCountResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="lpMinId" type="xsd:int"/>
+		    <part name="lpMaxId" type="xsd:int"/>
+		    <part name="lpChanges" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingList">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="StartID" type="xsd:int"/>
+		    <part name="Shift" type="xsd:int"/>
+		    <part name="amountIn" type="xsd:int"/>
+		    <part name="nIsPersonal" type="xsd:int"/>
+		    <part name="Filter" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingListResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpAmountOut" type="xsd:int"/>
+		    <part name="lpJobIDs" type="typens:ArrayOfint"/>
+		    <part name="lpComments" type="typens:ArrayOfstring"/>
+		    <part name="lpFlags" type="typens:ArrayOfshort"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingInfo">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="lpIncomeWs" type="typens:cpiIncomeDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingInfoResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpIncomeWs" type="typens:cpiIncomeDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingComment">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="nIsPersonal" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingCommentResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpComment" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeleteIncoming">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="nIsPersonal" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeleteIncomingResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeleteIncomingEx">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="UserName" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeleteIncomingExResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPrintIncoming">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="printStreamWs" type="typens:cpiPrintStreamDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPrintIncomingResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMRouteIncoming">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="incomeWs" type="typens:cpiIncomeDefWs"/>
+		    <part name="userList" type="typens:ArrayOfstring"/>
+		    <part name="nUsers" type="xsd:int"/>
+		    <part name="nDoConfirm" type="xsd:int"/>
+		    <part name="Comment" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMRouteIncomingResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetIncomingComment">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="nIsPersonal" type="xsd:int"/>
+		    <part name="Comment" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetIncomingCommentResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetIncomingFlags">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="lJobID" type="xsd:int"/>
+		    <part name="nIsPersonal" type="xsd:int"/>
+		    <part name="nFlags" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetIncomingFlagsResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingList">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="CountIn" type="xsd:int"/>
+		    <part name="Filter" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingListResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="lpJobIDs" type="typens:ArrayOfint"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingInfo">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="lpOutgo" type="typens:cpiOutgoDefExWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingInfoResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpOutgo" type="typens:cpiOutgoDefExWs"/>
+		    <part name="Npages" type="xsd:int"/>
+		    <part name="bCoverFlag" type="xsd:int"/>
+		    <part name="lpMasterJobID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingInfoEx">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="CountIn" type="xsd:int"/>
+		    <part name="lpJobIDs" type="typens:ArrayOfint"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingInfoExResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="lpJobIDs" type="typens:ArrayOfint"/>
+		    <part name="lpOutgo" type="typens:ArrayOfcpiOutgoDefExWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeleteOutgoing">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeleteOutgoingResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMHoldJob">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMHoldJobResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMResequenceJob">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="nDelta" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMResequenceJobResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMTransmitFiles">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="faxCmnParamWs" type="typens:cpiFaxCommonParamDefWs"/>
+		    <part name="CountIn" type="xsd:int"/>
+		    <part name="Files" type="typens:ArrayOfstring"/>
+	  </message>
+
+	  <message name="wsQMClient.QMTransmitFilesResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpFailCount" type="xsd:int"/>
+		    <part name="lpFailedFiles" type="typens:ArrayOfstring"/>
+		    <part name="lpJobIDs" type="typens:ArrayOfint"/>
+	  </message>
+
+	  <message name="wsQMClient.QMTransmitJob">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="prefJobID" type="xsd:int"/>
+		    <part name="faxCmnParamWs" type="typens:cpiFaxCommonParamDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMTransmitJobResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpJobIDs" type="typens:ArrayOfint"/>
+	  </message>
+
+	  <message name="wsQMClient.QMUnHoldJob">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMUnHoldJobResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPhoneNumbers">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="cdpWs" type="typens:ArrayOfcpiDestinationParamDefExWs"/>
+		    <part name="nDest" type="xsd:short"/>
+		    <part name="cnpWs" type="typens:ArrayOfcpiNamePhoneDefExWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPhoneNumbersResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpUnknown" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeleteNotice">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="noteID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeleteNoticeResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetNoticeList">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="CountIn" type="xsd:int"/>
+		    <part name="Filter" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetNoticeListResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="lpNoteList" type="typens:ArrayOfint"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetNoticeText">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="noteID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetNoticeTextResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpNoticeText" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetNoticeInfo">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="noteID" type="xsd:int"/>
+		    <part name="Skip" type="xsd:int"/>
+		    <part name="CountIn" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetNoticeInfoResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="lpNotice" type="typens:ArrayOfcpiNoticeDefExtWs"/>
+		    <part name="lpFlags" type="typens:ArrayOfshort"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPrintNotice">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="noteID" type="xsd:int"/>
+		    <part name="printStreamWs" type="typens:cpiPrintStreamDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPrintNoticeResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetAlert">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="UserName" type="xsd:string"/>
+		    <part name="AlertType" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetAlertResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetAlertMsg">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="UserName" type="xsd:string"/>
+		    <part name="lpAlertType" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetAlertMsgResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpAlertType" type="xsd:int"/>
+		    <part name="lpJobID" type="xsd:int"/>
+		    <part name="lpAlertMsg" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetArchiveInfo">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="nDaysOld" type="xsd:int"/>
+		    <part name="lType" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetArchiveInfoResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetArchivedItemList">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="CountIn" type="xsd:int"/>
+		    <part name="type" type="xsd:int"/>
+		    <part name="Filter" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetArchivedItemListResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="lpItemIDs" type="typens:ArrayOfint"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeleteArchivedItem">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="itemID" type="xsd:int"/>
+		    <part name="type" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeleteArchivedItemResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetAutoCleanupInfo">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="lpAutoCleanupInfoWs" type="typens:cpiAutoCleanupInfoDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetAutoCleanupInfoResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpAutoCleanupInfoWs" type="typens:cpiAutoCleanupInfoDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetAutoCleanupInfo">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="autoCleanupInfo" type="typens:cpiAutoCleanupInfoDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetAutoCleanupInfoResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMReclaimUnroutedFaxes">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="nDaysOld" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMReclaimUnroutedFaxesResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMReclaimLogStorage">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="nDaysOld" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMReclaimLogStorageResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetArchivedItemListCount">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="type" type="xsd:int"/>
+		    <part name="Filter" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetArchivedItemListCountResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPing">
+		    <part name="Session" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPingResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetFaxLineInfo">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="nLine" type="xsd:int"/>
+		    <part name="lpFaxLineInfoWs" type="typens:CpiServerFaxLineDefExWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetFaxLineInfoResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpFaxLineInfoWs" type="typens:CpiServerFaxLineDefExWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetFaxLineInfo">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="nLine" type="xsd:int"/>
+		    <part name="faxLineInfo" type="typens:CpiServerFaxLineDefExWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetFaxLineInfoResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMReclaimStorage">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="Days" type="xsd:int"/>
+		    <part name="Flags" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMReclaimStorageResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.WaitForAlert">
+		    <part name="lpRecWs" type="typens:AlertRecWs"/>
+		    <part name="Timeout" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.WaitForAlertResponse">
+		    <part name="ret" type="xsd:int"/>
+		    <part name="lpRecWs" type="typens:AlertRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMApproveJob">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="CountIn" type="xsd:int"/>
+		    <part name="JobIDs" type="typens:ArrayOfint"/>
+		    <part name="Approve" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMApproveJobResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetIncomingJobArchiveBit">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="ArchiveBit" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetIncomingJobArchiveBitResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetOutgoingJobArchiveBit">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="ArchiveBit" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetOutgoingJobArchiveBitResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMChangePhoneNumber">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="PhoneNumber" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMChangePhoneNumberResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetJobPriority">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetJobPriorityResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpPriority" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetJobPriority">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="NewPriority" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetJobPriorityResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPrintOutgoing">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="printStreamWs" type="typens:cpiPrintStreamDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPrintOutgoingResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingLogCount">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="Filter" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingLogCountResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="lpMinId" type="xsd:int"/>
+		    <part name="lpMaxId" type="xsd:int"/>
+		    <part name="lpChanges" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingLogList">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="StartID" type="xsd:int"/>
+		    <part name="Shift" type="xsd:int"/>
+		    <part name="CountIn" type="xsd:int"/>
+		    <part name="nIsPersonal" type="xsd:int"/>
+		    <part name="Filter" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingLogListResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="lpJobIDs" type="typens:ArrayOfint"/>
+		    <part name="lpComments" type="typens:ArrayOfstring"/>
+		    <part name="lpFlags" type="typens:ArrayOfshort"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingLogInfo">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="incomingInfoWs" type="typens:cpiIncomeDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingLogInfoResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="incomingInfoWs" type="typens:cpiIncomeDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingLogList">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="CountIn" type="xsd:int"/>
+		    <part name="Filter" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingLogListResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="lpJobIDs" type="typens:ArrayOfint"/>
+		    <part name="lpComplAtmps" type="typens:ArrayOfshort"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingLogInfo">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="ComplAtmp" type="xsd:int"/>
+		    <part name="lpOutgoingInfoWs" type="typens:cpiOutgoDefExWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingLogInfoResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpOutgoingInfoWs" type="typens:cpiOutgoDefExWs"/>
+		    <part name="lpPages" type="xsd:int"/>
+		    <part name="lpCoverFlag" type="xsd:int"/>
+		    <part name="lpMasterJobID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetIncomingLogArchiveBit">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="ArchiveBit" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetIncomingLogArchiveBitResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetOutgoingLogArchiveBit">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="ComplAtmp" type="xsd:int"/>
+		    <part name="ArchiveBit" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSetOutgoingLogArchiveBitResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingQueueRec">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="lpOutRecWs" type="typens:InQueueRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingQueueRecResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpOutRecWs" type="typens:InQueueRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingLogRec">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="lpRecWs" type="typens:InQueueRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingLogRecResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpRecWs" type="typens:InQueueRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingQueueRec">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="lpOutRecWs" type="typens:OutQueueRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingQueueRecResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpOutRecWs" type="typens:OutQueueRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingLogRec">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="ComplAtmp" type="xsd:int"/>
+		    <part name="lpOutRecWs" type="typens:OutQueueRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingLogRecResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpOutRecWs" type="typens:OutQueueRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMBackup">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="Path" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMBackupResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingLogRecEx">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="ComplAtmp" type="xsd:int"/>
+		    <part name="lpOutRecWs" type="typens:OutQueueRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingLogRecExResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpOutRecWs" type="typens:OutQueueRecWs"/>
+		    <part name="lpUserName" type="xsd:string"/>
+		    <part name="lpErrorMsg" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingLogRecEx">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+		    <part name="lpInRecWs" type="typens:InQueueRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetIncomingLogRecExResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpInRecWs" type="typens:InQueueRecWs"/>
+		    <part name="lpUserName" type="xsd:string"/>
+		    <part name="lpErrorMsg" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMReindex">
+		    <part name="Session" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMReindexResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetLineStatus">
+		    <part name="Session" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetLineStatusResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpLineCount" type="xsd:int"/>
+		    <part name="lpStat" type="typens:ArrayOfLineStatWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMOpenImpersonatedSession">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="impersonatedUserName" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMOpenImpersonatedSessionResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpImpersonatedSessionID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetNoticeListByFlags">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="UserName" type="xsd:string"/>
+		    <part name="CountIn" type="xsd:int"/>
+		    <part name="Flags" type="xsd:int"/>
+		    <part name="Negate" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetNoticeListByFlagsResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="lpNoticeIDs" type="typens:ArrayOfint"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetNoticeRec">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="noteID" type="xsd:int"/>
+		    <part name="lpNoticeRecWs" type="typens:NoticeRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetNoticeRecResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpNoticeRecWs" type="typens:NoticeRecWs"/>
+		    <part name="lpUserName" type="xsd:string"/>
+		    <part name="lpNoticeText" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMUpdateNoticeRec">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="NoticeRec" type="typens:NoticeRecWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMUpdateNoticeRecResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMTransmitConfig">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="EmailAddress" type="xsd:string"/>
+		    <part name="Message" type="xsd:string"/>
+	  </message>
+
+	  <message name="wsQMClient.QMTransmitConfigResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPrintFile">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="FilePath" type="xsd:string"/>
+		    <part name="psdWs" type="typens:cpiPrintStreamDefWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPrintFileResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetSessionCount">
+		    <part name="Session" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetSessionCountResponse">
+		    <part name="lpCount" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetSessionUsers">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="CountIn" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetSessionUsersResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="userList" type="typens:ArrayOfstring"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetPrintJobs">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="QueueName" type="xsd:string"/>
+		    <part name="lpCount" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetPrintJobsResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+		    <part name="sar" type="typens:ArrayOfcpiPrintDefExWs"/>
+	  </message>
+
+	  <message name="wsQMClient.QMHoldPrintJob">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="QueueName" type="xsd:string"/>
+		    <part name="PrintJobID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMHoldPrintJobResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMUnholdPrintJob">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="QueueName" type="xsd:string"/>
+		    <part name="PrintJobID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMUnholdPrintJobResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeletePrintJob">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="QueueName" type="xsd:string"/>
+		    <part name="PrintJobID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDeletePrintJobResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSequencePrintJob">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="QueueName" type="xsd:string"/>
+		    <part name="PrintJobID" type="xsd:int"/>
+		    <part name="Change" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSequencePrintJobResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPutFile">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="FileName" type="xsd:string"/>
+		    <part name="InputData" type="xsd:base64Binary"/>
+		    <part name="InputLength" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPutFileResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPutMultiple">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="fileNames" type="typens:ArrayOfstring"/>
+	  </message>
+
+	  <message name="wsQMClient.QMPutMultipleResponse">
+		    <part name="ret" type="xsd:short"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSubmitFax">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="fileNames" type="typens:ArrayOfstring"/>
+		    <part name="cdpWs" type="typens:ArrayOfcpiDestinationParamDefExWs"/>
+		    <part name="nDest" type="xsd:short"/>
+		    <part name="cnpWs" type="typens:ArrayOfcpiNamePhoneDefExWs"/>
+		    <part name="faxCmnParamWs" type="typens:cpiFaxCommonParamDefWs"/>
+		    <part name="CountIn" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMSubmitFaxResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpUnknown" type="xsd:short"/>
+		    <part name="lpFailCount" type="xsd:int"/>
+		    <part name="FailedFiles" type="typens:ArrayOfstring"/>
+		    <part name="lpJobIDs" type="typens:ArrayOfint"/>
+		    <part name="bid" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingCount">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="Filter" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMGetOutgoingCountResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="lpCount" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDownloadIncomingFax">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDownloadIncomingFaxResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="FileName" type="xsd:string"/>
+		    <part name="OutputData" type="xsd:base64Binary"/>
+		    <part name="OutputLength" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDownloadIncomingFaxes">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="lpJobIDs" type="typens:ArrayOfint"/>
+		    <part name="numJobs" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDownloadIncomingFaxesResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="fileNames" type="typens:ArrayOfstring"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDownloadOutgoingFax">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="jobID" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDownloadOutgoingFaxResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="FileName" type="xsd:string"/>
+		    <part name="OutputData" type="xsd:base64Binary"/>
+		    <part name="OutputLength" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDownloadOutgoingFaxes">
+		    <part name="Session" type="xsd:int"/>
+		    <part name="lpJobIDs" type="typens:ArrayOfint"/>
+		    <part name="numJobs" type="xsd:int"/>
+	  </message>
+
+	  <message name="wsQMClient.QMDownloadOutgoingFaxesResponse">
+		    <part name="ret" type="xsd:short"/>
+		    <part name="fileNames" type="typens:ArrayOfstring"/>
+	  </message>
+
+	  <portType name="wsQMClientSoapPort">
+
+		    <operation name="QMOpenSession" parameterOrder="ret UserName Password lpSession">
+			      <input message="wsdlns:wsQMClient.QMOpenSession"/>
+			      <output message="wsdlns:wsQMClient.QMOpenSessionResponse"/>
+		    </operation>
+
+		    <operation name="QMCloseSession" parameterOrder="ret Session">
+			      <input message="wsdlns:wsQMClient.QMCloseSession"/>
+			      <output message="wsdlns:wsQMClient.QMCloseSessionResponse"/>
+		    </operation>
+
+		    <operation name="QMGetIncomingCount"
+                 parameterOrder="ret Session lpCount lpMinId lpMaxId lpChanges Filter">
+			      <input message="wsdlns:wsQMClient.QMGetIncomingCount"/>
+			      <output message="wsdlns:wsQMClient.QMGetIncomingCountResponse"/>
+		    </operation>
+
+		    <operation name="QMGetIncomingList"
+                 parameterOrder="ret Session StartID Shift amountIn lpAmountOut lpJobIDs lpComments lpFlags nIsPersonal Filter">
+			      <input message="wsdlns:wsQMClient.QMGetIncomingList"/>
+			      <output message="wsdlns:wsQMClient.QMGetIncomingListResponse"/>
+		    </operation>
+
+		    <operation name="QMGetIncomingInfo" parameterOrder="ret Session jobID lpIncomeWs">
+			      <input message="wsdlns:wsQMClient.QMGetIncomingInfo"/>
+			      <output message="wsdlns:wsQMClient.QMGetIncomingInfoResponse"/>
+		    </operation>
+
+		    <operation name="QMGetIncomingComment"
+                 parameterOrder="ret Session jobID nIsPersonal lpComment">
+			      <input message="wsdlns:wsQMClient.QMGetIncomingComment"/>
+			      <output message="wsdlns:wsQMClient.QMGetIncomingCommentResponse"/>
+		    </operation>
+
+		    <operation name="QMDeleteIncoming" parameterOrder="ret Session jobID nIsPersonal">
+			      <input message="wsdlns:wsQMClient.QMDeleteIncoming"/>
+			      <output message="wsdlns:wsQMClient.QMDeleteIncomingResponse"/>
+		    </operation>
+
+		    <operation name="QMDeleteIncomingEx" parameterOrder="ret Session jobID UserName">
+			      <input message="wsdlns:wsQMClient.QMDeleteIncomingEx"/>
+			      <output message="wsdlns:wsQMClient.QMDeleteIncomingExResponse"/>
+		    </operation>
+
+		    <operation name="QMPrintIncoming" parameterOrder="ret Session jobID printStreamWs">
+			      <input message="wsdlns:wsQMClient.QMPrintIncoming"/>
+			      <output message="wsdlns:wsQMClient.QMPrintIncomingResponse"/>
+		    </operation>
+
+		    <operation name="QMRouteIncoming"
+                 parameterOrder="ret Session jobID incomeWs userList nUsers nDoConfirm Comment">
+			      <input message="wsdlns:wsQMClient.QMRouteIncoming"/>
+			      <output message="wsdlns:wsQMClient.QMRouteIncomingResponse"/>
+		    </operation>
+
+		    <operation name="QMSetIncomingComment"
+                 parameterOrder="ret Session jobID nIsPersonal Comment">
+			      <input message="wsdlns:wsQMClient.QMSetIncomingComment"/>
+			      <output message="wsdlns:wsQMClient.QMSetIncomingCommentResponse"/>
+		    </operation>
+
+		    <operation name="QMSetIncomingFlags"
+                 parameterOrder="ret Session lJobID nIsPersonal nFlags">
+			      <input message="wsdlns:wsQMClient.QMSetIncomingFlags"/>
+			      <output message="wsdlns:wsQMClient.QMSetIncomingFlagsResponse"/>
+		    </operation>
+
+		    <operation name="QMGetOutgoingList"
+                 parameterOrder="ret Session CountIn lpCount lpJobIDs Filter">
+			      <input message="wsdlns:wsQMClient.QMGetOutgoingList"/>
+			      <output message="wsdlns:wsQMClient.QMGetOutgoingListResponse"/>
+		    </operation>
+
+		    <operation name="QMGetOutgoingInfo"
+                 parameterOrder="ret Session jobID lpOutgo Npages bCoverFlag lpMasterJobID">
+			      <input message="wsdlns:wsQMClient.QMGetOutgoingInfo"/>
+			      <output message="wsdlns:wsQMClient.QMGetOutgoingInfoResponse"/>
+		    </operation>
+
+		    <operation name="QMGetOutgoingInfoEx"
+                 parameterOrder="ret Session CountIn lpCount lpJobIDs lpOutgo">
+			      <input message="wsdlns:wsQMClient.QMGetOutgoingInfoEx"/>
+			      <output message="wsdlns:wsQMClient.QMGetOutgoingInfoExResponse"/>
+		    </operation>
+
+		    <operation name="QMDeleteOutgoing" parameterOrder="ret Session jobID">
+			      <input message="wsdlns:wsQMClient.QMDeleteOutgoing"/>
+			      <output message="wsdlns:wsQMClient.QMDeleteOutgoingResponse"/>
+		    </operation>
+
+		    <operation name="QMHoldJob" parameterOrder="ret Session jobID">
+			      <input message="wsdlns:wsQMClient.QMHoldJob"/>
+			      <output message="wsdlns:wsQMClient.QMHoldJobResponse"/>
+		    </operation>
+
+		    <operation name="QMResequenceJob" parameterOrder="ret Session jobID nDelta">
+			      <input message="wsdlns:wsQMClient.QMResequenceJob"/>
+			      <output message="wsdlns:wsQMClient.QMResequenceJobResponse"/>
+		    </operation>
+
+		    <operation name="QMTransmitFiles"
+                 parameterOrder="ret Session faxCmnParamWs CountIn Files lpFailCount lpFailedFiles lpJobIDs">
+			      <input message="wsdlns:wsQMClient.QMTransmitFiles"/>
+			      <output message="wsdlns:wsQMClient.QMTransmitFilesResponse"/>
+		    </operation>
+
+		    <operation name="QMTransmitJob"
+                 parameterOrder="ret Session prefJobID faxCmnParamWs lpJobIDs">
+			      <input message="wsdlns:wsQMClient.QMTransmitJob"/>
+			      <output message="wsdlns:wsQMClient.QMTransmitJobResponse"/>
+		    </operation>
+
+		    <operation name="QMUnHoldJob" parameterOrder="ret Session jobID">
+			      <input message="wsdlns:wsQMClient.QMUnHoldJob"/>
+			      <output message="wsdlns:wsQMClient.QMUnHoldJobResponse"/>
+		    </operation>
+
+		    <operation name="QMPhoneNumbers" parameterOrder="ret Session cdpWs nDest cnpWs lpUnknown">
+			      <input message="wsdlns:wsQMClient.QMPhoneNumbers"/>
+			      <output message="wsdlns:wsQMClient.QMPhoneNumbersResponse"/>
+		    </operation>
+
+		    <operation name="QMDeleteNotice" parameterOrder="ret Session noteID">
+			      <input message="wsdlns:wsQMClient.QMDeleteNotice"/>
+			      <output message="wsdlns:wsQMClient.QMDeleteNoticeResponse"/>
+		    </operation>
+
+		    <operation name="QMGetNoticeList"
+                 parameterOrder="ret Session CountIn lpCount lpNoteList Filter">
+			      <input message="wsdlns:wsQMClient.QMGetNoticeList"/>
+			      <output message="wsdlns:wsQMClient.QMGetNoticeListResponse"/>
+		    </operation>
+
+		    <operation name="QMGetNoticeText" parameterOrder="ret Session noteID lpNoticeText">
+			      <input message="wsdlns:wsQMClient.QMGetNoticeText"/>
+			      <output message="wsdlns:wsQMClient.QMGetNoticeTextResponse"/>
+		    </operation>
+
+		    <operation name="QMGetNoticeInfo"
+                 parameterOrder="ret Session noteID Skip CountIn lpCount lpNotice lpFlags">
+			      <input message="wsdlns:wsQMClient.QMGetNoticeInfo"/>
+			      <output message="wsdlns:wsQMClient.QMGetNoticeInfoResponse"/>
+		    </operation>
+
+		    <operation name="QMPrintNotice" parameterOrder="ret Session noteID printStreamWs">
+			      <input message="wsdlns:wsQMClient.QMPrintNotice"/>
+			      <output message="wsdlns:wsQMClient.QMPrintNoticeResponse"/>
+		    </operation>
+
+		    <operation name="QMSetAlert" parameterOrder="ret Session UserName AlertType">
+			      <input message="wsdlns:wsQMClient.QMSetAlert"/>
+			      <output message="wsdlns:wsQMClient.QMSetAlertResponse"/>
+		    </operation>
+
+		    <operation name="QMGetAlertMsg"
+                 parameterOrder="ret Session UserName lpAlertType lpJobID lpAlertMsg">
+			      <input message="wsdlns:wsQMClient.QMGetAlertMsg"/>
+			      <output message="wsdlns:wsQMClient.QMGetAlertMsgResponse"/>
+		    </operation>
+
+		    <operation name="QMSetArchiveInfo" parameterOrder="ret Session nDaysOld lType">
+			      <input message="wsdlns:wsQMClient.QMSetArchiveInfo"/>
+			      <output message="wsdlns:wsQMClient.QMSetArchiveInfoResponse"/>
+		    </operation>
+
+		    <operation name="QMGetArchivedItemList"
+                 parameterOrder="ret Session CountIn lpCount lpItemIDs type Filter">
+			      <input message="wsdlns:wsQMClient.QMGetArchivedItemList"/>
+			      <output message="wsdlns:wsQMClient.QMGetArchivedItemListResponse"/>
+		    </operation>
+
+		    <operation name="QMDeleteArchivedItem" parameterOrder="ret Session itemID type">
+			      <input message="wsdlns:wsQMClient.QMDeleteArchivedItem"/>
+			      <output message="wsdlns:wsQMClient.QMDeleteArchivedItemResponse"/>
+		    </operation>
+
+		    <operation name="QMGetAutoCleanupInfo" parameterOrder="ret Session lpAutoCleanupInfoWs">
+			      <input message="wsdlns:wsQMClient.QMGetAutoCleanupInfo"/>
+			      <output message="wsdlns:wsQMClient.QMGetAutoCleanupInfoResponse"/>
+		    </operation>
+
+		    <operation name="QMSetAutoCleanupInfo" parameterOrder="ret Session autoCleanupInfo">
+			      <input message="wsdlns:wsQMClient.QMSetAutoCleanupInfo"/>
+			      <output message="wsdlns:wsQMClient.QMSetAutoCleanupInfoResponse"/>
+		    </operation>
+
+		    <operation name="QMReclaimUnroutedFaxes" parameterOrder="ret Session nDaysOld">
+			      <input message="wsdlns:wsQMClient.QMReclaimUnroutedFaxes"/>
+			      <output message="wsdlns:wsQMClient.QMReclaimUnroutedFaxesResponse"/>
+		    </operation>
+
+		    <operation name="QMReclaimLogStorage" parameterOrder="ret Session nDaysOld">
+			      <input message="wsdlns:wsQMClient.QMReclaimLogStorage"/>
+			      <output message="wsdlns:wsQMClient.QMReclaimLogStorageResponse"/>
+		    </operation>
+
+		    <operation name="QMGetArchivedItemListCount"
+                 parameterOrder="ret Session type Filter lpCount">
+			      <input message="wsdlns:wsQMClient.QMGetArchivedItemListCount"/>
+			      <output message="wsdlns:wsQMClient.QMGetArchivedItemListCountResponse"/>
+		    </operation>
+
+		    <operation name="QMPing" parameterOrder="ret Session">
+			      <input message="wsdlns:wsQMClient.QMPing"/>
+			      <output message="wsdlns:wsQMClient.QMPingResponse"/>
+		    </operation>
+
+		    <operation name="QMGetFaxLineInfo" parameterOrder="ret Session nLine lpFaxLineInfoWs">
+			      <input message="wsdlns:wsQMClient.QMGetFaxLineInfo"/>
+			      <output message="wsdlns:wsQMClient.QMGetFaxLineInfoResponse"/>
+		    </operation>
+
+		    <operation name="QMSetFaxLineInfo" parameterOrder="ret Session nLine faxLineInfo">
+			      <input message="wsdlns:wsQMClient.QMSetFaxLineInfo"/>
+			      <output message="wsdlns:wsQMClient.QMSetFaxLineInfoResponse"/>
+		    </operation>
+
+		    <operation name="QMReclaimStorage" parameterOrder="ret Session Days Flags">
+			      <input message="wsdlns:wsQMClient.QMReclaimStorage"/>
+			      <output message="wsdlns:wsQMClient.QMReclaimStorageResponse"/>
+		    </operation>
+
+		    <operation name="WaitForAlert" parameterOrder="ret lpRecWs Timeout">
+			      <input message="wsdlns:wsQMClient.WaitForAlert"/>
+			      <output message="wsdlns:wsQMClient.WaitForAlertResponse"/>
+		    </operation>
+
+		    <operation name="QMApproveJob" parameterOrder="ret Session CountIn JobIDs Approve">
+			      <input message="wsdlns:wsQMClient.QMApproveJob"/>
+			      <output message="wsdlns:wsQMClient.QMApproveJobResponse"/>
+		    </operation>
+
+		    <operation name="QMSetIncomingJobArchiveBit" parameterOrder="ret Session jobID ArchiveBit">
+			      <input message="wsdlns:wsQMClient.QMSetIncomingJobArchiveBit"/>
+			      <output message="wsdlns:wsQMClient.QMSetIncomingJobArchiveBitResponse"/>
+		    </operation>
+
+		    <operation name="QMSetOutgoingJobArchiveBit" parameterOrder="ret Session jobID ArchiveBit">
+			      <input message="wsdlns:wsQMClient.QMSetOutgoingJobArchiveBit"/>
+			      <output message="wsdlns:wsQMClient.QMSetOutgoingJobArchiveBitResponse"/>
+		    </operation>
+
+		    <operation name="QMChangePhoneNumber" parameterOrder="ret Session jobID PhoneNumber">
+			      <input message="wsdlns:wsQMClient.QMChangePhoneNumber"/>
+			      <output message="wsdlns:wsQMClient.QMChangePhoneNumberResponse"/>
+		    </operation>
+
+		    <operation name="QMGetJobPriority" parameterOrder="ret Session jobID lpPriority">
+			      <input message="wsdlns:wsQMClient.QMGetJobPriority"/>
+			      <output message="wsdlns:wsQMClient.QMGetJobPriorityResponse"/>
+		    </operation>
+
+		    <operation name="QMSetJobPriority" parameterOrder="ret Session jobID NewPriority">
+			      <input message="wsdlns:wsQMClient.QMSetJobPriority"/>
+			      <output message="wsdlns:wsQMClient.QMSetJobPriorityResponse"/>
+		    </operation>
+
+		    <operation name="QMPrintOutgoing" parameterOrder="ret Session jobID printStreamWs">
+			      <input message="wsdlns:wsQMClient.QMPrintOutgoing"/>
+			      <output message="wsdlns:wsQMClient.QMPrintOutgoingResponse"/>
+		    </operation>
+
+		    <operation name="QMGetIncomingLogCount"
+                 parameterOrder="ret Session lpCount lpMinId lpMaxId lpChanges Filter">
+			      <input message="wsdlns:wsQMClient.QMGetIncomingLogCount"/>
+			      <output message="wsdlns:wsQMClient.QMGetIncomingLogCountResponse"/>
+		    </operation>
+
+		    <operation name="QMGetIncomingLogList"
+                 parameterOrder="ret Session StartID Shift CountIn lpCount lpJobIDs lpComments lpFlags nIsPersonal Filter">
+			      <input message="wsdlns:wsQMClient.QMGetIncomingLogList"/>
+			      <output message="wsdlns:wsQMClient.QMGetIncomingLogListResponse"/>
+		    </operation>
+
+		    <operation name="QMGetIncomingLogInfo" parameterOrder="ret Session jobID incomingInfoWs">
+			      <input message="wsdlns:wsQMClient.QMGetIncomingLogInfo"/>
+			      <output message="wsdlns:wsQMClient.QMGetIncomingLogInfoResponse"/>
+		    </operation>
+
+		    <operation name="QMGetOutgoingLogList"
+                 parameterOrder="ret Session CountIn lpCount lpJobIDs lpComplAtmps Filter">
+			      <input message="wsdlns:wsQMClient.QMGetOutgoingLogList"/>
+			      <output message="wsdlns:wsQMClient.QMGetOutgoingLogListResponse"/>
+		    </operation>
+
+		    <operation name="QMGetOutgoingLogInfo"
+                 parameterOrder="ret Session jobID ComplAtmp lpOutgoingInfoWs lpPages lpCoverFlag lpMasterJobID">
+			      <input message="wsdlns:wsQMClient.QMGetOutgoingLogInfo"/>
+			      <output message="wsdlns:wsQMClient.QMGetOutgoingLogInfoResponse"/>
+		    </operation>
+
+		    <operation name="QMSetIncomingLogArchiveBit" parameterOrder="ret Session jobID ArchiveBit">
+			      <input message="wsdlns:wsQMClient.QMSetIncomingLogArchiveBit"/>
+			      <output message="wsdlns:wsQMClient.QMSetIncomingLogArchiveBitResponse"/>
+		    </operation>
+
+		    <operation name="QMSetOutgoingLogArchiveBit"
+                 parameterOrder="ret Session jobID ComplAtmp ArchiveBit">
+			      <input message="wsdlns:wsQMClient.QMSetOutgoingLogArchiveBit"/>
+			      <output message="wsdlns:wsQMClient.QMSetOutgoingLogArchiveBitResponse"/>
+		    </operation>
+
+		    <operation name="QMGetIncomingQueueRec" parameterOrder="ret Session jobID lpOutRecWs">
+			      <input message="wsdlns:wsQMClient.QMGetIncomingQueueRec"/>
+			      <output message="wsdlns:wsQMClient.QMGetIncomingQueueRecResponse"/>
+		    </operation>
+
+		    <operation name="QMGetIncomingLogRec" parameterOrder="ret Session jobID lpRecWs">
+			      <input message="wsdlns:wsQMClient.QMGetIncomingLogRec"/>
+			      <output message="wsdlns:wsQMClient.QMGetIncomingLogRecResponse"/>
+		    </operation>
+
+		    <operation name="QMGetOutgoingQueueRec" parameterOrder="ret Session jobID lpOutRecWs">
+			      <input message="wsdlns:wsQMClient.QMGetOutgoingQueueRec"/>
+			      <output message="wsdlns:wsQMClient.QMGetOutgoingQueueRecResponse"/>
+		    </operation>
+
+		    <operation name="QMGetOutgoingLogRec"
+                 parameterOrder="ret Session jobID ComplAtmp lpOutRecWs">
+			      <input message="wsdlns:wsQMClient.QMGetOutgoingLogRec"/>
+			      <output message="wsdlns:wsQMClient.QMGetOutgoingLogRecResponse"/>
+		    </operation>
+
+		    <operation name="QMBackup" parameterOrder="ret Session Path">
+			      <input message="wsdlns:wsQMClient.QMBackup"/>
+			      <output message="wsdlns:wsQMClient.QMBackupResponse"/>
+		    </operation>
+
+		    <operation name="QMGetOutgoingLogRecEx"
+                 parameterOrder="ret Session jobID ComplAtmp lpOutRecWs lpUserName lpErrorMsg">
+			      <input message="wsdlns:wsQMClient.QMGetOutgoingLogRecEx"/>
+			      <output message="wsdlns:wsQMClient.QMGetOutgoingLogRecExResponse"/>
+		    </operation>
+
+		    <operation name="QMGetIncomingLogRecEx"
+                 parameterOrder="ret Session jobID lpInRecWs lpUserName lpErrorMsg">
+			      <input message="wsdlns:wsQMClient.QMGetIncomingLogRecEx"/>
+			      <output message="wsdlns:wsQMClient.QMGetIncomingLogRecExResponse"/>
+		    </operation>
+
+		    <operation name="QMReindex" parameterOrder="ret Session">
+			      <input message="wsdlns:wsQMClient.QMReindex"/>
+			      <output message="wsdlns:wsQMClient.QMReindexResponse"/>
+		    </operation>
+
+		    <operation name="QMGetLineStatus" parameterOrder="ret Session lpLineCount lpStat">
+			      <input message="wsdlns:wsQMClient.QMGetLineStatus"/>
+			      <output message="wsdlns:wsQMClient.QMGetLineStatusResponse"/>
+		    </operation>
+
+		    <operation name="QMOpenImpersonatedSession"
+                 parameterOrder="ret Session impersonatedUserName lpImpersonatedSessionID">
+			      <input message="wsdlns:wsQMClient.QMOpenImpersonatedSession"/>
+			      <output message="wsdlns:wsQMClient.QMOpenImpersonatedSessionResponse"/>
+		    </operation>
+
+		    <operation name="QMGetNoticeListByFlags"
+                 parameterOrder="ret Session UserName CountIn lpCount lpNoticeIDs Flags Negate">
+			      <input message="wsdlns:wsQMClient.QMGetNoticeListByFlags"/>
+			      <output message="wsdlns:wsQMClient.QMGetNoticeListByFlagsResponse"/>
+		    </operation>
+
+		    <operation name="QMGetNoticeRec"
+                 parameterOrder="ret Session noteID lpNoticeRecWs lpUserName lpNoticeText">
+			      <input message="wsdlns:wsQMClient.QMGetNoticeRec"/>
+			      <output message="wsdlns:wsQMClient.QMGetNoticeRecResponse"/>
+		    </operation>
+
+		    <operation name="QMUpdateNoticeRec" parameterOrder="ret Session NoticeRec">
+			      <input message="wsdlns:wsQMClient.QMUpdateNoticeRec"/>
+			      <output message="wsdlns:wsQMClient.QMUpdateNoticeRecResponse"/>
+		    </operation>
+
+		    <operation name="QMTransmitConfig" parameterOrder="ret Session EmailAddress Message">
+			      <input message="wsdlns:wsQMClient.QMTransmitConfig"/>
+			      <output message="wsdlns:wsQMClient.QMTransmitConfigResponse"/>
+		    </operation>
+
+		    <operation name="QMPrintFile" parameterOrder="ret Session FilePath psdWs">
+			      <input message="wsdlns:wsQMClient.QMPrintFile"/>
+			      <output message="wsdlns:wsQMClient.QMPrintFileResponse"/>
+		    </operation>
+
+		    <operation name="QMGetSessionCount" parameterOrder="lpCount Session">
+			      <input message="wsdlns:wsQMClient.QMGetSessionCount"/>
+			      <output message="wsdlns:wsQMClient.QMGetSessionCountResponse"/>
+		    </operation>
+
+		    <operation name="QMGetSessionUsers" parameterOrder="ret Session CountIn lpCount userList">
+			      <input message="wsdlns:wsQMClient.QMGetSessionUsers"/>
+			      <output message="wsdlns:wsQMClient.QMGetSessionUsersResponse"/>
+		    </operation>
+
+		    <operation name="QMGetPrintJobs" parameterOrder="ret Session QueueName lpCount sar">
+			      <input message="wsdlns:wsQMClient.QMGetPrintJobs"/>
+			      <output message="wsdlns:wsQMClient.QMGetPrintJobsResponse"/>
+		    </operation>
+
+		    <operation name="QMHoldPrintJob" parameterOrder="ret Session QueueName PrintJobID">
+			      <input message="wsdlns:wsQMClient.QMHoldPrintJob"/>
+			      <output message="wsdlns:wsQMClient.QMHoldPrintJobResponse"/>
+		    </operation>
+
+		    <operation name="QMUnholdPrintJob" parameterOrder="ret Session QueueName PrintJobID">
+			      <input message="wsdlns:wsQMClient.QMUnholdPrintJob"/>
+			      <output message="wsdlns:wsQMClient.QMUnholdPrintJobResponse"/>
+		    </operation>
+
+		    <operation name="QMDeletePrintJob" parameterOrder="ret Session QueueName PrintJobID">
+			      <input message="wsdlns:wsQMClient.QMDeletePrintJob"/>
+			      <output message="wsdlns:wsQMClient.QMDeletePrintJobResponse"/>
+		    </operation>
+
+		    <operation name="QMSequencePrintJob"
+                 parameterOrder="ret Session QueueName PrintJobID Change">
+			      <input message="wsdlns:wsQMClient.QMSequencePrintJob"/>
+			      <output message="wsdlns:wsQMClient.QMSequencePrintJobResponse"/>
+		    </operation>
+
+		    <operation name="QMPutFile" parameterOrder="ret Session FileName InputData InputLength">
+			      <input message="wsdlns:wsQMClient.QMPutFile"/>
+			      <output message="wsdlns:wsQMClient.QMPutFileResponse"/>
+		    </operation>
+
+		    <operation name="QMPutMultiple" parameterOrder="ret Session fileNames">
+			      <input message="wsdlns:wsQMClient.QMPutMultiple"/>
+			      <output message="wsdlns:wsQMClient.QMPutMultipleResponse"/>
+		    </operation>
+
+		    <operation name="QMSubmitFax"
+                 parameterOrder="ret Session fileNames cdpWs nDest cnpWs lpUnknown faxCmnParamWs CountIn lpFailCount FailedFiles lpJobIDs bid">
+			      <input message="wsdlns:wsQMClient.QMSubmitFax"/>
+			      <output message="wsdlns:wsQMClient.QMSubmitFaxResponse"/>
+		    </operation>
+
+		    <operation name="QMGetOutgoingCount" parameterOrder="ret Session lpCount Filter">
+			      <input message="wsdlns:wsQMClient.QMGetOutgoingCount"/>
+			      <output message="wsdlns:wsQMClient.QMGetOutgoingCountResponse"/>
+		    </operation>
+
+		    <operation name="QMDownloadIncomingFax"
+                 parameterOrder="ret Session jobID FileName OutputData OutputLength">
+			      <input message="wsdlns:wsQMClient.QMDownloadIncomingFax"/>
+			      <output message="wsdlns:wsQMClient.QMDownloadIncomingFaxResponse"/>
+		    </operation>
+
+		    <operation name="QMDownloadIncomingFaxes"
+                 parameterOrder="ret Session lpJobIDs numJobs fileNames">
+			      <input message="wsdlns:wsQMClient.QMDownloadIncomingFaxes"/>
+			      <output message="wsdlns:wsQMClient.QMDownloadIncomingFaxesResponse"/>
+		    </operation>
+
+		    <operation name="QMDownloadOutgoingFax"
+                 parameterOrder="ret Session jobID FileName OutputData OutputLength">
+			      <input message="wsdlns:wsQMClient.QMDownloadOutgoingFax"/>
+			      <output message="wsdlns:wsQMClient.QMDownloadOutgoingFaxResponse"/>
+		    </operation>
+
+		    <operation name="QMDownloadOutgoingFaxes"
+                 parameterOrder="ret Session lpJobIDs numJobs fileNames">
+			      <input message="wsdlns:wsQMClient.QMDownloadOutgoingFaxes"/>
+			      <output message="wsdlns:wsQMClient.QMDownloadOutgoingFaxesResponse"/>
+		    </operation>
+
+	  </portType>
+
+	  <binding name="wsQMClientSoapBinding" type="wsdlns:wsQMClientSoapPort">
+
+		    <stk:binding preferredEncoding="UTF-8"/>
+		    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		    <operation name="QMOpenSession">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMOpenSession"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="UserName Password"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpSession"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMCloseSession">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMCloseSession"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetIncomingCount">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetIncomingCount"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session Filter"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount lpMinId lpMaxId lpChanges"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetIncomingList">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetIncomingList"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session StartID Shift amountIn nIsPersonal Filter"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpAmountOut lpJobIDs lpComments lpFlags"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetIncomingInfo">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetIncomingInfo"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID lpIncomeWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpIncomeWs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetIncomingComment">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetIncomingComment"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID nIsPersonal"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpComment"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMDeleteIncoming">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMDeleteIncoming"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID nIsPersonal"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMDeleteIncomingEx">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMDeleteIncomingEx"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID UserName"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMPrintIncoming">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMPrintIncoming"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID printStreamWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMRouteIncoming">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMRouteIncoming"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID incomeWs userList nUsers nDoConfirm Comment"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSetIncomingComment">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSetIncomingComment"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID nIsPersonal Comment"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSetIncomingFlags">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSetIncomingFlags"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session lJobID nIsPersonal nFlags"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetOutgoingList">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetOutgoingList"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session CountIn Filter"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount lpJobIDs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetOutgoingInfo">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetOutgoingInfo"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID lpOutgo"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpOutgo Npages bCoverFlag lpMasterJobID"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetOutgoingInfoEx">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetOutgoingInfoEx"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session CountIn lpJobIDs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount lpJobIDs lpOutgo"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMDeleteOutgoing">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMDeleteOutgoing"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMHoldJob">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMHoldJob"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMResequenceJob">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMResequenceJob"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID nDelta"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMTransmitFiles">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMTransmitFiles"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session faxCmnParamWs CountIn Files"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpFailCount lpFailedFiles lpJobIDs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMTransmitJob">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMTransmitJob"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session prefJobID faxCmnParamWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpJobIDs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMUnHoldJob">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMUnHoldJob"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMPhoneNumbers">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMPhoneNumbers"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session cdpWs nDest cnpWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpUnknown"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMDeleteNotice">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMDeleteNotice"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session noteID"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetNoticeList">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetNoticeList"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session CountIn Filter"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount lpNoteList"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetNoticeText">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetNoticeText"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session noteID"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpNoticeText"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetNoticeInfo">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetNoticeInfo"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session noteID Skip CountIn"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount lpNotice lpFlags"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMPrintNotice">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMPrintNotice"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session noteID printStreamWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSetAlert">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSetAlert"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session UserName AlertType"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetAlertMsg">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetAlertMsg"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session UserName lpAlertType"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpAlertType lpJobID lpAlertMsg"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSetArchiveInfo">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSetArchiveInfo"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session nDaysOld lType"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetArchivedItemList">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetArchivedItemList"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session CountIn type Filter"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount lpItemIDs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMDeleteArchivedItem">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMDeleteArchivedItem"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session itemID type"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetAutoCleanupInfo">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetAutoCleanupInfo"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session lpAutoCleanupInfoWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpAutoCleanupInfoWs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSetAutoCleanupInfo">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSetAutoCleanupInfo"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session autoCleanupInfo"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMReclaimUnroutedFaxes">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMReclaimUnroutedFaxes"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session nDaysOld"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMReclaimLogStorage">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMReclaimLogStorage"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session nDaysOld"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetArchivedItemListCount">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetArchivedItemListCount"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session type Filter"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMPing">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMPing"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetFaxLineInfo">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetFaxLineInfo"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session nLine lpFaxLineInfoWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpFaxLineInfoWs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSetFaxLineInfo">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSetFaxLineInfo"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session nLine faxLineInfo"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMReclaimStorage">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMReclaimStorage"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session Days Flags"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="WaitForAlert">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.WaitForAlert"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="lpRecWs Timeout"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpRecWs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMApproveJob">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMApproveJob"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session CountIn JobIDs Approve"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSetIncomingJobArchiveBit">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSetIncomingJobArchiveBit"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID ArchiveBit"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSetOutgoingJobArchiveBit">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSetOutgoingJobArchiveBit"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID ArchiveBit"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMChangePhoneNumber">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMChangePhoneNumber"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID PhoneNumber"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetJobPriority">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetJobPriority"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpPriority"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSetJobPriority">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSetJobPriority"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID NewPriority"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMPrintOutgoing">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMPrintOutgoing"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID printStreamWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetIncomingLogCount">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetIncomingLogCount"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session Filter"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount lpMinId lpMaxId lpChanges"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetIncomingLogList">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetIncomingLogList"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session StartID Shift CountIn nIsPersonal Filter"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount lpJobIDs lpComments lpFlags"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetIncomingLogInfo">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetIncomingLogInfo"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID incomingInfoWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret incomingInfoWs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetOutgoingLogList">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetOutgoingLogList"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session CountIn Filter"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount lpJobIDs lpComplAtmps"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetOutgoingLogInfo">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetOutgoingLogInfo"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID ComplAtmp lpOutgoingInfoWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpOutgoingInfoWs lpPages lpCoverFlag lpMasterJobID"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSetIncomingLogArchiveBit">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSetIncomingLogArchiveBit"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID ArchiveBit"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSetOutgoingLogArchiveBit">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSetOutgoingLogArchiveBit"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID ComplAtmp ArchiveBit"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetIncomingQueueRec">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetIncomingQueueRec"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID lpOutRecWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpOutRecWs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetIncomingLogRec">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetIncomingLogRec"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID lpRecWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpRecWs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetOutgoingQueueRec">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetOutgoingQueueRec"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID lpOutRecWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpOutRecWs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetOutgoingLogRec">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetOutgoingLogRec"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID ComplAtmp lpOutRecWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpOutRecWs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMBackup">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMBackup"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session Path"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetOutgoingLogRecEx">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetOutgoingLogRecEx"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID ComplAtmp lpOutRecWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpOutRecWs lpUserName lpErrorMsg"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetIncomingLogRecEx">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetIncomingLogRecEx"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID lpInRecWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpInRecWs lpUserName lpErrorMsg"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMReindex">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMReindex"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetLineStatus">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetLineStatus"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpLineCount lpStat"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMOpenImpersonatedSession">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMOpenImpersonatedSession"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session impersonatedUserName"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpImpersonatedSessionID"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetNoticeListByFlags">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetNoticeListByFlags"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session UserName CountIn Flags Negate"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount lpNoticeIDs"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetNoticeRec">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetNoticeRec"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session noteID lpNoticeRecWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpNoticeRecWs lpUserName lpNoticeText"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMUpdateNoticeRec">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMUpdateNoticeRec"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session NoticeRec"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMTransmitConfig">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMTransmitConfig"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session EmailAddress Message"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMPrintFile">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMPrintFile"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session FilePath psdWs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetSessionCount">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetSessionCount"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="lpCount"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetSessionUsers">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetSessionUsers"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session CountIn"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount userList"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetPrintJobs">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetPrintJobs"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session QueueName lpCount"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount sar"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMHoldPrintJob">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMHoldPrintJob"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session QueueName PrintJobID"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMUnholdPrintJob">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMUnholdPrintJob"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session QueueName PrintJobID"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMDeletePrintJob">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMDeletePrintJob"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session QueueName PrintJobID"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSequencePrintJob">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSequencePrintJob"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session QueueName PrintJobID Change"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMPutFile">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMPutFile"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session FileName InputData InputLength"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMPutMultiple">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMPutMultiple"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <dime:message layout="http://schemas.xmlsoap.org/ws/2002/04/dime/open-layout"
+                          wsdl:required="true"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session fileNames"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMSubmitFax">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMSubmitFax"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <dime:message layout="http://schemas.xmlsoap.org/ws/2002/04/dime/open-layout"
+                          wsdl:required="true"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session fileNames cdpWs nDest cnpWs faxCmnParamWs CountIn"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpUnknown lpFailCount FailedFiles lpJobIDs bid"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMGetOutgoingCount">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMGetOutgoingCount"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session Filter"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret lpCount"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMDownloadIncomingFax">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMDownloadIncomingFax"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret FileName OutputData OutputLength"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMDownloadIncomingFaxes">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMDownloadIncomingFaxes"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session lpJobIDs numJobs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <dime:message layout="http://schemas.xmlsoap.org/ws/2002/04/dime/open-layout"
+                          wsdl:required="true"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret fileNames"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMDownloadOutgoingFax">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMDownloadOutgoingFax"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session jobID"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret FileName OutputData OutputLength"/>
+			      </output>
+		    </operation>
+
+		    <operation name="QMDownloadOutgoingFaxes">
+			      <soap:operation soapAction="http://soap.castelle.com/FaxPressQM/action/wsQMClient.QMDownloadOutgoingFaxes"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="Session lpJobIDs numJobs"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <dime:message layout="http://schemas.xmlsoap.org/ws/2002/04/dime/open-layout"
+                          wsdl:required="true"/>
+				        <soap:body use="encoded" namespace="http://soap.castelle.com/FaxPressQM/message/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="ret fileNames"/>
+			      </output>
+		    </operation>
+
+	  </binding>
+
+	  <service name="FaxPressQM">
+		    <port name="wsQMClientSoapPort" binding="wsdlns:wsQMClientSoapBinding">
+			      <soap:address location="http://ws.soatrader.com/castelle.com/0.1/FaxPressQM"/>
+		    </port>
+	  </service>
+
+</definitions>

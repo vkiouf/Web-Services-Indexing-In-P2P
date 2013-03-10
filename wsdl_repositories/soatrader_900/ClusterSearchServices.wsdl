@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:element name="Search">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="param" type="tns:SearchParam"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="sessionID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SearchParam">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="strQuery" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="strSubQuery" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="nPage" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="bOthers" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchResult" type="tns:SearchResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SearchResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="strQuery" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="strSubQuery" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="nPage" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="bOthers" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="arrImageItem" type="tns:ArrayOfImageItem"/>
+               <s:element minOccurs="1" maxOccurs="1" name="nTotalCount" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfImageItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ImageItem" nillable="true"
+                          type="tns:ImageItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ImageItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="strThumbUrl" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="strImageUrl" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="strTitle" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="strSize" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ClusterNoThumb">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="query" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="sessionID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ClusterNoThumbResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClusterNoThumbResult"
+                             type="tns:ArrayOfString"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="bPruned" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="serviceMessage" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="RecacheCluster">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="query" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="sessionID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RecacheClusterResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RecacheClusterResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RecacheThumb">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="query" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="subQuery" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RecacheThumbResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RecacheThumbResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchSoapIn">
+      <wsdl:part name="parameters" element="tns:Search"/>
+  </wsdl:message>
+  <wsdl:message name="SearchSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ClusterNoThumbSoapIn">
+      <wsdl:part name="parameters" element="tns:ClusterNoThumb"/>
+  </wsdl:message>
+  <wsdl:message name="ClusterNoThumbSoapOut">
+      <wsdl:part name="parameters" element="tns:ClusterNoThumbResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RecacheClusterSoapIn">
+      <wsdl:part name="parameters" element="tns:RecacheCluster"/>
+  </wsdl:message>
+  <wsdl:message name="RecacheClusterSoapOut">
+      <wsdl:part name="parameters" element="tns:RecacheClusterResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RecacheThumbSoapIn">
+      <wsdl:part name="parameters" element="tns:RecacheThumb"/>
+  </wsdl:message>
+  <wsdl:message name="RecacheThumbSoapOut">
+      <wsdl:part name="parameters" element="tns:RecacheThumbResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="ClusterSearchServicesSoap" type="tns:ClusterSearchServicesSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="Search">
+         <soap:operation soapAction="http://tempuri.org/Search" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ClusterNoThumb">
+         <soap:operation soapAction="http://tempuri.org/ClusterNoThumb" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RecacheCluster">
+         <soap:operation soapAction="http://tempuri.org/RecacheCluster" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RecacheThumb">
+         <soap:operation soapAction="http://tempuri.org/RecacheThumb" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="ClusterSearchServices">
+      <wsdl:port name="ClusterSearchServicesSoap" binding="tns:ClusterSearchServicesSoap">
+         <soap:address location="http://ws.soatrader.com/219.141.219.123/0.1/ClusterSearchServices"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

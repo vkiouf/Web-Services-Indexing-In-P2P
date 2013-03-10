@@ -1,0 +1,557 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://locationlookup.webglimmerinc.com/"
+                  xmlns:s1="http://microsoft.com/wsdl/types/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://locationlookup.webglimmerinc.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://locationlookup.webglimmerinc.com/">
+         <s:import namespace="http://microsoft.com/wsdl/types/"/>
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="GetPostalCodesForRegion">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StateName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPostalCodesForRegionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPostalCodesForRegionResult"
+                             type="tns:ArrayOfZIPCode"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfZIPCode">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ZIPCode" nillable="true"
+                          type="tns:ZIPCode"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ZIPCode">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ZIPType" nillable="true" type="s1:char"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CityName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CityType" nillable="true" type="s1:char"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CountyName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CountyFIPS" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StateName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StateAbbr" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StateFIPS" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MSACode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AreaCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TimeZone" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UTC" nillable="true" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DST" nillable="true" type="s1:char"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Latitude" nillable="true" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Longitude" nillable="true" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetPostalCodesForCountry">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPostalCodesForCountryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPostalCodesForCountryResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetRegionsByCountry">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetRegionsByCountryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRegionsByCountryResult"
+                             type="tns:ArrayOfRegion"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfRegion">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Region" nillable="true"
+                          type="tns:Region"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Region">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StateAbbr" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StateName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetPostalCodesForCity">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RegionName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CityName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPostalCodesForCityResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPostalCodesForCityResult"
+                             type="tns:ArrayOfZIPCode"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllCitiesForPostalCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllCitiesForPostalCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllCitiesForPostalCodeResult"
+                             type="tns:ArrayOfZIPCode"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllCitiesForPostalCodeFull">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllCitiesForPostalCodeFullResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllCitiesForPostalCodeFullResult"
+                             type="tns:ArrayOfZIPCode"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllCitiesForRegion">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RegionName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllCitiesForRegionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllCitiesForRegionResult"
+                             type="tns:ArrayOfCity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCity">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="City" nillable="true" type="tns:City"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="City">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CityName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StateAbbr" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StateName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetAllCitiesForState">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StateName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllCitiesForStateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllCitiesForStateResult"
+                             type="tns:ArrayOfCity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetRegionsForCountry">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetRegionsForCountryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRegionsForCountryResult"
+                             type="tns:ArrayOfRegion"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllCountries">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllCountriesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllCountriesResult"
+                             type="tns:ArrayOfCountry"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCountry">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Country" nillable="true"
+                          type="tns:Country"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Country">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="_2DigitCountryCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="_3DigitCountryCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CountryName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Subscribe">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="IPAddress" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SubscribeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SubscribeResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLicenseInformation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLicenseInformationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLicenseInformationResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://microsoft.com/wsdl/types/">
+         <s:simpleType name="char">
+            <s:restriction base="s:unsignedShort"/>
+         </s:simpleType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetPostalCodesForRegionSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPostalCodesForRegion"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostalCodesForRegionSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPostalCodesForRegionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostalCodesForCountrySoapIn">
+      <wsdl:part name="parameters" element="tns:GetPostalCodesForCountry"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostalCodesForCountrySoapOut">
+      <wsdl:part name="parameters" element="tns:GetPostalCodesForCountryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRegionsByCountrySoapIn">
+      <wsdl:part name="parameters" element="tns:GetRegionsByCountry"/>
+  </wsdl:message>
+  <wsdl:message name="GetRegionsByCountrySoapOut">
+      <wsdl:part name="parameters" element="tns:GetRegionsByCountryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostalCodesForCitySoapIn">
+      <wsdl:part name="parameters" element="tns:GetPostalCodesForCity"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostalCodesForCitySoapOut">
+      <wsdl:part name="parameters" element="tns:GetPostalCodesForCityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllCitiesForPostalCodeSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAllCitiesForPostalCode"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllCitiesForPostalCodeSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAllCitiesForPostalCodeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllCitiesForPostalCodeFullSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAllCitiesForPostalCodeFull"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllCitiesForPostalCodeFullSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAllCitiesForPostalCodeFullResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllCitiesForRegionSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAllCitiesForRegion"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllCitiesForRegionSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAllCitiesForRegionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllCitiesForStateSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAllCitiesForState"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllCitiesForStateSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAllCitiesForStateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRegionsForCountrySoapIn">
+      <wsdl:part name="parameters" element="tns:GetRegionsForCountry"/>
+  </wsdl:message>
+  <wsdl:message name="GetRegionsForCountrySoapOut">
+      <wsdl:part name="parameters" element="tns:GetRegionsForCountryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllCountriesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAllCountries"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllCountriesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAllCountriesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SubscribeSoapIn">
+      <wsdl:part name="parameters" element="tns:Subscribe"/>
+  </wsdl:message>
+  <wsdl:message name="SubscribeSoapOut">
+      <wsdl:part name="parameters" element="tns:SubscribeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLicenseInformationSoapIn">
+      <wsdl:part name="parameters" element="tns:GetLicenseInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetLicenseInformationSoapOut">
+      <wsdl:part name="parameters" element="tns:GetLicenseInformationResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="LocationLookupSoap" type="tns:LocationLookupSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetPostalCodesForRegion">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/GetPostalCodesForRegion"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPostalCodesForCountry">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/GetPostalCodesForCountry"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRegionsByCountry">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/GetRegionsByCountry"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPostalCodesForCity">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/GetPostalCodesForCity"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllCitiesForPostalCode">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/GetAllCitiesForPostalCode"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllCitiesForPostalCodeFull">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/GetAllCitiesForPostalCodeFull"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllCitiesForRegion">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/GetAllCitiesForRegion"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllCitiesForState">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/GetAllCitiesForState"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRegionsForCountry">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/GetRegionsForCountry"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllCountries">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/GetAllCountries"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Subscribe">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/Subscribe" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetLicenseInformation">
+         <soap:operation soapAction="http://locationlookup.webglimmerinc.com/GetLicenseInformation"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="LocationLookup">
+      <wsdl:port name="LocationLookupSoap" binding="tns:LocationLookupSoap">
+         <soap:address location="http://ws.soatrader.com/webglimmerinc.com/0.1/LocationLookup"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

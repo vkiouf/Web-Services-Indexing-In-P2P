@@ -1,0 +1,196 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.quisque.com/fr/chasses/blasons/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.quisque.com/fr/chasses/blasons/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Search engine in french town heraldic database v1.0.4&lt;BR&gt;&lt;A HREF='http://www.quisque.com'&gt;http://www.quisque.com&lt;/A&gt;&lt;BR&gt;</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.quisque.com/fr/chasses/blasons/">
+         <s:element name="Search">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="byname" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="cp" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="bycp" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ci" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="byci" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="dept" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="bydept" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="region" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="byregion" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="description" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="bydescription" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="info" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="byinfo" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="limit" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchResult" type="tns:ArrayOfCSearchInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCSearchInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CSearchInfo" nillable="true"
+                          type="tns:CSearchInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CSearchInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="region_name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="dept_name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="dept_num" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="town_name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="town_ci" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="town_cp" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="town_id" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SearchImage">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="limit" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchImageResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchImageResult"
+                             type="tns:ArrayOfCSearchPertinence"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCSearchPertinence">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CSearchPertinence" nillable="true"
+                          type="tns:CSearchPertinence"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CSearchPertinence">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="pertinence" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="type" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SearchImageStream">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="img" type="s:base64Binary"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="limit" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchImageStreamResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchImageStreamResult"
+                             type="tns:ArrayOfCSearchPertinence"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchSoapIn">
+      <wsdl:part name="parameters" element="tns:Search"/>
+  </wsdl:message>
+  <wsdl:message name="SearchSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchImageSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchImage"/>
+  </wsdl:message>
+  <wsdl:message name="SearchImageSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchImageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchImageStreamSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchImageStream"/>
+  </wsdl:message>
+  <wsdl:message name="SearchImageStreamSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchImageStreamResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="CSearchSoap" type="tns:CSearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="Search">
+         <soap:operation soapAction="http://www.quisque.com/fr/chasses/blasons/Search" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchImage">
+         <soap:operation soapAction="http://www.quisque.com/fr/chasses/blasons/SearchImage"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchImageStream">
+         <soap:operation soapAction="http://www.quisque.com/fr/chasses/blasons/SearchImageStream"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="CSearch">
+      <wsdl:documentation>Search engine in french town heraldic database v1.0.4&lt;BR&gt;&lt;A HREF='http://www.quisque.com'&gt;http://www.quisque.com&lt;/A&gt;&lt;BR&gt;</wsdl:documentation>
+      <wsdl:port name="CSearchSoap" binding="tns:CSearchSoap">
+         <soap:address location="http://ws.soatrader.com/quisque.com/0.1/CSearch"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

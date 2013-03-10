@@ -1,0 +1,121 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.wintoolzone.com/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.wintoolzone.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.wintoolzone.com/">
+         <s:element name="GenerateCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Length" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Alphanumeric" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GenerateCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GenerateCodeResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GenerateSpamCheckImageFromCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SpamCheckCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ForegroundColor" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BackgroundColor" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Bold" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Italic" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FontName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GenerateSpamCheckImageFromCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GenerateSpamCheckImageFromCodeResult"
+                             type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GenerateCodeSoapIn">
+      <wsdl:part name="parameters" element="tns:GenerateCode"/>
+  </wsdl:message>
+  <wsdl:message name="GenerateCodeSoapOut">
+      <wsdl:part name="parameters" element="tns:GenerateCodeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GenerateSpamCheckImageFromCodeSoapIn">
+      <wsdl:part name="parameters" element="tns:GenerateSpamCheckImageFromCode"/>
+  </wsdl:message>
+  <wsdl:message name="GenerateSpamCheckImageFromCodeSoapOut">
+      <wsdl:part name="parameters" element="tns:GenerateSpamCheckImageFromCodeResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="WZNECaptchaGeneratorSoap" type="tns:WZNECaptchaGeneratorSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GenerateCode">
+         <soap:operation soapAction="http://www.wintoolzone.com/GenerateCode" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GenerateSpamCheckImageFromCode">
+         <soap:operation soapAction="http://www.wintoolzone.com/GenerateSpamCheckImageFromCode"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="WZNECaptchaGenerator">
+      <wsdl:port name="WZNECaptchaGeneratorSoap" binding="tns:WZNECaptchaGeneratorSoap">
+         <soap:address location="http://ws.soatrader.com/wintoolzone.com/0.1/WZNECaptchaGenerator"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

@@ -20,8 +20,8 @@ public class XMLHandler
 	 *					Fields
 	 *=========================================================================*/
 
-	protected String document;			// xml document
-	protected Vector<String> tags;		// all tags names of xml document 
+	protected String document;				// xml document
+	protected Vector<String> tags;			// all tags names of xml document 
 	protected Vector<String> attributes;	// all attributes of xml document
 	
 	public final static String[] PrimitiveTypes=

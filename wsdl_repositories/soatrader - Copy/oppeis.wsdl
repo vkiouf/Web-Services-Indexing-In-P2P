@@ -1,0 +1,174 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://producers.oppeis.xtee.riik.ee/producer/oppeis"
+                  xmlns:xtee="http://x-tee.riik.ee/xsd/xtee.xsd"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                  targetNamespace="http://producers.oppeis.xtee.riik.ee/producer/oppeis"
+                  name="mydef">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://producers.oppeis.xtee.riik.ee/producer/oppeis">
+            <import namespace="http://x-tee.riik.ee/xsd/xtee.xsd"
+                 schemaLocation="http://x-tee.riik.ee/xsd/xtee.xsd"/>
+            <import namespace="http://schemas.xmlsoap.org/soap/encoding/"
+                 schemaLocation="http://schemas.xmlsoap.org/soap/encoding/"/>
+            <complexType name="oppeis_autent_paring">
+                <all>
+                    <element name="kasutajatunnus" type="string">
+                        <annotation>
+                            <appinfo>
+                                <xtee:title>kasutajatunnus</xtee:title>
+                            </appinfo>
+                        </annotation>
+                    </element>
+                    <element name="parool" type="string">
+                        <annotation>
+                            <appinfo>
+                                <xtee:title>parool</xtee:title>
+                            </appinfo>
+                        </annotation>
+                    </element>
+                </all>
+            </complexType>
+            <complexType name="oppeis_autent_vastus">
+                <all>
+                    <element name="UserPersonCode" type="string">
+                        <annotation>
+                            <appinfo>
+                                <xtee:title>Isikukood</xtee:title>
+                            </appinfo>
+                        </annotation>
+                    </element>
+                    <element name="UserFirstName" type="string" nillable="true">
+                        <annotation>
+                            <appinfo>
+                                <xtee:title>Eesnimi</xtee:title>
+                            </appinfo>
+                        </annotation>
+                    </element>
+                    <element name="UserLastName" type="string" nillable="true">
+                        <annotation>
+                            <appinfo>
+                                <xtee:title>Perekonnanimi</xtee:title>
+                            </appinfo>
+                        </annotation>
+                    </element>
+                </all>
+            </complexType>
+            <complexType name="listMethods_vastus">
+                <complexContent>
+                    <restriction base="SOAP-ENC:Array">
+                        <sequence>
+                            <element name="item" type="string" minOccurs="0" maxOccurs="unbounded"/>
+                        </sequence>
+                    </restriction>
+                </complexContent>
+            </complexType>
+        </schema>
+    </wsdl:types>
+    <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="oppeis_autent">
+        <part name="keha" type="tns:oppeis_autent_paring"/>
+    </message>
+    <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="oppeis_autentResponse">
+        <part name="paring" type="tns:oppeis_autent_paring"/>
+        <part name="keha" type="tns:oppeis_autent_vastus"/>
+    </message>
+    <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="listMethods">
+        <part name="keha" type="xsd:string"/>
+    </message>
+    <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="listMethodsResponse">
+        <part name="keha" type="tns:listMethods_vastus"/>
+    </message>
+    
+    <portType xmlns="http://schemas.xmlsoap.org/wsdl/" name="myporttype">
+        <operation name="oppeis_autent">
+            <documentation>
+                <xtee:title>autentimine</xtee:title>
+            </documentation>
+            <input message="tns:oppeis_autent"/>
+            <output message="tns:oppeis_autentResponse"/>
+        </operation>
+        <operation name="listMethods">
+            <documentation>
+                <xtee:title>listMethods</xtee:title>
+            </documentation>
+            <input message="tns:listMethods"/>
+            <output message="tns:listMethodsResponse"/>
+        </operation>
+    </portType>
+    <binding xmlns="http://schemas.xmlsoap.org/wsdl/" name="mybinding" type="tns:myporttype">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="listMethods">
+            <xtee:version>v1</xtee:version>
+            <soap:operation/>
+            <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="keha"
+                       namespace="x-tee.riik.ee/xsd/xtee.xsd"/>
+            </input>
+            <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="keha"
+                       namespace="x-tee.riik.ee/xsd/xtee.xsd"/>
+            </output>
+        </operation>
+        <operation name="oppeis_autent">
+            <xtee:version>v1</xtee:version>
+            <soap:operation/>
+            <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="keha"
+                       namespace="http://producers.oppeis.xtee.riik.ee/producer/oppeis"/>
+                
+                
+                
+                
+                
+            </input>
+            <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="keha"
+                       namespace="http://producers.oppeis.xtee.riik.ee/producer/oppeis"/>
+                
+                
+                
+                
+                
+            </output>
+        </operation>
+    </binding>
+    <service xmlns="http://schemas.xmlsoap.org/wsdl/" name="oppeis">
+        <port name="oppeis" binding="tns:mybinding">
+            <soap:address location="http://ws.soatrader.com/riik.ee/0.3/oppeis"/>
+            <xtee:title>oppeis</xtee:title>
+            <xtee:address producer="oppeis"/>
+        </port>
+    </service>
+</wsdl:definitions>

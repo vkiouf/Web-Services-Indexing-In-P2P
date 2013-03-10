@@ -1,0 +1,415 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="https://www.iamclients.com/WebServices/CompanyNewHires.asmx"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="https://www.iamclients.com/WebServices/CompanyNewHires.asmx">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="https://www.iamclients.com/WebServices/CompanyNewHires.asmx">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="GetPending">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetPendingResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPendingResult" type="tns:ArrayOfDecimal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDecimal">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="decimal" type="s:decimal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AuthenticateCompany" type="tns:AuthenticateCompany"/>
+         <s:complexType name="AuthenticateCompany">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetDateRange">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="begin_date" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="end_date" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDateRangeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetDateRangeResult" type="tns:ArrayOfDecimal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNewHire">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="new_hire_id" type="s:decimal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNewHireResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetNewHireResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNewHireDocArray">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="new_hire_id" type="s:decimal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNewHireDocArrayResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetNewHireDocArrayResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetNewHireDocument">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="document_id" type="s:decimal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNewHireDocumentResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetNewHireDocumentResult"
+                             type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="IsComplete">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="new_hire_id" type="s:decimal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="IsCompleteResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="IsCompleteResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ArrayOfDecimal" nillable="true" type="tns:ArrayOfDecimal"/>
+         <s:element name="DataSet" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:element ref="s:schema"/>
+                  <s:any/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ArrayOfString" nillable="true" type="tns:ArrayOfString"/>
+         <s:element name="base64Binary" nillable="true" type="s:base64Binary"/>
+         <s:element name="boolean" type="s:boolean"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetPendingSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPending"/>
+  </wsdl:message>
+  <wsdl:message name="GetPendingSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPendingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPendingAuthenticateCompany">
+      <wsdl:part name="AuthenticateCompany" element="tns:AuthenticateCompany"/>
+  </wsdl:message>
+  <wsdl:message name="GetDateRangeSoapIn">
+      <wsdl:part name="parameters" element="tns:GetDateRange"/>
+  </wsdl:message>
+  <wsdl:message name="GetDateRangeSoapOut">
+      <wsdl:part name="parameters" element="tns:GetDateRangeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDateRangeAuthenticateCompany">
+      <wsdl:part name="AuthenticateCompany" element="tns:AuthenticateCompany"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireSoapIn">
+      <wsdl:part name="parameters" element="tns:GetNewHire"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireSoapOut">
+      <wsdl:part name="parameters" element="tns:GetNewHireResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireAuthenticateCompany">
+      <wsdl:part name="AuthenticateCompany" element="tns:AuthenticateCompany"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocArraySoapIn">
+      <wsdl:part name="parameters" element="tns:GetNewHireDocArray"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocArraySoapOut">
+      <wsdl:part name="parameters" element="tns:GetNewHireDocArrayResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocArrayAuthenticateCompany">
+      <wsdl:part name="AuthenticateCompany" element="tns:AuthenticateCompany"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocumentSoapIn">
+      <wsdl:part name="parameters" element="tns:GetNewHireDocument"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocumentSoapOut">
+      <wsdl:part name="parameters" element="tns:GetNewHireDocumentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocumentAuthenticateCompany">
+      <wsdl:part name="AuthenticateCompany" element="tns:AuthenticateCompany"/>
+  </wsdl:message>
+  <wsdl:message name="IsCompleteSoapIn">
+      <wsdl:part name="parameters" element="tns:IsComplete"/>
+  </wsdl:message>
+  <wsdl:message name="IsCompleteSoapOut">
+      <wsdl:part name="parameters" element="tns:IsCompleteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IsCompleteAuthenticateCompany">
+      <wsdl:part name="AuthenticateCompany" element="tns:AuthenticateCompany"/>
+  </wsdl:message>
+  <wsdl:message name="GetPendingHttpGetIn"/>
+  <wsdl:message name="GetPendingHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfDecimal"/>
+  </wsdl:message>
+  <wsdl:message name="GetDateRangeHttpGetIn">
+      <wsdl:part name="begin_date" type="s:string"/>
+      <wsdl:part name="end_date" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetDateRangeHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfDecimal"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireHttpGetIn">
+      <wsdl:part name="new_hire_id" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocArrayHttpGetIn">
+      <wsdl:part name="new_hire_id" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocArrayHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocumentHttpGetIn">
+      <wsdl:part name="document_id" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocumentHttpGetOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="IsCompleteHttpGetIn">
+      <wsdl:part name="new_hire_id" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="IsCompleteHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="GetPendingHttpPostIn"/>
+  <wsdl:message name="GetPendingHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfDecimal"/>
+  </wsdl:message>
+  <wsdl:message name="GetDateRangeHttpPostIn">
+      <wsdl:part name="begin_date" type="s:string"/>
+      <wsdl:part name="end_date" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetDateRangeHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfDecimal"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireHttpPostIn">
+      <wsdl:part name="new_hire_id" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocArrayHttpPostIn">
+      <wsdl:part name="new_hire_id" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocArrayHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocumentHttpPostIn">
+      <wsdl:part name="document_id" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNewHireDocumentHttpPostOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="IsCompleteHttpPostIn">
+      <wsdl:part name="new_hire_id" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="IsCompleteHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:portType name="CompanyNewHiresSoap">
+      <wsdl:operation name="GetPending">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns an array of ID's for all pending New Hires.</documentation>
+         <wsdl:input message="tns:GetPendingSoapIn"/>
+         <wsdl:output message="tns:GetPendingSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetDateRange">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns an array of ID's for all New Hires hired within the specified date range.</documentation>
+         <wsdl:input message="tns:GetDateRangeSoapIn"/>
+         <wsdl:output message="tns:GetDateRangeSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetNewHire">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a dataset with New Hire Information.</documentation>
+         <wsdl:input message="tns:GetNewHireSoapIn"/>
+         <wsdl:output message="tns:GetNewHireSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetNewHireDocArray">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns an array of ID's for all documents downloaded by New Hire.</documentation>
+         <wsdl:input message="tns:GetNewHireDocArraySoapIn"/>
+         <wsdl:output message="tns:GetNewHireDocArraySoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetNewHireDocument">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns the document that was downloaded by the New Hire.</documentation>
+         <wsdl:input message="tns:GetNewHireDocumentSoapIn"/>
+         <wsdl:output message="tns:GetNewHireDocumentSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="IsComplete">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Sets the flag 'Transferred' for specified New Hire ID.</documentation>
+         <wsdl:input message="tns:IsCompleteSoapIn"/>
+         <wsdl:output message="tns:IsCompleteSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="CompanyNewHiresSoap" type="tns:CompanyNewHiresSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetPending">
+         <soap:operation soapAction="https://www.iamclients.com/WebServices/CompanyNewHires.asmx/GetPending"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetPendingAuthenticateCompany" part="AuthenticateCompany"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetDateRange">
+         <soap:operation soapAction="https://www.iamclients.com/WebServices/CompanyNewHires.asmx/GetDateRange"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetDateRangeAuthenticateCompany" part="AuthenticateCompany"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetNewHire">
+         <soap:operation soapAction="https://www.iamclients.com/WebServices/CompanyNewHires.asmx/GetNewHire"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetNewHireAuthenticateCompany" part="AuthenticateCompany"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetNewHireDocArray">
+         <soap:operation soapAction="https://www.iamclients.com/WebServices/CompanyNewHires.asmx/GetNewHireDocArray"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetNewHireDocArrayAuthenticateCompany" part="AuthenticateCompany"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetNewHireDocument">
+         <soap:operation soapAction="https://www.iamclients.com/WebServices/CompanyNewHires.asmx/GetNewHireDocument"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetNewHireDocumentAuthenticateCompany" part="AuthenticateCompany"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="IsComplete">
+         <soap:operation soapAction="https://www.iamclients.com/WebServices/CompanyNewHires.asmx/IsComplete"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:IsCompleteAuthenticateCompany" part="AuthenticateCompany"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="CompanyNewHires">
+      <wsdl:port name="CompanyNewHiresSoap" binding="tns:CompanyNewHiresSoap">
+         <soap:address location="http://ws.soatrader.com/iamclients.com/0.1/CompanyNewHires"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

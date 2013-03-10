@@ -1,0 +1,910 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://rep.oio.dk/cvr.dk/xml/schemas/2005/03/22/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s0="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+                  xmlns:s3="http://rep.oio.dk/ams.dk/xml/schemas/2004/11/01/"
+                  xmlns:s4="http://rep.oio.dk/ams.dk/xml/schemas/2005/09/01/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:ams1="http://rep.oio.dk/ams.dk/xml/schemas/2006/12/01/"
+                  targetNamespace="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/"
+                  name="SupplementaryInformationService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">
+		Service to update company informations, regarding
+		strike/blockade, notification and distribution of work.
+	</documentation>
+	  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <s:schema xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+                elementFormDefault="qualified"
+                targetNamespace="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+                version="1.1">
+			      <s:element name="PostCodeIdentifier" type="dkcc:PostCodeIdentifierType">
+				        <s:annotation>
+					          <s:documentation>
+						The postal departments nationwide postal code.
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:simpleType name="PostCodeIdentifierType">
+				        <s:restriction base="s:string">
+					          <s:pattern value="[0-9]{4}"/>
+				        </s:restriction>
+			      </s:simpleType>
+		    </s:schema>
+		    <s:schema xmlns:cvr="http://rep.oio.dk/cvr.dk/xml/schemas/2005/03/22/"
+                targetNamespace="http://rep.oio.dk/cvr.dk/xml/schemas/2005/03/22/">
+			      <s:element name="ProductionUnitIdentifier" type="cvr:ProductionUnitIdentifierType">
+				        <s:annotation>
+					          <s:documentation>
+						Unique and generally usable identifier for all
+						production units (“workplaces”).
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:simpleType name="ProductionUnitIdentifierType">
+				        <s:restriction base="s:string">
+					          <s:length value="10"/>
+				        </s:restriction>
+			      </s:simpleType>
+			      <s:element name="CVRnumberIdentifier" type="cvr:CVRnumberIdentifierType">
+				        <s:annotation>
+					          <s:documentation>
+						Unique and generally usable identifier for all
+						legal units included i CVR.
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:simpleType name="CVRnumberIdentifierType">
+				        <s:restriction base="s:string">
+					          <s:length value="8"/>
+				        </s:restriction>
+			      </s:simpleType>
+		    </s:schema>
+		    <s:schema xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+                xmlns:cvr="http://rep.oio.dk/cvr.dk/xml/schemas/2005/03/22/"
+                targetNamespace="http://rep.oio.dk/ams.dk/xml/schemas/2006/12/01/">
+			      <s:import namespace="http://rep.oio.dk/cvr.dk/xml/schemas/2005/03/22/"/>
+			      <s:import namespace="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"/>
+			      <s:simpleType name="GUID">
+				        <s:annotation>
+					          <s:documentation xml:lang="en">
+						The representation of a GUID, generally the id
+						of an element.
+					</s:documentation>
+				        </s:annotation>
+				        <s:restriction base="s:string">
+					          <s:pattern value="[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"/>
+				        </s:restriction>
+			      </s:simpleType>
+			      <s:element name="Receipt" type="ams1:GUID"/>
+			      <s:element name="StrikeBlockadeStartDate" type="ams1:StrikeBlockadeStartDateType"/>
+			      <s:simpleType name="StrikeBlockadeStartDateType">
+				        <s:restriction base="s:date"/>
+			      </s:simpleType>
+			      <s:element name="StrikeBlockadeUpdateRequest" type="ams1:StrikeBlockadeUpdateRequestType"/>
+			      <s:complexType name="StrikeBlockadeUpdateRequestType">
+				        <s:sequence>
+					          <s:element ref="cvr:CVRnumberIdentifier"/>
+					          <s:element ref="cvr:ProductionUnitIdentifier"/>
+                    <s:element ref="ams1:LastModifiedTimeStamp"/>
+					          <s:element ref="ams1:StrikeBlockadeStartDate"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:element name="LastModifiedTimeStamp" type="ams1:LastModifiedTimeStampType"/>
+			      <s:simpleType name="LastModifiedTimeStampType">
+				        <s:restriction base="s:dateTime"/>
+			      </s:simpleType>
+			      <s:element name="StrikeBlockadeUpdateResponse"
+                    type="ams1:StrikeBlockadeUpdateResponseType"/>
+			      <s:complexType name="StrikeBlockadeUpdateResponseType">
+				        <s:sequence>
+					          <s:element ref="ams1:Receipt"/>
+				        </s:sequence>
+			      </s:complexType>
+            <s:element name="StrikeBlockadeCreateRequest" type="ams1:StrikeBlockadeCreateRequestType"/>
+            <s:complexType name="StrikeBlockadeCreateRequestType">
+                <s:sequence>
+                    <s:element ref="cvr:CVRnumberIdentifier"/>
+                    <s:element ref="cvr:ProductionUnitIdentifier"/>
+                    <s:element ref="ams1:StrikeBlockadeStartDate"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="StrikeBlockadeCreateResponse"
+                    type="ams1:StrikeBlockadeCreateResponseType"/>
+            <s:complexType name="StrikeBlockadeCreateResponseType">
+                <s:sequence>
+                    <s:element ref="ams1:Receipt"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="StrikeBlockadeReadRequestWithPostCodeIdentifier"
+                    type="ams1:StrikeBlockadeReadRequestWithPostCodeIdentifierType"/>
+            <s:complexType name="StrikeBlockadeReadRequestWithPostCodeIdentifierType">
+                <s:sequence>
+                    <s:element ref="dkcc:PostCodeIdentifier"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="StrikeBlockadeReadRequestWithCvrAndPnumber"
+                    type="ams1:StrikeBlockadeReadRequestWithCvrAndPnumberType"/>
+            <s:complexType name="StrikeBlockadeReadRequestWithCvrAndPnumberType">
+                <s:sequence>
+                    <s:element ref="cvr:CVRnumberIdentifier"/>
+                    <s:element ref="cvr:ProductionUnitIdentifier"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="StrikeBlockade" type="ams1:StrikeBlockadeType"/>
+            <s:complexType name="StrikeBlockadeType">
+                <s:sequence>
+                    <s:element ref="cvr:CVRnumberIdentifier"/>
+                    <s:element ref="cvr:ProductionUnitIdentifier"/>
+                    <s:element ref="ams1:StrikeBlockadeStartDate"/>
+                    <s:element ref="ams1:LastModifiedTimeStamp"/>
+                </s:sequence>
+            </s:complexType>
+			      <s:element name="StrikeBlockadeReadResponse" type="ams1:StrikeBlockadeReadResponseType"/>
+			      <s:complexType name="StrikeBlockadeReadResponseType">
+				        <s:sequence minOccurs="0" maxOccurs="unbounded">
+                    <s:element ref="ams1:StrikeBlockade"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:element name="StrikeBlockadeDeleteRequest" type="ams1:StrikeBlockadeDeleteRequestType"/>
+			      <s:complexType name="StrikeBlockadeDeleteRequestType">
+				        <s:sequence>
+					          <s:element ref="cvr:CVRnumberIdentifier"/>
+					          <s:element ref="cvr:ProductionUnitIdentifier"/>
+					          <s:element ref="ams1:LastModifiedTimeStamp"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:element name="StrikeBlockadeDeleteResponse"
+                    type="ams1:StrikeBlockadeDeleteResponseType"/>
+			      <s:complexType name="StrikeBlockadeDeleteResponseType">
+				        <s:sequence>
+					          <s:element ref="ams1:Receipt"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:element name="DistributionOfWorkState" type="ams1:DistributionOfWorkStateType"/>
+			      <s:simpleType name="DistributionOfWorkStateType">
+				        <s:restriction base="s:string">
+					          <s:enumeration value="Anmeldt"/>
+					          <s:enumeration value="Godkendt"/>
+					          <s:enumeration value="Afsluttet"/>
+				        </s:restriction>
+			      </s:simpleType>
+			      <s:element name="DistributionOfWorkStartDate" type="ams1:DistributionOfWorkStartDateType"/>
+			      <s:simpleType name="DistributionOfWorkStartDateType">
+				        <s:restriction base="s:date"/>
+			      </s:simpleType>
+			      <s:element name="DistributionOfWorkEndDate" type="ams1:DistributionOfWorkEndDateType"/>
+			      <s:simpleType name="DistributionOfWorkEndDateType">
+				        <s:restriction base="s:date"/>
+			      </s:simpleType>
+			      <s:element name="AffectedNumberOfEmployees" type="ams1:AffectedNumberOfEmployeesType"/>
+			      <s:simpleType name="AffectedNumberOfEmployeesType">
+                <s:restriction base="s:int">
+                    <s:minInclusive value="0"/>
+                </s:restriction>
+                
+			      </s:simpleType>
+			      <s:element name="DistributionOfWorkCreateRequest"
+                    type="ams1:DistributionOfWorkCreateRequestType"/>
+			      <s:complexType name="DistributionOfWorkCreateRequestType">
+				        <s:sequence>
+					          <s:element ref="cvr:CVRnumberIdentifier"/>
+					          <s:element ref="cvr:ProductionUnitIdentifier"/>
+					          <s:element ref="ams1:DistributionOfWorkState"/>
+					          <s:element ref="ams1:DistributionOfWorkStartDate"/>
+					          <s:element ref="ams1:DistributionOfWorkEndDate"/>
+					          <s:element ref="ams1:AffectedNumberOfEmployees"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:element name="DistributionOfWorkCreateResponse"
+                    type="ams1:DistributionOfWorkCreateResponseType"/>
+			      <s:complexType name="DistributionOfWorkCreateResponseType">
+				        <s:sequence>
+					          <s:element ref="ams1:Receipt"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:element name="DistributionOfWorkReadRequestWithPostCodeIdentifier"
+                    type="ams1:DistributionOfWorkReadRequestWithPostCodeIdentifierType"/>
+			      <s:complexType name="DistributionOfWorkReadRequestWithPostCodeIdentifierType">
+                <s:sequence>
+                    <s:element ref="dkcc:PostCodeIdentifier"/>
+                </s:sequence>
+			      </s:complexType>
+            <s:element name="DistributionOfWorkReadRequestWithCvrAndPnumber"
+                    type="ams1:DistributionOfWorkReadRequestWithCvrAndPnumberType"/>
+            <s:complexType name="DistributionOfWorkReadRequestWithCvrAndPnumberType">
+                <s:sequence>
+                    <s:element ref="cvr:CVRnumberIdentifier"/>
+                    <s:element ref="cvr:ProductionUnitIdentifier"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="DistributionOfWork" type="ams1:DistributionOfWorkType"/>
+            <s:complexType name="DistributionOfWorkType">
+                <s:sequence>
+                    <s:element ref="cvr:CVRnumberIdentifier"/>
+                    <s:element ref="cvr:ProductionUnitIdentifier"/>
+                    <s:element ref="ams1:DistributionOfWorkState"/>
+                    <s:element ref="ams1:DistributionOfWorkStartDate"/>
+                    <s:element ref="ams1:DistributionOfWorkEndDate" minOccurs="0"/>
+                    <s:element ref="ams1:AffectedNumberOfEmployees"/>
+                    <s:element ref="ams1:LastModifiedTimeStamp"/>
+                </s:sequence>
+            </s:complexType>
+			      <s:element name="DistributionOfWorkReadResponse"
+                    type="ams1:DistributionOfWorkReadResponseType"/>
+			      <s:complexType name="DistributionOfWorkReadResponseType">
+				        <s:sequence minOccurs="0" maxOccurs="unbounded">
+                    <s:element ref="ams1:DistributionOfWork"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:element name="DistributionOfWorkUpdateRequest"
+                    type="ams1:DistributionOfWorkUpdateRequestType"/>
+			      <s:complexType name="DistributionOfWorkUpdateRequestType">
+				        <s:sequence>
+					          <s:element ref="cvr:CVRnumberIdentifier"/>
+					          <s:element ref="cvr:ProductionUnitIdentifier"/>
+					          <s:element ref="ams1:DistributionOfWorkState"/>
+					          <s:element ref="ams1:DistributionOfWorkStartDate"/>
+					          <s:element ref="ams1:DistributionOfWorkEndDate"/>
+					          <s:element ref="ams1:AffectedNumberOfEmployees"/>
+					          <s:element ref="ams1:LastModifiedTimeStamp"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:element name="DistributionOfWorkUpdateResponse"
+                    type="ams1:DistributionOfWorkUpdateResponseType"/>
+			      <s:complexType name="DistributionOfWorkUpdateResponseType">
+				        <s:sequence>
+					          <s:element ref="ams1:Receipt"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:element name="DistributionOfWorkDeleteRequest"
+                    type="ams1:DistributionOfWorkDeleteRequestType"/>
+			      <s:complexType name="DistributionOfWorkDeleteRequestType">
+				        <s:sequence>
+					          <s:element ref="cvr:CVRnumberIdentifier"/>
+					          <s:element ref="cvr:ProductionUnitIdentifier"/>
+					          <s:element ref="ams1:LastModifiedTimeStamp"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:element name="ReturnMessage" type="ams1:ReturnMessageType"/>
+			      <s:simpleType name="ReturnMessageType">
+				        <s:restriction base="s:string"/>
+			      </s:simpleType>
+			      <s:element name="DistributionOfWorkDeleteResponse"
+                    type="ams1:DistributionOfWorkDeleteResponseType"/>
+			      <s:complexType name="DistributionOfWorkDeleteResponseType">
+				        <s:sequence>
+					          <s:element ref="ams1:Receipt"/>
+				        </s:sequence>
+			      </s:complexType>
+            <s:element name="WorkReductionReadRequestWithPostCodeIdentifier"
+                    type="ams1:WorkReductionReadRequestWithPostCodeIdentifierType"/>
+            <s:complexType name="WorkReductionReadRequestWithPostCodeIdentifierType">
+                <s:sequence>
+                    <s:element ref="dkcc:PostCodeIdentifier"/>
+                </s:sequence>
+            </s:complexType>
+			      <s:element name="WorkReductionReadRequestWithCvrAndPnumber"
+                    type="ams1:WorkReductionReadRequestWithCvrAndPnumberType"/>
+			      <s:complexType name="WorkReductionReadRequestWithCvrAndPnumberType">
+                <s:sequence>
+                    <s:element ref="cvr:CVRnumberIdentifier"/>
+                    <s:element ref="cvr:ProductionUnitIdentifier"/>
+                </s:sequence>
+			      </s:complexType>
+            <s:element name="WorkReductionCreateRequest" type="ams1:WorkReductionCreateRequestType"/>
+            <s:complexType name="WorkReductionCreateRequestType">
+                <s:sequence>
+                    <s:element ref="cvr:CVRnumberIdentifier"/>
+                    <s:element ref="cvr:ProductionUnitIdentifier"/>
+                    <s:element ref="ams1:WorkReductionState"/>
+                    <s:element ref="ams1:WorkReductionStartDate"/>
+                    <s:element ref="ams1:WorkReductionCause"/>
+                    <s:element ref="ams1:WorkReductionExtent"/>
+                    <s:element ref="ams1:WorkReductionNumberOfEmployees"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="WorkReductionCreateResponse" type="ams1:WorkReductionCreateResponseType"/>
+            <s:complexType name="WorkReductionCreateResponseType">
+                <s:sequence>
+                    <s:element ref="ams1:Receipt"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="WorkReductionUpdateRequest" type="ams1:WorkReductionUpdateRequestType"/>
+            <s:complexType name="WorkReductionUpdateRequestType">
+                <s:sequence>
+                    <s:element ref="cvr:CVRnumberIdentifier"/>
+                    <s:element ref="cvr:ProductionUnitIdentifier"/>
+                    <s:element ref="ams1:WorkReductionState"/>
+                    <s:element ref="ams1:WorkReductionStartDate"/>
+                    <s:element ref="ams1:WorkReductionCause"/>
+                    <s:element ref="ams1:WorkReductionExtent"/>
+                    <s:element ref="ams1:WorkReductionNumberOfEmployees"/>
+                    <s:element ref="ams1:LastModifiedTimeStamp"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="WorkReductionUpdateResponse" type="ams1:WorkReductionUpdateResponseType"/>
+            <s:complexType name="WorkReductionUpdateResponseType">
+                <s:sequence>
+                    <s:element ref="ams1:Receipt"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="WorkReductionDeleteRequest" type="ams1:WorkReductionDeleteRequestType"/>
+            <s:complexType name="WorkReductionDeleteRequestType">
+                <s:sequence>
+                    <s:element ref="cvr:CVRnumberIdentifier"/>
+                    <s:element ref="cvr:ProductionUnitIdentifier"/>
+                    <s:element ref="ams1:LastModifiedTimeStamp"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="WorkReductionDeleteResponse" type="ams1:WorkReductionDeleteResponseType"/>
+            <s:complexType name="WorkReductionDeleteResponseType">
+                <s:sequence>
+                    <s:element ref="ams1:Receipt"/>
+                </s:sequence>
+            </s:complexType>
+			      <s:element name="WorkReductionState" type="ams1:WorkReductionStateType"/>
+			      <s:simpleType name="WorkReductionStateType">
+                <s:restriction base="s:string">
+                    <s:enumeration value="Anmeldt"/>
+                    <s:enumeration value="Godkendt"/>
+                    <s:enumeration value="Afsluttet"/>
+                </s:restriction>
+                <!--
+				<s:restriction base="s:string">
+					<s:enumeration value="Active" />
+					<s:enumeration value="Passive" />
+				</s:restriction>
+                -->
+			</s:simpleType>
+			      <s:element name="WorkReductionStartDate" type="ams1:WorkReductionStartDateType"/>
+			      <s:simpleType name="WorkReductionStartDateType">
+				        <s:restriction base="s:date"/>
+			      </s:simpleType>
+			      <s:element name="WorkReductionEndDate" type="ams1:WorkReductionEndDateType"/>
+			      <s:simpleType name="WorkReductionEndDateType">
+				        <s:restriction base="s:date"/>
+			      </s:simpleType>
+			      <s:element name="WorkReductionCause" type="ams1:WorkReductionCauseType"/>
+			      <s:simpleType name="WorkReductionCauseType">
+				        <s:restriction base="s:string">
+					          <s:enumeration value="CompanyCloses"/>
+					          <s:enumeration value="Reduction"/>
+				        </s:restriction>
+			      </s:simpleType>
+			      <s:element name="WorkReductionExtent" type="ams1:WorkReductionExtentType"/>
+			      <s:simpleType name="WorkReductionExtentType">
+				        <s:restriction base="s:string">
+					          <s:enumeration value="&lt;50%"/>
+					          <s:enumeration value="&gt;50%"/>
+				        </s:restriction>
+			      </s:simpleType>
+			      <s:element name="WorkReductionNumberOfEmployees"
+                    type="ams1:WorkReductionNumberOfEmployeesType"/>
+			      <s:simpleType name="WorkReductionNumberOfEmployeesType">
+                <s:restriction base="s:int">
+                    <s:minInclusive value="0"/>
+                </s:restriction>
+			      </s:simpleType>
+            <s:element name="WorkReduction" type="ams1:WorkReductionType"/>
+            <s:complexType name="WorkReductionType">
+                <s:sequence>
+                    <s:element ref="cvr:CVRnumberIdentifier"/>
+                    <s:element ref="cvr:ProductionUnitIdentifier"/>
+                    <s:element ref="ams1:WorkReductionState"/>
+                    <s:element ref="ams1:WorkReductionStartDate"/>
+                    <s:element ref="ams1:WorkReductionCause"/>
+                    <s:element ref="ams1:WorkReductionExtent"/>
+                    <s:element ref="ams1:WorkReductionNumberOfEmployees"/>
+                    <s:element ref="ams1:LastModifiedTimeStamp"/>
+                </s:sequence>
+            </s:complexType>
+			      <s:element name="WorkReductionReadResponse" type="ams1:WorkReductionReadResponseType"/>
+			      <s:complexType name="WorkReductionReadResponseType">
+				        <s:sequence minOccurs="0" maxOccurs="unbounded">
+                    <s:element ref="ams1:WorkReduction"/>
+				        </s:sequence>
+			      </s:complexType>
+		    </s:schema>
+		    <s:schema xmlns:ams="http://rep.oio.dk/ams.dk/xml/schemas/2004/11/01/"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified"
+                targetNamespace="http://rep.oio.dk/ams.dk/xml/schemas/2004/11/01/">
+			      <s:element name="OcesCertHeader" type="ams:OcesCertHeader">
+				        <s:annotation>
+					          <s:documentation xml:lang="en">
+						This element is used in a SOAP header. It is
+						used for sending the raw bytes from the public
+						part of a X509 certificate.
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:complexType name="OcesCertHeader">
+				        <s:sequence>
+					          <s:element minOccurs="0" maxOccurs="1" name="CertificateBytes" type="s:base64Binary"/>
+				        </s:sequence>
+			      </s:complexType>
+		    </s:schema>
+		    <s:schema xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"
+                xmlns:ams2="http://rep.oio.dk/ams.dk/xml/schemas/2005/09/01/"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified"
+                targetNamespace="http://rep.oio.dk/ams.dk/xml/schemas/2005/09/01/">
+			      <s:element name="OrganisationTypeIdentifier" type="ams2:OrganisationTypeIdentifierType">
+				        <s:annotation>
+					          <s:documentation>
+						Identifies the type of organisation to which the
+						user belongs to.
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:simpleType name="OrganisationTypeIdentifierType">
+				        <s:restriction base="s:int">
+					          <s:minInclusive value="1"/>
+					          <s:maxInclusive value="100"/>
+				        </s:restriction>
+			      </s:simpleType>
+			      <s:element name="OrganisationCode" type="ams2:OrganisationCodeType">
+				        <s:annotation>
+					          <s:documentation>
+						The code that identifies the organisation. It
+						could be a CVR number, an unemploymentfundcode,
+						a municipality code
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:simpleType name="OrganisationCodeType">
+				        <s:restriction base="s:string">
+					          <s:minLength value="1"/>
+					          <s:maxLength value="20"/>
+				        </s:restriction>
+			      </s:simpleType>
+			      <s:element name="ActiveOrganisationHeader" type="ams2:ActiveOrganisationHeader">
+				        <s:annotation>
+					          <s:documentation xml:lang="en">
+						This element is used in a SOAP header. It is
+						used for sending the type of organisation and
+						the code of the organisation the user acts as.
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:complexType name="ActiveOrganisationHeader">
+				        <s:sequence>
+					          <s:element ref="ams2:OrganisationTypeIdentifier"/>
+					          <s:element ref="ams2:OrganisationCode"/>
+				        </s:sequence>
+			      </s:complexType>
+		    </s:schema>
+    </wsdl:types>
+	  <wsdl:message name="StrikeBlockadeCreateRequestMsg">
+		    <wsdl:part name="StrikeBlockadeCreateRequestPart"
+                 element="ams1:StrikeBlockadeCreateRequest"/>
+	  </wsdl:message>
+	  <wsdl:message name="StrikeBlockadeCreateResponseMsg">
+		    <wsdl:part name="StrikeBlockadeCreateResponsePart"
+                 element="ams1:StrikeBlockadeCreateResponse"/>
+	  </wsdl:message>
+    <wsdl:message name="StrikeBlockadeUpdateRequestMsg">
+        <wsdl:part name="StrikeBlockadeUpdateRequestPart"
+                 element="ams1:StrikeBlockadeUpdateRequest"/>
+    </wsdl:message>
+    <wsdl:message name="StrikeBlockadeUpdateResponseMsg">
+        <wsdl:part name="StrikeBlockadeUpdateResponsePart"
+                 element="ams1:StrikeBlockadeUpdateResponse"/>
+    </wsdl:message>
+    <wsdl:message name="StrikeBlockadeReadRequestWithPostCodeIdentifierMsg">
+        <wsdl:part name="StrikeBlockadeReadRequestWithPostCodeIdentifierPart"
+                 element="ams1:StrikeBlockadeReadRequestWithPostCodeIdentifier"/>
+    </wsdl:message>
+    <wsdl:message name="StrikeBlockadeReadRequestWithCvrAndPnumberMsg">
+        <wsdl:part name="StrikeBlockadeReadRequestWithCvrAndPnumberPart"
+                 element="ams1:StrikeBlockadeReadRequestWithCvrAndPnumber"/>
+    </wsdl:message>
+	  <wsdl:message name="StrikeBlockadeReadResponseMsg">
+		    <wsdl:part name="StrikeBlockadeReadResponsePart" element="ams1:StrikeBlockadeReadResponse"/>
+	  </wsdl:message>
+	  <wsdl:message name="StrikeBlockadeDeleteRequestMsg">
+		    <wsdl:part name="StrikeBlockadeDeleteRequestPart"
+                 element="ams1:StrikeBlockadeDeleteRequest"/>
+	  </wsdl:message>
+	  <wsdl:message name="StrikeBlockadeDeleteResponseMsg">
+		    <wsdl:part name="StrikeBlockadeDeleteResponsePart"
+                 element="ams1:StrikeBlockadeDeleteResponse"/>
+	  </wsdl:message>
+	  <wsdl:message name="DistributionOfWorkCreateRequestMsg">
+		    <wsdl:part name="DistributionOfWorkCreateRequestPart"
+                 element="ams1:DistributionOfWorkCreateRequest"/>
+	  </wsdl:message>
+	  <wsdl:message name="DistributionOfWorkCreateResponseMsg">
+		    <wsdl:part name="DistributionOfWorkCreateResponsePart"
+                 element="ams1:DistributionOfWorkCreateResponse"/>
+	  </wsdl:message>
+	  <wsdl:message name="DistributionOfWorkReadRequestWithPostCodeIdentifierMsg">
+		    <wsdl:part name="DistributionOfWorkReadRequestWithPostCodeIdentifierPart"
+                 element="ams1:DistributionOfWorkReadRequestWithPostCodeIdentifier"/>
+	  </wsdl:message>
+    <wsdl:message name="DistributionOfWorkReadRequestWithCvrAndPnumberMsg">
+        <wsdl:part name="DistributionOfWorkReadRequestWithCvrAndPnumberPart"
+                 element="ams1:DistributionOfWorkReadRequestWithCvrAndPnumber"/>
+    </wsdl:message>
+	  <wsdl:message name="DistributionOfWorkReadResponseMsg">
+		    <wsdl:part name="DistributionOfWorkReadResponsePart"
+                 element="ams1:DistributionOfWorkReadResponse"/>
+	  </wsdl:message>
+	  <wsdl:message name="DistributionOfWorkUpdateRequestMsg">
+		    <wsdl:part name="DistributionOfWorkUpdateRequestPart"
+                 element="ams1:DistributionOfWorkUpdateRequest"/>
+	  </wsdl:message>
+	  <wsdl:message name="DistributionOfWorkUpdateResponseMsg">
+		    <wsdl:part name="DistributionOfWorkUpdateResponsePart"
+                 element="ams1:DistributionOfWorkUpdateResponse"/>
+	  </wsdl:message>
+	  <wsdl:message name="DistributionOfWorkDeleteRequestMsg">
+		    <wsdl:part name="DistributionOfWorkDeleteRequestPart"
+                 element="ams1:DistributionOfWorkDeleteRequest"/>
+	  </wsdl:message>
+	  <wsdl:message name="DistributionOfWorkDeleteResponseMsg">
+		    <wsdl:part name="DistributionOfWorkDeleteResponsePart"
+                 element="ams1:DistributionOfWorkDeleteResponse"/>
+	  </wsdl:message>
+	  <wsdl:message name="WorkReductionReadRequestWithPostCodeIdentifierMsg">
+		    <wsdl:part name="WorkReductionReadRequestWithPostCodeIdentifierPart"
+                 element="ams1:WorkReductionReadRequestWithPostCodeIdentifier"/>
+	  </wsdl:message>
+    <wsdl:message name="WorkReductionReadRequestWithCvrAndPnumberMsg">
+        <wsdl:part name="WorkReductionReadRequestWithCvrAndPnumberPart"
+                 element="ams1:WorkReductionReadRequestWithCvrAndPnumber"/>
+    </wsdl:message>
+	  <wsdl:message name="WorkReductionReadResponseMsg">
+		    <wsdl:part name="WorkReductionReadResponsePart" element="ams1:WorkReductionReadResponse"/>
+	  </wsdl:message>
+    <wsdl:message name="WorkReductionCreateRequestMsg">
+        <wsdl:part name="WorkReductionCreateRequestPart" element="ams1:WorkReductionCreateRequest"/>
+    </wsdl:message>
+    <wsdl:message name="WorkReductionCreateResponseMsg">
+        <wsdl:part name="WorkReductionCreateResponsePart"
+                 element="ams1:WorkReductionCreateResponse"/>
+    </wsdl:message>
+    <wsdl:message name="WorkReductionUpdateRequestMsg">
+        <wsdl:part name="WorkReductionUpdateRequestPart" element="ams1:WorkReductionUpdateRequest"/>
+    </wsdl:message>
+    <wsdl:message name="WorkReductionUpdateResponseMsg">
+        <wsdl:part name="WorkReductionUpdateResponsePart"
+                 element="ams1:WorkReductionUpdateResponse"/>
+    </wsdl:message>
+    <wsdl:message name="WorkReductionDeleteRequestMsg">
+        <wsdl:part name="WorkReductionDeleteRequestPart" element="ams1:WorkReductionDeleteRequest"/>
+    </wsdl:message>
+    <wsdl:message name="WorkReductionDeleteResponseMsg">
+        <wsdl:part name="WorkReductionDeleteResponsePart"
+                 element="ams1:WorkReductionDeleteResponse"/>
+    </wsdl:message>
+	  <wsdl:message name="ActiveOrganisationHeaderMsg">
+		    <wsdl:part name="ActiveOrganisationHeaderPart" element="s4:ActiveOrganisationHeader">
+		</wsdl:part>
+	  </wsdl:message>
+	  <wsdl:message name="OcesCertHeaderMsg">
+		    <wsdl:part name="OcesCertHeaderPart" element="s3:OcesCertHeader">
+		</wsdl:part>
+	  </wsdl:message>
+	  <wsdl:portType name="SupplementaryInformationServiceSoap">
+		    <wsdl:operation name="StrikeBlockadeCreate">
+			      <wsdl:input message="tns:StrikeBlockadeCreateRequestMsg"/>
+			      <wsdl:output message="tns:StrikeBlockadeCreateResponseMsg"/>
+		    </wsdl:operation>
+        <wsdl:operation name="StrikeBlockadeUpdate">
+            <wsdl:input message="tns:StrikeBlockadeUpdateRequestMsg"/>
+            <wsdl:output message="tns:StrikeBlockadeUpdateResponseMsg"/>
+        </wsdl:operation>
+        <wsdl:operation name="StrikeBlockadeReadWithPostCodeIdentifier">
+            <wsdl:input message="tns:StrikeBlockadeReadRequestWithPostCodeIdentifierMsg"/>
+            <wsdl:output message="tns:StrikeBlockadeReadResponseMsg"/>
+        </wsdl:operation>
+        <wsdl:operation name="StrikeBlockadeReadWithCvrAndPnumber">
+            <wsdl:input message="tns:StrikeBlockadeReadRequestWithCvrAndPnumberMsg"/>
+            <wsdl:output message="tns:StrikeBlockadeReadResponseMsg"/>
+        </wsdl:operation>
+		    <wsdl:operation name="StrikeBlockadeDelete">
+			      <wsdl:input message="tns:StrikeBlockadeDeleteRequestMsg"/>
+			      <wsdl:output message="tns:StrikeBlockadeDeleteResponseMsg"/>
+        </wsdl:operation>
+		    <wsdl:operation name="DistributionOfWorkCreate">
+			      <wsdl:input message="tns:DistributionOfWorkCreateRequestMsg"/>
+			      <wsdl:output message="tns:DistributionOfWorkCreateResponseMsg"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="DistributionOfWorkReadWithPostCodeIdentifier">
+			      <wsdl:input message="tns:DistributionOfWorkReadRequestWithPostCodeIdentifierMsg"/>
+			      <wsdl:output message="tns:DistributionOfWorkReadResponseMsg"/>
+		    </wsdl:operation>
+        <wsdl:operation name="DistributionOfWorkReadWithCvrAndPnumber">
+            <wsdl:input message="tns:DistributionOfWorkReadRequestWithCvrAndPnumberMsg"/>
+            <wsdl:output message="tns:DistributionOfWorkReadResponseMsg"/>
+        </wsdl:operation>
+		    <wsdl:operation name="DistributionOfWorkUpdate">
+			      <wsdl:input message="tns:DistributionOfWorkUpdateRequestMsg"/>
+			      <wsdl:output message="tns:DistributionOfWorkUpdateResponseMsg"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="DistributionOfWorkDelete">
+			      <wsdl:input message="tns:DistributionOfWorkDeleteRequestMsg"/>
+			      <wsdl:output message="tns:DistributionOfWorkDeleteResponseMsg"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="WorkReductionReadWithPostCodeIdentifier">
+			      <wsdl:input message="tns:WorkReductionReadRequestWithPostCodeIdentifierMsg"/>
+			      <wsdl:output message="tns:WorkReductionReadResponseMsg"/>
+		    </wsdl:operation>
+        <wsdl:operation name="WorkReductionReadWithCvrAndPnumber">
+            <wsdl:input message="tns:WorkReductionReadRequestWithCvrAndPnumberMsg"/>
+            <wsdl:output message="tns:WorkReductionReadResponseMsg"/>
+        </wsdl:operation>
+        <wsdl:operation name="WorkReductionCreate">
+            <wsdl:input message="tns:WorkReductionCreateRequestMsg"/>
+            <wsdl:output message="tns:WorkReductionCreateResponseMsg"/>
+        </wsdl:operation>
+        <wsdl:operation name="WorkReductionUpdate">
+            <wsdl:input message="tns:WorkReductionUpdateRequestMsg"/>
+            <wsdl:output message="tns:WorkReductionUpdateResponseMsg"/>
+        </wsdl:operation>
+        <wsdl:operation name="WorkReductionDelete">
+            <wsdl:input message="tns:WorkReductionDeleteRequestMsg"/>
+            <wsdl:output message="tns:WorkReductionDeleteResponseMsg"/>
+        </wsdl:operation>
+	  </wsdl:portType>
+	  <wsdl:binding name="SupplementaryInformationServiceBinding"
+                 type="tns:SupplementaryInformationServiceSoap">
+		    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+		    <wsdl:operation name="StrikeBlockadeCreate">
+			      <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/StrikeBlockadeCreate"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" parts="StrikeBlockadeCreateRequestPart"/>
+				        <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+				        <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" parts="StrikeBlockadeCreateResponsePart"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+        <wsdl:operation name="StrikeBlockadeUpdate">
+        <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/StrikeBlockadeUpdate"/>
+        <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" parts="StrikeBlockadeUpdateRequestPart"/>
+            <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+            <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+        </wsdl:input>
+        <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" parts="StrikeBlockadeUpdateResponsePart"/>
+        </wsdl:output>
+        </wsdl:operation>
+		    <wsdl:operation name="StrikeBlockadeReadWithPostCodeIdentifier">
+			      <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/StrikeBlockadeReadWithPostCodeIdentifier"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" parts="StrikeBlockadeReadRequestWithPostCodeIdentifierPart"/>
+				        <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+				        <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" parts="StrikeBlockadeReadResponsePart"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+        <wsdl:operation name="StrikeBlockadeReadWithCvrAndPnumber">
+            <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/StrikeBlockadeReadWithCvrAndPnumber"/>
+            <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="literal" parts="StrikeBlockadeReadRequestWithCvrAndPnumberPart"/>
+                <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+                <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="literal" parts="StrikeBlockadeReadResponsePart"/>
+            </wsdl:output>
+        </wsdl:operation>
+		    <wsdl:operation name="StrikeBlockadeDelete">
+			      <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/StrikeBlockadeDelete"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" parts="StrikeBlockadeDeleteRequestPart"/>
+				        <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+				        <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" parts="StrikeBlockadeDeleteResponsePart"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+		    <wsdl:operation name="DistributionOfWorkCreate">
+			      <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/DistributionOfWorkCreate"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" parts="DistributionOfWorkCreateRequestPart"/>
+				        <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+				        <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" parts="DistributionOfWorkCreateResponsePart"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+		    <wsdl:operation name="DistributionOfWorkReadWithPostCodeIdentifier">
+			      <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/DistributionOfWorkReadWithPostCodeIdentifier"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" parts="DistributionOfWorkReadRequestWithPostCodeIdentifierPart"/>
+				        <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+				        <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" parts="DistributionOfWorkReadResponsePart"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+        <wsdl:operation name="DistributionOfWorkReadWithCvrAndPnumber">
+            <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/DistributionOfWorkReadWithCvrAndPnumber"/>
+            <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="literal" parts="DistributionOfWorkReadRequestWithCvrAndPnumberPart"/>
+                <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+                <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="literal" parts="DistributionOfWorkReadResponsePart"/>
+            </wsdl:output>
+        </wsdl:operation>
+		    <wsdl:operation name="DistributionOfWorkUpdate">
+			      <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/DistributionOfWorkUpdate"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" parts="DistributionOfWorkUpdateRequestPart"/>
+				        <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+				        <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" parts="DistributionOfWorkUpdateResponsePart"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+		    <wsdl:operation name="DistributionOfWorkDelete">
+			      <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/DistributionOfWorkDelete"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" parts="DistributionOfWorkDeleteRequestPart"/>
+				        <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+				        <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" parts="DistributionOfWorkDeleteResponsePart"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+		    <wsdl:operation name="WorkReductionReadWithPostCodeIdentifier">
+			      <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/WorkReductionReadWithPostCodeIdentifier"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" parts="WorkReductionReadRequestWithPostCodeIdentifierPart"/>
+				        <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+				        <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" parts="WorkReductionReadResponsePart"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+        <wsdl:operation name="WorkReductionReadWithCvrAndPnumber">
+            <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/WorkReductionReadWithCvrAndPnumber"/>
+            <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="literal" parts="WorkReductionReadRequestWithCvrAndPnumberPart"/>
+                <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+                <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="literal" parts="WorkReductionReadResponsePart"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="WorkReductionCreate">
+            <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/WorkReductionCreate"/>
+            <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="literal" parts="WorkReductionCreateRequestPart"/>
+                <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+                <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="literal" parts="WorkReductionCreateResponsePart"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="WorkReductionUpdate">
+            <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/WorkReductionUpdate"/>
+            <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="literal" parts="WorkReductionUpdateRequestPart"/>
+                <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+                <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="literal" parts="WorkReductionUpdateResponsePart"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="WorkReductionDelete">
+            <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/SupplementaryInformationService/1/WorkReductionDelete"/>
+            <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="literal" parts="WorkReductionDeleteRequestPart"/>
+                <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+                <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="literal" parts="WorkReductionDeleteResponsePart"/>
+            </wsdl:output>
+        </wsdl:operation>
+	  </wsdl:binding>
+	  <wsdl:service name="SupplementaryInformationService">
+		    <wsdl:port name="SupplementaryInformationServicePort"
+                 binding="tns:SupplementaryInformationServiceBinding">
+			      <soap:address location="http://ws.soatrader.com/bm.dk/0.1/SupplementaryInformationService"/>
+		    </wsdl:port>
+	  </wsdl:service>
+</wsdl:definitions>

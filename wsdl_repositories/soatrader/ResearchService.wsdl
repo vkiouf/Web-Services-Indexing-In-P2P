@@ -1,0 +1,116 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s0="urn:Microsoft.Search"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="urn:Microsoft.Search">
+         <s:element name="Registration">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="registrationXml" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RegistrationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RegistrationResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Query">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="queryXml" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="QueryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="QueryResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RegistrationSoapIn">
+      <wsdl:part name="parameters" element="s0:Registration"/>
+  </wsdl:message>
+  <wsdl:message name="RegistrationSoapOut">
+      <wsdl:part name="parameters" element="s0:RegistrationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="QuerySoapIn">
+      <wsdl:part name="parameters" element="s0:Query"/>
+  </wsdl:message>
+  <wsdl:message name="QuerySoapOut">
+      <wsdl:part name="parameters" element="s0:QueryResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ResearchServiceSoap">
+      <wsdl:operation name="Registration">
+         <wsdl:input message="tns:RegistrationSoapIn"/>
+         <wsdl:output message="tns:RegistrationSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="Query">
+         <wsdl:input message="tns:QuerySoapIn"/>
+         <wsdl:output message="tns:QuerySoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ResearchServiceSoap" type="tns:ResearchServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="Registration">
+         <soap:operation soapAction="urn:Microsoft.Search/Registration" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Query">
+         <soap:operation soapAction="urn:Microsoft.Search/Query" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ResearchService">
+      <wsdl:port name="ResearchServiceSoap" binding="tns:ResearchServiceSoap">
+         <soap:address location="http://ws.soatrader.com/oio.dk/0.1/ResearchService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

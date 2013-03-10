@@ -1,0 +1,657 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://geoaccess.and.com/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://geoaccess.and.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://geoaccess.and.com/">
+         <s:element name="AddressSimple">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Street" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Premise" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SubscriptionKey" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="UseCleanseSearchMethod" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddressSimpleResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddressSimpleResult"
+                             type="tns:AddressLocation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AddressLocation">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Location" type="tns:Location"/>
+            </s:sequence>
+            <s:attribute default="OK" name="Status" type="tns:FieldStatus"/>
+            <s:attribute name="Found" type="s:string"/>
+            <s:attribute name="Returned" type="s:string"/>
+            <s:attribute name="fid" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="Location">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="tns:LocationField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="tns:LocationField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="tns:LocationField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="tns:LocationField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Street" type="tns:LocationField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Premise" type="tns:LocationField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PoBox" type="tns:LocationField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LargeUser" type="tns:LocationField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="X" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Y" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Radius" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Encoding" type="tns:EncodingType"/>
+            </s:sequence>
+            <s:attribute name="fid" type="s:string"/>
+            <s:attribute name="Status" type="tns:FieldStatus" use="required"/>
+         </s:complexType>
+         <s:complexType name="LocationField">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="tns:ArrayOfString"/>
+            </s:sequence>
+            <s:attribute name="Status" type="tns:FieldStatus" use="required"/>
+            <s:attribute name="Current" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="FieldStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="OK"/>
+               <s:enumeration value="NotChecked"/>
+               <s:enumeration value="Completed"/>
+               <s:enumeration value="Alternatives"/>
+               <s:enumeration value="Conflict"/>
+               <s:enumeration value="Incomplete"/>
+               <s:enumeration value="Empty"/>
+               <s:enumeration value="RangeCheck"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="EncodingType">
+            <s:restriction base="s:string">
+               <s:enumeration value="EPGS4326"/>
+               <s:enumeration value="AND1"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="AddressExSimple">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Street" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Premise" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PoBox" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LargeUser" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SubscriptionKey" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="UseCleanseSearchMethod" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddressExSimpleResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddressExSimpleResult"
+                             type="tns:AddressLocation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Address">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Addresses" type="tns:ArrayOfLocationInput"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="UseCleanseSearchMethod" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SubscriptionKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfLocationInput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="LocationInput" nillable="true"
+                          type="tns:LocationInput"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="LocationInput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Street" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Premise" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="X" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Y" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Radius" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Encoding" type="tns:EncodingType"/>
+            </s:sequence>
+            <s:attribute name="fid" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="LocationInputField">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddressResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddressResult"
+                             type="tns:ArrayOfAddressLocation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAddressLocation">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressLocation" nillable="true"
+                          type="tns:AddressLocation"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddressEx">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Addresses"
+                             type="tns:ArrayOfAddressLocationInput"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="UseCleanseSearchMethod" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SubscriptionKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAddressLocationInput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressLocationInput" nillable="true"
+                          type="tns:AddressLocationInput"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressLocationInput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Street" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Premise" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PoBox" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LargeUser" type="tns:LocationInputField"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="X" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Y" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Radius" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Encoding" type="tns:EncodingType"/>
+            </s:sequence>
+            <s:attribute name="fid" type="s:string"/>
+         </s:complexType>
+         <s:element name="AddressExResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddressExResult"
+                             type="tns:ArrayOfAddressLocation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddressAdvanced">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Settings" type="tns:ArrayOfAddressSetting"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Addresses" type="tns:ArrayOfAddressInput"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RequestFields" type="tns:ArrayOfAddressField"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MaxHits" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="WantFormattedResult" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SubscriptionKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAddressSetting">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressSetting" nillable="true"
+                          type="tns:AddressSetting"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressSetting">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Flag" type="tns:AddressFlag"/>
+               <s:element minOccurs="1" maxOccurs="1" name="How" type="tns:AddressHow"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="AddressFlag">
+            <s:restriction base="s:string">
+               <s:enumeration value="FLAG_LOGLEVEL"/>
+               <s:enumeration value="FLAG_BASELANGUAGE_LANG"/>
+               <s:enumeration value="FLAG_BASELANGUAGE_TYPE"/>
+               <s:enumeration value="FLAG_ORIGINCOUNTRY"/>
+               <s:enumeration value="FLAG_QUERYMODE"/>
+               <s:enumeration value="FLAG_SRCHCITY_DUPLICATE"/>
+               <s:enumeration value="FLAG_SRCHCITY_FUZZMETHOD"/>
+               <s:enumeration value="FLAG_SRCHCITY_MINACCEPT"/>
+               <s:enumeration value="FLAG_SRCHCITY_CONTROLBITS"/>
+               <s:enumeration value="FLAG_SRCHCITY_NRPREFCHAR"/>
+               <s:enumeration value="FLAG_SRCHSTREET_FUZZMETHOD"/>
+               <s:enumeration value="FLAG_SRCHSTREET_MINACCEPT"/>
+               <s:enumeration value="FLAG_SRCHSTREET_CONTROLBITS"/>
+               <s:enumeration value="FLAG_SRCHSTREET_NRPREFCHAR"/>
+               <s:enumeration value="FLAG_SRCHSTREETMAIN_MINACCEPT"/>
+               <s:enumeration value="FLAG_SRCHSTREETMAIN_NRPREFCHAR"/>
+               <s:enumeration value="FLAG_SRCHPOSTCODE_MINACCEPT"/>
+               <s:enumeration value="FLAG_SRCHPREMISE_MINACCEPT"/>
+               <s:enumeration value="FLAG_SRCHPROV_DUPLICATE"/>
+               <s:enumeration value="FLAG_SRCHPROV_FUZZMETHOD"/>
+               <s:enumeration value="FLAG_SRCHPROV_MINACCEPT"/>
+               <s:enumeration value="FLAG_SRCHPROV_CONTROLBITS"/>
+               <s:enumeration value="FLAG_SRCHPROV_NRPREFCHAR"/>
+               <s:enumeration value="FLAG_SRCHCOUNTRY_FUZZMETHOD"/>
+               <s:enumeration value="FLAG_SRCHCOUNTRY_MINACCEPT"/>
+               <s:enumeration value="FLAG_SRCHCOUNTRY_NRPREFCHAR"/>
+               <s:enumeration value="FLAG_SRCHLARGEUSER_FUZZMETHOD"/>
+               <s:enumeration value="FLAG_SRCHLARGEUSER_MINACCEPT"/>
+               <s:enumeration value="FLAG_SRCHLARGEUSER_CONTROLBITS"/>
+               <s:enumeration value="FLAG_SRCHLARGEUSER_NRPREFCHAR"/>
+               <s:enumeration value="FLAG_SRCHLARGEUSERMAIN_MINACCEPT"/>
+               <s:enumeration value="FLAG_SRCHLARGEUSERMAIN_NRPREFCHAR"/>
+               <s:enumeration value="FLAG_SEARCHNOPRUNE_CONTROLBITS"/>
+               <s:enumeration value="FLAG_SEARCHMETHOD"/>
+               <s:enumeration value="FLAG_TRANSLATE_COUNTRY_QUERY"/>
+               <s:enumeration value="FLAG_TRANSLATE_COUNTRY_FORMAT"/>
+               <s:enumeration value="FLAG_FORMATCONTROLBITS"/>
+               <s:enumeration value="FLAG_FORMATCONVERSIONBITS_DEFAULT"/>
+               <s:enumeration value="FLAG_FORMATCONVERSIONBITS_UPPER"/>
+               <s:enumeration value="FLAG_FORMATCONVERSIONBITS_LOWER"/>
+               <s:enumeration value="FLAG_FORMATCONVERSIONBITS_MIXED"/>
+               <s:enumeration value="FLAG_FORMATCONVERSIONBITS_NONE"/>
+               <s:enumeration value="FLAG_MATCHWEIGHT_COUNTRY"/>
+               <s:enumeration value="FLAG_MATCHWEIGHT_PROV"/>
+               <s:enumeration value="FLAG_MATCHWEIGHT_CITY"/>
+               <s:enumeration value="FLAG_MATCHWEIGHT_STREET"/>
+               <s:enumeration value="FLAG_MATCHWEIGHT_PREMISES"/>
+               <s:enumeration value="FLAG_MATCHWEIGHT_POBOX"/>
+               <s:enumeration value="FLAG_MATCHWEIGHT_PS_CEDEX"/>
+               <s:enumeration value="FLAG_MATCHWEIGHT_POSTCODE"/>
+               <s:enumeration value="FLAG_MATCHWEIGHT_LARGEUSER"/>
+               <s:enumeration value="FLAG_MATCH_ITERATIONS"/>
+               <s:enumeration value="FLAG_MATCH_RESULT_MINACCEPT"/>
+               <s:enumeration value="FLAG_MATCH_RESULT_MINDIF"/>
+               <s:enumeration value="FLAG_MATCH_RESULT_MODE"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="AddressHow">
+            <s:restriction base="s:string">
+               <s:enumeration value="HOW_SET"/>
+               <s:enumeration value="HOW_DEFAULT"/>
+               <s:enumeration value="HOW_ADD"/>
+               <s:enumeration value="HOW_REMOVE"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfAddressInput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressInput" nillable="true"
+                          type="tns:AddressInput"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressInput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Items" type="tns:ArrayOfAddressInputItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfAddressInputItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressInputItem" nillable="true"
+                          type="tns:AddressInputItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressInputItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:AddressCv"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="AddressCv">
+            <s:restriction base="s:string">
+               <s:enumeration value="CV_NELEM_COUNTRY"/>
+               <s:enumeration value="CV_NELEM_PROV"/>
+               <s:enumeration value="CV_NELEM_PROV_OFFICIAL"/>
+               <s:enumeration value="CV_NELEM_CITY"/>
+               <s:enumeration value="CV_NELEM_CITY_OFFICIAL"/>
+               <s:enumeration value="CV_NELEM_STREET"/>
+               <s:enumeration value="CV_NELEM_STREETMAIN"/>
+               <s:enumeration value="CV_NELEM_PREMISES"/>
+               <s:enumeration value="CV_NELEM_POBOX"/>
+               <s:enumeration value="CV_NELEM_PS_CEDEX"/>
+               <s:enumeration value="CV_NELEM_POSTCODE"/>
+               <s:enumeration value="CV_NELEM_LARGEUSER"/>
+               <s:enumeration value="CV_NELEM_LARGEUSERMAIN"/>
+               <s:enumeration value="CV_FELEM_ORGCOUNTRY"/>
+               <s:enumeration value="CV_FELEM_BUILDING"/>
+               <s:enumeration value="CV_FELEM_SUBBUILDING"/>
+               <s:enumeration value="CV_FELEM_CITY_POSTAL"/>
+               <s:enumeration value="CV_FELEM_STREET_DEPENDANT"/>
+               <s:enumeration value="CV_FELEM_STREET_DOUBLEDEPENDANT"/>
+               <s:enumeration value="CV_FELEM_POBOXNAME"/>
+               <s:enumeration value="CV_FELEM_COUNTRYCODE"/>
+               <s:enumeration value="CV_PELEM_CITYSTREET_ID"/>
+               <s:enumeration value="CV_PELEM_CITYLARGEUSER_ID"/>
+               <s:enumeration value="CV_PELEM_CITYSTREETRANGE_ID"/>
+               <s:enumeration value="CV_PELEM_CITYPOBOX_ID"/>
+               <s:enumeration value="CV_PELEM_GENORDI"/>
+               <s:enumeration value="CV_SELEM_IQSTRATEGY"/>
+               <s:enumeration value="CV_SELEM_SOFTWARE"/>
+               <s:enumeration value="CV_SELEM_BOOKFILE"/>
+               <s:enumeration value="CV_SELEM_WORLDINFO"/>
+               <s:enumeration value="CV_SELEM_DUMMY"/>
+               <s:enumeration value="CV_MELEM_ROWSCORE"/>
+               <s:enumeration value="CV_MELEM_CANDIDATE_SET"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfAddressField">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressField" nillable="true"
+                          type="tns:AddressField"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressField">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:AddressCv"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Attributes" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddressAdvancedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddressAdvancedResult"
+                             type="tns:ArrayOfAddressResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAddressResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressResult" nillable="true"
+                          type="tns:AddressResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Addresses" type="tns:ArrayOfAddressOutput"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfAddressOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressOutput" nillable="true"
+                          type="tns:AddressOutput"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Items" type="tns:ArrayOfAddressOutputItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Format" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfInt"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfAddressOutputItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressOutputItem" nillable="true"
+                          type="tns:AddressOutputItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressOutputItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:AddressCv"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Attribute" type="tns:ArrayOfAddressAttribute"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfAddressAttribute">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressAttribute" nillable="true"
+                          type="tns:AddressAttribute"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressAttribute">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfInt">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddressLocation" nillable="true" type="tns:AddressLocation"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AddressSimpleSoapIn">
+      <wsdl:part name="parameters" element="tns:AddressSimple"/>
+  </wsdl:message>
+  <wsdl:message name="AddressSimpleSoapOut">
+      <wsdl:part name="parameters" element="tns:AddressSimpleResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddressExSimpleSoapIn">
+      <wsdl:part name="parameters" element="tns:AddressExSimple"/>
+  </wsdl:message>
+  <wsdl:message name="AddressExSimpleSoapOut">
+      <wsdl:part name="parameters" element="tns:AddressExSimpleResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddressSoapIn">
+      <wsdl:part name="parameters" element="tns:Address"/>
+  </wsdl:message>
+  <wsdl:message name="AddressSoapOut">
+      <wsdl:part name="parameters" element="tns:AddressResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddressExSoapIn">
+      <wsdl:part name="parameters" element="tns:AddressEx"/>
+  </wsdl:message>
+  <wsdl:message name="AddressExSoapOut">
+      <wsdl:part name="parameters" element="tns:AddressExResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddressAdvancedSoapIn">
+      <wsdl:part name="parameters" element="tns:AddressAdvanced"/>
+  </wsdl:message>
+  <wsdl:message name="AddressAdvancedSoapOut">
+      <wsdl:part name="parameters" element="tns:AddressAdvancedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddressSimpleHttpGetIn">
+      <wsdl:part name="Country" type="s:string"/>
+      <wsdl:part name="State" type="s:string"/>
+      <wsdl:part name="City" type="s:string"/>
+      <wsdl:part name="Street" type="s:string"/>
+      <wsdl:part name="Premise" type="s:string"/>
+      <wsdl:part name="PostCode" type="s:string"/>
+      <wsdl:part name="SubscriptionKey" type="s:string"/>
+      <wsdl:part name="UseCleanseSearchMethod" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddressSimpleHttpGetOut">
+      <wsdl:part name="Body" element="tns:AddressLocation"/>
+  </wsdl:message>
+  <wsdl:message name="AddressExSimpleHttpGetIn">
+      <wsdl:part name="Country" type="s:string"/>
+      <wsdl:part name="State" type="s:string"/>
+      <wsdl:part name="City" type="s:string"/>
+      <wsdl:part name="Street" type="s:string"/>
+      <wsdl:part name="Premise" type="s:string"/>
+      <wsdl:part name="PostCode" type="s:string"/>
+      <wsdl:part name="PoBox" type="s:string"/>
+      <wsdl:part name="LargeUser" type="s:string"/>
+      <wsdl:part name="SubscriptionKey" type="s:string"/>
+      <wsdl:part name="UseCleanseSearchMethod" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddressExSimpleHttpGetOut">
+      <wsdl:part name="Body" element="tns:AddressLocation"/>
+  </wsdl:message>
+  <wsdl:message name="AddressSimpleHttpPostIn">
+      <wsdl:part name="Country" type="s:string"/>
+      <wsdl:part name="State" type="s:string"/>
+      <wsdl:part name="City" type="s:string"/>
+      <wsdl:part name="Street" type="s:string"/>
+      <wsdl:part name="Premise" type="s:string"/>
+      <wsdl:part name="PostCode" type="s:string"/>
+      <wsdl:part name="SubscriptionKey" type="s:string"/>
+      <wsdl:part name="UseCleanseSearchMethod" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddressSimpleHttpPostOut">
+      <wsdl:part name="Body" element="tns:AddressLocation"/>
+  </wsdl:message>
+  <wsdl:message name="AddressExSimpleHttpPostIn">
+      <wsdl:part name="Country" type="s:string"/>
+      <wsdl:part name="State" type="s:string"/>
+      <wsdl:part name="City" type="s:string"/>
+      <wsdl:part name="Street" type="s:string"/>
+      <wsdl:part name="Premise" type="s:string"/>
+      <wsdl:part name="PostCode" type="s:string"/>
+      <wsdl:part name="PoBox" type="s:string"/>
+      <wsdl:part name="LargeUser" type="s:string"/>
+      <wsdl:part name="SubscriptionKey" type="s:string"/>
+      <wsdl:part name="UseCleanseSearchMethod" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddressExSimpleHttpPostOut">
+      <wsdl:part name="Body" element="tns:AddressLocation"/>
+  </wsdl:message>
+  <wsdl:portType name="GeoAddressSoap">
+      <wsdl:operation name="AddressSimple">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Verify an address using eAddress (No Coordinates are returned now, but in the future they will be there)</documentation>
+         <wsdl:input message="tns:AddressSimpleSoapIn"/>
+         <wsdl:output message="tns:AddressSimpleSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AddressExSimple">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Verify an address using eAddress (also supports PO Boxes and Large users)</documentation>
+         <wsdl:input message="tns:AddressExSimpleSoapIn"/>
+         <wsdl:output message="tns:AddressExSimpleSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="Address">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Verify a list of addresses using eAddress (No Coordinates are returned now, but in the future they will be there)</documentation>
+         <wsdl:input message="tns:AddressSoapIn"/>
+         <wsdl:output message="tns:AddressSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AddressEx">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Verify a list of addresses using eAddress (also supports PO Boxes and Large users)</documentation>
+         <wsdl:input message="tns:AddressExSoapIn"/>
+         <wsdl:output message="tns:AddressExSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AddressAdvanced">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Use the functionality of the address library. See the documentation and the AdvancedAddress sample for more information</documentation>
+         <wsdl:input message="tns:AddressAdvancedSoapIn"/>
+         <wsdl:output message="tns:AddressAdvancedSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="GeoAddressSoap" type="tns:GeoAddressSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="AddressSimple">
+         <soap:operation soapAction="http://geoaccess.and.com/AddressSimple" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddressExSimple">
+         <soap:operation soapAction="http://geoaccess.and.com/AddressExSimple" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Address">
+         <soap:operation soapAction="http://geoaccess.and.com/Address" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddressEx">
+         <soap:operation soapAction="http://geoaccess.and.com/AddressEx" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddressAdvanced">
+         <soap:operation soapAction="http://geoaccess.and.com/AddressAdvanced" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="GeoAddress">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">GeoAccess Web Services platform from AND Products B.V. &lt;br&gt;&lt;br&gt;Additonal information can be found in the &lt;a href="default.htm"  target="_top" &gt;documentation&lt;/a&gt;</documentation>
+      <wsdl:port name="GeoAddressSoap" binding="tns:GeoAddressSoap">
+         <soap:address location="http://ws.soatrader.com/and.com/0.1/GeoAddress"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

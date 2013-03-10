@@ -1,0 +1,136 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.blueface.ie/webservices/public/voip"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.blueface.ie/webservices/public/voip">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.blueface.ie/webservices/public/voip">
+         <s:element name="IsAlive">
+            <s:complexType/>
+         </s:element>
+         <s:element name="IsAliveResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="IsAliveResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Echo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="EchoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="EchoResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="boolean" type="s:boolean"/>
+         <s:element name="string" nillable="true" type="s:string"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="IsAliveSoapIn">
+      <wsdl:part name="parameters" element="tns:IsAlive"/>
+  </wsdl:message>
+  <wsdl:message name="IsAliveSoapOut">
+      <wsdl:part name="parameters" element="tns:IsAliveResponse"/>
+  </wsdl:message>
+  <wsdl:message name="EchoSoapIn">
+      <wsdl:part name="parameters" element="tns:Echo"/>
+  </wsdl:message>
+  <wsdl:message name="EchoSoapOut">
+      <wsdl:part name="parameters" element="tns:EchoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IsAliveHttpGetIn"/>
+  <wsdl:message name="IsAliveHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="EchoHttpGetIn">
+      <wsdl:part name="message" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="EchoHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="IsAliveHttpPostIn"/>
+  <wsdl:message name="IsAliveHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="EchoHttpPostIn">
+      <wsdl:part name="message" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="EchoHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="AccountServicesSoap" type="tns:AccountServicesSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="IsAlive">
+         <soap:operation soapAction="http://www.blueface.ie/webservices/public/voip/IsAlive"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Echo">
+         <soap:operation soapAction="http://www.blueface.ie/webservices/public/voip/Echo"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="AccountServices">
+      <wsdl:port name="AccountServicesSoap" binding="tns:AccountServicesSoap">
+         <soap:address location="http://ws.soatrader.com/blueface.ie/0.1/AccountServices"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

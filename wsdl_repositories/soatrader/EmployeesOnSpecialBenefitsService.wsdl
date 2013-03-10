@@ -1,0 +1,367 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://rep.oio.dk/cvr.dk/xml/schemas/2005/03/22/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s0="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+                  xmlns:s3="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"
+                  xmlns:s5="http://rep.oio.dk/ams.dk/xml/schemas/2005/09/01/"
+                  xmlns:s4="http://rep.oio.dk/ams.dk/xml/schemas/2004/11/01/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://amportal.bm.dk/CompanyModuleServices/EmployeesOnSpecialBenefitsService/1/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:ams1="http://rep.oio.dk/ams.dk/xml/schemas/2006/12/01/"
+                  targetNamespace="http://amportal.bm.dk/CompanyModuleServices/EmployeesOnSpecialBenefitsService/1/"
+                  name="EmployeesOnSpecialBenefitsService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">
+		Service to supply a list, showing the number of employees with
+		special benefits per cvr/Production number.
+	</documentation>
+	  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <s:schema xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+                elementFormDefault="qualified"
+                targetNamespace="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+                version="1.1">
+			      <s:element name="PostCodeIdentifier" type="dkcc:PostCodeIdentifierType">
+				        <s:annotation>
+					          <s:documentation>
+						The postal departments nationwide postal code.
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:simpleType name="PostCodeIdentifierType">
+				        <s:restriction base="s:string">
+					          <s:pattern value="[0-9]{4}"/>
+				        </s:restriction>
+			      </s:simpleType>
+		    </s:schema>
+		    <s:schema xmlns:cvr="http://rep.oio.dk/cvr.dk/xml/schemas/2005/03/22/"
+                targetNamespace="http://rep.oio.dk/cvr.dk/xml/schemas/2005/03/22/">
+			      <s:element name="ProductionUnitIdentifier" type="cvr:ProductionUnitIdentifierType">
+				        <s:annotation>
+					          <s:documentation>
+						Unique and generally usable identifier for all
+						production units (“workplaces”).
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:simpleType name="ProductionUnitIdentifierType">
+				        <s:restriction base="s:string">
+                    <s:length value="10"/>
+				        </s:restriction>
+			      </s:simpleType>
+			      <s:element name="CVRnumberIdentifier" type="cvr:CVRnumberIdentifierType">
+				        <s:annotation>
+					          <s:documentation>
+						Unique and generally usable identifier for all
+						legal units included i CVR.
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:simpleType name="CVRnumberIdentifierType">
+				        <s:restriction base="s:string">
+					          <s:length value="8"/>
+				        </s:restriction>
+			      </s:simpleType>
+		    </s:schema>
+		    <s:schema xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+                xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"
+                xmlns:cvr="http://rep.oio.dk/cvr.dk/xml/schemas/2005/03/22/"
+                targetNamespace="http://rep.oio.dk/ams.dk/xml/schemas/2006/12/01/">
+			      <s:import namespace="http://rep.oio.dk/cvr.dk/xml/schemas/2005/03/22/"/>
+			      <s:import namespace="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"/>
+			      <s:import namespace="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"/>
+			      <s:element name="EmployeesOnSpecialBenefitsSearchWithPostCodeRequest"
+                    type="ams1:EmployeesOnSpecialBenefitsSearchWithPostCodeRequestType"/>
+			      <s:complexType name="EmployeesOnSpecialBenefitsSearchWithPostCodeRequestType">
+				        <s:sequence>
+						         <s:element ref="dkcc:PostCodeIdentifier"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:element name="EmployeesOnSpecialBenefitsSearchWithCvrAndPnumberRequest"
+                    type="ams1:EmployeesOnSpecialBenefitsSearchWithCvrAndPnumberRequestType"/>
+			      <s:complexType name="EmployeesOnSpecialBenefitsSearchWithCvrAndPnumberRequestType">
+				        <s:sequence>
+						         <s:group ref="ams1:CompanyCVRAndPnumber"/>
+				        </s:sequence>
+			      </s:complexType>
+			      <s:group name="CompanyCVRAndPnumber">
+				        <s:sequence>
+					          <s:element ref="cvr:CVRnumberIdentifier"/>
+					          <s:element minOccurs="0" ref="cvr:ProductionUnitIdentifier"/>
+				        </s:sequence>
+			      </s:group>
+			      <s:element name="EmploymentPromotionMeasureDescription"
+                    type="ams1:EmploymentPromotionMeasureDescriptionType"/>
+			      <s:simpleType name="EmploymentPromotionMeasureDescriptionType">
+				        <s:restriction base="s:string"/>
+			      </s:simpleType>
+			      <s:element name="EmploymentPromotionMeasureIdentifier"
+                    type="ams1:EmploymentPromotionMeasureIdentifierType"/>
+			      <s:simpleType name="EmploymentPromotionMeasureIdentifierType">
+				        <s:restriction base="s:int"/>
+			      </s:simpleType>
+			      <s:element name="EmployeeOnSpecialBenefitsState"
+                    type="ams1:EmployeeOnSpecialBenefitsStateType"/>
+			      <s:simpleType name="EmployeeOnSpecialBenefitsStateType">
+				        <s:restriction base="s:string">
+					          <s:enumeration value="Planlagt"/>
+					          <s:enumeration value="Aktiveret"/>
+					          <s:enumeration value="Afbrudt"/>
+					          <s:enumeration value="Afsluttet"/>
+					          <s:enumeration value="Annulleret"/>
+				        </s:restriction>
+			      </s:simpleType>
+			      <s:element name="EmployeeOnSpecialBenefitsStartDate"
+                    type="ams1:EmployeeOnSpecialBenefitsStartDate"/>
+			      <s:simpleType name="EmployeeOnSpecialBenefitsStartDate">
+				        <s:restriction base="s:date"/>
+			      </s:simpleType>
+			      <s:element name="EmployeeOnSpecialBenefitsEndDate"
+                    type="ams1:EmployeeOnSpecialBenefitsEndDateType"/>
+			      <s:simpleType name="EmployeeOnSpecialBenefitsEndDateType">
+				        <s:restriction base="s:date"/>
+			      </s:simpleType>
+			      <s:element name="JobDescriptionCode" type="ams1:JobDescriptionCodeType"/>
+			      <s:simpleType name="JobDescriptionCodeType">
+				        <s:restriction base="s:int"/>
+			      </s:simpleType>
+			      <s:element name="JobDescription" type="ams1:JobDescriptionType"/>
+			      <s:simpleType name="JobDescriptionType">
+				        <s:restriction base="s:string"/>
+			      </s:simpleType>
+			      <s:element name="TargetGroupName" type="ams1:TargetGroupNameType"/>
+			      <s:simpleType name="TargetGroupNameType">
+				        <s:restriction base="s:string"/>
+			      </s:simpleType>
+			      <s:element name="NumberOfSubsidizedEmployees" type="ams1:NumberOfSubsidizedEmployeesType"/>
+			      <s:simpleType name="NumberOfSubsidizedEmployeesType">
+				        <s:restriction base="s:int"/>
+			      </s:simpleType>
+			      <s:element name="TargetGroupIdentifier" type="ams1:TargetGroupIdentifierType"/>
+			      <s:simpleType name="TargetGroupIdentifierType">
+				        <s:restriction base="s:int"/>
+			      </s:simpleType>
+			      <s:element name="OrganisationCode" type="ams1:OrganisationCodeType"/>
+			      <s:simpleType name="OrganisationCodeType">
+				        <s:restriction base="s:string">
+					          <s:minLength value="1"/>
+					          <s:maxLength value="20"/>
+				        </s:restriction>
+			      </s:simpleType>
+            <s:element name="Employee" type="ams1:EmployeeType"/>
+                <s:complexType name="EmployeeType">
+                    <s:sequence>
+                        <s:element ref="ams1:EmploymentPromotionMeasureDescription"/>
+                        <s:element ref="ams1:EmploymentPromotionMeasureIdentifier"/>
+                        <s:element ref="cvr:CVRnumberIdentifier"/>
+                        <s:element ref="cvr:ProductionUnitIdentifier"/>
+                        <s:element ref="ams1:EmployeeOnSpecialBenefitsStartDate"/>
+                        <s:element ref="ams1:EmployeeOnSpecialBenefitsEndDate"/>
+                        <s:element ref="ams1:JobDescriptionCode"/>
+                        <s:element ref="ams1:JobDescription"/>
+                        <s:element ref="ams1:TargetGroupName"/>
+                        <s:element ref="ams1:TargetGroupIdentifier"/>
+                        <s:element ref="ams1:EmployeeOnSpecialBenefitsState"/>
+                        <s:element ref="ams1:NumberOfSubsidizedEmployees"/>
+                        <s:element ref="ams1:OrganisationCode"/>
+                    </s:sequence>
+                </s:complexType>
+			      <s:element name="EmployeesOnSpecialBenefitsSearchResponse"
+                    type="ams1:EmployeesOnSpecialBenefitsSearchResponseType"/>
+			      <s:complexType name="EmployeesOnSpecialBenefitsSearchResponseType">
+				        <s:sequence maxOccurs="unbounded" minOccurs="0">
+                    <s:element ref="ams1:Employee"/>
+				        </s:sequence>
+			      </s:complexType>
+		    </s:schema>
+		    <s:schema xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"
+                targetNamespace="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/">
+			      <s:element name="MunicipalityCode" type="cpr:AuthorityCodeType">
+				        <s:annotation>
+					          <s:documentation>
+						The code of a municipality. The plain text of a
+						municipality is to be found by reference to the
+						authority-data in the civilregistrationsystem.
+						The code will always be unique."
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:element name="AuthorityCode" type="cpr:AuthorityCodeType">
+				        <s:annotation>
+					          <s:documentation>
+						Code, which identifies an authority. Every
+						AuthorityCode belongs to a specific authority
+						(reference to data of authorities in CPR). The
+						AuthorityCode is unique.
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:simpleType name="AuthorityCodeType">
+				        <s:restriction base="s:string">
+					          <s:pattern value="[0-9]{4}"/>
+				        </s:restriction>
+			      </s:simpleType>
+		    </s:schema>
+		    <s:schema xmlns:ams="http://rep.oio.dk/ams.dk/xml/schemas/2004/11/01/"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified"
+                targetNamespace="http://rep.oio.dk/ams.dk/xml/schemas/2004/11/01/">
+			      <s:element name="OcesCertHeader" type="ams:OcesCertHeader">
+				        <s:annotation>
+					          <s:documentation xml:lang="en">
+						This element is used in a SOAP header. It is
+						used for sending the raw bytes from the public
+						part of a X509 certificate.
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:complexType name="OcesCertHeader">
+				        <s:sequence>
+					          <s:element minOccurs="0" maxOccurs="1" name="CertificateBytes" type="s:base64Binary"/>
+				        </s:sequence>
+			      </s:complexType>
+		    </s:schema>
+		    <s:schema xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"
+                xmlns:ams2="http://rep.oio.dk/ams.dk/xml/schemas/2005/09/01/"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified"
+                targetNamespace="http://rep.oio.dk/ams.dk/xml/schemas/2005/09/01/">
+			      <s:element name="OrganisationTypeIdentifier" type="ams2:OrganisationTypeIdentifierType">
+				        <s:annotation>
+					          <s:documentation>
+						Identifies the type of organisation to which the
+						user belongs to.
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:simpleType name="OrganisationTypeIdentifierType">
+				        <s:restriction base="s:int">
+					          <s:minInclusive value="1"/>
+					          <s:maxInclusive value="100"/>
+				        </s:restriction>
+			      </s:simpleType>
+			      <s:element name="OrganisationCode" type="ams2:OrganisationCodeType">
+				        <s:annotation>
+					          <s:documentation>
+						The code that identifies the organisation. It
+						could be a CVR number, an unemploymentfundcode,
+						a municipality code
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:simpleType name="OrganisationCodeType">
+				        <s:restriction base="s:string">
+					          <s:minLength value="1"/>
+					          <s:maxLength value="20"/>
+				        </s:restriction>
+			      </s:simpleType>
+			      <s:element name="ActiveOrganisationHeader" type="ams2:ActiveOrganisationHeader">
+				        <s:annotation>
+					          <s:documentation xml:lang="en">
+						This element is used in a SOAP header. It is
+						used for sending the type of organisation and
+						the code of the organisation the user acts as.
+					</s:documentation>
+				        </s:annotation>
+			      </s:element>
+			      <s:complexType name="ActiveOrganisationHeader">
+				        <s:sequence>
+					          <s:element ref="ams2:OrganisationTypeIdentifier"/>
+					          <s:element ref="ams2:OrganisationCode"/>
+				        </s:sequence>
+			      </s:complexType>
+		    </s:schema>
+	  </wsdl:types>
+	  <wsdl:message name="EmployeesOnSpecialBenefitsSearchWithCvrAndPnumberRequestMsg">
+		    <wsdl:part name="EmployeesOnSpecialBenefitsSearchWithCvrAndPnumberRequestPart"
+                 element="ams1:EmployeesOnSpecialBenefitsSearchWithCvrAndPnumberRequest"/>
+	  </wsdl:message>
+	  <wsdl:message name="EmployeesOnSpecialBenefitsSearchWithPostCodeRequestMsg">
+		    <wsdl:part name="EmployeesOnSpecialBenefitsSearchWithPostCodeRequestPart"
+                 element="ams1:EmployeesOnSpecialBenefitsSearchWithPostCodeRequest"/>
+	  </wsdl:message>
+	  <wsdl:message name="EmployeesOnSpecialBenefitsSearchResponseMsg">
+		    <wsdl:part name="EmployeesOnSpecialBenefitsSearchResponsePart"
+                 element="ams1:EmployeesOnSpecialBenefitsSearchResponse"/>
+	  </wsdl:message>
+	  <wsdl:message name="ActiveOrganisationHeaderMsg">
+		    <wsdl:part name="ActiveOrganisationHeaderPart" element="s5:ActiveOrganisationHeader">
+		</wsdl:part>
+	  </wsdl:message>
+	  <wsdl:message name="OcesCertHeaderMsg">
+		    <wsdl:part name="OcesCertHeaderPart" element="s4:OcesCertHeader">
+		</wsdl:part>
+	  </wsdl:message>
+	  <wsdl:portType name="EmployeesOnSpecialBenefitsServiceSoap">
+		    <wsdl:operation name="EmployeesOnSpecialBenefitsSearchWithCvrAndPnumber">
+			      <wsdl:input message="tns:EmployeesOnSpecialBenefitsSearchWithCvrAndPnumberRequestMsg"/>
+			      <wsdl:output message="tns:EmployeesOnSpecialBenefitsSearchResponseMsg"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="EmployeesOnSpecialBenefitsSearchWithPostCode">
+			      <wsdl:input message="tns:EmployeesOnSpecialBenefitsSearchWithPostCodeRequestMsg"/>
+			      <wsdl:output message="tns:EmployeesOnSpecialBenefitsSearchResponseMsg"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+	  <wsdl:binding name="EmployeesOnSpecialBenefitsServiceBinding"
+                 type="tns:EmployeesOnSpecialBenefitsServiceSoap">
+		    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+		    <wsdl:operation name="EmployeesOnSpecialBenefitsSearchWithCvrAndPnumber">
+			      <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/EmployeesOnSpecialBenefitsService/1/EmployeesOnSpecialBenefitsSearchWithCvrAndPnumber"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"
+                       parts="EmployeesOnSpecialBenefitsSearchWithCvrAndPnumberRequestPart"/>
+				        <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+				        <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" parts="EmployeesOnSpecialBenefitsSearchResponsePart"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+		    <wsdl:operation name="EmployeesOnSpecialBenefitsSearchWithPostCode">
+			      <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/EmployeesOnSpecialBenefitsService/1/EmployeesOnSpecialBenefitsSearchWithPostCode"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" parts="EmployeesOnSpecialBenefitsSearchWithPostCodeRequestPart"/>
+				        <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+				        <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" parts="EmployeesOnSpecialBenefitsSearchResponsePart"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+	  </wsdl:binding>
+	  <wsdl:service name="EmployeesOnSpecialBenefitsService">
+		    <wsdl:port name="EmployeesOnSpecialBenefitsServicePort"
+                 binding="tns:EmployeesOnSpecialBenefitsServiceBinding">
+			      <soap:address location="http://ws.soatrader.com/bm.dk/0.1/EmployeesOnSpecialBenefitsService"/>
+		    </wsdl:port>
+	  </wsdl:service>
+</wsdl:definitions>

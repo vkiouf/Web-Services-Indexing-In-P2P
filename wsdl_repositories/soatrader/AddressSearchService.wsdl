@@ -1,0 +1,190 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://ws.address.lands.nsw.gov"
+                  xmlns:impl="http://ws.address.lands.nsw.gov"
+                  xmlns:intf="http://ws.address.lands.nsw.gov"
+                  xmlns:tns2="http://data.address.lands.nsw.gov"
+                  xmlns:tns3="http://utl.search.address.lands.nsw.gov"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsi="http://ws-i.org/profiles/basic/1.1/xsd"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://ws.address.lands.nsw.gov">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.address.lands.nsw.gov">
+         <import namespace="http://data.address.lands.nsw.gov"/>
+         <element name="findAddressResponse">
+            <complexType>
+               <sequence>
+                  <element name="findAddressReturn" nillable="true" type="tns2:AddressResult"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="findAddress">
+            <complexType>
+               <sequence>
+                  <element name="houseNumber" nillable="true" type="xsd:string"/>
+                  <element name="roadName" nillable="true" type="xsd:string"/>
+                  <element name="roadType" nillable="true" type="xsd:string"/>
+                  <element name="suburb" nillable="true" type="xsd:string"/>
+                  <element name="postCode" nillable="true" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="ArrayOf_tns2_nillable_AddressRecord">
+            <sequence>
+               <element maxOccurs="unbounded" minOccurs="0" name="AddressRecord" nillable="true"
+                        type="tns2:AddressRecord"/>
+            </sequence>
+         </complexType>
+         <complexType name="ArrayOf_xsd_nillable_string">
+            <sequence>
+               <element maxOccurs="unbounded" minOccurs="0" name="string" nillable="true"
+                        type="xsd:string"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://data.address.lands.nsw.gov">
+         <import namespace="http://utl.search.address.lands.nsw.gov"/>
+         <import namespace="http://data.address.lands.nsw.gov"/>
+         <complexType name="AddressResult">
+            <sequence>
+               <element name="addresses" nillable="true"
+                        type="impl:ArrayOf_tns2_nillable_AddressRecord"/>
+               <element name="errMsg" nillable="true" type="xsd:string"/>
+               <element name="numRecs" type="xsd:int"/>
+               <element name="searchMethod" nillable="true" type="tns3:SearchMethod"/>
+            </sequence>
+         </complexType>
+         <complexType name="AddressRecord">
+            <sequence>
+               <element name="houseNumberFirst" type="xsd:int"/>
+               <element name="houseNumberFirstSuffix" nillable="true" type="xsd:string"/>
+               <element name="houseNumberSecond" type="xsd:int"/>
+               <element name="houseNumberSecondSuffix" nillable="true" type="xsd:string"/>
+               <element name="objectId" type="xsd:long"/>
+               <element name="postCode" type="xsd:long"/>
+               <element name="roadName" nillable="true" type="xsd:string"/>
+               <element name="roadSuffix" nillable="true" type="xsd:string"/>
+               <element name="roadType" nillable="true" type="xsd:string"/>
+               <element name="shortAddressString" nillable="true" type="xsd:string"/>
+               <element name="suburbName" nillable="true" type="xsd:string"/>
+               <element name="addressType" nillable="true" type="xsd:string"/>
+               <element name="council" nillable="true" type="xsd:string"/>
+               <element name="houseNumberString" nillable="true" type="xsd:string"/>
+               <element name="addressPoint" nillable="true" type="tns2:AddressPoint"/>
+            </sequence>
+         </complexType>
+         <complexType name="AddressPoint">
+            <sequence>
+               <element name="addressPointType" nillable="true" type="xsd:long"/>
+               <element name="addressPointUncertainty" nillable="true" type="xsd:int"/>
+               <element name="addressstringOid" type="xsd:long"/>
+               <element name="containment" nillable="true" type="xsd:long"/>
+               <element name="createDate" nillable="true" type="xsd:dateTime"/>
+               <element name="gurasId" nillable="true" type="xsd:long"/>
+               <element name="objectId" nillable="true" type="xsd:long"/>
+               <element name="prowayOid" nillable="true" type="xsd:long"/>
+               <element name="waypointOid" nillable="true" type="xsd:long"/>
+               <element name="coordRefSys" nillable="true" type="xsd:string"/>
+               <element name="centreX" type="xsd:double"/>
+               <element name="centreY" type="xsd:double"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://utl.search.address.lands.nsw.gov">
+         <import namespace="http://data.address.lands.nsw.gov"/>
+         <complexType name="SearchMethod">
+            <sequence>
+               <element name="methodDescriptions" nillable="true"
+                        type="impl:ArrayOf_xsd_nillable_string"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="findAddressRequest">
+
+      <wsdl:part element="impl:findAddress" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="findAddressResponse">
+
+      <wsdl:part element="impl:findAddressResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="AddressSearch">
+
+      <wsdl:operation name="findAddress">
+
+         <wsdl:input message="impl:findAddressRequest" name="findAddressRequest"/>
+
+         <wsdl:output message="impl:findAddressResponse" name="findAddressResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="AddressSearchSoapBinding" type="impl:AddressSearch">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="findAddress">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findAddressRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findAddressResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="AddressSearchService">
+
+      <wsdl:port binding="impl:AddressSearchSoapBinding" name="AddressSearch">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/nsw.gov.au/0.1/AddressSearchService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

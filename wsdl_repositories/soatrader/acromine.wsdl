@@ -1,0 +1,147 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://www.nactem.ac.uk/software/acromine3/acromine.wsdl"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsd1="http://www.nactem.ac.uk/schema"
+             name="acromine"
+             targetNamespace="http://www.nactem.ac.uk/software/acromine3/acromine.wsdl">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+ 
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+     <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  targetNamespace="http://www.nactem.ac.uk/schema">
+
+         <complexType name="defids">
+           <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="int[]"/>
+               </restriction>
+           </complexContent>
+         </complexType>
+
+      </xsd:schema>
+   </types>
+ 
+   <message name="retrieve_request">
+     <part name="shortform" type="xsd:string"/>
+     <part name="longform" type="xsd:string"/>
+   </message>   
+   <message name="retrieve_response">
+     <part name="defids" type="xsd1:defids"/>
+   </message>
+ 
+   <message name="get_stat_request">
+     <part name="defid" type="xsd:int"/>
+   </message>
+   <message name="get_stat_response">
+     <part name="sf" type="xsd:string"/>
+     <part name="lf" type="xsd:string"/>
+     <part name="freq" type="xsd:int"/>
+     <part name="score" type="xsd:double"/>
+     <part name="since" type="xsd:int"/>
+   </message>
+ 
+   <message name="get_sources_request">
+     <part name="defid" type="xsd:int"/>
+   </message>
+   <message name="get_sources_response">
+     <part name="sources" type="xsd:string"/>
+   </message>
+
+   <portType name="acromine_porttype">
+     <operation name="retrieve">
+         <input message="tns:retrieve_request"/>
+         <output message="tns:retrieve_response"/>
+     </operation>
+     <operation name="get_stat">
+         <input message="tns:get_stat_request"/>
+         <output message="tns:get_stat_response"/>
+     </operation>
+     <operation name="get_sources">
+         <input message="tns:get_sources_request"/>
+         <output message="tns:get_sources_response"/>
+     </operation>
+   </portType>
+ 
+   <binding name="acromine" type="tns:acromine_porttype">
+     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+     <operation name="retrieve">
+         <soap:operation stype="rpc" soapAction=""/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:acromine"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:acromine"
+                       use="encoded"/>
+         </output>
+     </operation>
+
+     <operation name="get_stat">
+         <soap:operation stype="rpc" soapAction=""/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:acromine"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:acromine"
+                       use="encoded"/>
+         </output>
+     </operation>
+
+     <operation name="get_sources">
+         <soap:operation stype="rpc" soapAction=""/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:acromine"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:acromine"
+                       use="encoded"/>
+         </output>
+     </operation>
+
+   </binding>
+ 
+   <service name="acromine"> 
+     <port name="acromine" binding="tns:acromine">
+         <soap:address location="http://ws.soatrader.com/nactem.ac.uk/0.1/acromine"/>
+     </port>
+   </service>
+
+</definitions>

@@ -1,0 +1,423 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://www.dkfz-heidelberg.de/menu/tomcat/as/protein_2d_structure.hmoment"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://www.dkfz-heidelberg.de/menu/tomcat/as/protein_2d_structure.hmoment"
+                  xmlns:intf="http://www.dkfz-heidelberg.de/menu/tomcat/as/protein_2d_structure.hmoment"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://www.dkfz-heidelberg.de/menu/tomcat/as/protein_2d_structure.hmoment">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://www.dkfz-heidelberg.de/menu/tomcat/as/protein_2d_structure.hmoment">
+         <xsd:annotation>
+            <xsd:documentation>Hydrophobic moment calculation</xsd:documentation>
+         </xsd:annotation>
+         <element name="runAndWaitFor">
+            <complexType>
+               <sequence>
+                  <element name="hmoment" type="impl:Thmoment"/>
+               </sequence>
+            </complexType>
+         </element>
+         <simpleType name="ThmomentSeqallSformat">
+            <restriction base="xsd:string">
+               <enumeration value="gcg"/>
+               <enumeration value="gcg8"/>
+               <enumeration value="embl"/>
+               <enumeration value="swiss"/>
+               <enumeration value="fasta"/>
+               <enumeration value="ncbi"/>
+               <enumeration value="genbank"/>
+               <enumeration value="nbrf"/>
+               <enumeration value="pir"/>
+               <enumeration value="codata"/>
+               <enumeration value="strider"/>
+               <enumeration value="clustal"/>
+               <enumeration value="phylip"/>
+               <enumeration value="acedb"/>
+               <enumeration value="msf"/>
+               <enumeration value="jackknifer"/>
+               <enumeration value="jackknifernon"/>
+               <enumeration value="nexus"/>
+               <enumeration value="nexusnon"/>
+               <enumeration value="treecon"/>
+               <enumeration value="mega"/>
+               <enumeration value="meganon"/>
+               <enumeration value="ig"/>
+               <enumeration value="staden"/>
+               <enumeration value="text"/>
+               <enumeration value="raw"/>
+            </restriction>
+         </simpleType>
+         <complexType name="ThmomentSeqall">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="seqall_direct_data" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="seqall_usa" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="sformat" type="impl:ThmomentSeqallSformat"/>
+               <element maxOccurs="1" minOccurs="0" name="sbegin" type="xsd:long"/>
+               <element maxOccurs="1" minOccurs="0" name="send" type="xsd:long"/>
+               <element maxOccurs="1" minOccurs="0" name="sprotein" type="xsd:boolean"/>
+               <element maxOccurs="1" minOccurs="0" name="snucleotide" type="xsd:boolean"/>
+               <element maxOccurs="1" minOccurs="0" name="sreverse" type="xsd:boolean"/>
+               <element maxOccurs="1" minOccurs="0" name="slower" type="xsd:boolean"/>
+               <element maxOccurs="1" minOccurs="0" name="supper" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <simpleType name="ThmomentGraph_format">
+            <restriction base="xsd:string">
+               <enumeration value="png"/>
+               <enumeration value="postscript"/>
+               <enumeration value="colourps"/>
+               <enumeration value="hpgl"/>
+            </restriction>
+         </simpleType>
+         <complexType name="Thmoment">
+            <sequence>
+               <element name="seqall" type="impl:ThmomentSeqall">
+                  <xsd:annotation>
+                     <xsd:documentation>qualifiers for parameter: seqall</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="graph_format"
+                        type="impl:ThmomentGraph_format">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Format of the graphical output</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Format of the graphical output</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="window" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Window</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Window</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="aangle" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Alpha helix angle (degrees)</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Alpha helix angle (degrees)</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="bangle" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Beta sheet angle (degrees)</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Beta sheet angle (degrees)</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="baseline" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Graph marker line</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Graph marker line</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="double" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Plot two graphs</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Plot two graphs</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+            </sequence>
+         </complexType>
+         <element name="runAndWaitForResponse">
+            <complexType>
+               <sequence>
+                  <element name="hmomentResult" type="impl:ThmomentResult"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="ThmomentResultGraphics_container">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="Graphics" type="xsd:base64Binary"/>
+               <element maxOccurs="1" minOccurs="0" name="Graphics_in_Postscript" type="xsd:string"/>
+               <element maxOccurs="unbounded" minOccurs="0" name="Graphics_in_PNG"
+                        type="xsd:base64Binary"/>
+            </sequence>
+         </complexType>
+         <complexType name="ThmomentResult">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="report" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="detailed_status" type="xsd:long"/>
+               <element maxOccurs="1" minOccurs="0" name="outfile" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="Graphics_container"
+                        type="impl:ThmomentResultGraphics_container">
+                  <xsd:annotation>
+                     <xsd:documentation>graphics output data</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+            </sequence>
+         </complexType>
+         <complexType name="TSoaplabException">
+            <sequence/>
+         </complexType>
+         <element name="fault" type="impl:TSoaplabException"/>
+         <element name="createAndRun">
+            <complexType>
+               <sequence>
+                  <element name="hmoment" type="impl:Thmoment"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="createAndRunResponse">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="waitFor">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="waitForResponse">
+            <complexType/>
+         </element>
+         <element name="getStatus">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getStatusResponse">
+            <complexType>
+               <sequence>
+                  <element name="status" type="impl:Tstatus"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="Tstatus">
+            <sequence>
+               <element name="inProgress" type="xsd:boolean"/>
+               <element name="detailed" type="xsd:string"/>
+               <element name="erroneous" type="xsd:boolean"/>
+               <element name="description" type="xsd:string"/>
+               <element name="completed" type="xsd:boolean"/>
+               <element name="asString" type="xsd:string"/>
+               <element name="successful" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <element name="getResults">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getResultsResponse">
+            <complexType>
+               <sequence>
+                  <element name="hmomentResult" type="impl:ThmomentResult"/>
+               </sequence>
+            </complexType>
+         </element>
+      </schema>
+  </wsdl:types>
+  <wsdl:message name="getResultsRequest">
+      <wsdl:part element="impl:getResults" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="runAndWaitForResponse">
+      <wsdl:part element="impl:runAndWaitForResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getResultsResponse">
+      <wsdl:part element="impl:getResultsResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getStatusResponse">
+      <wsdl:part element="impl:getStatusResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="waitForResponse">
+      <wsdl:part element="impl:waitForResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getStatusRequest">
+      <wsdl:part element="impl:getStatus" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="waitForRequest">
+      <wsdl:part element="impl:waitFor" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="createAndRunRequest">
+      <wsdl:part element="impl:createAndRun" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="SoaplabException">
+      <wsdl:part element="impl:fault" name="fault"/>
+  </wsdl:message>
+  <wsdl:message name="createAndRunResponse">
+      <wsdl:part element="impl:createAndRunResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="runAndWaitForRequest">
+      <wsdl:part element="impl:runAndWaitFor" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="protein_2D_structure__hmoment">
+      <wsdl:operation name="runAndWaitFor">
+         <wsdl:documentation>Start the web service and receive the result. Blocks until job is finished.</wsdl:documentation>
+         <wsdl:input message="impl:runAndWaitForRequest" name="runAndWaitForRequest"/>
+         <wsdl:output message="impl:runAndWaitForResponse" name="runAndWaitForResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="createAndRun">
+         <wsdl:documentation>Start the web service and receive a job-id. Returns immediately.</wsdl:documentation>
+         <wsdl:input message="impl:createAndRunRequest" name="createAndRunRequest"/>
+         <wsdl:output message="impl:createAndRunResponse" name="createAndRunResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="waitFor">
+         <wsdl:documentation>Wait until a job (by job-id) has finished. Blocks until job is finished.</wsdl:documentation>
+         <wsdl:input message="impl:waitForRequest" name="waitForRequest"/>
+         <wsdl:output message="impl:waitForResponse" name="waitForResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="getStatus">
+         <wsdl:documentation>Get status information about a running job. Returns immediately.</wsdl:documentation>
+         <wsdl:input message="impl:getStatusRequest" name="getStatusRequest"/>
+         <wsdl:output message="impl:getStatusResponse" name="getStatusResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="getResults">
+         <wsdl:documentation>Get the results of a job (by job-id)</wsdl:documentation>
+         <wsdl:input message="impl:getResultsRequest" name="getResultsRequest"/>
+         <wsdl:output message="impl:getResultsResponse" name="getResultsResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="protein_2d_structure.hmoment.derivedSoapBinding"
+                 type="impl:protein_2D_structure__hmoment">
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="runAndWaitFor">
+         <wsdl:documentation>Start the web service and receive the result. Blocks until job is finished.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="runAndWaitForRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="runAndWaitForResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="createAndRun">
+         <wsdl:documentation>Start the web service and receive a job-id. Returns immediately.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="createAndRunRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="createAndRunResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="waitFor">
+         <wsdl:documentation>Wait until a job (by job-id) has finished. Blocks until job is finished.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="waitForRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="waitForResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="getStatus">
+         <wsdl:documentation>Get status information about a running job. Returns immediately.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getStatusRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getStatusResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="getResults">
+         <wsdl:documentation>Get the results of a job (by job-id)</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getResultsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getResultsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="hmomentService">
+      <wsdl:port binding="impl:protein_2d_structure.hmoment.derivedSoapBinding"
+                 name="protein_2d_structure.hmoment.derived">
+         <wsdlsoap:address location="http://ws.soatrader.com/dkfz-heidelberg.de/0.1/hmomentService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

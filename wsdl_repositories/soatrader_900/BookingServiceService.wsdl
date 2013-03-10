@@ -1,0 +1,155 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://localhost:8080/axis/BookingService.jws"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://localhost:8080/axis/BookingService.jws"
+                  xmlns:intf="http://localhost:8080/axis/BookingService.jws"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://DefaultNamespace"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://localhost:8080/axis/BookingService.jws">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://DefaultNamespace">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Resource">
+            <sequence>
+               <element name="description" nillable="true" type="xsd:string"/>
+               <element name="name" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://localhost:8080/axis/BookingService.jws">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOf_tns1_Resource">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:Resource[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+   </wsdl:types>
+  <wsdl:message name="getAllResourcesRequest">
+  </wsdl:message>
+  <wsdl:message name="bookResourceResponse">
+  </wsdl:message>
+  <wsdl:message name="bookResourceRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+      <wsdl:part name="in1" type="xsd:dateTime"/>
+      <wsdl:part name="in2" type="xsd:dateTime"/>
+      <wsdl:part name="in3" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="getAllResourcesResponse">
+      <wsdl:part name="getAllResourcesReturn" type="impl:ArrayOf_tns1_Resource"/>
+  </wsdl:message>
+  <wsdl:message name="getFreeResourcesOnRequest">
+      <wsdl:part name="in0" type="xsd:dateTime"/>
+      <wsdl:part name="in1" type="xsd:dateTime"/>
+  </wsdl:message>
+  <wsdl:message name="getFreeResourcesOnResponse">
+      <wsdl:part name="getFreeResourcesOnReturn" type="impl:ArrayOf_tns1_Resource"/>
+  </wsdl:message>
+  <wsdl:portType name="BookingService">
+      <wsdl:operation name="getAllResources">
+         <wsdl:input message="impl:getAllResourcesRequest" name="getAllResourcesRequest"/>
+         <wsdl:output message="impl:getAllResourcesResponse" name="getAllResourcesResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getFreeResourcesOn" parameterOrder="in0 in1">
+         <wsdl:input message="impl:getFreeResourcesOnRequest" name="getFreeResourcesOnRequest"/>
+         <wsdl:output message="impl:getFreeResourcesOnResponse" name="getFreeResourcesOnResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="bookResource" parameterOrder="in0 in1 in2 in3">
+         <wsdl:input message="impl:bookResourceRequest" name="bookResourceRequest"/>
+         <wsdl:output message="impl:bookResourceResponse" name="bookResourceResponse"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BookingServiceSoapBinding" type="impl:BookingService">
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="getAllResources">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getAllResourcesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://localhost:8080/axis/BookingService.jws"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="getAllResourcesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://localhost:8080/axis/BookingService.jws"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getFreeResourcesOn">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getFreeResourcesOnRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://localhost:8080/axis/BookingService.jws"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="getFreeResourcesOnResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://localhost:8080/axis/BookingService.jws"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="bookResource">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="bookResourceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://localhost:8080/axis/BookingService.jws"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="bookResourceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://localhost:8080/axis/BookingService.jws"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BookingServiceService">
+      <wsdl:port binding="impl:BookingServiceSoapBinding" name="BookingService">
+         <wsdlsoap:address location="http://ws.soatrader.com/inwind.it/0.1/BookingServiceService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

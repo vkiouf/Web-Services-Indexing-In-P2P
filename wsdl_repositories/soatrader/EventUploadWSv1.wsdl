@@ -1,0 +1,132 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://com/clarkston/cts/webservice/source/event/EventUploadWSv1.wsdl"
+             xmlns:ns1="http://com.clarkston.cts.webservice.source.event/IEventUploadWSv1.xsd"
+             name="EventUploadWSv1"
+             targetNamespace="http://com/clarkston/cts/webservice/source/event/EventUploadWSv1.wsdl">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+              targetNamespace="http://com.clarkston.cts.webservice.source.event/IEventUploadWSv1.xsd">
+         <complexType xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                      name="ArrayOfcom_clarkston_cts_webservice_source_event_Event">
+            <complexContent>
+               <restriction base="SOAP-ENC:Array">
+                  <attribute ref="SOAP-ENC:arrayType"
+                             wsdl:arrayType="ns1:com_clarkston_cts_webservice_source_event_Event[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType xmlns:jdev="http://xmlns.oracle.com/jdeveloper/webservices"
+                      name="com_clarkston_cts_webservice_source_event_Event"
+                      jdev:packageName="com.clarkston.cts.webservice.source.event">
+            <all>
+               <element name="attribute"
+                        type="ns1:ArrayOfcom_clarkston_cts_webservice_source_event_Attribute"/>
+            </all>
+         </complexType>
+         <complexType xmlns:jdev="http://xmlns.oracle.com/jdeveloper/webservices"
+                      name="com_clarkston_cts_webservice_source_event_Attribute"
+                      jdev:packageName="com.clarkston.cts.webservice.source.event">
+            <all>
+               <element name="name" type="string"/>
+               <element name="value" type="string"/>
+            </all>
+         </complexType>
+         <complexType xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                      name="ArrayOfcom_clarkston_cts_webservice_source_event_Attribute">
+            <complexContent>
+               <restriction base="SOAP-ENC:Array">
+                  <attribute ref="SOAP-ENC:arrayType"
+                             wsdl:arrayType="ns1:com_clarkston_cts_webservice_source_event_Attribute[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType xmlns:jdev="http://xmlns.oracle.com/jdeveloper/webservices"
+                      name="com_clarkston_cts_webservice_source_event_UploadStatus"
+                      jdev:packageName="com.clarkston.cts.webservice.source.event">
+            <all>
+               <element name="status" type="string"/>
+               <element name="eventStatus"
+                        type="ns1:ArrayOfcom_clarkston_cts_webservice_source_event_EventStatus"/>
+               <element name="message" type="string"/>
+            </all>
+         </complexType>
+         <complexType xmlns:jdev="http://xmlns.oracle.com/jdeveloper/webservices"
+                      name="com_clarkston_cts_webservice_source_event_EventStatus"
+                      jdev:packageName="com.clarkston.cts.webservice.source.event">
+            <all>
+               <element name="eventNumber" type="int"/>
+               <element name="message" type="string"/>
+               <element name="status" type="string"/>
+            </all>
+         </complexType>
+         <complexType xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                      name="ArrayOfcom_clarkston_cts_webservice_source_event_EventStatus">
+            <complexContent>
+               <restriction base="SOAP-ENC:Array">
+                  <attribute ref="SOAP-ENC:arrayType"
+                             wsdl:arrayType="ns1:com_clarkston_cts_webservice_source_event_EventStatus[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+   </types>
+   <message name="uploadEvents0Request">
+      <part name="events" type="ns1:ArrayOfcom_clarkston_cts_webservice_source_event_Event"/>
+   </message>
+   <message name="uploadEvents0Response">
+      <part name="return" type="ns1:com_clarkston_cts_webservice_source_event_UploadStatus"/>
+   </message>
+   <portType name="EventUploadWSv1PortType">
+      <operation name="uploadEvents">
+         <input name="uploadEvents0Request" message="tns:uploadEvents0Request"/>
+         <output name="uploadEvents0Response" message="tns:uploadEvents0Response"/>
+      </operation>
+   </portType>
+   <binding name="EventUploadWSv1Binding" type="tns:EventUploadWSv1PortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="uploadEvents">
+         <soap:operation soapAction="" style="rpc"/>
+         <input name="uploadEvents0Request">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="EventUploadWSv1"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output name="uploadEvents0Response">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="EventUploadWSv1"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+   <service name="EventUploadWSv1">
+      <documentation>
+@author 
+@version 
+</documentation>
+      <port name="EventUploadWSv1Port" binding="tns:EventUploadWSv1Binding">
+         <soap:address location="http://ws.soatrader.com/clia.livestockid.ca/0.1/EventUploadWSv1"/>
+      </port>
+   </service>
+</definitions>

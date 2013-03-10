@@ -1,0 +1,629 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://www.strikeiron.com"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://ws.strikeiron.com"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:si="http://www.strikeiron.com"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.strikeiron.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.strikeiron.com">
+         <s:element name="LookupFinancialNews">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="request" type="si:MidnightTraderRequest"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="MidnightTraderRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Ticker" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExtendedHoursEventType"
+                          type="si:ExtendedHoursEventTypeEnum"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExtendedHoursPriceReaction"
+                          type="si:ExtendedHoursPriceReactionEnum"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HistoricalSearchPeriod"
+                          type="si:HistoricalSearchPeriodEnum"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="ExtendedHoursEventTypeEnum">
+            <s:restriction base="s:string">
+               <s:enumeration value="MostRecent"/>
+               <s:enumeration value="PreMarket"/>
+               <s:enumeration value="AfterHours"/>
+               <s:enumeration value="ForecastReports"/>
+               <s:enumeration value="MostActives"/>
+               <s:enumeration value="WatchLists"/>
+               <s:enumeration value="AnalystNotebook"/>
+               <s:enumeration value="TradingRanges"/>
+               <s:enumeration value="BidActivity"/>
+               <s:enumeration value="AskActivity"/>
+               <s:enumeration value="Earnings"/>
+               <s:enumeration value="EarningsNotebook"/>
+               <s:enumeration value="Gainers"/>
+               <s:enumeration value="Losers"/>
+               <s:enumeration value="Upgrades"/>
+               <s:enumeration value="Downgrades"/>
+               <s:enumeration value="Summary"/>
+               <s:enumeration value="TradingAnalysis"/>
+               <s:enumeration value="FDA"/>
+               <s:enumeration value="SEC"/>
+               <s:enumeration value="Mergers"/>
+               <s:enumeration value="Halts"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="ExtendedHoursPriceReactionEnum">
+            <s:restriction base="s:string">
+               <s:enumeration value="All"/>
+               <s:enumeration value="Positive"/>
+               <s:enumeration value="Negative"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="HistoricalSearchPeriodEnum">
+            <s:restriction base="s:string">
+               <s:enumeration value="Days1"/>
+               <s:enumeration value="Days5"/>
+               <s:enumeration value="Months1"/>
+               <s:enumeration value="Months3"/>
+               <s:enumeration value="Months6"/>
+               <s:enumeration value="Years1"/>
+               <s:enumeration value="Years2"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="LookupFinancialNewsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LookupFinancialNewsResult"
+                             type="si:MidnightTraderOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="MidnightTraderOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="si:MidnightTraderResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIWsOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ServiceStatus" type="si:SIWsStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="StatusNbr" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MidnightTraderResult">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Events" type="si:ArrayOfMidnightTraderRecord"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIWsResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfMidnightTraderRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="MidnightTraderRecord" nillable="true"
+                          type="si:MidnightTraderRecord"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MidnightTraderRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Headline" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EarningsSummary" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PriceChange" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PercentChange" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetAllStatuses">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAllStatusesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllStatusesResult"
+                             type="si:StatusCodeOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="StatusCodeOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="si:StatusCodeResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="StatusCodeResult">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Statuses" type="si:ArrayOfSIWsStatus"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfSIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIWsStatus" nillable="true"
+                          type="si:SIWsStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetServiceInfo">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetServiceInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetServiceInfoResult"
+                             type="si:ServiceInfoOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ServiceInfoOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="si:SIServiceInfoResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIServiceInfoResult">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceInfo"
+                                type="si:ArrayOfServiceInfoRecord"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceInfoRecord" nillable="true"
+                          type="si:ServiceInfoRecord"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoKey" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoValue" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.strikeiron.com">
+         <s:element name="LookupFinancialNews">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="request" type="si:MidnightTraderRequest"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="MidnightTraderRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Ticker" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExtendedHoursEventType"
+                          type="si:ExtendedHoursEventTypeEnum"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExtendedHoursPriceReaction"
+                          type="si:ExtendedHoursPriceReactionEnum"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HistoricalSearchPeriod"
+                          type="si:HistoricalSearchPeriodEnum"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="ExtendedHoursEventTypeEnum">
+            <s:restriction base="s:string">
+               <s:enumeration value="MostRecent"/>
+               <s:enumeration value="PreMarket"/>
+               <s:enumeration value="AfterHours"/>
+               <s:enumeration value="ForecastReports"/>
+               <s:enumeration value="MostActives"/>
+               <s:enumeration value="WatchLists"/>
+               <s:enumeration value="AnalystNotebook"/>
+               <s:enumeration value="TradingRanges"/>
+               <s:enumeration value="BidActivity"/>
+               <s:enumeration value="AskActivity"/>
+               <s:enumeration value="Earnings"/>
+               <s:enumeration value="EarningsNotebook"/>
+               <s:enumeration value="Gainers"/>
+               <s:enumeration value="Losers"/>
+               <s:enumeration value="Upgrades"/>
+               <s:enumeration value="Downgrades"/>
+               <s:enumeration value="Summary"/>
+               <s:enumeration value="TradingAnalysis"/>
+               <s:enumeration value="FDA"/>
+               <s:enumeration value="SEC"/>
+               <s:enumeration value="Mergers"/>
+               <s:enumeration value="Halts"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="ExtendedHoursPriceReactionEnum">
+            <s:restriction base="s:string">
+               <s:enumeration value="All"/>
+               <s:enumeration value="Positive"/>
+               <s:enumeration value="Negative"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="HistoricalSearchPeriodEnum">
+            <s:restriction base="s:string">
+               <s:enumeration value="Days1"/>
+               <s:enumeration value="Days5"/>
+               <s:enumeration value="Months1"/>
+               <s:enumeration value="Months3"/>
+               <s:enumeration value="Months6"/>
+               <s:enumeration value="Years1"/>
+               <s:enumeration value="Years2"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="LookupFinancialNewsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LookupFinancialNewsResult"
+                             type="si:MidnightTraderOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="MidnightTraderOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="si:MidnightTraderResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIWsOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ServiceStatus" type="si:SIWsStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="StatusNbr" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MidnightTraderResult">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Events" type="si:ArrayOfMidnightTraderRecord"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIWsResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfMidnightTraderRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="MidnightTraderRecord" nillable="true"
+                          type="si:MidnightTraderRecord"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MidnightTraderRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Headline" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EarningsSummary" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PriceChange" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PercentChange" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetAllStatuses">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAllStatusesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllStatusesResult"
+                             type="si:StatusCodeOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="StatusCodeOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="si:StatusCodeResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="StatusCodeResult">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Statuses" type="si:ArrayOfSIWsStatus"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfSIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIWsStatus" nillable="true"
+                          type="si:SIWsStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetServiceInfo">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetServiceInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetServiceInfoResult"
+                             type="si:ServiceInfoOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ServiceInfoOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="si:SIServiceInfoResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIServiceInfoResult">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceInfo"
+                                type="si:ArrayOfServiceInfoRecord"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceInfoRecord" nillable="true"
+                          type="si:ServiceInfoRecord"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoKey" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoValue" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns1="http://ws.strikeiron.com"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified"
+                targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </s:schema>
+      <s:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns1="http://ws.strikeiron.com"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified"
+                targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LookupFinancialNewsSoapIn">
+      <wsdl:part name="parameters" element="si:LookupFinancialNews"/>
+  </wsdl:message>
+  <wsdl:message name="LookupFinancialNewsSoapOut">
+      <wsdl:part name="parameters" element="si:LookupFinancialNewsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesSoapIn">
+      <wsdl:part name="parameters" element="si:GetAllStatuses"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesSoapOut">
+      <wsdl:part name="parameters" element="si:GetAllStatusesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoSoapIn">
+      <wsdl:part name="parameters" element="si:GetServiceInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoSoapOut">
+      <wsdl:part name="parameters" element="si:GetServiceInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="s1:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="s1:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseInfoMessage">
+      <wsdl:part name="LicenseInfo" element="s1:LicenseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SubscriptionInfoMessage">
+      <wsdl:part name="SubscriptionInfo" element="s1:SubscriptionInfo"/>
+  </wsdl:message>
+  <wsdl:portType name="MidnightTraderSoap">
+      <wsdl:operation name="LookupFinancialNews">
+         <wsdl:input message="si:LookupFinancialNewsSoapIn"/>
+         <wsdl:output message="si:LookupFinancialNewsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllStatuses">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get all statuses this service might return</documentation>
+         <wsdl:input message="si:GetAllStatusesSoapIn"/>
+         <wsdl:output message="si:GetAllStatusesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetServiceInfo">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get information about the web service</documentation>
+         <wsdl:input message="si:GetServiceInfoSoapIn"/>
+         <wsdl:output message="si:GetServiceInfoSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <wsdl:input message="si:GetRemainingHitsSoapIn"/>
+         <wsdl:output message="si:GetRemainingHitsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MidnightTraderSoap" type="si:MidnightTraderSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="LookupFinancialNews">
+         <soap:operation soapAction="http://www.strikeiron.com/LookupFinancialNews" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllStatuses">
+         <soap:operation soapAction="http://www.strikeiron.com/GetAllStatuses" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetServiceInfo">
+         <soap:operation soapAction="http://www.strikeiron.com/GetServiceInfo" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation soapAction="http://ws.strikeiron.com/StrikeIron/MidnightTraderFinancialNews/MidnightTrader/GetRemainingHits"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MidnightTrader">
+      <wsdl:port name="MidnightTraderSoap" binding="si:MidnightTraderSoap">
+         <soap:address location="http://ws.soatrader.com/strikeiron.com/0.1/MidnightTrader"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

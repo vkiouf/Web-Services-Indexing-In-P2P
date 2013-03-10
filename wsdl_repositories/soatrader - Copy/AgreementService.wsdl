@@ -1,0 +1,543 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://glite.org/ar/agreementService"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:glitens="http://glite.org/ar/agreementService"
+                  xmlns:glitenstype="http://glite.org/ar/agreementService"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing"
+                  xmlns:wsag="http://www.ggf.org/namespaces/ws-agreement"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  targetNamespace="http://glite.org/ar/agreementService"
+                  name="AgreementService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+  <!-- =====================================================================
+       wsdl types
+  ====================================================================== -->
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+
+      <xs:schema targetNamespace="http://glite.org/ar/agreementService"
+                 elementFormDefault="qualified"
+                 attributeFormDefault="qualified">
+
+         <xs:import namespace="http://schemas.xmlsoap.org/ws/2003/03/addressing"
+                    schemaLocation="addressing.xsd"/>
+
+         <xs:import namespace="http://www.ggf.org/namespaces/ws-agreement"
+                    schemaLocation="agreement_types.xsd"/>
+
+         <xs:element name="AgreementReference" type="glitenstype:AgreementReferenceType"/>
+         <xs:complexType name="AgreementReferenceType">
+            <xs:sequence>
+               <xs:element name="agreementID" type="xs:string"/>
+               <xs:element name="agreementHandle" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+
+         <xs:element name="AgreementStateProperties" type="glitenstype:AgreementStatePropertiesType"/>
+         <xs:complexType name="AgreementStatePropertiesType">
+            <xs:sequence>
+               <xs:element name="agState" type="wsag:AgreementStateType"/>
+	              <xs:element name="guaranteeStates" type="wsag:GuaranteeTermStateListType"/>
+	              <xs:element name="serviceStates" type="wsag:ServiceTermStateListType"/>
+            </xs:sequence>
+         </xs:complexType>
+
+         <xs:element name="GenericFault" type="glitenstype:GenericFaultType"/>
+         <xs:complexType name="GenericFaultType">
+            <xs:complexContent>
+               <xs:extension base="wsag:ContinuingFaultType"/>
+            </xs:complexContent>
+         </xs:complexType>
+
+         <xs:element name="AuthenticationFault" type="glitenstype:AuthenticationFaultType"/>
+         <xs:complexType name="AuthenticationFaultType">
+            <xs:complexContent>
+               <xs:extension base="wsag:ContinuingFaultType"/>
+            </xs:complexContent>
+         </xs:complexType>
+
+         <xs:element name="AuthorizationFault" type="glitenstype:AuthorizationFaultType"/>
+         <xs:complexType name="AuthorizationFaultType">
+            <xs:complexContent>
+               <xs:extension base="wsag:ContinuingFaultType"/>
+            </xs:complexContent>
+         </xs:complexType>
+
+         <xs:element name="InvalidArgumentFault" type="glitenstype:InvalidArgumentFaultType"/>
+         <xs:complexType name="InvalidArgumentFaultType">
+            <xs:complexContent>
+               <xs:extension base="wsag:ContinuingFaultType"/>
+            </xs:complexContent>
+         </xs:complexType>
+
+         <!--===================================================================
+      Operational input/output type declarations 
+  ====================================================================-->
+  <!-- createAgreement input and output -->
+  <xs:element name="createAgreementInput" type="glitenstype:CreateAgreementInputType"/>
+         <xs:element name="createAgreementOutput" type="glitenstype:AgreementReferenceType"/>
+         <xs:complexType name="CreateAgreementInputType">
+            <xs:sequence>
+               <xs:element name="userAgreementId" type="xs:string"/>
+               <xs:element name="initiatorAgreementEPR" type="wsa:EndpointReferenceType" minOccurs="0"/>
+               <xs:element name="AgreementOffer" type="wsag:AgreementType"/>
+            </xs:sequence>
+         </xs:complexType>
+
+         <!-- getTemplates input and output -->
+  <xs:element name="getTemplatesInput" type="glitenstype:GetTemplatesInputType"/>
+         <xs:element name="getTemplatesOutput" type="glitenstype:GetTemplatesOutputType"/>
+         <xs:complexType name="GetTemplatesInputType"/>
+         <xs:complexType name="GetTemplatesOutputType">
+            <xs:sequence>
+               <xs:element name="Template" type="wsag:AgreementTemplateType" minOccurs="0"
+                           maxOccurs="unbounded"/>
+            </xs:sequence>
+         </xs:complexType>
+
+         <!-- getAgreementProperties input and output -->
+  <xs:element name="getAgreementPropertiesInput" type="glitenstype:AgreementReferenceType"/>
+         <xs:element name="getAgreementPropertiesOutput"
+                     type="glitenstype:GetAgreementPropertiesOutputType"/>
+         <xs:complexType name="GetAgreementPropertiesOutputType">
+            <xs:sequence>
+               <xs:element name="Name" type="xs:NCName" minOccurs="0"/>
+               <xs:element name="Context" type="wsag:AgreementContextType"/>
+               <xs:element name="Terms" type="wsag:TermCompositorType"/>
+            </xs:sequence>
+         </xs:complexType>
+
+         <!-- agreementKill input and output -->
+  <xs:element name="agreementKillInput" type="glitenstype:AgreementReferenceType"/>
+         <xs:element name="agreementKillOutput" type="xs:integer"/>
+
+         <!-- getAgreementGetStatus input and output -->
+  <xs:element name="getAgreementStatusInput" type="glitenstype:AgreementReferenceType"/>
+         <xs:element name="getAgreementStatusOutput" type="glitenstype:AgreementStatePropertiesType"/>
+
+      </xs:schema>
+  </wsdl:types>
+
+  <!--=======================================================================
+      messages 
+  ========================================================================-->
+    <!-- fault  messages -->
+      <wsdl:message name="GenericFault">
+        <wsdl:part name="GenericFault" element="glitenstype:GenericFault"/>
+      </wsdl:message>
+
+      <wsdl:message name="AuthenticationFault">
+        <wsdl:part name="AuthenticationFault" element="glitenstype:AuthenticationFault"/>
+        </wsdl:message>
+
+      <wsdl:message name="AuthorizationFault">
+        <wsdl:part name="AuthorizationFault" element="glitenstype:AuthorizationFault"/>
+        </wsdl:message>
+
+      <wsdl:message name="InvalidArgumentFault">
+        <wsdl:part name="InvalidArgumentFault" element="glitenstype:InvalidArgumentFault"/>
+      </wsdl:message>
+
+    <!-- createAgreement messages -->
+       <wsdl:message name="createAgreementInputMessage">
+         <wsdl:part name="parameters" element="glitenstype:createAgreementInput"/>
+       </wsdl:message>
+       <wsdl:message name="createAgreementOuputMessage">
+         <wsdl:part name="parameters" element="glitenstype:createAgreementOutput"/>
+       </wsdl:message>
+
+   <!-- getTemplates messages -->
+       <wsdl:message name="getTemplatesInputMessage">
+         <wsdl:part name="parameters" element="glitenstype:getTemplatesInput"/>
+       </wsdl:message>
+       <wsdl:message name="getTemplatesOutputMessage">
+         <wsdl:part name="parameters" element="glitenstype:getTemplatesOutput"/>
+       </wsdl:message>
+
+   <!-- getAgreementProperties messages -->
+        <wsdl:message name="getAgreementPropertiesInputMessage">
+          <wsdl:part name="parameters" element="glitenstype:getAgreementPropertiesInput"/>
+        </wsdl:message>
+        <wsdl:message name="getAgreementPropertiesOutputMessage">
+           <wsdl:part name="parameters" element="glitenstype:getAgreementPropertiesOutput"/>
+        </wsdl:message>
+
+   <!-- agreementKill messages -->
+        <wsdl:message name="agreementKillInputMessage">
+          <wsdl:part name="parameters" element="glitenstype:agreementKillInput"/>        
+        </wsdl:message>
+        <wsdl:message name="agreementKillOutputMessage">
+          <wsdl:part name="parameters" element="glitenstype:agreementKillOutput"/>
+        </wsdl:message>
+
+   <!-- getAgreementStatus messages -->
+        <wsdl:message name="getAgreementStatusInputMessage">
+          <wsdl:part name="parameters" element="glitenstype:getAgreementStatusInput"/>
+        </wsdl:message>
+        <wsdl:message name="getAgreementStatusOutputMessage">
+          <wsdl:part name="parameters" element="glitenstype:getAgreementStatusOutput"/>
+        </wsdl:message>
+
+
+  <!--=======================================================================
+      operations of the gLite Agreement Service
+      1. createAgreement
+      2. getTemplates
+      3. getAgreementProperties
+      4. agreementKill
+      5. getAgreementStatus
+  =========================================================================-->
+
+  <wsdl:portType name="AgreementServicePortType">
+
+    <!-- createAgreement operation -->
+    <wsdl:operation name="createAgreement">
+         <wsdl:documentation>
+	Operation: the createAgreement operation is invoked to establish
+	  a new agreement between the agreement initiator (for example one
+	  client or a proxy of it such as the Workload Management System) 
+	  and the provider (the Agreement Service itself).
+
+	Input: the composition of three information items:
+	  a. the agreement initiator end-point reference (if available) 
+	  b. the userAgreementId, i.e. an agreement 
+	  identification string defined by the agreement initiator. 
+	  Note: the final full identification 
+	  one agreement successfully negotiated, consists of the composition 
+	  of the userAgreementId and the agreement Handle defined by the
+	  agreement Service Provider. The composition of the two is called
+	  "agreement reference", and is the output of the createAgreement
+	  operation.
+	  c: the agreement offer, which describes quantitatively describes
+	  the requested agreement.
+
+	Output: the agreement reference, which is the composition of the 
+	  userAgreementId - defined directly or indirectly by the agreement
+	  initiator - and the agreement handle - originated by the service
+	  provide responsible of the actual enforcement of the agreement 
+	  guarantees under consideration.
+
+	Faults:
+		AuthenticationFault: a generic authentication problem occured.
+		AuthorizationFault: the client is not authorized to performed
+		  the invoked operation.
+		InvalidArgumentFault: the agreement identifier, the initiator's
+		  end-point reference, or both, are not valid.
+        	GenericFault: another problem occured.
+
+    </wsdl:documentation>
+
+         <wsdl:input message="glitens:createAgreementInputMessage"/>
+         <wsdl:output message="glitens:createAgreementOuputMessage"/>
+         <wsdl:fault name="GenericFault" message="glitens:GenericFault"/>
+         <wsdl:fault name="AuthenticationFault" message="glitens:AuthenticationFault"/>
+         <wsdl:fault name="AuthorizationFault" message="glitens:AuthorizationFault"/>
+         <wsdl:fault name="InvalidArgumentFault" message="glitens:InvalidArgumentFault"/>
+      </wsdl:operation>
+
+      <!-- getTemplates operation -->
+    <wsdl:operation name="getTemplates">
+         <wsdl:documentation>
+	Operation: the getTemplates operation is invoked to retrieve 
+	  information about the valid templates that a given Agreement Service
+	  can handle. The agreement offer submitted when invoking the
+	  createAgreement operation needs to comply to at least one of the
+	  templates advertized by the Agreement Service.
+
+	Input: no input.
+
+	Output: list of agreement templates, which can be constituted by zero
+	  or more occurrences.
+
+	Faults:
+		AuthenticationFault: a generic authentication problem occured.
+		AuthorizationFault: the client is not authorized to performed
+		  the invoked operation.
+        	GenericFault: another problem occured.
+    </wsdl:documentation>
+         <wsdl:input message="glitens:getTemplatesInputMessage"/>
+         <wsdl:output message="glitens:getTemplatesOutputMessage"/>
+         <wsdl:fault name="GenericFault" message="glitens:GenericFault"/>
+         <wsdl:fault name="AuthenticationFault" message="glitens:AuthenticationFault"/>
+         <wsdl:fault name="AuthorizationFault" message="glitens:AuthorizationFault"/>
+      </wsdl:operation>
+
+      <!-- getAgreementProperties operation -->
+    <wsdl:operation name="getAgreementProperties">
+         <wsdl:documentation>
+	Operation: the getAgreementProperties operation is invoked to get 
+	  information about a successfully established agreement. This 
+	  information includes:
+	  a. the name (optional) assigned to a given agreement.
+	  b. the agreement context, that contains information such as the
+	     parties involved in the agreementi (initiator and provider), 
+	     the duration, and optionally the name of the template 
+	     from which the agreement is created.
+	  c. the agreement terms, i.e. the "service description terms" that
+	     provide information needed to instantiate a service, and the
+	     "guarantee terms", that specify the service levels that the
+	     parties are agreeing to.
+
+	Input: a reference to an established agreement, i.e. the composition
+	  of an agreement identifier (from the agreement initiator) and an
+	  agreement handle (defined by the associated service provider).
+
+	Output: the agreement properties (name, context and terms).
+
+	Faults:
+		AuthenticationFault: a generic authentication problem occured.
+		AuthorizationFault: the client is not authorized to performed
+		  the invoked operation.
+		InvalidArgumentFault: the agreement identifier, the initiator's
+		  end-point reference, or both, are not valid.
+        	GenericFault: another problem occured.
+    </wsdl:documentation>
+         <wsdl:input message="glitens:getAgreementPropertiesInputMessage"/>
+         <wsdl:output message="glitens:getAgreementPropertiesOutputMessage"/>
+         <wsdl:fault name="GenericFault" message="glitens:GenericFault"/>
+         <wsdl:fault name="AuthenticationFault" message="glitens:AuthenticationFault"/>
+         <wsdl:fault name="AuthorizationFault" message="glitens:AuthorizationFault"/>
+         <wsdl:fault name="InvalidArgumentFault" message="glitens:InvalidArgumentFault"/>
+      </wsdl:operation>
+
+      <!-- agreementKill operation -->
+    <wsdl:operation name="agreementKill">
+         <wsdl:documentation>
+	Operation: the agreementKill operation is invoked to abort an
+	  agreement that was previously successfully established.
+
+	Input: a reference to an established agreement, i.e. the composition
+	  of an agreement identifier (from the agreement initiator) and an
+	  agreement handle (defined by the associated service provider).
+
+	Output: 1 if agreement is killed succesfully, 0 otherwise.
+
+	Faults:
+		AuthenticationFault: a generic authentication problem occured.
+		AuthorizationFault: the client is not authorized to performed
+		  the invoked operation.
+		InvalidArgumentFault: the agreement identifier, the initiator's
+		  end-point reference, or both, are not valid.
+        	GenericFault: another problem occured.
+    </wsdl:documentation>
+         <wsdl:input message="glitens:agreementKillInputMessage"/>
+         <wsdl:output message="glitens:agreementKillOutputMessage"/>
+         <wsdl:fault name="GenericFault" message="glitens:GenericFault"/>
+         <wsdl:fault name="AuthenticationFault" message="glitens:AuthenticationFault"/>
+         <wsdl:fault name="AuthorizationFault" message="glitens:AuthorizationFault"/>
+         <wsdl:fault name="InvalidArgumentFault" message="glitens:InvalidArgumentFault"/>
+      </wsdl:operation>
+
+      <!-- getAgreementStatus operation -->
+    <wsdl:operation name="getAgreementStatus">
+         <wsdl:documentation>
+	Operation: the getAgreementStatus operation is invoked to get 
+	  information about status of one established agreement. Information
+	  provides data about three distinct components: the negotiation
+	  status of the agreement offer, the status of the corresponding
+	  service, and the status of the requested guarantees.
+
+	Input: a reference to an established agreement, i.e. the composition
+	  of an agreement identifier (from the agreement initiator) and an
+	  agreement handle (defined by the associated service provider).
+
+	Output: status information about:
+	  a. the agreement: notDetermined, beforeObserved, observed, 
+	     afterObserved.
+	  b. service: a list of named service terms with their corresponding
+	     respective state (NotDetermined, NotReady, Ready, Processing,
+	     Completed).
+	  c. guarantee terms: a list of named guarantee terms with their
+	     corresponding respective state (NotDetermined, Fulfilled, 
+	     Violated). 
+
+	Faults:
+		AuthenticationFault: a generic authentication problem occured.
+		AuthorizationFault: the client is not authorized to performed
+		  the invoked operation.
+		InvalidArgumentFault: the agreement identifier, the initiator's
+		  end-point reference, or both, are not valid.
+        	GenericFault: another problem occured.
+    </wsdl:documentation>
+         <wsdl:input message="glitens:getAgreementStatusInputMessage"/>
+         <wsdl:output message="glitens:getAgreementStatusOutputMessage"/>
+         <wsdl:fault name="GenericFault" message="glitens:GenericFault"/>
+         <wsdl:fault name="AuthenticationFault" message="glitens:AuthenticationFault"/>
+         <wsdl:fault name="AuthorizationFault" message="glitens:AuthorizationFault"/>
+         <wsdl:fault name="InvalidArgumentFault" message="glitens:InvalidArgumentFault"/>
+      </wsdl:operation>
+
+  </wsdl:portType>
+
+    <wsdl:binding name="AgreementServiceBinding" type="glitens:AgreementServicePortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="createAgreement">
+        <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:input>
+        <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:output>
+        <wsdl:fault name="AuthenticationFault">
+            <soap:fault name="AuthenticationFault" use="literal"/>
+        </wsdl:fault>
+        <wsdl:fault name="AuthorizationFault">
+            <soap:fault name="AuthorizationFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+        <wsdl:fault name="InvalidArgumentFault">
+            <soap:fault name="InvalidArgumentFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+        <wsdl:fault name="GenericFault">
+            <soap:fault name="GenericFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+      </wsdl:operation>
+
+      <wsdl:operation name="getTemplates">
+        <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:input>
+        <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:output>
+        <wsdl:fault name="AuthenticationFault">
+            <soap:fault name="AuthenticationFault" use="literal"/>
+        </wsdl:fault>
+        <wsdl:fault name="AuthorizationFault">
+            <soap:fault name="AuthorizationFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+        <wsdl:fault name="GenericFault">
+            <soap:fault name="GenericFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgreementProperties">
+        <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:input>
+        <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:output>
+        <wsdl:fault name="AuthenticationFault">
+            <soap:fault name="AuthenticationFault" use="literal"/>
+        </wsdl:fault>
+        <wsdl:fault name="AuthorizationFault">
+            <soap:fault name="AuthorizationFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+        <wsdl:fault name="InvalidArgumentFault">
+            <soap:fault name="InvalidArgumentFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+        <wsdl:fault name="GenericFault">
+            <soap:fault name="GenericFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+      </wsdl:operation>
+
+      <wsdl:operation name="agreementKill">
+        <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:input>
+        <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:output>
+        <wsdl:fault name="AuthenticationFault">
+            <soap:fault name="AuthenticationFault" use="literal"/>
+        </wsdl:fault>
+        <wsdl:fault name="AuthorizationFault">
+            <soap:fault name="AuthorizationFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+        <wsdl:fault name="InvalidArgumentFault">
+            <soap:fault name="InvalidArgumentFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+        <wsdl:fault name="GenericFault">
+            <soap:fault name="GenericFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgreementStatus">
+        <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:input>
+        <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:output>
+        <wsdl:fault name="AuthenticationFault">
+            <soap:fault name="AuthenticationFault" use="literal"/>
+        </wsdl:fault>
+        <wsdl:fault name="AuthorizationFault">
+            <soap:fault name="AuthorizationFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+        <wsdl:fault name="InvalidArgumentFault">
+            <soap:fault name="InvalidArgumentFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+        <wsdl:fault name="GenericFault">
+            <soap:fault name="GenericFault" use="literal"
+                        namespace="http://glite.org/ar/agreementService"/>
+        </wsdl:fault>
+      </wsdl:operation>
+
+    </wsdl:binding>
+
+    <wsdl:service name="AgreementService">
+      <wsdl:documentation>
+      gLite Agreement Service for establishment, monitoring and handling of
+      service level agreements. The operations exposed are: 
+      1. createAgreement
+      2. getTemplates
+      3. getAgreementProperties
+      4. agreementKill
+      5. getAgreementStatus
+    </wsdl:documentation>
+      <wsdl:port name="AgreementServicePortType" binding="glitens:AgreementServiceBinding">
+          <soap:address location="http://ws.soatrader.com/mi.infn.it/0.1/AgreementService"/>
+      </wsdl:port>
+    </wsdl:service>
+
+
+</wsdl:definitions>

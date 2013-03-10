@@ -1,0 +1,71 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="http://homepages.feis.herts.ac.uk/~rk9ab/StockCheck.wsdl"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="StockCheck"
+             targetNamespace="http://homepages.feis.herts.ac.uk/~rk9ab/StockCheck.wsdl">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+ 
+								
+	  <message name="StockCheckRequest">
+		    <part name="productCode" type="xsd:string"/>
+		    <part name="date" type="xsd:date"/>
+	  </message>
+	
+	  <message name="StockCheckResponse">
+		    <part name="return" type="xsd:integer"/>
+	  </message>                  
+
+	
+	  <portType name="StockCheckPortType">
+		    <operation name="checkStockLevel">
+			      <input message="tns:StockCheckRequest"/>
+			      <output message="tns:StockCheckResponse"/>
+		    </operation>
+	  </portType>
+
+	  <binding name="StockCheckBinding" type="tns:StockCheckPortType">
+		    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <operation name="checkStockLevel">
+			      <soap:operation soapAction="urn:stock#checkStockLevel"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:stock"/>				
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:stock"/>
+			      </output>
+		    </operation>
+	  </binding>
+
+	  <service name="StockCheckService">
+		    <port name="StockCheckPort" binding="tns:StockCheckBinding">
+			      <soap:address location="http://ws.soatrader.com/herts.ac.uk/0.1/StockCheckService"/>
+		    </port>
+	  </service>
+
+</definitions>

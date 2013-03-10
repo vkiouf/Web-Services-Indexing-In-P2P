@@ -1,0 +1,120 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xtee="http://x-tee.riik.ee/xsd/xtee.xsd"
+                  xmlns:tns="http://producers.riha.xtee.riik.ee/producer/riha"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                  targetNamespace="http://producers.riha.xtee.riik.ee/producer/riha">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+		
+	
+	
+	  <wsdl:message name="legacy">
+		    <wsdl:part name="keha" type="xtee:ArrayOfString"/>
+	  </wsdl:message>
+	
+	  <wsdl:message name="legacyResponse">
+		    <wsdl:part name="paring" type="xtee:ArrayOfString"/>
+		    <wsdl:part name="keha" type="xtee:legacy_response"/>
+	  </wsdl:message>
+	
+	
+	  <wsdl:message name="legacy_allasutus">
+		    <wsdl:part name="keha" type="xtee:ArrayOfString"/>
+	  </wsdl:message>
+	
+	  <wsdl:message name="legacy_allasutusResponse">
+		    <wsdl:part name="paring" type="xtee:ArrayOfString"/>
+		    <wsdl:part name="keha" type="xtee:legacy_response"/>
+	  </wsdl:message>
+	
+	
+	  <wsdl:portType name="riha">
+		    <wsdl:operation name="legacyRIHA">
+			      <wsdl:documentation>
+				        <xtee:title>RIHA legacy autentimine</xtee:title>
+			      </wsdl:documentation>
+			      <wsdl:input message="tns:legacy"/>
+			      <wsdl:output message="tns:legacyResponse"/>
+		    </wsdl:operation>
+		
+		    <wsdl:operation name="legacyRIHA_allasutus">
+			      <wsdl:documentation>
+				        <xtee:title>RIHA legacy autentimine allasutuse järgi</xtee:title>
+			      </wsdl:documentation>
+			      <wsdl:input message="tns:legacy_allasutus"/>
+			      <wsdl:output message="tns:legacy_allasutusResponse"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+	
+	
+	  <wsdl:binding name="riha_soapbinding" type="tns:riha">
+		    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		
+		    <wsdl:operation name="legacyRIHA">
+			      <xtee:version>v1</xtee:version>
+			      <soap:operation/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.riha.xtee.riik.ee/producer/riha"/>
+				
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.riha.xtee.riik.ee/producer/riha"/>
+				
+			      </wsdl:output>
+		    </wsdl:operation>
+		
+		    <wsdl:operation name="legacyRIHA_allasutus">
+			      <xtee:version>v1</xtee:version>
+			      <soap:operation/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.riha.xtee.riik.ee/producer/riha"/>
+				
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.riha.xtee.riik.ee/producer/riha"/>
+				
+			      </wsdl:output>
+		    </wsdl:operation>
+	  </wsdl:binding>
+	
+	
+	  <wsdl:service name="riha">
+		    <wsdl:port name="riha" binding="tns:riha_soapbinding">
+			      <soap:address location="http://ws.soatrader.com/riik.ee/0.3/riha"/>
+			      <xtee:address producer="riha"/>
+			      <xtee:title>Riigi Infosüsteemi Haldusüsteem</xtee:title>
+		    </wsdl:port>
+	  </wsdl:service>
+
+</wsdl:definitions>

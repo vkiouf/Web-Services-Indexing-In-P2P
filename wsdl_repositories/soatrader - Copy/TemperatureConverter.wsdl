@@ -1,0 +1,126 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://example.ws"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:axis2="http://example.ws"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:ns0="http://example.ws/xsd"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:ns1="http://org.apache.axis2/xsd"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://example.ws">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <wsdl:documentation>TemperatureConverter</wsdl:documentation>
+	  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <xs:schema xmlns:ns="http://example.ws/xsd" attributeFormDefault="qualified"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://example.ws/xsd">
+			      <xs:element name="c2fConvertion">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element name="cValue" nillable="true" type="xs:double"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:element name="c2fConvertionResponse">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element name="return" nillable="true" type="xs:double"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:element name="f2cConvertion">
+
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element name="fValue" nillable="true" type="xs:double"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:element name="f2cConvertionResponse">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element name="return" nillable="true" type="xs:double"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+		    </xs:schema>
+	  </wsdl:types>
+	  <wsdl:message name="f2cConvertionMessage">
+		    <wsdl:part name="part1" element="ns0:f2cConvertion"/>
+	  </wsdl:message>
+	  <wsdl:message name="f2cConvertionResponse">
+		    <wsdl:part name="part1" element="ns0:f2cConvertionResponse"/>
+	  </wsdl:message>
+	  <wsdl:message name="c2fConvertionMessage">
+		    <wsdl:part name="part1" element="ns0:c2fConvertion"/>
+	  </wsdl:message>
+	  <wsdl:message name="c2fConvertionResponse">
+		    <wsdl:part name="part1" element="ns0:c2fConvertionResponse"/>
+	  </wsdl:message>
+	
+	  <wsdl:binding name="TemperatureConverterSOAP11Binding"
+                 type="axis2:TemperatureConverterPortType">
+		    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+		    <wsdl:operation name="f2cConvertion">
+			      <soap:operation soapAction="urn:f2cConvertion" style="document"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+		    <wsdl:operation name="c2fConvertion">
+			      <soap:operation soapAction="urn:c2fConvertion" style="document"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+	  </wsdl:binding>
+	
+	
+	  <wsdl:service name="TemperatureConverter">
+		    <wsdl:port name="TemperatureConverterSOAP11port_http"
+                 binding="axis2:TemperatureConverterSOAP11Binding">
+			      <soap:address location="http://ws.soatrader.com/wso2.org/0.1/TemperatureConverter"/>
+		    </wsdl:port>
+		    <wsdl:port name="TemperatureConverterSOAP12port_http"
+                 binding="axis2:TemperatureConverterSOAP12Binding">
+         <soap:address location="http://ws.soatrader.com/wso2.org/0.1/TemperatureConverter"/>
+			      <soap12:address location="http://localhost:8080/TestLables/services/TemperatureConverter"/>
+		    </wsdl:port>
+		    <wsdl:port name="TemperatureConverterHttpport"
+                 binding="axis2:TemperatureConverterHttpBinding">
+         <soap:address location="http://ws.soatrader.com/wso2.org/0.1/TemperatureConverter"/>
+			      <http:address location="http://localhost:8080/TestLables/services/TemperatureConverter"/>
+		    </wsdl:port>
+	  </wsdl:service>
+</wsdl:definitions>

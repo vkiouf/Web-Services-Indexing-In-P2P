@@ -1,0 +1,133 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://www.aspemporium.com/ws/nycaddr/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.aspemporium.com/ws/nycaddr/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.aspemporium.com/ws/nycaddr/">
+         <s:element name="GetCrossStreet">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="addrNumber" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="avenue" type="tns:NycAvenue"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="NycAvenue">
+            <s:restriction base="s:string">
+               <s:enumeration value="AvenueA"/>
+               <s:enumeration value="AvenueB"/>
+               <s:enumeration value="AvenueC"/>
+               <s:enumeration value="AvenueD"/>
+               <s:enumeration value="First"/>
+               <s:enumeration value="Second"/>
+               <s:enumeration value="Third"/>
+               <s:enumeration value="Fourth"/>
+               <s:enumeration value="Fifth"/>
+               <s:enumeration value="Sixth"/>
+               <s:enumeration value="Seventh"/>
+               <s:enumeration value="Eighth"/>
+               <s:enumeration value="Ninth"/>
+               <s:enumeration value="Tenth"/>
+               <s:enumeration value="Amsterdam"/>
+               <s:enumeration value="Columbus"/>
+               <s:enumeration value="WestEnd"/>
+               <s:enumeration value="Broadway"/>
+               <s:enumeration value="Lenox"/>
+               <s:enumeration value="Lexington"/>
+               <s:enumeration value="Madison"/>
+               <s:enumeration value="Park"/>
+               <s:enumeration value="Riverside"/>
+               <s:enumeration value="CentralParkWest"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetCrossStreetResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetCrossStreetResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="int" type="s:int"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCrossStreetSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCrossStreet"/>
+  </wsdl:message>
+  <wsdl:message name="GetCrossStreetSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCrossStreetResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCrossStreetHttpGetIn">
+      <wsdl:part name="addrNumber" type="s:string"/>
+      <wsdl:part name="avenue" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCrossStreetHttpGetOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="GetCrossStreetHttpPostIn">
+      <wsdl:part name="addrNumber" type="s:string"/>
+      <wsdl:part name="avenue" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCrossStreetHttpPostOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:portType name="NycAddressService">
+      <wsdl:operation name="GetCrossStreet">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Finds a cross street within three blocks of any avenue address in Midtown Manhattan. Returns -1 if unable to determine cross street.</documentation>
+         <wsdl:input message="tns:GetCrossStreetSoapIn"/>
+         <wsdl:output message="tns:GetCrossStreetSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="NycAddressService" type="tns:NycAddressService">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetCrossStreet">
+         <soap:operation soapAction="http://www.aspemporium.com/ws/nycaddr/GetCrossStreet"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="NycAddressService">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Utilities for working with NYC addresses</documentation>
+      <wsdl:port name="NycAddressService" binding="tns:NycAddressService">
+         <soap:address location="http://ws.soatrader.com/aspemporium.com/0.1/NycAddressService"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

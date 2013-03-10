@@ -1,0 +1,200 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="urn:LeftCollocationFinder"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="urn:LeftCollocationFinder"
+                  xmlns:intf="urn:LeftCollocationFinder"
+                  xmlns:tns1="http://datatypes.webservice.wortschatz.uni_leipzig.de"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="urn:LeftCollocationFinder">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.2RC3
+Built on Mar 28, 2005 (10:34:47 CEST)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="urn:LeftCollocationFinder">
+         <import namespace="http://datatypes.webservice.wortschatz.uni_leipzig.de"/>
+         <element name="execute">
+            <complexType>
+               <sequence>
+                  <element name="objRequestParameters" type="impl:RequestParameter"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="DataMatrix">
+            <sequence>
+               <element maxOccurs="unbounded" name="dataVectors" type="tns1:DataVector"/>
+            </sequence>
+         </complexType>
+         <complexType name="RequestParameter">
+            <sequence>
+               <element name="corpus" nillable="true" type="xsd:string"/>
+               <element name="parameters" nillable="true" type="impl:DataMatrix"/>
+            </sequence>
+         </complexType>
+         <element name="executeResponse">
+            <complexType>
+               <sequence>
+                  <element name="executeReturn" type="impl:ResponseParameter"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="ResponseParameter">
+            <sequence>
+               <element name="executionTime" nillable="true" type="xsd:string"/>
+               <element name="result" nillable="true" type="impl:DataMatrix"/>
+               <element name="serviceMagnitude" type="xsd:int"/>
+               <element name="userAmount" type="xsd:int"/>
+               <element name="userMaxLimit" type="xsd:int"/>
+            </sequence>
+         </complexType>
+         <element name="ping">
+            <complexType/>
+         </element>
+         <element name="pingResponse">
+            <complexType>
+               <sequence>
+                  <element name="pingReturn" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://datatypes.webservice.wortschatz.uni_leipzig.de">
+         <import namespace="urn:LeftCollocationFinder"/>
+         <complexType name="DataVector">
+            <sequence>
+               <element maxOccurs="unbounded" name="dataRow" type="xsd:string"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="pingResponse">
+
+      <wsdl:part element="impl:pingResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="executeRequest">
+
+      <wsdl:part element="impl:execute" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="executeResponse">
+
+      <wsdl:part element="impl:executeResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="pingRequest">
+
+      <wsdl:part element="impl:ping" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="LeftCollocationFinder">
+
+      <wsdl:operation name="execute">
+
+         <wsdl:input message="impl:executeRequest" name="executeRequest"/>
+
+         <wsdl:output message="impl:executeResponse" name="executeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ping">
+
+         <wsdl:input message="impl:pingRequest" name="pingRequest"/>
+
+         <wsdl:output message="impl:pingResponse" name="pingResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="LeftCollocationFinderSoapBinding" type="impl:LeftCollocationFinder">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="execute">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="executeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="executeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="ping">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="pingRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="pingResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="LeftCollocationFinderService">
+
+      <wsdl:port binding="impl:LeftCollocationFinderSoapBinding" name="LeftCollocationFinder">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/uni-leipzig.de/0.1/LeftCollocationFinderService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

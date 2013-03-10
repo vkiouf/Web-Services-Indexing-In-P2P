@@ -1,0 +1,140 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://webServices.macam.ac.il/librarySearch"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://webServices.macam.ac.il/librarySearch">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://webServices.macam.ac.il/librarySearch">
+         <s:element name="basicSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SQLServerIP" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="userId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="pwd" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="dbName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="tableName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="fieldNames" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="searchStr" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requiredField" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="isCaseSensitive" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="basicSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="basicSearchResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="advancedSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SQLServerIP" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="userId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="pwd" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="dbName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="tableName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="fieldNames" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="searchStrs" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requiredField" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="isCaseSensitive" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="advancedSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="advancedSearchResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="basicSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:basicSearch"/>
+  </wsdl:message>
+  <wsdl:message name="basicSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:basicSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="advancedSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:advancedSearch"/>
+  </wsdl:message>
+  <wsdl:message name="advancedSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:advancedSearchResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="QueryBuilderSoap">
+      <wsdl:operation name="basicSearch">
+         <wsdl:input message="tns:basicSearchSoapIn"/>
+         <wsdl:output message="tns:basicSearchSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="advancedSearch">
+         <wsdl:input message="tns:advancedSearchSoapIn"/>
+         <wsdl:output message="tns:advancedSearchSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="QueryBuilderSoap" type="tns:QueryBuilderSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="basicSearch">
+         <soap:operation soapAction="http://webServices.macam.ac.il/librarySearch/basicSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="advancedSearch">
+         <soap:operation soapAction="http://webServices.macam.ac.il/librarySearch/advancedSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="QueryBuilder">
+      <wsdl:port name="QueryBuilderSoap" binding="tns:QueryBuilderSoap">
+         <soap:address location="http://ws.soatrader.com/macam.ac.il/0.1/QueryBuilder"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

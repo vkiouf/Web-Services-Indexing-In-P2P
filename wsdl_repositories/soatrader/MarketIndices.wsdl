@@ -1,0 +1,614 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://www.strikeiron.com"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:si="http://www.strikeiron.com"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.strikeiron.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.strikeiron.com">
+         <s:element name="ListIndices">
+            <s:complexType/>
+         </s:element>
+         <s:element name="ListIndicesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListIndicesResult"
+                             type="si:ArrayOfSISecurity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfSISecurity">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SISecurity" nillable="true"
+                          type="si:SISecurity"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SISecurity">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CIK" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Cusip" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Market" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CategoryOrIndustry" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ResponseInfo" type="si:ResponseInfo"/>
+         <s:complexType name="ResponseInfo">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ResponseCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Response" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetDelayedValue">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="si:SIIdentifierTypes"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="SIIdentifierTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Symbol"/>
+               <s:enumeration value="CIK"/>
+               <s:enumeration value="CUSIP"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetDelayedValueResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetDelayedValueResult" type="si:SIIndexQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SIIndexQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Security" type="si:SISecurity"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Last" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Open" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="High" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Low" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromOpen" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromOpen" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromLastClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromLastClose" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetLastClosingValue">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="si:SIIdentifierTypes"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLastClosingValueResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLastClosingValueResult"
+                             type="si:SIIndexQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLastClosingValues">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Identifiers" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="si:SIIdentifierTypes"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLastClosingValuesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLastClosingValuesResult"
+                             type="si:ArrayOfSIIndexQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfSIIndexQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIIndexQuote" nillable="true"
+                          type="si:SIIndexQuote"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetHistoricalValue">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="si:SIIdentifierTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="si:SIDate"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SIDate">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Month" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Day" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Year" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetHistoricalValueResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetHistoricalValueResult"
+                             type="si:SIIndexQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetHistoricalValues">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Identifiers" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="si:SIIdentifierTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="si:SIDate"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetHistoricalValuesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetHistoricalValuesResult"
+                             type="si:ArrayOfSIIndexQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetHistoricalValuesAsOf">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="si:SIIdentifierTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="si:SIDate"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PeriodType" type="si:SIPeriodTypes"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Periods" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="SIPeriodTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Day"/>
+               <s:enumeration value="Week"/>
+               <s:enumeration value="Month"/>
+               <s:enumeration value="Quarter"/>
+               <s:enumeration value="Year"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetHistoricalValuesAsOfResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetHistoricalValuesAsOfResult"
+                             type="si:SIIndexQuotes"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SIIndexQuotes">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Security" type="si:SISecurity"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Indices" type="si:ArrayOfSIIndexQuote"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetHistoricalValuesRange">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="si:SIIdentifierTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="si:SIDate"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="si:SIDate"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetHistoricalValuesRangeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetHistoricalValuesRangeResult"
+                             type="si:SIIndexQuotes"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <xs:schema xmlns:tns1="http://ws.strikeiron.com" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 attributeFormDefault="unqualified"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ListIndicesSoapIn">
+      <wsdl:part name="parameters" element="si:ListIndices"/>
+  </wsdl:message>
+  <wsdl:message name="ListIndicesSoapOut">
+      <wsdl:part name="parameters" element="si:ListIndicesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListIndicesResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetDelayedValueSoapIn">
+      <wsdl:part name="parameters" element="si:GetDelayedValue"/>
+  </wsdl:message>
+  <wsdl:message name="GetDelayedValueSoapOut">
+      <wsdl:part name="parameters" element="si:GetDelayedValueResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDelayedValueResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetLastClosingValueSoapIn">
+      <wsdl:part name="parameters" element="si:GetLastClosingValue"/>
+  </wsdl:message>
+  <wsdl:message name="GetLastClosingValueSoapOut">
+      <wsdl:part name="parameters" element="si:GetLastClosingValueResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLastClosingValueResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetLastClosingValuesSoapIn">
+      <wsdl:part name="parameters" element="si:GetLastClosingValues"/>
+  </wsdl:message>
+  <wsdl:message name="GetLastClosingValuesSoapOut">
+      <wsdl:part name="parameters" element="si:GetLastClosingValuesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLastClosingValuesResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValueSoapIn">
+      <wsdl:part name="parameters" element="si:GetHistoricalValue"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValueSoapOut">
+      <wsdl:part name="parameters" element="si:GetHistoricalValueResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValueResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValuesSoapIn">
+      <wsdl:part name="parameters" element="si:GetHistoricalValues"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValuesSoapOut">
+      <wsdl:part name="parameters" element="si:GetHistoricalValuesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValuesResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValuesAsOfSoapIn">
+      <wsdl:part name="parameters" element="si:GetHistoricalValuesAsOf"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValuesAsOfSoapOut">
+      <wsdl:part name="parameters" element="si:GetHistoricalValuesAsOfResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValuesAsOfResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValuesRangeSoapIn">
+      <wsdl:part name="parameters" element="si:GetHistoricalValuesRange"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValuesRangeSoapOut">
+      <wsdl:part name="parameters" element="si:GetHistoricalValuesRangeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalValuesRangeResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="q1:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="q2:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseInfoMessage">
+      <wsdl:part name="LicenseInfo" element="q3:LicenseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SubscriptionInfoMessage">
+      <wsdl:part name="SubscriptionInfo" element="q4:SubscriptionInfo"/>
+  </wsdl:message>
+  <wsdl:portType name="MarketIndicesSoap">
+      <wsdl:operation name="ListIndices">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns last closing value for an index</documentation>
+         <wsdl:input message="si:ListIndicesSoapIn"/>
+         <wsdl:output message="si:ListIndicesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetDelayedValue">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a delayed value for an index</documentation>
+         <wsdl:input message="si:GetDelayedValueSoapIn"/>
+         <wsdl:output message="si:GetDelayedValueSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetLastClosingValue">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns last closing value for an index</documentation>
+         <wsdl:input message="si:GetLastClosingValueSoapIn"/>
+         <wsdl:output message="si:GetLastClosingValueSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetLastClosingValues">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns last closing value for a collection of indices</documentation>
+         <wsdl:input message="si:GetLastClosingValuesSoapIn"/>
+         <wsdl:output message="si:GetLastClosingValuesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetHistoricalValue">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns an index value as of a historical date</documentation>
+         <wsdl:input message="si:GetHistoricalValueSoapIn"/>
+         <wsdl:output message="si:GetHistoricalValueSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetHistoricalValues">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a collection of index values as of a historical date</documentation>
+         <wsdl:input message="si:GetHistoricalValuesSoapIn"/>
+         <wsdl:output message="si:GetHistoricalValuesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetHistoricalValuesAsOf">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This operation returns a range of values for an index</documentation>
+         <wsdl:input message="si:GetHistoricalValuesAsOfSoapIn"/>
+         <wsdl:output message="si:GetHistoricalValuesAsOfSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetHistoricalValuesRange">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This operation returns a complete range of stock quotes for a US equity. This includes split and dividend adjusted price</documentation>
+         <wsdl:input message="si:GetHistoricalValuesRangeSoapIn"/>
+         <wsdl:output message="si:GetHistoricalValuesRangeSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <wsdl:input message="si:GetRemainingHitsSoapIn"/>
+         <wsdl:output message="si:GetRemainingHitsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MarketIndicesSoap" type="si:MarketIndicesSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="ListIndices">
+         <soap:operation soapAction="http://www.strikeiron.com/ListIndices" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions/>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:ListIndicesResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetDelayedValue">
+         <soap:operation soapAction="http://www.strikeiron.com/GetDelayedValue" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Identifier) &gt; 0</tns:expression>
+                     <tns:description>Identifier is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetDelayedValueResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetLastClosingValue">
+         <soap:operation soapAction="http://www.strikeiron.com/GetLastClosingValue" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Identifier) &gt; 0</tns:expression>
+                     <tns:description>Identifier is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetLastClosingValueResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetLastClosingValues">
+         <soap:operation soapAction="http://www.strikeiron.com/GetLastClosingValues" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Identifiers) &gt; 0</tns:expression>
+                     <tns:description>Identifiers is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetLastClosingValuesResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetHistoricalValue">
+         <soap:operation soapAction="http://www.strikeiron.com/GetHistoricalValue" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Identifier) &gt; 0</tns:expression>
+                     <tns:description>Identifier is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetHistoricalValueResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetHistoricalValues">
+         <soap:operation soapAction="http://www.strikeiron.com/GetHistoricalValues" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Identifiers) &gt; 0</tns:expression>
+                     <tns:description>Identifiers is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetHistoricalValuesResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetHistoricalValuesAsOf">
+         <soap:operation soapAction="http://www.strikeiron.com/GetHistoricalValuesAsOf" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Identifier) &gt; 0</tns:expression>
+                     <tns:description>Identifier is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetHistoricalValuesAsOfResponseInfo" part="ResponseInfo"
+                         use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetHistoricalValuesRange">
+         <soap:operation soapAction="http://www.strikeiron.com/GetHistoricalValuesRange"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Identifier) &gt; 0</tns:expression>
+                     <tns:description>Identifier is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetHistoricalValuesRangeResponseInfo" part="ResponseInfo"
+                         use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation soapAction="http://ws.strikeiron.com/StrikeIron/MarketIndices/GetRemainingHits"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MarketIndices">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This web service provides historical and end-of-day values for more than 400 US indices</documentation>
+      <wsdl:port name="MarketIndicesSoap" binding="si:MarketIndicesSoap">
+         <soap:address location="http://ws.soatrader.com/strikeiron.com/0.1/MarketIndices"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,1037 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://glite.org/ce/creamapij/ws"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:common_faults="http://glite.org/ce/faults"
+                  xmlns:cream_faults="http://glite.org/ce/creamapij/faults"
+                  xmlns:cream_types="http://glite.org/ce/creamapij/types"
+                  xmlns:delegation="http://www.gridsite.org/namespaces/delegation-1"
+                  name="CREAM"
+                  targetNamespace="http://glite.org/ce/creamapij/ws">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+	  <wsdl:import namespace="http://www.gridsite.org/namespaces/delegation-1"
+                location="org.glite.security-delegation.wsdl"/>
+
+	  <wsdl:import namespace="http://glite.org/ce/creamapij/faults"
+                location="org.glite.ce-cream_faults.wsdl"/>
+
+	  <wsdl:import namespace="http://glite.org/ce/creamapij/types"
+                location="org.glite.ce-cream_types.wsdl"/>
+
+
+	  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <!--  
+			<xsd:schema targetNamespace='http://glite.org/ce/creamapij/ws'>
+			<xsd:import namespace="http://glite.org/ce/creamapij/types"
+			schemaLocation="org.glite.ce-cream_types.xsd" />
+			</xsd:schema>
+			
+			<xsd:schema targetNamespace='http://glite.org/ce/creamapij/ws'>
+			<xsd:import namespace="http://glite.org/ce/creamapij/faults"
+			schemaLocation="org.glite.ce-cream_faults.xsd" />
+			</xsd:schema>
+		-->
+	</wsdl:types>
+
+
+
+
+	  <wsdl:message name="JobRegisterHeader">
+		    <wsdl:part name="iceId" type="xsd:string" soap:mustUnderstand="true"/>
+	  </wsdl:message>
+	
+	
+	  <wsdl:message name="Ping"/>
+	  <wsdl:message name="PingResponse"/>
+
+	  <wsdl:message name="JobAssess">
+		    <wsdl:part name="jdl" type="xsd:string">
+			      <wsdl:documentation>
+				The job's jdl, which specifies the characteristics of the job
+			</wsdl:documentation>
+		    </wsdl:part>
+		    <wsdl:part name="assessFilter" type="xsd:string">
+			      <wsdl:documentation>
+				A filter specifying which kind of information the user is
+				interested in.
+			</wsdl:documentation>
+		    </wsdl:part>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobAssessResponse">
+		    <wsdl:part name="assess" type="xsd:string"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobCancel">
+	    <wsdl:part name="jobIdList" type="cream_types:JobIdList"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobCancelResponse"/>
+
+	  <wsdl:message name="JobSuspend">
+		    <wsdl:part name="jobIdList" type="cream_types:JobIdList"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobSuspendResponse"/>
+
+	  <wsdl:message name="JobResume">
+		    <wsdl:documentation>A list of jobIDs.</wsdl:documentation>
+		    <!--wsdl:part name="jobIdList" element="glitenstypes:JobIdList"/-->
+		<wsdl:part name="jobIdList" type="cream_types:JobIdList"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobResumeResponse"/>
+
+	  <wsdl:message name="JobList"/>
+
+	  <wsdl:message name="JobListResponse">
+		    <wsdl:part name="jobIdList" type="cream_types:JobIdList"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobSignal">
+		<!-- wsdl:part name="signal" element="glitenstypes:JobSignal"/ -->
+		<!--wsdl:part name="jobIdList" element="glitenstypes:JobIdList"/-->
+		<wsdl:part name="jobIdList" type="cream_types:JobIdList">
+			      <wsdl:documentation>A list of jobIDs.</wsdl:documentation>
+		    </wsdl:part>
+		    <wsdl:part name="signal" type="xsd:string">
+			      <wsdl:documentation>
+				A string indicating the signal to send.
+			</wsdl:documentation>
+		    </wsdl:part>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobSignalResponse"/>
+
+
+	  <wsdl:message name="JobRegisterRequest">
+		    <wsdl:part name="delegationID" type="xsd:string">
+			      <wsdl:documentation>The delegationID string.</wsdl:documentation>
+		    </wsdl:part>
+		    <wsdl:part name="jdl" type="xsd:string">
+			      <wsdl:documentation>The job's jdl String.</wsdl:documentation>
+		    </wsdl:part>
+		    <wsdl:part name="autoStart" type="xsd:boolean"/>		
+		    <!--  wsdl:part name="iceId" type="xsd:string"></wsdl:part -->
+	</wsdl:message>
+
+	  <wsdl:message name="JobRegisterResponse">
+		    <wsdl:part name="jobInfo" type="cream_types:JobInfo"/>
+	  </wsdl:message>
+
+
+	  <wsdl:message name="JobStart">
+		    <wsdl:part name="jobId" type="xsd:string"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobStartResponse"/>
+
+
+	  <wsdl:message name="JobPurge">
+		    <wsdl:part name="jobIdList" type="cream_types:JobIdList"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobPurgeResponse"/>
+
+
+	  <wsdl:message name="JobInfo">
+		    <wsdl:part name="jobFilter" type="cream_types:JobFilter"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobInfoResponse">
+		    <wsdl:part name="JobInfoResponse" type="cream_types:JobInfoList"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="Generic_Fault">
+		    <wsdl:part name="fault" element="common_faults:GenericFault"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="Authentication_Fault">
+		    <wsdl:part name="fault" element="common_faults:AuthenticationFault"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="Authorization_Fault">
+		    <wsdl:part name="fault" element="common_faults:AuthorizationFault"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="InvalidArgument_Fault">
+		    <wsdl:part name="fault" element="cream_faults:InvalidArgumentFault"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobUnknown_Fault">
+		    <wsdl:part name="fault" element="cream_faults:JobUnknownFault"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobStatusInvalid_Fault">
+		    <wsdl:part name="fault" element="cream_faults:JobStatusInvalidFault"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="OperationNotSupported_Fault">
+		    <wsdl:part name="fault" element="cream_faults:OperationNotSupportedFault"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="NoSuitableResources_Fault">
+		    <wsdl:part name="fault" element="cream_faults:NoSuitableResourcesFault"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="GridProxyDelegation_Fault">
+		    <wsdl:part name="fault" element="cream_faults:GridProxyDelegationFault"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="JobProxyRenewResponse"/>
+
+	  <wsdl:message name="JobProxyRenew">
+		    <wsdl:part name="delegationID" type="xsd:string"/>
+		    <wsdl:part name="jobIdList" type="cream_types:JobIdList"/>
+	  </wsdl:message>
+
+
+	  <wsdl:portType name="CREAMPort">
+		    <wsdl:documentation>
+			The main portType of CREAM. It exposes via Web Service the methods
+			and services offered by CREAM.
+		</wsdl:documentation>
+		    <wsdl:operation name="Ping">
+			      <wsdl:documentation>
+				Checks, doing a ping operation, if the service is up and
+				running.
+			</wsdl:documentation>
+			      <wsdl:input message="Ping"/>
+			      <wsdl:output message="PingResponse"/>
+		    </wsdl:operation>
+
+		    <wsdl:operation name="JobRegister">
+			      <wsdl:documentation>
+				First operation to be called when a job has to be submitted to
+				CREAM. This operation, which takes as input the job's JDL,
+				returns a jobInfo object encompassing, among other information,
+				the CREAM jobid and a URL where the user can upload files of the
+				InputSandbox (e.g. files needed for the execution of the job
+				that must be therefore staged in the executing node). When this
+				upload has been done, the actual submission can be triggered via
+				the jobStart operation.
+			</wsdl:documentation>
+			      <wsdl:input message="JobRegisterRequest"/>
+			      <wsdl:output message="JobRegisterResponse">
+				        <wsdl:documentation>
+					A jobInfo object containing information about the job (its
+					status, etc.). In particular the InputSandboxURI, where the
+					user can upload the files of the InputSandbox needed by the
+					job, is returned. The other attributes of the jobInfo object
+					includes also a CREAMJobid, which identified the job, and
+					which can be used to perform operations on it.
+				</wsdl:documentation>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault" message="Authentication_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authentication problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault" message="Authorization_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authorization problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="gridProxyDelegationFault" message="GridProxyDelegation_Fault">
+				        <wsdl:documentation>
+					Thrown if the proxy delegation process wasn't successful.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault" message="InvalidArgument_Fault">
+				        <wsdl:documentation>
+					Thrown if an invalid argument was passed.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault" message="Generic_Fault">
+				        <wsdl:documentation>
+					Thrown if any other possible error occurs.
+				</wsdl:documentation>
+			      </wsdl:fault>
+		    </wsdl:operation>
+
+
+		    <wsdl:operation name="JobCancel">
+			      <wsdl:documentation>
+				Cancel prevously submitted job(s). It can be applied only when
+				the job status is "pending", "running" or
+				"held". Even if the job is cancelled, its relevant
+				information (which can be retrieved via the jobInfo operation)
+				is still available (until the job explicitly calls the jobPurge
+				operation, or this purge is done by the CE administrator.
+			</wsdl:documentation>
+			      <wsdl:input message="JobCancel">
+				        <wsdl:documentation>
+					A list of CREAMJobIDs to cancel.
+				</wsdl:documentation>
+			      </wsdl:input>
+			      <wsdl:output message="JobCancelResponse"/>
+			      <wsdl:fault name="authenticationFault" message="Authentication_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authentication problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault" message="Authorization_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authorization problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault" message="InvalidArgument_Fault">
+				        <wsdl:documentation>
+					Thrown if an invalid argument is passed.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobStatusInvalidFault" message="JobStatusInvalid_Fault">
+				        <wsdl:documentation>
+					Thrown if the status of the considered job is different than
+					"HELD", "PENDING" or
+					"RUNNING".
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault" message="Generic_Fault">
+				        <wsdl:documentation>
+					Thrown if any other possible error occurs.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault" message="JobUnknown_Fault">
+				        <wsdl:documentation>
+					Thrown if the specified CREAMJobId hasn't been found (very
+					likely, it is wrong).
+				</wsdl:documentation>
+			      </wsdl:fault>
+		    </wsdl:operation>
+
+		    <wsdl:operation name="JobSuspend">
+			      <wsdl:documentation>
+				Suspend the execution of a list of jobs.
+			</wsdl:documentation>
+			      <wsdl:input message="JobSuspend">
+				        <wsdl:documentation>A list of jobIDs.</wsdl:documentation>
+			      </wsdl:input>
+			      <wsdl:output message="JobSuspendResponse"/>
+			      <wsdl:fault name="authenticationFault" message="Authentication_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authentication problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault" message="Authorization_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authorization problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault" message="InvalidArgument_Fault">
+				        <wsdl:documentation>
+					Thrown if an invalid argument is passed.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault" message="Generic_Fault">
+				        <wsdl:documentation>
+					Thrown if any other possible error occurs.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault" message="JobUnknown_Fault">
+				        <wsdl:documentation>
+					Thrown if the specified CREAMJobId hasn't been found (very
+					likely it is wrong).
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobStatusInvalidFault" message="JobStatusInvalid_Fault">
+				        <wsdl:documentation>
+					Thrown if the status of the considered job isn't
+					"RUNNING".
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="operationNotSupportedFault" message="OperationNotSupported_Fault">
+				        <wsdl:documentation>
+					Thrown if the abstraction layer of the LRMS (i.e. BLAH in
+					the current implementation) doesn't support this operation.
+				</wsdl:documentation>
+			      </wsdl:fault>
+		    </wsdl:operation>
+
+		    <wsdl:operation name="JobResume">
+			      <wsdl:documentation>
+				Resume the execution of a list of previously suspended jobs.
+			</wsdl:documentation>
+			      <wsdl:input message="JobResume"/>
+			      <wsdl:output message="JobResumeResponse"/>
+			      <wsdl:fault name="authenticationFault" message="Authentication_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authentication problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault" message="Authorization_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authorization problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault" message="InvalidArgument_Fault">
+				        <wsdl:documentation>
+					Thrown if an invalid argument is passed.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault" message="Generic_Fault">
+				        <wsdl:documentation>
+					Thrown if any other possible error occurs.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault" message="JobUnknown_Fault">
+				        <wsdl:documentation>
+					Thrown if the specified CREAMJobId hasn't been found (very
+					likely it is invalid).
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobStatusInvalidFault" message="JobStatusInvalid_Fault">
+				        <wsdl:documentation>
+					Thrown if the status of the considered job isn't
+					"SUSPENDED".
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="operationNotSupportedFault" message="OperationNotSupported_Fault">
+				        <wsdl:documentation>
+					Thrown if the abstraction layer of the LRMS (i.e. BLAH in
+					the current implementation) tdoesn't support this operation.
+				</wsdl:documentation>
+			      </wsdl:fault>
+		    </wsdl:operation>
+
+		    <wsdl:operation name="JobAssess">
+			      <wsdl:documentation>
+				Verifies if the conditions exist to submit the specified job and
+				returns an estimation of the time the job will wait before
+				running.
+			</wsdl:documentation>
+			      <wsdl:input message="JobAssess"/>
+			      <wsdl:output message="JobAssessResponse">
+				        <wsdl:documentation>
+					An estimation of the time the job will wait before running
+					and other statistics, filtered as required.
+				</wsdl:documentation>
+			      </wsdl:output>
+			      <wsdl:fault name="noSuitableResourcesFault" message="NoSuitableResources_Fault">
+				        <wsdl:documentation>
+					Thrown if the required resources aren't suitable in the CE.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="authenticationFault" message="Authentication_Fault">
+				        <wsdl:documentation>
+					Thrown if authentication process wasn't successful.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault" message="Authorization_Fault">
+				        <wsdl:documentation>
+					Thrown if authorization process wasn't successful.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault" message="InvalidArgument_Fault">
+				        <wsdl:documentation>
+					Thrown if an invalid argument is passed.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="operationNotSupportedFault" message="OperationNotSupported_Fault">
+				        <wsdl:documentation>
+					Thrown if the abstraction layer of the LRMS doesn't support
+					this operation.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault" message="Generic_Fault">
+				        <wsdl:documentation>
+					Thrown if any other possible error occurs.
+				</wsdl:documentation>
+			      </wsdl:fault>
+		    </wsdl:operation>
+
+
+
+		    <wsdl:operation name="JobList">
+			      <wsdl:documentation>
+				Returns the list of jobIDs referring to all active jobs
+				belonging to that user.
+			</wsdl:documentation>
+			      <wsdl:input message="JobList"/>
+			      <wsdl:output message="JobListResponse">
+				        <wsdl:documentation>A list of jobIDs.</wsdl:documentation>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault" message="Authentication_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authentication problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault" message="Authorization_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authorization problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault" message="Generic_Fault">
+				        <wsdl:documentation>
+					Thrown if any other possible error occurs.
+				</wsdl:documentation>
+			      </wsdl:fault>
+		    </wsdl:operation>
+
+
+		    <wsdl:operation name="JobSignal">
+			      <wsdl:documentation>
+				Send a specified signal to a list of jobs.
+			</wsdl:documentation>
+			      <wsdl:input message="JobSignal"/>
+			      <wsdl:output message="JobSignalResponse"/>
+			      <wsdl:fault name="authenticationFault" message="Authentication_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authentication problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault" message="Authorization_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authorization problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault" message="InvalidArgument_Fault">
+				        <wsdl:documentation>
+					Thrown if an invalid argument is passed.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault" message="Generic_Fault">
+				        <wsdl:documentation>
+					Thrown if any other possible error occurs.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault" message="JobUnknown_Fault">
+				        <wsdl:documentation>
+					Thrown if one or more CREAMJobId specified as input hasn't
+					been found (likely it is wrong).
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobStatusInvalidFault" message="JobStatusInvalid_Fault">
+				        <wsdl:documentation>
+					Thrown if the status of the specified job isn't
+					"RUNNING".
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="operationNotSupportedFault" message="OperationNotSupported_Fault">
+				        <wsdl:documentation>
+					Thrown if the abstraction layer of the LRMS (i.e. BLAH in
+					the current implementation) doesn't support this operation.
+				</wsdl:documentation>
+			      </wsdl:fault>
+		    </wsdl:operation>
+
+		    <wsdl:operation name="JobStart">
+			      <wsdl:documentation>
+				This operation actually triggers the submission process eof a
+				job previously registered via the jobRegister operation.
+			</wsdl:documentation>
+			      <wsdl:input message="JobStart">
+				        <wsdl:documentation>
+					The jobID previously returned from the jobRegister
+					operation.
+				</wsdl:documentation>
+			      </wsdl:input>
+			      <wsdl:output message="JobStartResponse"/>
+			      <wsdl:fault name="authenticationFault" message="Authentication_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authentication problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault" message="Authorization_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authorization problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault" message="InvalidArgument_Fault">
+				        <wsdl:documentation>
+					Thrown if an invalid argument is passed.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault" message="Generic_Fault">
+				        <wsdl:documentation>
+					Thrown if any other possible error occurs.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault" message="JobUnknown_Fault">
+				        <wsdl:documentation>
+					Thrown if a CREAMJobId passed as input hasn't been found
+					(likely it is wrong).
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobStatusInvalidFault" message="JobStatusInvalid_Fault">
+				        <wsdl:documentation>
+					Thrown if the status of the considered job is different than
+					"PENDING" or "RUNNING".
+				</wsdl:documentation>
+			      </wsdl:fault>
+		    </wsdl:operation>
+
+		    <wsdl:operation name="JobPurge">
+			      <wsdl:documentation>
+				Permanently deletes all information regarding the specified
+				jobs. It works only if the job status is "aborted",
+				"cancelled", "done-ok",
+				"done-failed" or "registered".
+			</wsdl:documentation>
+			      <wsdl:input message="JobPurge">
+				        <wsdl:documentation>
+					The list of jobIds to purge.
+				</wsdl:documentation>
+			      </wsdl:input>
+			      <wsdl:output message="JobPurgeResponse"/>
+			      <wsdl:fault name="authenticationFault" message="Authentication_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authentication problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault" message="Authorization_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authorization problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault" message="InvalidArgument_Fault">
+				        <wsdl:documentation>
+					Thrown if an invalid argument is passed.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault" message="Generic_Fault">
+				        <wsdl:documentation>
+					Thrown if any other possible error occurs.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault" message="JobUnknown_Fault">
+				        <wsdl:documentation>
+					Thrown if a CREAMJobId passed as input hasn't been found
+					(liely it is wrong).
+				</wsdl:documentation>
+			      </wsdl:fault>
+		    </wsdl:operation>
+
+		    <wsdl:operation name="JobInfo">
+			      <wsdl:documentation>
+				return information about user's jobs, filtered as specified in
+				input.
+			</wsdl:documentation>
+			      <wsdl:input message="JobInfo">
+				        <wsdl:documentation>
+					A filter used to select the jobs the user is interested in.
+					The filter can specify a set of jobIDs or a set of states.
+					If empty the jobInfo will return information concerning all
+					the submitted jobs belonging to that user.
+				</wsdl:documentation>
+			      </wsdl:input>
+			      <wsdl:output message="JobInfoResponse">
+				        <wsdl:documentation>
+					A list of jobInfo, one per job.
+				</wsdl:documentation>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault" message="Authentication_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authentication problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault" message="Authorization_Fault">
+				        <wsdl:documentation>
+					Thrown in case of authorization problems.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault" message="InvalidArgument_Fault">
+				        <wsdl:documentation>
+					Thrown if an invalid argument is passed.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault" message="Generic_Fault">
+				        <wsdl:documentation>
+					Thrown if any other possible error occurs.
+				</wsdl:documentation>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault" message="JobUnknown_Fault">
+				        <wsdl:documentation>
+					Thrown if a CREAMJobId passed as input hasn't been found
+					(likely it doesn't exist).
+				</wsdl:documentation>
+			      </wsdl:fault>
+		    </wsdl:operation>
+		    <wsdl:operation name="JobProxyRenew">
+			      <wsdl:input message="JobProxyRenew"/>
+			      <wsdl:output message="JobProxyRenewResponse"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+
+
+
+	  <!-- 
+		<wsdl:operation name="submitOrder">
+		<soap:operation soapAction="" style="rpc"/>
+		<wsdl:input>
+		<soap:body use="literal" namespace="http://www.ws-i.org/SampleApplicatio
+		ns/SupplyChainManagement/2002-08/Retailer.wsdl" parts="PartsOrder CustomerDetails"/>
+		<soap:header message="tns:submitOrderRequest" part="ConfigurationHeader"
+		use="literal" wsdl:required="true">
+		<soap:headerfault message="cfgw:ConfigurationFaultMessage" part=
+		"ConfigurationFault" use="literal"/>
+		</soap:header>
+		</wsdl:input>
+		<wsdl:output>
+		<soap:body use="literal" namespace="http://www.ws-i.org/SampleApplicatio
+		ns/SupplyChainManagement/2002-08/Retailer.wsdl"/>
+		</wsdl:output>
+		<wsdl:fault name="BadOrder">
+		<soap:fault name="BadOrder" use="literal"/>
+		</wsdl:fault>
+		<wsdl:fault name="InvalidProductCode">
+		<soap:fault name="InvalidProductCode" use="literal"/>
+		</wsdl:fault>
+		</wsdl:operation>
+		
+	-->
+
+
+	<wsdl:binding name="CREAMBinding" type="CREAMPort">
+		    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <wsdl:operation name="Ping">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/Ping" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+		
+		    <wsdl:operation name="JobRegister">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/JobRegister" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>			
+                <soap:body parts="delegationID jdl autoStart" use="literal"
+                       namespace="http://glite.org/ce/creamapij/ws"/>
+                <soap:header message="JobRegisterHeader" part="iceId" use="literal"
+                         namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault">
+				        <soap:fault use="literal" name="authenticationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault">
+				        <soap:fault use="literal" name="authorizationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="gridProxyDelegationFault">
+				        <soap:fault use="literal" name="gridProxyDelegationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault">
+				        <soap:fault use="literal" name="invalidArgumentFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault">
+				        <soap:fault use="literal" name="genericFault"/>
+			      </wsdl:fault>
+		    </wsdl:operation>
+		    <wsdl:operation name="JobCancel">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/JobCancel" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws" parts="jobIdList"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault">
+				        <soap:fault use="literal" name="authenticationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault">
+				        <soap:fault use="literal" name="authorizationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault">
+				        <soap:fault use="literal" name="invalidArgumentFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobStatusInvalidFault">
+				        <soap:fault use="literal" name="jobStatusInvalidFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault">
+				        <soap:fault use="literal" name="genericFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault">
+				        <soap:fault use="literal" name="jobUnknownFault"/>
+			      </wsdl:fault>
+		    </wsdl:operation>
+		    <wsdl:operation name="JobSuspend">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/JobSuspend" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault">
+				        <soap:fault use="literal" name="authenticationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault">
+				        <soap:fault use="literal" name="authorizationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault">
+				        <soap:fault use="literal" name="invalidArgumentFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault">
+				        <soap:fault use="literal" name="genericFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault">
+				        <soap:fault use="literal" name="jobUnknownFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobStatusInvalidFault">
+				        <soap:fault use="literal" name="jobStatusInvalidFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="operationNotSupportedFault">
+				        <soap:fault use="literal" name="operationNotSupportedFault"/>
+			      </wsdl:fault>
+		    </wsdl:operation>
+		    <wsdl:operation name="JobResume">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/JobResume" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault">
+				        <soap:fault use="literal" name="authenticationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault">
+				        <soap:fault use="literal" name="authorizationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault">
+				        <soap:fault use="literal" name="invalidArgumentFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault">
+				        <soap:fault use="literal" name="genericFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault">
+				        <soap:fault use="literal" name="jobUnknownFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobStatusInvalidFault">
+				        <soap:fault use="literal" name="jobStatusInvalidFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="operationNotSupportedFault">
+				        <soap:fault use="literal" name="operationNotSupportedFault"/>
+			      </wsdl:fault>
+		    </wsdl:operation>
+		    <wsdl:operation name="JobAssess">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/JobAssess" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+			      <wsdl:fault name="noSuitableResourcesFault">
+				        <soap:fault use="literal" name="noSuitableResourcesFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="authenticationFault">
+				        <soap:fault use="literal" name="authenticationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault">
+				        <soap:fault use="literal" name="authorizationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault">
+				        <soap:fault use="literal" name="invalidArgumentFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="operationNotSupportedFault">
+				        <soap:fault use="literal" name="operationNotSupportedFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault">
+				        <soap:fault use="literal" name="genericFault"/>
+			      </wsdl:fault>
+		    </wsdl:operation>
+		    <wsdl:operation name="JobList">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/JobList" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault">
+				        <soap:fault use="literal" name="authenticationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault">
+				        <soap:fault use="literal" name="authorizationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault">
+				        <soap:fault use="literal" name="genericFault"/>
+			      </wsdl:fault>
+		    </wsdl:operation>
+		    <wsdl:operation name="JobSignal">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/JobSignal" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault">
+				        <soap:fault use="literal" name="authenticationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault">
+				        <soap:fault use="literal" name="authorizationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault">
+				        <soap:fault use="literal" name="invalidArgumentFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault">
+				        <soap:fault use="literal" name="genericFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault">
+				        <soap:fault use="literal" name="jobUnknownFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobStatusInvalidFault">
+				        <soap:fault use="literal" name="jobStatusInvalidFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="operationNotSupportedFault">
+				        <soap:fault use="literal" name="operationNotSupportedFault"/>
+			      </wsdl:fault>
+		    </wsdl:operation>
+		    <wsdl:operation name="JobStart">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/JobStart" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault">
+				        <soap:fault use="literal" name="authenticationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault">
+				        <soap:fault use="literal" name="authorizationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault">
+				        <soap:fault use="literal" name="invalidArgumentFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault">
+				        <soap:fault use="literal" name="genericFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault">
+				        <soap:fault use="literal" name="jobUnknownFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobStatusInvalidFault">
+				        <soap:fault use="literal" name="jobStatusInvalidFault"/>
+			      </wsdl:fault>
+		    </wsdl:operation>
+		    <wsdl:operation name="JobPurge">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/JobPurge" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault">
+				        <soap:fault use="literal" name="authenticationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault">
+				        <soap:fault use="literal" name="authorizationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault">
+				        <soap:fault use="literal" name="invalidArgumentFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault">
+				        <soap:fault use="literal" name="genericFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault">
+				        <soap:fault use="literal" name="jobUnknownFault"/>
+			      </wsdl:fault>
+		    </wsdl:operation>
+		    <wsdl:operation name="JobInfo">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/JobInfo" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+			      <wsdl:fault name="authenticationFault">
+				        <soap:fault use="literal" name="authenticationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="authorizationFault">
+				        <soap:fault use="literal" name="authorizationFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="invalidArgumentFault">
+				        <soap:fault use="literal" name="invalidArgumentFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="genericFault">
+				        <soap:fault use="literal" name="genericFault"/>
+			      </wsdl:fault>
+			      <wsdl:fault name="jobUnknownFault">
+				        <soap:fault use="literal" name="jobUnknownFault"/>
+			      </wsdl:fault>
+		    </wsdl:operation>
+		    <wsdl:operation name="JobProxyRenew">
+			      <soap:operation soapAction="http://glite.org/ce/creamapij/ws/JobProxyRenew" style="rpc"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://glite.org/ce/creamapij/ws"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+	  </wsdl:binding>
+
+
+	  <wsdl:service name="CREAM">
+		    <wsdl:port name="CREAM" binding="CREAMBinding">
+			      <soap:address location="http://ws.soatrader.com/pd.infn.it/0.1/CREAM"/>
+		    </wsdl:port>
+		    <wsdl:port name="CREAMDelegation" binding="delegation:DelegationSoapBinding">
+			      <soap:address location="http://ws.soatrader.com/pd.infn.it/0.1/CREAM"/>
+		    </wsdl:port>
+	  </wsdl:service>
+
+
+</wsdl:definitions>

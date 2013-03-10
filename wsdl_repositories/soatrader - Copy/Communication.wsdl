@@ -1,0 +1,258 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://zetauploader.zeta-software.de/webservices/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://zetauploader.zeta-software.de/webservices/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Service to send large files via e-mail by uploading files to the zeta server and generating an e-mail message with the appropriate download hyperlink.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://zetauploader.zeta-software.de/webservices/">
+         <s:element name="SendFileEx3">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="sendInfo" type="tns:SendFileInformation3"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SendFileInformation3">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FileContent" type="s:base64Binary"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReceiverEMailAddresses"
+                          type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EMailSubject" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EMailBody" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AdditionalRemarks" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EMailSenderFromName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EMailSenderFromAddress" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EMailSenderReplyToName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EMailSenderReplyToAddress" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SendFileEx3Response">
+            <s:complexType/>
+         </s:element>
+         <s:element name="SendFileEx2">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="sendInfo" type="tns:SendFileInformation2"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SendFileInformation2">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FileContent" type="s:base64Binary"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReceiverEMailAddresses"
+                          type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EMailSubject" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EMailBody" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AdditionalRemarks" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SendFileEx2Response">
+            <s:complexType/>
+         </s:element>
+         <s:element name="SendFileEx">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="sendInfo" type="tns:SendFileInformation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SendFileInformation">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FileContent" type="s:base64Binary"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReceiverEMailAddresses"
+                          type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EMailSubject" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EMailBody" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AdditionalRemarks" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SendFileExResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="SendFile">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="fileName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="fileContent" type="s:base64Binary"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="receiverEMailAddresses" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="additionalRemarks" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendFileResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="IsUpdateAvailable">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="info" type="tns:UpdateCheckInfoInformation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="UpdateCheckInfoInformation">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="VersionDate" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VersionNumber" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="IsUpdateAvailableResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="IsUpdateAvailableResult"
+                             type="tns:UpdatePresentResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="UpdatePresentResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="IsPresent" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DownloadWebsiteUrl" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendFileEx3SoapIn">
+      <wsdl:part name="parameters" element="tns:SendFileEx3"/>
+  </wsdl:message>
+  <wsdl:message name="SendFileEx3SoapOut">
+      <wsdl:part name="parameters" element="tns:SendFileEx3Response"/>
+  </wsdl:message>
+  <wsdl:message name="SendFileEx2SoapIn">
+      <wsdl:part name="parameters" element="tns:SendFileEx2"/>
+  </wsdl:message>
+  <wsdl:message name="SendFileEx2SoapOut">
+      <wsdl:part name="parameters" element="tns:SendFileEx2Response"/>
+  </wsdl:message>
+  <wsdl:message name="SendFileExSoapIn">
+      <wsdl:part name="parameters" element="tns:SendFileEx"/>
+  </wsdl:message>
+  <wsdl:message name="SendFileExSoapOut">
+      <wsdl:part name="parameters" element="tns:SendFileExResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendFileSoapIn">
+      <wsdl:part name="parameters" element="tns:SendFile"/>
+  </wsdl:message>
+  <wsdl:message name="SendFileSoapOut">
+      <wsdl:part name="parameters" element="tns:SendFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IsUpdateAvailableSoapIn">
+      <wsdl:part name="parameters" element="tns:IsUpdateAvailable"/>
+  </wsdl:message>
+  <wsdl:message name="IsUpdateAvailableSoapOut">
+      <wsdl:part name="parameters" element="tns:IsUpdateAvailableResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="CommunicationSoap" type="tns:CommunicationSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="SendFileEx3">
+         <soap:operation soapAction="http://zetauploader.zeta-software.de/webservices/SendFileEx3"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendFileEx2">
+         <soap:operation soapAction="http://zetauploader.zeta-software.de/webservices/SendFileEx2"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendFileEx">
+         <soap:operation soapAction="http://zetauploader.zeta-software.de/webservices/SendFileEx"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendFile">
+         <soap:operation soapAction="http://zetauploader.zeta-software.de/webservices/SendFile"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="IsUpdateAvailable">
+         <soap:operation soapAction="http://zetauploader.zeta-software.de/webservices/IsUpdateAvailable"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="Communication">
+      <wsdl:documentation>Service to send large files via e-mail by uploading files to the zeta server and generating an e-mail message with the appropriate download hyperlink.</wsdl:documentation>
+      <wsdl:port name="CommunicationSoap" binding="tns:CommunicationSoap">
+         <soap:address location="http://ws.soatrader.com/zeta-uploader.de/0.1/Communication"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,66 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="http://tempuri.org/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             name="IWhoIsservice"
+             targetNamespace="http://tempuri.org/">
+   <wsdl:types xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <message name="GetWhoIsRequest">
+      <part name="ADomainName" type="xs:string"/>
+  </message>
+  <message name="GetWhoIsResponse">
+      <part name="return" type="xs:TWhoIsInfo"/>
+  </message>
+  <portType name="IWhoIs">
+      <operation name="GetWhoIs">
+         <input message="tns:GetWhoIsRequest"/>
+         <output message="tns:GetWhoIsResponse"/>
+      </operation>
+  </portType>
+  <binding name="IWhoIsbinding" type="tns:IWhoIs">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="GetWhoIs">
+         <soap:operation soapAction="urn:WhoIsIntf-IWhoIs#GetWhoIs" style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:WhoIsIntf-IWhoIs"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:WhoIsIntf-IWhoIs"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="IWhoIsservice">
+      <port name="IWhoIsPort" binding="tns:IWhoIsbinding">
+         <soap:address location="http://ws.soatrader.com/ncku.edu.tw/0.1/IWhoIsservice"/>
+      </port>
+      <port name="80" binding="tns:IWhoIsbinding">
+         <soap:address location="http://ws.soatrader.com/ncku.edu.tw/0.1/IWhoIsservice"/>
+      </port>
+  </service>
+</definitions>

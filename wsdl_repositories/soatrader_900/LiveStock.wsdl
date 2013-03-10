@@ -1,0 +1,243 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.myereef.com/webservices/"
+                  xmlns:s1="http://microsoft.com/wsdl/types/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.myereef.com/webservices/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.myereef.com/webservices/">
+         <s:import namespace="http://microsoft.com/wsdl/types/"/>
+         <s:element name="GetLivestock">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetLivestockResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLivestockResult"
+                             type="tns:ArrayOfLivestockObject"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfLivestockObject">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="LivestockObject"
+                          type="tns:LivestockObject"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="LivestockObject">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="LivestockKey" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ParentLivestockKey" type="s1:guid"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CommonName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Genius" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Species" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Notes" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CreatedOn" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AquiredOn" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LostOn" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="InsertLivestock">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="parentLivestockKey" nillable="true"
+                             type="s1:guid"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="commonName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="genius" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="species" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="aquiredDate" type="s:dateTime"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="notes" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InsertLivestockResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="InsertLivestockResult" type="s1:guid"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateLivestock">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="livestockKey" type="s1:guid"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="parentLivestockKey" nillable="true"
+                             type="s1:guid"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="commonName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="genius" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="species" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="aquiredDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="lostOn" nillable="true" type="s:dateTime"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="notes" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateLivestockResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="RenderLivestock">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="livestockKey" type="s1:guid"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="controlPath" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RenderLivestockResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RenderLivestockResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SetLivestockLostOn">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="livestockKey" type="s1:guid"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SetLivestockLostOnResponse">
+            <s:complexType/>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://microsoft.com/wsdl/types/">
+         <s:simpleType name="guid">
+            <s:restriction base="s:string">
+               <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+            </s:restriction>
+         </s:simpleType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetLivestockSoapIn">
+      <wsdl:part name="parameters" element="tns:GetLivestock"/>
+  </wsdl:message>
+  <wsdl:message name="GetLivestockSoapOut">
+      <wsdl:part name="parameters" element="tns:GetLivestockResponse"/>
+  </wsdl:message>
+  <wsdl:message name="InsertLivestockSoapIn">
+      <wsdl:part name="parameters" element="tns:InsertLivestock"/>
+  </wsdl:message>
+  <wsdl:message name="InsertLivestockSoapOut">
+      <wsdl:part name="parameters" element="tns:InsertLivestockResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateLivestockSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateLivestock"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateLivestockSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateLivestockResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RenderLivestockSoapIn">
+      <wsdl:part name="parameters" element="tns:RenderLivestock"/>
+  </wsdl:message>
+  <wsdl:message name="RenderLivestockSoapOut">
+      <wsdl:part name="parameters" element="tns:RenderLivestockResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SetLivestockLostOnSoapIn">
+      <wsdl:part name="parameters" element="tns:SetLivestockLostOn"/>
+  </wsdl:message>
+  <wsdl:message name="SetLivestockLostOnSoapOut">
+      <wsdl:part name="parameters" element="tns:SetLivestockLostOnResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="LiveStockSoap" type="tns:LiveStockSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetLivestock">
+         <soap:operation soapAction="http://www.myereef.com/webservices/GetLivestock" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="InsertLivestock">
+         <soap:operation soapAction="http://www.myereef.com/webservices/InsertLivestock"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateLivestock">
+         <soap:operation soapAction="http://www.myereef.com/webservices/UpdateLivestock"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RenderLivestock">
+         <soap:operation soapAction="http://www.myereef.com/webservices/RenderLivestock"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SetLivestockLostOn">
+         <soap:operation soapAction="http://www.myereef.com/webservices/SetLivestockLostOn"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="LiveStock">
+      <wsdl:port name="LiveStockSoap" binding="tns:LiveStockSoap">
+         <soap:address location="http://ws.soatrader.com/myereef.com/0.1/LiveStock"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

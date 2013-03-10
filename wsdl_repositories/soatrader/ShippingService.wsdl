@@ -1,0 +1,251 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="urn:ActionWebService"
+             xmlns:typens="urn:ActionWebService"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             name="Shipping"
+             targetNamespace="urn:ActionWebService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:ActionWebService">
+         <xsd:complexType name="anySimpleType">
+            <xsd:all>
+        </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="IntegerArray">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute wsdl:arrayType="xsd:int[]" ref="soapenc:arrayType"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+      </xsd:schema>
+  </types>
+  <message name="GetYamatoList">
+      <part name="size" type="xsd:int"/>
+      <part name="weight" type="xsd:int"/>
+      <part name="prefecture" type="xsd:string"/>
+  </message>
+  <message name="GetYamatoListResponse">
+      <part name="return" type="typens:anySimpleType"/>
+  </message>
+  <message name="GetYoupackPrice">
+      <part name="size" type="xsd:int"/>
+      <part name="weight" type="xsd:int"/>
+      <part name="prefecture" type="xsd:string"/>
+      <part name="sendPrefecture" type="xsd:string"/>
+  </message>
+  <message name="GetYoupackPriceResponse">
+      <part name="return" type="xsd:int"/>
+  </message>
+  <message name="GetShippingPrice">
+      <part name="size" type="xsd:int"/>
+      <part name="weight" type="xsd:int"/>
+      <part name="prefecture" type="xsd:string"/>
+      <part name="sendPrefecture" type="xsd:string"/>
+  </message>
+  <message name="GetShippingPriceResponse">
+      <part name="return" type="typens:IntegerArray"/>
+  </message>
+  <message name="GetTeikeigaiPrice">
+      <part name="weight" type="xsd:int"/>
+  </message>
+  <message name="GetTeikeigaiPriceResponse">
+      <part name="return" type="xsd:int"/>
+  </message>
+  <message name="GetSagawaPrice">
+      <part name="size" type="xsd:int"/>
+      <part name="weight" type="xsd:int"/>
+      <part name="prefecture" type="xsd:string"/>
+      <part name="sendPrefecture" type="xsd:string"/>
+  </message>
+  <message name="GetSagawaPriceResponse">
+      <part name="return" type="xsd:int"/>
+  </message>
+  <message name="GetYoupackList">
+      <part name="size" type="xsd:int"/>
+      <part name="weight" type="xsd:int"/>
+      <part name="prefecture" type="xsd:string"/>
+  </message>
+  <message name="GetYoupackListResponse">
+      <part name="return" type="typens:anySimpleType"/>
+  </message>
+  <message name="GetYamatoPrice">
+      <part name="size" type="xsd:int"/>
+      <part name="weight" type="xsd:int"/>
+      <part name="prefecture" type="xsd:string"/>
+      <part name="sendPrefecture" type="xsd:string"/>
+  </message>
+  <message name="GetYamatoPriceResponse">
+      <part name="return" type="xsd:int"/>
+  </message>
+  <portType name="ShippingShippingPort">
+      <operation name="GetYamatoList">
+         <input message="typens:GetYamatoList"/>
+         <output message="typens:GetYamatoListResponse"/>
+      </operation>
+      <operation name="GetYoupackPrice">
+         <input message="typens:GetYoupackPrice"/>
+         <output message="typens:GetYoupackPriceResponse"/>
+      </operation>
+      <operation name="GetShippingPrice">
+         <input message="typens:GetShippingPrice"/>
+         <output message="typens:GetShippingPriceResponse"/>
+      </operation>
+      <operation name="GetTeikeigaiPrice">
+         <input message="typens:GetTeikeigaiPrice"/>
+         <output message="typens:GetTeikeigaiPriceResponse"/>
+      </operation>
+      <operation name="GetSagawaPrice">
+         <input message="typens:GetSagawaPrice"/>
+         <output message="typens:GetSagawaPriceResponse"/>
+      </operation>
+      <operation name="GetYoupackList">
+         <input message="typens:GetYoupackList"/>
+         <output message="typens:GetYoupackListResponse"/>
+      </operation>
+      <operation name="GetYamatoPrice">
+         <input message="typens:GetYamatoPrice"/>
+         <output message="typens:GetYamatoPriceResponse"/>
+      </operation>
+  </portType>
+  <binding name="ShippingShippingBinding" type="typens:ShippingShippingPort">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+      <operation name="GetYamatoList">
+         <soap:operation soapAction="/shipping/api/GetYamatoList"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetYoupackPrice">
+         <soap:operation soapAction="/shipping/api/GetYoupackPrice"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetShippingPrice">
+         <soap:operation soapAction="/shipping/api/GetShippingPrice"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetTeikeigaiPrice">
+         <soap:operation soapAction="/shipping/api/GetTeikeigaiPrice"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetSagawaPrice">
+         <soap:operation soapAction="/shipping/api/GetSagawaPrice"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetYoupackList">
+         <soap:operation soapAction="/shipping/api/GetYoupackList"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="GetYamatoPrice">
+         <soap:operation soapAction="/shipping/api/GetYamatoPrice"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="ShippingService">
+      <port name="ShippingShippingPort" binding="typens:ShippingShippingBinding">
+         <soap:address location="http://ws.soatrader.com/ebeta.jp/0.1/ShippingService"/>
+      </port>
+  </service>
+</definitions>

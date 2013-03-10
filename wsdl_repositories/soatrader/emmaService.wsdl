@@ -1,0 +1,725 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://www.dkfz-heidelberg.de/menu/tomcat/as/alignment_multiple.emma"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://www.dkfz-heidelberg.de/menu/tomcat/as/alignment_multiple.emma"
+                  xmlns:intf="http://www.dkfz-heidelberg.de/menu/tomcat/as/alignment_multiple.emma"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://www.dkfz-heidelberg.de/menu/tomcat/as/alignment_multiple.emma">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://www.dkfz-heidelberg.de/menu/tomcat/as/alignment_multiple.emma">
+         <xsd:annotation>
+            <xsd:documentation>Multiple alignment program - interface to
+                  ClustalW program</xsd:documentation>
+         </xsd:annotation>
+         <element name="runAndWaitFor">
+            <complexType>
+               <sequence>
+                  <element name="emma" type="impl:Temma"/>
+               </sequence>
+            </complexType>
+         </element>
+         <simpleType name="TemmaSequenceSformat">
+            <restriction base="xsd:string">
+               <enumeration value="gcg"/>
+               <enumeration value="gcg8"/>
+               <enumeration value="embl"/>
+               <enumeration value="swiss"/>
+               <enumeration value="fasta"/>
+               <enumeration value="ncbi"/>
+               <enumeration value="genbank"/>
+               <enumeration value="nbrf"/>
+               <enumeration value="pir"/>
+               <enumeration value="codata"/>
+               <enumeration value="strider"/>
+               <enumeration value="clustal"/>
+               <enumeration value="phylip"/>
+               <enumeration value="acedb"/>
+               <enumeration value="msf"/>
+               <enumeration value="jackknifer"/>
+               <enumeration value="jackknifernon"/>
+               <enumeration value="nexus"/>
+               <enumeration value="nexusnon"/>
+               <enumeration value="treecon"/>
+               <enumeration value="mega"/>
+               <enumeration value="meganon"/>
+               <enumeration value="ig"/>
+               <enumeration value="staden"/>
+               <enumeration value="text"/>
+               <enumeration value="raw"/>
+            </restriction>
+         </simpleType>
+         <complexType name="TemmaSequence">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="sequence_direct_data" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="sequence_usa" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="sformat" type="impl:TemmaSequenceSformat"/>
+               <element maxOccurs="1" minOccurs="0" name="sbegin" type="xsd:long"/>
+               <element maxOccurs="1" minOccurs="0" name="send" type="xsd:long"/>
+               <element maxOccurs="1" minOccurs="0" name="sprotein" type="xsd:boolean"/>
+               <element maxOccurs="1" minOccurs="0" name="snucleotide" type="xsd:boolean"/>
+               <element maxOccurs="1" minOccurs="0" name="sreverse" type="xsd:boolean"/>
+               <element maxOccurs="1" minOccurs="0" name="slower" type="xsd:boolean"/>
+               <element maxOccurs="1" minOccurs="0" name="supper" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="TemmaDendfile">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="dendfile_direct_data" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="dendfile_url" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <simpleType name="TemmaPwmatrix">
+            <restriction base="xsd:string">
+               <enumeration value="b"/>
+               <enumeration value="p"/>
+               <enumeration value="g"/>
+               <enumeration value="i"/>
+               <enumeration value="o"/>
+            </restriction>
+         </simpleType>
+         <simpleType name="TemmaPwdnamatrix">
+            <restriction base="xsd:string">
+               <enumeration value="i"/>
+               <enumeration value="c"/>
+               <enumeration value="o"/>
+            </restriction>
+         </simpleType>
+         <complexType name="TemmaPairwisedata">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="pairwisedata_direct_data" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="pairwisedata_url" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <simpleType name="TemmaMatrix">
+            <restriction base="xsd:string">
+               <enumeration value="b"/>
+               <enumeration value="p"/>
+               <enumeration value="g"/>
+               <enumeration value="i"/>
+               <enumeration value="o"/>
+            </restriction>
+         </simpleType>
+         <simpleType name="TemmaDnamatrix">
+            <restriction base="xsd:string">
+               <enumeration value="i"/>
+               <enumeration value="c"/>
+               <enumeration value="o"/>
+            </restriction>
+         </simpleType>
+         <complexType name="TemmaMamatrix">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="mamatrix_direct_data" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="mamatrix_url" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <simpleType name="TemmaOsformat">
+            <restriction base="xsd:string">
+               <enumeration value="gcg"/>
+               <enumeration value="gcg8"/>
+               <enumeration value="embl"/>
+               <enumeration value="swiss"/>
+               <enumeration value="fasta"/>
+               <enumeration value="ncbi"/>
+               <enumeration value="genbank"/>
+               <enumeration value="nbrf"/>
+               <enumeration value="pir"/>
+               <enumeration value="codata"/>
+               <enumeration value="strider"/>
+               <enumeration value="clustal"/>
+               <enumeration value="phylip"/>
+               <enumeration value="acedb"/>
+               <enumeration value="msf"/>
+               <enumeration value="jackknifer"/>
+               <enumeration value="jackknifernon"/>
+               <enumeration value="nexus"/>
+               <enumeration value="nexusnon"/>
+               <enumeration value="treecon"/>
+               <enumeration value="mega"/>
+               <enumeration value="meganon"/>
+               <enumeration value="ig"/>
+               <enumeration value="staden"/>
+               <enumeration value="text"/>
+               <enumeration value="raw"/>
+            </restriction>
+         </simpleType>
+         <complexType name="Temma">
+            <sequence>
+               <element name="sequence" type="impl:TemmaSequence">
+                  <xsd:annotation>
+                     <xsd:documentation>qualifiers for parameter: sequence</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="dendfile" type="impl:TemmaDendfile">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Name of old dendrogram file</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Name of old dendrogram file</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="pwmatrix" type="impl:TemmaPwmatrix">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Protein pairwise alignment matrix options</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>The scoring table which describes the similarity of each
+             amino acid to each other. 
+             There are three 'in-built' series of weight matrices offered.
+             Each consists of several matrices which work differently at
+             different evolutionary distances. To see the exact details, read
+             the documentation. Crudely, we store several matrices in
+             memory, spanning the full range of amino acid distance (from
+             almost identical sequences to highly divergent ones). For very
+             similar sequences, it is best to use a strict weight matrix
+             which only gives a high score to identities and the most
+             favoured conservative substitutions. For more divergent
+             sequences, it is appropriate to use 'softer' matrices which give
+             a high score to many other frequent substitutions. 
+             1) BLOSUM (Henikoff). These matrices appear to be the best
+             available for carrying out data base similarity (homology
+             searches). The matrices used are: Blosum80, 62, 45 and 30. 
+             2) PAM (Dayhoff). These have been extremely widely used since
+             the late '70s. We use the PAM 120, 160, 250 and 350 matrices. 
+             3) GONNET . These matrices were derived using almost the same
+             procedure as the Dayhoff one (above) but are much more up to
+             date and are based on a far larger data set. They appear to be
+             more sensitive than the Dayhoff series. We use the GONNET 40,
+             80, 120, 160, 250 and 350 matrices. 
+             We also supply an identity matrix which gives a score of 1.0 to
+             two identical amino acids and a score of zero otherwise. This
+             matrix is not very useful.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="pwdnamatrix" type="impl:TemmaPwdnamatrix">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>DNA pairwise alignment matrix options</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>The scoring table which describes the scores assigned to
+             matches and mismatches (including IUB ambiguity codes).</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="pairwisedata" type="impl:TemmaPairwisedata">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Filename of user pairwise matrix</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Filename of user pairwise matrix</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="matrix" type="impl:TemmaMatrix">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Protein multiple alignment matrix options</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>This gives a menu where you are offered a choice of
+             weight matrices. The default for proteins is the PAM series
+             derived by Gonnet and colleagues. Note, a series is used! The
+             actual matrix that is used depends on how similar the sequences
+             to be aligned at this alignment step are. Different matrices
+             work differently at each evolutionary distance. 
+             There are three 'in-built' series of weight matrices offered.
+             Each consists of several matrices which work differently at
+             different evolutionary distances. To see the exact details, read
+             the documentation. Crudely, we store several matrices in
+             memory, spanning the full range of amino acid distance (from
+             almost identical sequences to highly divergent ones). For very
+             similar sequences, it is best to use a strict weight matrix
+             which only gives a high score to identities and the most
+             favoured conservative substitutions. For more divergent
+             sequences, it is appropriate to use 'softer' matrices which give
+             a high score to many other frequent substitutions. 
+             1) BLOSUM (Henikoff). These matrices appear to be the best
+             available for carrying out data base similarity (homology
+             searches). The matrices used are: Blosum80, 62, 45 and 30. 
+             2) PAM (Dayhoff). These have been extremely widely used since
+             the late '70s. We use the PAM 120, 160, 250 and 350 matrices. 
+             3) GONNET . These matrices were derived using almost the same
+             procedure as the Dayhoff one (above) but are much more up to
+             date and are based on a far larger data set. They appear to be
+             more sensitive than the Dayhoff series. We use the GONNET 40,
+             80, 120, 160, 250 and 350 matrices. 
+             We also supply an identity matrix which gives a score of 1.0 to
+             two identical amino acids and a score of zero otherwise. This
+             matrix is not very useful. Alternatively, you can read in your
+             own (just one matrix, not a series).</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="dnamatrix" type="impl:TemmaDnamatrix">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Nucleotide multiple alignment matrix options</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>This gives a menu where you are offered amenu where a
+             single matrix (not a series) can be selected.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="mamatrix" type="impl:TemmaMamatrix">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Filename of user multiple alignment matrix</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Filename of user multiple alignment matrix</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="pwgapc" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Slow pairwise alignment: gap opening
+                    penalty</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>The penalty for opening a gap in the pairwise
+             alignments.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="pwgapv" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Slow pairwise alignment: gap extension
+                    penalty</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>The penalty for extending a gap by 1 residue in the
+             pairwise alignments.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="ktup" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Fast pairwise alignment: similarity scores:
+                    K-Tuple size</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>This is the size of exactly matching fragment that is
+             used. INCREASE for speed (max= 2 for proteins; 4 for DNA),
+             DECREASE for sensitivity. For longer sequences (e.g. &gt;1000
+             residues) you may need to increase the default.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="gapw" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Fast pairwise alignment: similarity scores:
+                    gap penalty</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>This is a penalty for each gap in the fast alignments. It
+             has little affect on the speed or sensitivity except for
+             extreme values.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="topdiags" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Fast pairwise alignment: similarity scores:
+                    number of diagonals to be considered</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>The number of k-tuple matches on each diagonal (in an
+             imaginary dot-matrix plot) is calculated. Only the best ones
+             (with most matches) are used in the alignment. This parameter
+             specifies how many. Decrease for speed; increase for
+             sensitivity.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="window" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Fast pairwise alignment: similarity scores:
+                    diagonal window size</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>This is the number of diagonals around each of the 'best'
+             diagonals that will be used. Decrease for speed; increase for
+             sensitivity.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="nopercent" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Fast pairwise alignment: similarity scores:
+                    suppresses percentage score</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Fast pairwise alignment: similarity scores:
+                    suppresses percentage score</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="gapc" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Multiple alignment: Gap opening penalty</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>The penalty for opening a gap in the alignment.
+             Increasing the gap opening penalty will make gaps less
+             frequent.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="gapv" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Multiple alignment: Gap extension penalty</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>The penalty for extending a gap by 1 residue. Increasing
+             the gap extension penalty will make gaps shorter. Terminal gaps
+             are not penalised.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="endgaps" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Use end gap separation penalty</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>End gap separation: treats end gaps just like internal
+             gaps for the purposes of avoiding gaps that are too close (set
+             by 'gap separation distance'). If you turn this off, end gaps
+             will be ignored for this purpose. This is useful when you wish
+             to align fragments where the end gaps are not biologically
+             meaningful.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="gapdist" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Gap separation distance</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Gap separation distance: tries to decrease the chances
+             of gaps being too close to each other. Gaps that are less than
+             this distance apart are penalised more than other gaps. This
+             does not prevent close gaps; it makes them less frequent,
+             promoting a block-like appearance of the alignment.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="norgap" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>No residue specific gaps</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Residue specific penalties:  amino acid specific gap
+             penalties that reduce or increase the gap opening penalties at
+             each position in the alignment or sequence. As an example,
+             positions that are rich in glycine are more likely to have an
+             adjacent gap than positions that are rich in valine.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="hgapres" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>List of hydrophilic residues</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>This is a set of the residues 'considered' to be
+             hydrophilic. It is used when introducing Hydrophilic gap
+             penalties.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="nohgap" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>No hydrophilic gaps</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Hydrophilic gap penalties: used to increase the
+             chances of a gap within a run (5 or more residues) of
+             hydrophilic amino acids; these are likely to be loop or random
+             coil regions where gaps are more common. The residues that are
+             'considered' to be hydrophilic are set by '-hgapres'.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="maxdiv" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Cut-off to delay the alignment of the most
+                  divergent sequences</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>This switch, delays the alignment of the most distantly
+           related sequences until after the most closely related sequences
+           have been aligned. The setting shows the percent identity level
+           required to delay the addition of a sequence; sequences that are
+           less identical than this level to any other sequences will be
+           aligned later.</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="osformat" type="impl:TemmaOsformat">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Format of the output sequence (outseq)</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Format of the output sequence (outseq)</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+            </sequence>
+         </complexType>
+         <element name="runAndWaitForResponse">
+            <complexType>
+               <sequence>
+                  <element name="emmaResult" type="impl:TemmaResult"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="TemmaResult">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="report" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="detailed_status" type="xsd:long"/>
+               <element maxOccurs="1" minOccurs="0" name="outseq" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="dendoutfile" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="TSoaplabException">
+            <sequence/>
+         </complexType>
+         <element name="fault" type="impl:TSoaplabException"/>
+         <element name="createAndRun">
+            <complexType>
+               <sequence>
+                  <element name="emma" type="impl:Temma"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="createAndRunResponse">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="waitFor">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="waitForResponse">
+            <complexType/>
+         </element>
+         <element name="getStatus">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getStatusResponse">
+            <complexType>
+               <sequence>
+                  <element name="status" type="impl:Tstatus"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="Tstatus">
+            <sequence>
+               <element name="inProgress" type="xsd:boolean"/>
+               <element name="detailed" type="xsd:string"/>
+               <element name="erroneous" type="xsd:boolean"/>
+               <element name="description" type="xsd:string"/>
+               <element name="completed" type="xsd:boolean"/>
+               <element name="asString" type="xsd:string"/>
+               <element name="successful" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <element name="getResults">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getResultsResponse">
+            <complexType>
+               <sequence>
+                  <element name="emmaResult" type="impl:TemmaResult"/>
+               </sequence>
+            </complexType>
+         </element>
+      </schema>
+  </wsdl:types>
+  <wsdl:message name="getResultsResponse">
+      <wsdl:part element="impl:getResultsResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="createAndRunRequest">
+      <wsdl:part element="impl:createAndRun" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="runAndWaitForRequest">
+      <wsdl:part element="impl:runAndWaitFor" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="waitForRequest">
+      <wsdl:part element="impl:waitFor" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="createAndRunResponse">
+      <wsdl:part element="impl:createAndRunResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="runAndWaitForResponse">
+      <wsdl:part element="impl:runAndWaitForResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getStatusResponse">
+      <wsdl:part element="impl:getStatusResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getStatusRequest">
+      <wsdl:part element="impl:getStatus" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="waitForResponse">
+      <wsdl:part element="impl:waitForResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getResultsRequest">
+      <wsdl:part element="impl:getResults" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="SoaplabException">
+      <wsdl:part element="impl:fault" name="fault"/>
+  </wsdl:message>
+  <wsdl:portType name="alignment_multiple__emma">
+      <wsdl:operation name="runAndWaitFor">
+         <wsdl:documentation>Start the web service and receive the result. Blocks until job is finished.</wsdl:documentation>
+         <wsdl:input message="impl:runAndWaitForRequest" name="runAndWaitForRequest"/>
+         <wsdl:output message="impl:runAndWaitForResponse" name="runAndWaitForResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="createAndRun">
+         <wsdl:documentation>Start the web service and receive a job-id. Returns immediately.</wsdl:documentation>
+         <wsdl:input message="impl:createAndRunRequest" name="createAndRunRequest"/>
+         <wsdl:output message="impl:createAndRunResponse" name="createAndRunResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="waitFor">
+         <wsdl:documentation>Wait until a job (by job-id) has finished. Blocks until job is finished.</wsdl:documentation>
+         <wsdl:input message="impl:waitForRequest" name="waitForRequest"/>
+         <wsdl:output message="impl:waitForResponse" name="waitForResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="getStatus">
+         <wsdl:documentation>Get status information about a running job. Returns immediately.</wsdl:documentation>
+         <wsdl:input message="impl:getStatusRequest" name="getStatusRequest"/>
+         <wsdl:output message="impl:getStatusResponse" name="getStatusResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="getResults">
+         <wsdl:documentation>Get the results of a job (by job-id)</wsdl:documentation>
+         <wsdl:input message="impl:getResultsRequest" name="getResultsRequest"/>
+         <wsdl:output message="impl:getResultsResponse" name="getResultsResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="alignment_multiple.emma.derivedSoapBinding"
+                 type="impl:alignment_multiple__emma">
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="runAndWaitFor">
+         <wsdl:documentation>Start the web service and receive the result. Blocks until job is finished.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="runAndWaitForRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="runAndWaitForResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="createAndRun">
+         <wsdl:documentation>Start the web service and receive a job-id. Returns immediately.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="createAndRunRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="createAndRunResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="waitFor">
+         <wsdl:documentation>Wait until a job (by job-id) has finished. Blocks until job is finished.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="waitForRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="waitForResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="getStatus">
+         <wsdl:documentation>Get status information about a running job. Returns immediately.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getStatusRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getStatusResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="getResults">
+         <wsdl:documentation>Get the results of a job (by job-id)</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getResultsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getResultsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="emmaService">
+      <wsdl:port binding="impl:alignment_multiple.emma.derivedSoapBinding"
+                 name="alignment_multiple.emma.derived">
+         <wsdlsoap:address location="http://ws.soatrader.com/dkfz-heidelberg.de/0.1/emmaService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

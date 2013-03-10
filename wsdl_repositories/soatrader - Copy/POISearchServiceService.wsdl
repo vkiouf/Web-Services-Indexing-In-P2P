@@ -1,0 +1,249 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://poisearchservices.wasp.freeband.nl-impl"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://poisearchservices.wasp.freeband.nl-impl"
+                  xmlns:intf="http://poisearchservices.wasp.freeband.nl-impl"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://poisearchservices.wasp.freeband.nl"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://poisearchservices.wasp.freeband.nl-impl">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://poisearchservices.wasp.freeband.nl">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOf_xsd_string">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="soapenc:string[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOfArrayOf_xsd_string">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="soapenc:string[][]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://poisearchservices.wasp.freeband.nl">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOf_xsd_string">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="soapenc:string[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOfArrayOf_xsd_string">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="soapenc:string[][]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="searchSeRQLResponse">
+
+      <wsdl:part name="searchSeRQLReturn" type="tns1:ArrayOfArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchPOISeRQLResponse">
+
+      <wsdl:part name="searchPOISeRQLReturn" type="tns1:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchPOIInRectangleAreaRequest">
+
+      <wsdl:part name="types" type="tns1:ArrayOf_xsd_string"/>
+
+      <wsdl:part name="x1" type="xsd:double"/>
+
+      <wsdl:part name="y1" type="xsd:double"/>
+
+      <wsdl:part name="x2" type="xsd:double"/>
+
+      <wsdl:part name="y2" type="xsd:double"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchSeRQLRequest">
+
+      <wsdl:part name="query" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchPOISeRQLRequest">
+
+      <wsdl:part name="query" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchPOIInRectangleAreaResponse">
+
+      <wsdl:part name="searchPOIInRectangleAreaReturn" type="tns1:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="POISearchService">
+
+      <wsdl:operation name="searchPOIInRectangleArea" parameterOrder="types x1 y1 x2 y2">
+
+         <wsdl:input message="impl:searchPOIInRectangleAreaRequest"
+                     name="searchPOIInRectangleAreaRequest"/>
+
+         <wsdl:output message="impl:searchPOIInRectangleAreaResponse"
+                      name="searchPOIInRectangleAreaResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchPOISeRQL" parameterOrder="query">
+
+         <wsdl:input message="impl:searchPOISeRQLRequest" name="searchPOISeRQLRequest"/>
+
+         <wsdl:output message="impl:searchPOISeRQLResponse" name="searchPOISeRQLResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchSeRQL" parameterOrder="query">
+
+         <wsdl:input message="impl:searchSeRQLRequest" name="searchSeRQLRequest"/>
+
+         <wsdl:output message="impl:searchSeRQLResponse" name="searchSeRQLResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="RealEstateSearchServiceSoapBinding" type="impl:POISearchService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="searchPOIInRectangleArea">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchPOIInRectangleAreaRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://poisearchservices.wasp.freeband.nl"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchPOIInRectangleAreaResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://poisearchservices.wasp.freeband.nl-impl"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchPOISeRQL">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchPOISeRQLRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://poisearchservices.wasp.freeband.nl"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchPOISeRQLResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://poisearchservices.wasp.freeband.nl-impl"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchSeRQL">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchSeRQLRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://poisearchservices.wasp.freeband.nl"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchSeRQLResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://poisearchservices.wasp.freeband.nl-impl"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="POISearchServiceService">
+
+      <wsdl:port binding="impl:RealEstateSearchServiceSoapBinding"
+                 name="RealEstateSearchService">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/lab.telin.nl/0.1/POISearchServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

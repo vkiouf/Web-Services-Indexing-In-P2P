@@ -1,0 +1,104 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://webservices.flightexplorer.com"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://webservices.flightexplorer.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://webservices.flightexplorer.com">
+         <s:element name="GetACID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="company" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetACIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetACIDResult" type="tns:ACIDS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ACIDS">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="text" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ACIDS" type="tns:ACIDS"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetACIDSoapIn">
+      <wsdl:part name="parameters" element="tns:GetACID"/>
+  </wsdl:message>
+  <wsdl:message name="GetACIDSoapOut">
+      <wsdl:part name="parameters" element="tns:GetACIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetACIDHttpGetIn">
+      <wsdl:part name="company" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetACIDHttpGetOut">
+      <wsdl:part name="Body" element="tns:ACIDS"/>
+  </wsdl:message>
+  <wsdl:message name="GetACIDHttpPostIn">
+      <wsdl:part name="company" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetACIDHttpPostOut">
+      <wsdl:part name="Body" element="tns:ACIDS"/>
+  </wsdl:message>
+  <wsdl:portType name="FlightExplorerGetACIDSoap">
+      <wsdl:operation name="GetACID">
+         <wsdl:input message="tns:GetACIDSoapIn"/>
+         <wsdl:output message="tns:GetACIDSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="FlightExplorerGetACIDSoap" type="tns:FlightExplorerGetACIDSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetACID">
+         <soap:operation soapAction="http://webservices.flightexplorer.com/GetACID" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="FlightExplorerGetACID">
+      <wsdl:port name="FlightExplorerGetACIDSoap" binding="tns:FlightExplorerGetACIDSoap">
+         <soap:address location="http://ws.soatrader.com/femessaging.net/0.1/FlightExplorerGetACID"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

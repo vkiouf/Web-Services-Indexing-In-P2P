@@ -1,0 +1,82 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://esynaps.com/WebServices/eSynapsSearch"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://esynaps.com/WebServices/eSynapsSearch">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://esynaps.com/WebServices/eSynapsSearch">
+         <s:element name="SearchESynaps">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="srchText" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="limitResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchESynapsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchESynapsResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchESynapsSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchESynaps"/>
+  </wsdl:message>
+  <wsdl:message name="SearchESynapsSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchESynapsResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="eSynapsSerachSoap">
+      <wsdl:operation name="SearchESynaps">
+         <wsdl:input message="tns:SearchESynapsSoapIn"/>
+         <wsdl:output message="tns:SearchESynapsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="eSynapsSerachSoap" type="tns:eSynapsSerachSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="SearchESynaps">
+         <soap:operation soapAction="http://esynaps.com/WebServices/eSynapsSearch/SearchESynaps"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="eSynapsSerach">
+      <wsdl:port name="eSynapsSerachSoap" binding="tns:eSynapsSerachSoap">
+         <soap:address location="http://ws.soatrader.com/esynaps.com/0.1/eSynapsSerach"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

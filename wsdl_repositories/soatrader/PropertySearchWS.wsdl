@@ -1,0 +1,830 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="SearchProperties">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="criteria" type="tns:SearchCriteria"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="sortColumns" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="listingMode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SearchCriteria">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="MLSNumbers" type="tns:ArrayOfInt"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PropertyTypes" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetAddress" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Zip" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinPrice" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxPrice" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinSqFt" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinBedrooms" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxBedrooms" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinBathrooms" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxBathrooms" type="s:float"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SchoolDistricts" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AgentMemberNumbers" type="tns:ArrayOfInt"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HasVirtualTour" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HasOpenHouse" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HasPropertyPhoto" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AgentIdOverride" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IsNewProperty" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IsUpdatedProperty" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfInt">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SearchPropertiesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchPropertiesResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSearchOptions">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="optionName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSearchOptionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSearchOptionsResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPropertyType">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="mlNum" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPropertyTypeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPropertyTypeResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPropertyDetail">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="mlNum" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="propertyType" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPropertyDetailResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPropertyDetailResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPropertyPhotos">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="mlNum" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPropertyPhotosResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPropertyPhotosResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAgent">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="agentId" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAgentResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAgentResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPropertyAdditionalInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="mlNum" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="propertyType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="listingMode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPropertyAdditionalInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPropertyAdditionalInfoResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPropertyOpenHouses">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="mlNum" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPropertyOpenHousesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPropertyOpenHousesResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LogPropertyViewing">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="mlNum" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="os" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="browser" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LogPropertyViewingResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LogPropertyViewingResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LogSearchCriteria">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="criteria" type="tns:SearchCriteria"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="searchType" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LogSearchCriteriaResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LogSearchCriteriaResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateUserSearchCriteria">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userEmail" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="criteria" type="tns:SearchCriteria"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateUserSearchCriteriaResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="UpdateUserEmailPreference">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userEmail" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="sendEmail" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateUserEmailPreferenceResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="AddUserWatchListProperty">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userEmail" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mlNum" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddUserWatchListPropertyResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="RemoveUserWatchListProperty">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userEmail" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mlNum" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RemoveUserWatchListPropertyResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetUserWatchListMLNumbers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userEmail" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserWatchListMLNumbersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetUserWatchListMLNumbersResult"
+                             type="tns:ArrayOfInt"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserEmailPreference">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userEmail" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserEmailPreferenceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetUserEmailPreferenceResult"
+                             type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserWatchListProperties">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userEmail" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="sortColumns" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="listingMode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserWatchListPropertiesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetUserWatchListPropertiesResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllUserSavedSearches">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAllUserSavedSearchesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllUserSavedSearchesResult"
+                             type="tns:ArrayOfSavedSearchCriteria"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfSavedSearchCriteria">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SavedSearchCriteria" nillable="true"
+                          type="tns:SavedSearchCriteria"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SavedSearchCriteria">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserEmail" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Criteria" type="tns:SearchCriteria"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetUserSavedSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userEmail" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserSavedSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetUserSavedSearchResult"
+                             type="tns:SearchCriteria"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchPropertiesSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchProperties"/>
+  </wsdl:message>
+  <wsdl:message name="SearchPropertiesSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchPropertiesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchOptionsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSearchOptions"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchOptionsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSearchOptionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPropertyTypeSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPropertyType"/>
+  </wsdl:message>
+  <wsdl:message name="GetPropertyTypeSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPropertyTypeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPropertyDetailSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPropertyDetail"/>
+  </wsdl:message>
+  <wsdl:message name="GetPropertyDetailSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPropertyDetailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPropertyPhotosSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPropertyPhotos"/>
+  </wsdl:message>
+  <wsdl:message name="GetPropertyPhotosSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPropertyPhotosResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAgentSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAgent"/>
+  </wsdl:message>
+  <wsdl:message name="GetAgentSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAgentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPropertyAdditionalInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPropertyAdditionalInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetPropertyAdditionalInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPropertyAdditionalInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPropertyOpenHousesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPropertyOpenHouses"/>
+  </wsdl:message>
+  <wsdl:message name="GetPropertyOpenHousesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPropertyOpenHousesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LogPropertyViewingSoapIn">
+      <wsdl:part name="parameters" element="tns:LogPropertyViewing"/>
+  </wsdl:message>
+  <wsdl:message name="LogPropertyViewingSoapOut">
+      <wsdl:part name="parameters" element="tns:LogPropertyViewingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LogSearchCriteriaSoapIn">
+      <wsdl:part name="parameters" element="tns:LogSearchCriteria"/>
+  </wsdl:message>
+  <wsdl:message name="LogSearchCriteriaSoapOut">
+      <wsdl:part name="parameters" element="tns:LogSearchCriteriaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateUserSearchCriteriaSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateUserSearchCriteria"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateUserSearchCriteriaSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateUserSearchCriteriaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateUserEmailPreferenceSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateUserEmailPreference"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateUserEmailPreferenceSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateUserEmailPreferenceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddUserWatchListPropertySoapIn">
+      <wsdl:part name="parameters" element="tns:AddUserWatchListProperty"/>
+  </wsdl:message>
+  <wsdl:message name="AddUserWatchListPropertySoapOut">
+      <wsdl:part name="parameters" element="tns:AddUserWatchListPropertyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveUserWatchListPropertySoapIn">
+      <wsdl:part name="parameters" element="tns:RemoveUserWatchListProperty"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveUserWatchListPropertySoapOut">
+      <wsdl:part name="parameters" element="tns:RemoveUserWatchListPropertyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserWatchListMLNumbersSoapIn">
+      <wsdl:part name="parameters" element="tns:GetUserWatchListMLNumbers"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserWatchListMLNumbersSoapOut">
+      <wsdl:part name="parameters" element="tns:GetUserWatchListMLNumbersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserEmailPreferenceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetUserEmailPreference"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserEmailPreferenceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetUserEmailPreferenceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserWatchListPropertiesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetUserWatchListProperties"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserWatchListPropertiesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetUserWatchListPropertiesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllUserSavedSearchesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAllUserSavedSearches"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllUserSavedSearchesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAllUserSavedSearchesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserSavedSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:GetUserSavedSearch"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserSavedSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:GetUserSavedSearchResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="PropertySearchWSSoap">
+      <wsdl:operation name="SearchProperties">
+         <wsdl:input message="tns:SearchPropertiesSoapIn"/>
+         <wsdl:output message="tns:SearchPropertiesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetSearchOptions">
+         <wsdl:input message="tns:GetSearchOptionsSoapIn"/>
+         <wsdl:output message="tns:GetSearchOptionsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetPropertyType">
+         <wsdl:input message="tns:GetPropertyTypeSoapIn"/>
+         <wsdl:output message="tns:GetPropertyTypeSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetPropertyDetail">
+         <wsdl:input message="tns:GetPropertyDetailSoapIn"/>
+         <wsdl:output message="tns:GetPropertyDetailSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetPropertyPhotos">
+         <wsdl:input message="tns:GetPropertyPhotosSoapIn"/>
+         <wsdl:output message="tns:GetPropertyPhotosSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetAgent">
+         <wsdl:input message="tns:GetAgentSoapIn"/>
+         <wsdl:output message="tns:GetAgentSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetPropertyAdditionalInfo">
+         <wsdl:input message="tns:GetPropertyAdditionalInfoSoapIn"/>
+         <wsdl:output message="tns:GetPropertyAdditionalInfoSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetPropertyOpenHouses">
+         <wsdl:input message="tns:GetPropertyOpenHousesSoapIn"/>
+         <wsdl:output message="tns:GetPropertyOpenHousesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="LogPropertyViewing">
+         <wsdl:input message="tns:LogPropertyViewingSoapIn"/>
+         <wsdl:output message="tns:LogPropertyViewingSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="LogSearchCriteria">
+         <wsdl:input message="tns:LogSearchCriteriaSoapIn"/>
+         <wsdl:output message="tns:LogSearchCriteriaSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateUserSearchCriteria">
+         <wsdl:input message="tns:UpdateUserSearchCriteriaSoapIn"/>
+         <wsdl:output message="tns:UpdateUserSearchCriteriaSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateUserEmailPreference">
+         <wsdl:input message="tns:UpdateUserEmailPreferenceSoapIn"/>
+         <wsdl:output message="tns:UpdateUserEmailPreferenceSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AddUserWatchListProperty">
+         <wsdl:input message="tns:AddUserWatchListPropertySoapIn"/>
+         <wsdl:output message="tns:AddUserWatchListPropertySoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="RemoveUserWatchListProperty">
+         <wsdl:input message="tns:RemoveUserWatchListPropertySoapIn"/>
+         <wsdl:output message="tns:RemoveUserWatchListPropertySoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserWatchListMLNumbers">
+         <wsdl:input message="tns:GetUserWatchListMLNumbersSoapIn"/>
+         <wsdl:output message="tns:GetUserWatchListMLNumbersSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserEmailPreference">
+         <wsdl:input message="tns:GetUserEmailPreferenceSoapIn"/>
+         <wsdl:output message="tns:GetUserEmailPreferenceSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserWatchListProperties">
+         <wsdl:input message="tns:GetUserWatchListPropertiesSoapIn"/>
+         <wsdl:output message="tns:GetUserWatchListPropertiesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllUserSavedSearches">
+         <wsdl:input message="tns:GetAllUserSavedSearchesSoapIn"/>
+         <wsdl:output message="tns:GetAllUserSavedSearchesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserSavedSearch">
+         <wsdl:input message="tns:GetUserSavedSearchSoapIn"/>
+         <wsdl:output message="tns:GetUserSavedSearchSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PropertySearchWSSoap" type="tns:PropertySearchWSSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="SearchProperties">
+         <soap:operation soapAction="http://tempuri.org/SearchProperties" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSearchOptions">
+         <soap:operation soapAction="http://tempuri.org/GetSearchOptions" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPropertyType">
+         <soap:operation soapAction="http://tempuri.org/GetPropertyType" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPropertyDetail">
+         <soap:operation soapAction="http://tempuri.org/GetPropertyDetail" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPropertyPhotos">
+         <soap:operation soapAction="http://tempuri.org/GetPropertyPhotos" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAgent">
+         <soap:operation soapAction="http://tempuri.org/GetAgent" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPropertyAdditionalInfo">
+         <soap:operation soapAction="http://tempuri.org/GetPropertyAdditionalInfo" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPropertyOpenHouses">
+         <soap:operation soapAction="http://tempuri.org/GetPropertyOpenHouses" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LogPropertyViewing">
+         <soap:operation soapAction="http://tempuri.org/LogPropertyViewing" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LogSearchCriteria">
+         <soap:operation soapAction="http://tempuri.org/LogSearchCriteria" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateUserSearchCriteria">
+         <soap:operation soapAction="http://tempuri.org/UpdateUserSearchCriteria" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateUserEmailPreference">
+         <soap:operation soapAction="http://tempuri.org/UpdateUserEmailPreference" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddUserWatchListProperty">
+         <soap:operation soapAction="http://tempuri.org/AddUserWatchListProperty" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RemoveUserWatchListProperty">
+         <soap:operation soapAction="http://tempuri.org/RemoveUserWatchListProperty" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserWatchListMLNumbers">
+         <soap:operation soapAction="http://tempuri.org/GetUserWatchListMLNumbers" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserEmailPreference">
+         <soap:operation soapAction="http://tempuri.org/GetUserEmailPreference" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserWatchListProperties">
+         <soap:operation soapAction="http://tempuri.org/GetUserWatchListProperties" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllUserSavedSearches">
+         <soap:operation soapAction="http://tempuri.org/GetAllUserSavedSearches" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserSavedSearch">
+         <soap:operation soapAction="http://tempuri.org/GetUserSavedSearch" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PropertySearchWS">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/"/>
+      <wsdl:port name="PropertySearchWSSoap" binding="tns:PropertySearchWSSoap">
+         <soap:address location="http://ws.soatrader.com/tomieraines.com/0.1/PropertySearchWS"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

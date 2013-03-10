@@ -1,0 +1,372 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:i1="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:i2="https://www.tricommerce.co.uk/xGate/PaymentDetailsInformation.xsd"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:i0="https://www.tricommerce.co.uk/xGate/UserInformation.xsd"
+                  xmlns:tns="https://www.tricommerce.co.uk/xGate"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="https://www.tricommerce.co.uk/xGate">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:import namespace="https://www.tricommerce.co.uk/xGate/UserInformation.xsd"
+                location="https://www.tricommerce.co.uk/xGateWebservice/Services/xGateSecurity.asmx?schema=UserInformation"/>
+  <wsdl:import namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"
+                location="https://www.tricommerce.co.uk/xGateWebservice/Services/xGateSecurity.asmx?schema=CustomerInformation"/>
+  <wsdl:import namespace="https://www.tricommerce.co.uk/xGate/PaymentDetailsInformation.xsd"
+                location="https://www.tricommerce.co.uk/xGateWebservice/Services/xGateSecurity.asmx?schema=PaymentDetailsInformation"/>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="https://www.tricommerce.co.uk/xGate">
+         <s:import namespace="https://www.tricommerce.co.uk/xGate/UserInformation.xsd"/>
+         <s:import namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"/>
+         <s:import namespace="https://www.tricommerce.co.uk/xGate/PaymentDetailsInformation.xsd"/>
+         <s:element name="Login">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="IPAddress" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Domain" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LoginResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLoggedInUserInformation">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetLoggedInUserInformationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLoggedInUserInformationResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/UserInformation.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AuthenticationHeader" type="tns:AuthenticationHeader"/>
+         <s:complexType name="AuthenticationHeader">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AuthenticationToken" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetLoggedInUsersCustomerInformation">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetLoggedInUsersCustomerInformationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLoggedInUsersCustomerInformationResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLoggedInUsersDefaultPaymentMethod">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetLoggedInUsersDefaultPaymentMethodResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLoggedInUsersDefaultPaymentMethodResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/PaymentDetailsInformation.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ResellerAgentCreatorLogin">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ResellerAgentCreatorLoginResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ResellerAgentCreatorLoginResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/UserInformation.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="string" nillable="true" type="s:string"/>
+         <s:element name="UserInformation" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:any namespace="https://www.tricommerce.co.uk/xGate/UserInformation.xsd"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CustomerInformation" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:any namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="PaymentDetailsInformation" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:any namespace="https://www.tricommerce.co.uk/xGate/PaymentDetailsInformation.xsd"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoginSoapIn">
+      <wsdl:part name="parameters" element="tns:Login"/>
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+      <wsdl:part name="parameters" element="tns:LoginResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUserInformationSoapIn">
+      <wsdl:part name="parameters" element="tns:GetLoggedInUserInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUserInformationSoapOut">
+      <wsdl:part name="parameters" element="tns:GetLoggedInUserInformationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUserInformationAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUsersCustomerInformationSoapIn">
+      <wsdl:part name="parameters" element="tns:GetLoggedInUsersCustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUsersCustomerInformationSoapOut">
+      <wsdl:part name="parameters" element="tns:GetLoggedInUsersCustomerInformationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUsersCustomerInformationAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUsersDefaultPaymentMethodSoapIn">
+      <wsdl:part name="parameters" element="tns:GetLoggedInUsersDefaultPaymentMethod"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUsersDefaultPaymentMethodSoapOut">
+      <wsdl:part name="parameters" element="tns:GetLoggedInUsersDefaultPaymentMethodResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUsersDefaultPaymentMethodAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="ResellerAgentCreatorLoginSoapIn">
+      <wsdl:part name="parameters" element="tns:ResellerAgentCreatorLogin"/>
+  </wsdl:message>
+  <wsdl:message name="ResellerAgentCreatorLoginSoapOut">
+      <wsdl:part name="parameters" element="tns:ResellerAgentCreatorLoginResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ResellerAgentCreatorLoginAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="LoginHttpGetIn">
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="IPAddress" type="s:string"/>
+      <wsdl:part name="Domain" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LoginHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUserInformationHttpGetIn"/>
+  <wsdl:message name="GetLoggedInUserInformationHttpGetOut">
+      <wsdl:part name="Body" element="tns:UserInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUsersCustomerInformationHttpGetIn"/>
+  <wsdl:message name="GetLoggedInUsersCustomerInformationHttpGetOut">
+      <wsdl:part name="Body" element="tns:CustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUsersDefaultPaymentMethodHttpGetIn"/>
+  <wsdl:message name="GetLoggedInUsersDefaultPaymentMethodHttpGetOut">
+      <wsdl:part name="Body" element="tns:PaymentDetailsInformation"/>
+  </wsdl:message>
+  <wsdl:message name="ResellerAgentCreatorLoginHttpGetIn">
+      <wsdl:part name="Password" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ResellerAgentCreatorLoginHttpGetOut">
+      <wsdl:part name="Body" element="tns:UserInformation"/>
+  </wsdl:message>
+  <wsdl:message name="LoginHttpPostIn">
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="IPAddress" type="s:string"/>
+      <wsdl:part name="Domain" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LoginHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUserInformationHttpPostIn"/>
+  <wsdl:message name="GetLoggedInUserInformationHttpPostOut">
+      <wsdl:part name="Body" element="tns:UserInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUsersCustomerInformationHttpPostIn"/>
+  <wsdl:message name="GetLoggedInUsersCustomerInformationHttpPostOut">
+      <wsdl:part name="Body" element="tns:CustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetLoggedInUsersDefaultPaymentMethodHttpPostIn"/>
+  <wsdl:message name="GetLoggedInUsersDefaultPaymentMethodHttpPostOut">
+      <wsdl:part name="Body" element="tns:PaymentDetailsInformation"/>
+  </wsdl:message>
+  <wsdl:message name="ResellerAgentCreatorLoginHttpPostIn">
+      <wsdl:part name="Password" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ResellerAgentCreatorLoginHttpPostOut">
+      <wsdl:part name="Body" element="tns:UserInformation"/>
+  </wsdl:message>
+  <wsdl:portType name="xGateSecuritySoap">
+      <wsdl:operation name="Login">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Log into the service</documentation>
+         <wsdl:input message="tns:LoginSoapIn"/>
+         <wsdl:output message="tns:LoginSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetLoggedInUserInformation">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Retrieves information about the user relevant to the AuthToken</documentation>
+         <wsdl:input message="tns:GetLoggedInUserInformationSoapIn"/>
+         <wsdl:output message="tns:GetLoggedInUserInformationSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetLoggedInUsersCustomerInformation">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Retrieves Customer information for the user in the AuthToken</documentation>
+         <wsdl:input message="tns:GetLoggedInUsersCustomerInformationSoapIn"/>
+         <wsdl:output message="tns:GetLoggedInUsersCustomerInformationSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetLoggedInUsersDefaultPaymentMethod">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Retrieves Customer information for the user in the AuthToken</documentation>
+         <wsdl:input message="tns:GetLoggedInUsersDefaultPaymentMethodSoapIn"/>
+         <wsdl:output message="tns:GetLoggedInUsersDefaultPaymentMethodSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="ResellerAgentCreatorLogin">
+         <wsdl:input message="tns:ResellerAgentCreatorLoginSoapIn"/>
+         <wsdl:output message="tns:ResellerAgentCreatorLoginSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="xGateSecuritySoap" type="tns:xGateSecuritySoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="Login">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/Login" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetLoggedInUserInformation">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/GetLoggedInUserInformation"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetLoggedInUserInformationAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetLoggedInUsersCustomerInformation">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/GetLoggedInUsersCustomerInformation"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetLoggedInUsersCustomerInformationAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetLoggedInUsersDefaultPaymentMethod">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/GetLoggedInUsersDefaultPaymentMethod"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetLoggedInUsersDefaultPaymentMethodAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ResellerAgentCreatorLogin">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/ResellerAgentCreatorLogin"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:ResellerAgentCreatorLoginAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="xGateSecurity">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Contains security information and general xGate User information</documentation>
+      <wsdl:port name="xGateSecuritySoap" binding="tns:xGateSecuritySoap">
+         <soap:address location="http://ws.soatrader.com/tricommerce.co.uk/0.1/xGateSecurity"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="urn:anova"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="urn:anova"
+                  xmlns:intf="urn:anova"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="urn:anova">
+   <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:documentation>
+      <date xmlns="http://schemas.xmlsoap.org/wsdl/">9:3:5827 June 2005</date>
+      <version xmlns="http://schemas.xmlsoap.org/wsdl/">9c4cdb1b165edd5a2160446d2d161676</version>
+   </wsdl:documentation>
+   <wsdl:message name="anovaResponse">
+      <wsdl:part name="anovaReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="isFinishedResponse">
+      <wsdl:part name="isFinishedReturn" type="xsd:int"/>
+   </wsdl:message>
+   <wsdl:message name="aboutServiceResponse">
+      <wsdl:part name="aboutServiceReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="isFinishedRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getTimeEstimateRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="aboutOperationsResponse">
+      <wsdl:part name="aboutOperationsReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="aboutOperationsRequest"/>
+   <wsdl:message name="getTimeEstimateResponse">
+      <wsdl:part name="getTimeEstimateReturn" type="xsd:int"/>
+   </wsdl:message>
+   <wsdl:message name="aboutServiceRequest"/>
+   <wsdl:message name="anovaRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+      <wsdl:part name="in1" type="xsd:string"/>
+      <wsdl:part name="in2" type="xsd:double"/>
+   </wsdl:message>
+   <wsdl:message name="acknowledgeRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+      <wsdl:part name="in1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getResultsResponse">
+      <wsdl:part name="getResultsReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="acknowledgeResponse">
+      <wsdl:part name="acknowledgeReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getResultsRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:portType name="Anova">
+      <wsdl:operation name="anova" parameterOrder="in0 in1 in2">
+         <wsdl:input message="impl:anovaRequest" name="anovaRequest"/>
+         <wsdl:output message="impl:anovaResponse" name="anovaResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getTimeEstimate" parameterOrder="in0">
+         <wsdl:input message="impl:getTimeEstimateRequest" name="getTimeEstimateRequest"/>
+         <wsdl:output message="impl:getTimeEstimateResponse" name="getTimeEstimateResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="isFinished" parameterOrder="in0">
+         <wsdl:input message="impl:isFinishedRequest" name="isFinishedRequest"/>
+         <wsdl:output message="impl:isFinishedResponse" name="isFinishedResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="aboutService">
+         <wsdl:input message="impl:aboutServiceRequest" name="aboutServiceRequest"/>
+         <wsdl:output message="impl:aboutServiceResponse" name="aboutServiceResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="aboutOperations">
+         <wsdl:input message="impl:aboutOperationsRequest" name="aboutOperationsRequest"/>
+         <wsdl:output message="impl:aboutOperationsResponse" name="aboutOperationsResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="acknowledge" parameterOrder="in0 in1">
+         <wsdl:input message="impl:acknowledgeRequest" name="acknowledgeRequest"/>
+         <wsdl:output message="impl:acknowledgeResponse" name="acknowledgeResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getResults" parameterOrder="in0">
+         <wsdl:input message="impl:getResultsRequest" name="getResultsRequest"/>
+         <wsdl:output message="impl:getResultsResponse" name="getResultsResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="anovaSoapBinding" type="impl:Anova">
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="anova">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="anovaRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="anovaResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getTimeEstimate">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getTimeEstimateRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="getTimeEstimateResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="isFinished">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="isFinishedRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="isFinishedResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="aboutService">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="aboutServiceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="aboutServiceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="aboutOperations">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="aboutOperationsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="aboutOperationsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="acknowledge">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="acknowledgeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="acknowledgeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getResults">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getResultsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="getResultsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:anova"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="AnovaService">
+      <wsdl:port binding="impl:anovaSoapBinding" name="anova">
+         <wsdlsoap:address location="http://ws.soatrader.com/vbi.vt.edu/0.1/AnovaService"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

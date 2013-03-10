@@ -1,0 +1,111 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://hl7.util.nakkus.ee/jaws"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             name="HL7MessageReceiverService"
+             targetNamespace="http://hl7.util.nakkus.ee/jaws">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              elementFormDefault="qualified"
+              targetNamespace="http://hl7.util.nakkus.ee/jaws">
+         <complexType name="hl7">
+            <sequence>
+               <element name="param" nillable="true" type="string"/>
+            </sequence>
+         </complexType>
+         <complexType name="hl7Response">
+            <sequence>
+               <element name="result" nillable="true" type="string"/>
+            </sequence>
+         </complexType>
+         <complexType name="listMethods">
+            <sequence>
+               <element name="param" nillable="true" type="string"/>
+            </sequence>
+         </complexType>
+         <complexType name="listMethodsResponse">
+            <sequence>
+               <element maxOccurs="unbounded" minOccurs="0" name="result" nillable="true" type="string"/>
+            </sequence>
+         </complexType>
+         <element name="hl7" type="tns:hl7"/>
+         <element name="hl7Response" type="tns:hl7Response"/>
+         <element name="listMethods" type="tns:listMethods"/>
+         <element name="listMethodsResponse" type="tns:listMethodsResponse"/>
+      </schema>
+   </types>
+   <message name="HL7MessageReceiver_hl7">
+      <part element="tns:hl7" name="parameters"/>
+   </message>
+   <message name="HL7MessageReceiver_listMethods">
+      <part element="tns:listMethods" name="parameters"/>
+   </message>
+   <message name="HL7MessageReceiver_listMethodsResponse">
+      <part element="tns:listMethodsResponse" name="result"/>
+   </message>
+   <message name="HL7MessageReceiver_hl7Response">
+      <part element="tns:hl7Response" name="result"/>
+   </message>
+   <portType name="HL7MessageReceiver">
+      <operation name="hl7">
+         <input message="tns:HL7MessageReceiver_hl7"/>
+         <output message="tns:HL7MessageReceiver_hl7Response"/>
+      </operation>
+      <operation name="listMethods">
+         <input message="tns:HL7MessageReceiver_listMethods"/>
+         <output message="tns:HL7MessageReceiver_listMethodsResponse"/>
+      </operation>
+   </portType>
+   <binding name="HL7MessageReceiverBinding" type="tns:HL7MessageReceiver">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="hl7">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+      <operation name="listMethods">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+   <service name="HL7MessageReceiverService">
+      <port binding="tns:HL7MessageReceiverBinding" name="HL7MessageReceiverPort">
+         <soap:address location="http://ws.soatrader.com/riik.ee/0.3/nakis"/>
+      </port>
+   </service>
+</definitions>

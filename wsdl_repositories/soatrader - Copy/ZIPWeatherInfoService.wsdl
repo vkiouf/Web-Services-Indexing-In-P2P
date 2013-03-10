@@ -1,0 +1,359 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="ZIPWeatherInfo"
+                  xmlns:impl="ZIPWeatherInfo"
+                  xmlns:intf="ZIPWeatherInfo"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="ZIPWeatherInfo">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="ZIPWeatherInfo">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOfArrayOf_soapenc_string">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="soapenc:string[][]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOf_soapenc_string">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="soapenc:string[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ZIPWeatherInfoResult">
+            <sequence>
+               <element name="marketingHints" nillable="true" type="impl:ArrayOfArrayOf_soapenc_string"/>
+               <element name="usedStations" nillable="true" type="impl:ArrayOfArrayOf_soapenc_string"/>
+               <element name="weatherEmergences" nillable="true"
+                        type="impl:ArrayOfArrayOf_soapenc_string"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="topicsResponse">
+
+      <wsdl:part name="topicsReturn" type="impl:ArrayOfArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="validateInquiryInputResponse">
+
+      <wsdl:part name="validateInquiryInputReturn" type="impl:ArrayOfArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="helloResponse">
+
+      <wsdl:part name="helloReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="errorDefinitionsRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="customersResponse">
+
+      <wsdl:part name="customersReturn" type="impl:ArrayOfArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="topicsRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="sendInquiryResponse">
+
+      <wsdl:part name="sendInquiryReturn" type="impl:ZIPWeatherInfoResult"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="customersRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="helloRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="validateInquiryInputRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+      <wsdl:part name="in2" type="soapenc:string"/>
+
+      <wsdl:part name="in3" type="soapenc:string"/>
+
+      <wsdl:part name="in4" type="soapenc:string"/>
+
+      <wsdl:part name="in5" type="impl:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="errorDefinitionsResponse">
+
+      <wsdl:part name="errorDefinitionsReturn" type="impl:ArrayOfArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="sendInquiryRequest">
+
+      <wsdl:part name="in0" type="soapenc:string"/>
+
+      <wsdl:part name="in1" type="soapenc:string"/>
+
+      <wsdl:part name="in2" type="soapenc:string"/>
+
+      <wsdl:part name="in3" type="soapenc:string"/>
+
+      <wsdl:part name="in4" type="soapenc:string"/>
+
+      <wsdl:part name="in5" type="impl:ArrayOf_soapenc_string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ZIPWeatherInfo">
+
+      <wsdl:operation name="hello">
+
+         <wsdl:input name="helloRequest" message="impl:helloRequest"/>
+
+         <wsdl:output name="helloResponse" message="impl:helloResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="customers">
+
+         <wsdl:input name="customersRequest" message="impl:customersRequest"/>
+
+         <wsdl:output name="customersResponse" message="impl:customersResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="topics" parameterOrder="in0">
+
+         <wsdl:input name="topicsRequest" message="impl:topicsRequest"/>
+
+         <wsdl:output name="topicsResponse" message="impl:topicsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateInquiryInput" parameterOrder="in0 in1 in2 in3 in4 in5">
+
+         <wsdl:input name="validateInquiryInputRequest" message="impl:validateInquiryInputRequest"/>
+
+         <wsdl:output name="validateInquiryInputResponse" message="impl:validateInquiryInputResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sendInquiry" parameterOrder="in0 in1 in2 in3 in4 in5">
+
+         <wsdl:input name="sendInquiryRequest" message="impl:sendInquiryRequest"/>
+
+         <wsdl:output name="sendInquiryResponse" message="impl:sendInquiryResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="errorDefinitions">
+
+         <wsdl:input name="errorDefinitionsRequest" message="impl:errorDefinitionsRequest"/>
+
+         <wsdl:output name="errorDefinitionsResponse" message="impl:errorDefinitionsResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ZIPWeatherInfoSoapBinding" type="impl:ZIPWeatherInfo">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="hello">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="helloRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="helloResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="customers">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="customersRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="customersResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="topics">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="topicsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="topicsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateInquiryInput">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="validateInquiryInputRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="validateInquiryInputResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sendInquiry">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="sendInquiryRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="sendInquiryResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="errorDefinitions">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="errorDefinitionsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="errorDefinitionsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ZIPWeatherInfoService">
+
+      <wsdl:port name="ZIPWeatherInfo" binding="impl:ZIPWeatherInfoSoapBinding">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/weather-consult.com/0.1/ZIPWeatherInfoService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

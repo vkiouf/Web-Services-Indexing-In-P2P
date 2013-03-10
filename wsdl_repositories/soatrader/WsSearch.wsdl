@@ -1,0 +1,230 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://italcom.biz/webservices/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://italcom.biz/webservices/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://italcom.biz/webservices/">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="Search">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Args" type="tns:SearchArgs"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SearchArgs">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:QueryArgs">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="IssueAttrList" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="DocumentExpression" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="LanguageExpression" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="EnumList" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="OuterList" type="tns:ArrayOfInt"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="ShowDoc" type="s:boolean"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="ShowLink" type="s:boolean"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="ShowPermission" type="s:boolean"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="DeepSearch" type="s:boolean"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="FolderIdList" type="s:string"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="QueryArgs">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="PageNumber" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PageSize" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BlockSize" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchExpression" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OrderBy" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CacheMode" type="tns:CacheMode"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="CacheMode">
+            <s:restriction base="s:string">
+               <s:enumeration value="NotInitialized"/>
+               <s:enumeration value="Ignore"/>
+               <s:enumeration value="Use"/>
+               <s:enumeration value="Refresh"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfInt">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="I" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="MsgHeader" type="tns:MsgHeader"/>
+         <s:complexType name="MsgHeader">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Messages" type="tns:MsgClientSerializer"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MsgClientSerializer">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Msg" type="tns:MsgSerializedItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MsgSerializedItem">
+            <s:attribute name="Text" type="s:string"/>
+         </s:complexType>
+         <s:element name="SearchTest">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="pageNumber" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="pageSize" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="blockSize" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="issueAttrList" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="enumList" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="searchExpression" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="languageExpression" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="documentExpression" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="orderBy" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="showDocuments" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="showLinks" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="folderIdList" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="deepSearch" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="cacheMode" type="tns:CacheMode"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchTestResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DataPage" type="tns:DataPage"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="DataPage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Data">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+            </s:sequence>
+            <s:attribute name="PageNumber" type="s:int" use="required"/>
+            <s:attribute name="PageSize" type="s:int" use="required"/>
+            <s:attribute name="PageCount" type="s:int" use="required"/>
+            <s:attribute name="RecordCount" type="s:int" use="required"/>
+         </s:complexType>
+      </s:schema>
+      <s:schema elementFormDefault="qualified">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="SearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DataPage" type="DataPage"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="DataPage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Data">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+            </s:sequence>
+            <s:attribute name="PageNumber" type="s:int" use="required"/>
+            <s:attribute name="PageSize" type="s:int" use="required"/>
+            <s:attribute name="PageCount" type="s:int" use="required"/>
+            <s:attribute name="RecordCount" type="s:int" use="required"/>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchSoapIn">
+      <wsdl:part name="parameters" element="tns:Search"/>
+  </wsdl:message>
+  <wsdl:message name="SearchSoapOut">
+      <wsdl:part name="parameters" element="SearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchMsgHeader">
+      <wsdl:part name="MsgHeader" element="tns:MsgHeader"/>
+  </wsdl:message>
+  <wsdl:message name="SearchTestSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchTest"/>
+  </wsdl:message>
+  <wsdl:message name="SearchTestSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchTestResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchTestMsgHeader">
+      <wsdl:part name="MsgHeader" element="tns:MsgHeader"/>
+  </wsdl:message>
+  <wsdl:portType name="WsSearchSoap">
+      <wsdl:operation name="Search">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Motore di ricerca sulle pubblicazioni.</documentation>
+         <wsdl:input message="tns:SearchSoapIn"/>
+         <wsdl:output message="tns:SearchSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SearchTest">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Motore di ricerca sulle pubblicazioni (test).</documentation>
+         <wsdl:input message="tns:SearchTestSoapIn"/>
+         <wsdl:output message="tns:SearchTestSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WsSearchSoap" type="tns:WsSearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="Search">
+         <soap:operation soapAction="http://italcom.biz/webservices/Search" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SearchMsgHeader" part="MsgHeader" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchTest">
+         <soap:operation soapAction="http://italcom.biz/webservices/SearchTest" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SearchTestMsgHeader" part="MsgHeader" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WsSearch">
+      <wsdl:port name="WsSearchSoap" binding="tns:WsSearchSoap">
+         <soap:address location="http://ws.soatrader.com/cmlemmeovadese.it/0.1/WsSearch"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

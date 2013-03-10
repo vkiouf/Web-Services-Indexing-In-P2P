@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.connectmarkets.com/2007/07/10/IpToLocationWS"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.connectmarkets.com/2007/07/10/IpToLocationWS">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.connectmarkets.com/2007/07/10/IpToLocationWS">
+         <s:element name="GetUSCanadaIPList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="IPAddress" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUSCanadaIPListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetUSCanadaIPListResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCountries">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetCountriesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCountriesResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetUSCanadaIPListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetUSCanadaIPList"/>
+  </wsdl:message>
+  <wsdl:message name="GetUSCanadaIPListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetUSCanadaIPListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCountriesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCountries"/>
+  </wsdl:message>
+  <wsdl:message name="GetCountriesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCountriesResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="IpToLocationWSSoap" type="tns:IpToLocationWSSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetUSCanadaIPList">
+         <soap:operation soapAction="http://www.connectmarkets.com/2007/07/10/IpToLocationWS/GetUSCanadaIPList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCountries">
+         <soap:operation soapAction="http://www.connectmarkets.com/2007/07/10/IpToLocationWS/GetCountries"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="IpToLocationWS">
+      <wsdl:port name="IpToLocationWSSoap" binding="tns:IpToLocationWSSoap">
+         <soap:address location="http://ws.soatrader.com/connectmarkets.com/0.1/IpToLocationWS"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

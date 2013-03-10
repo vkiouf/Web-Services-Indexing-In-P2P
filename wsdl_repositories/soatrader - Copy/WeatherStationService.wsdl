@@ -1,0 +1,103 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:tns="http://www.pathfinder-xml.com/WeatherStationService.wsdl"
+             xmlns:ns="http://pathfinder-xml/WeatherStationService.xsd"
+             targetNamespace="http://www.pathfinder-xml.com/WeatherStationService.wsdl">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema elementFormDefault="qualified"
+                  targetNamespace="http://pathfinder-xml/WeatherStationService.xsd">
+         <xsd:complexType name="Error">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" name="Message" type="xsd:string"/>
+               <xsd:element maxOccurs="1" name="StackTrace" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="MajorCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MinorCode" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="Login">
+            <xsd:attribute name="AccountId" type="xsd:string" use="required"/>
+            <xsd:attribute name="Guid" type="xsd:string"/>
+            <xsd:attribute name="Password" type="xsd:string" use="required"/>
+            <xsd:attribute name="UserId" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="WeatherStation">
+            <xsd:attribute name="Code" type="xsd:string"/>
+            <xsd:attribute name="Name" type="xsd:string"/>
+            <xsd:attribute name="State" type="xsd:string"/>
+         </xsd:complexType>
+         <xsd:element name="WMOGetAllWeatherStationsRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="WMOGetAllWeatherStationsResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element maxOccurs="unbounded" name="WeatherStation" type="ns:WeatherStation"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+  </types>
+  <message name="WMOGetAllWeatherStationsRequest">
+      <part element="ns:WMOGetAllWeatherStationsRequest"
+            name="WMOGetAllWeatherStationsRequest"/>
+  </message>
+  <message name="WMOGetAllWeatherStationsResponse">
+      <part element="ns:WMOGetAllWeatherStationsResponse"
+            name="WMOGetAllWeatherStationsResponse"/>
+  </message>
+  <portType name="WMOGetAllWeatherStationsPort">
+      <operation name="WMOGetAllWeatherStationsOperation">
+         <input message="tns:WMOGetAllWeatherStationsRequest"/>
+         <output message="tns:WMOGetAllWeatherStationsResponse"/>
+      </operation>
+  </portType>
+  <binding name="WMOGetAllWeatherStationsSOAPBinding"
+            type="tns:WMOGetAllWeatherStationsPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="WMOGetAllWeatherStationsOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="WeatherStationService">
+      <port binding="tns:WMOGetAllWeatherStationsSOAPBinding"
+            name="WMOGetAllWeatherStationsService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.2/WeatherStationService"/>
+      </port>
+  </service>
+</definitions>

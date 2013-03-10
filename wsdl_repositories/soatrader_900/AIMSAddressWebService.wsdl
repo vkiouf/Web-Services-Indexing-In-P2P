@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://ims.jocogov.org/webservices"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://ims.jocogov.org/webservices">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://ims.jocogov.org/webservices">
+         <s:element name="ValidateAddressLine">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="addressLine" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateAddressLineResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ValidateAddressLineResult"
+                             type="tns:ArrayOfAddress"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAddress">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Address" nillable="true"
+                          type="tns:Address"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Address">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="APID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Predirection" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SecUnitDesignator" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SecUnit" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Zipcode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="X" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Y" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AddressLine" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CityLine" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ValidateAddressWithLocation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="streetNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="predirection" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="streetName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="streetType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="secUnitDesignator" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="secUnit" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="zipcode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateAddressWithLocationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ValidateAddressWithLocationResult"
+                             type="tns:ArrayOfAddress"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateAddressWithoutLocation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="streetNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="predirection" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="streetName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="streetType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="secUnitDesignator" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="secUnit" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateAddressWithoutLocationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ValidateAddressWithoutLocationResult"
+                             type="tns:ArrayOfAddress"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GeneralSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="streetNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="predirection" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="streetName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="streetType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="zipcode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GeneralSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GeneralSearchResult"
+                             type="tns:ArrayOfAddress"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LookupTaxPropertyID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="APID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LookupTaxPropertyIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LookupTaxPropertyIDResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LookupTaxUnitDMV">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="APID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LookupTaxUnitDMVResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LookupTaxUnitDMVResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDirectionDomain">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDirectionDomainResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetDirectionDomainResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetStreetNameDomain">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStreetNameDomainResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStreetNameDomainResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStreetTypeDomain">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStreetTypeDomainResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStreetTypeDomainResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSecUnitDesDomain">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSecUnitDesDomainResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSecUnitDesDomainResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCityTownshipDomain">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCityTownshipDomainResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCityTownshipDomainResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetZipCodeDomain">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="securityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetZipCodeDomainResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetZipCodeDomainResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ValidateAddressLineSoapIn">
+      <wsdl:part name="parameters" element="tns:ValidateAddressLine"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateAddressLineSoapOut">
+      <wsdl:part name="parameters" element="tns:ValidateAddressLineResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateAddressWithLocationSoapIn">
+      <wsdl:part name="parameters" element="tns:ValidateAddressWithLocation"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateAddressWithLocationSoapOut">
+      <wsdl:part name="parameters" element="tns:ValidateAddressWithLocationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateAddressWithoutLocationSoapIn">
+      <wsdl:part name="parameters" element="tns:ValidateAddressWithoutLocation"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateAddressWithoutLocationSoapOut">
+      <wsdl:part name="parameters" element="tns:ValidateAddressWithoutLocationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GeneralSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:GeneralSearch"/>
+  </wsdl:message>
+  <wsdl:message name="GeneralSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:GeneralSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LookupTaxPropertyIDSoapIn">
+      <wsdl:part name="parameters" element="tns:LookupTaxPropertyID"/>
+  </wsdl:message>
+  <wsdl:message name="LookupTaxPropertyIDSoapOut">
+      <wsdl:part name="parameters" element="tns:LookupTaxPropertyIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LookupTaxUnitDMVSoapIn">
+      <wsdl:part name="parameters" element="tns:LookupTaxUnitDMV"/>
+  </wsdl:message>
+  <wsdl:message name="LookupTaxUnitDMVSoapOut">
+      <wsdl:part name="parameters" element="tns:LookupTaxUnitDMVResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDirectionDomainSoapIn">
+      <wsdl:part name="parameters" element="tns:GetDirectionDomain"/>
+  </wsdl:message>
+  <wsdl:message name="GetDirectionDomainSoapOut">
+      <wsdl:part name="parameters" element="tns:GetDirectionDomainResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetNameDomainSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStreetNameDomain"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetNameDomainSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStreetNameDomainResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetTypeDomainSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStreetTypeDomain"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetTypeDomainSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStreetTypeDomainResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSecUnitDesDomainSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSecUnitDesDomain"/>
+  </wsdl:message>
+  <wsdl:message name="GetSecUnitDesDomainSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSecUnitDesDomainResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCityTownshipDomainSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCityTownshipDomain"/>
+  </wsdl:message>
+  <wsdl:message name="GetCityTownshipDomainSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCityTownshipDomainResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetZipCodeDomainSoapIn">
+      <wsdl:part name="parameters" element="tns:GetZipCodeDomain"/>
+  </wsdl:message>
+  <wsdl:message name="GetZipCodeDomainSoapOut">
+      <wsdl:part name="parameters" element="tns:GetZipCodeDomainResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="AIMSAddressWebServiceSoap">
+      <wsdl:operation name="ValidateAddressLine">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Given an address string, returns all possible matches</documentation>
+         <wsdl:input message="tns:ValidateAddressLineSoapIn"/>
+         <wsdl:output message="tns:ValidateAddressLineSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="ValidateAddressWithLocation">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Given an address in parts, returns all possible matches. Use this method for more accurate results.</documentation>
+         <wsdl:input message="tns:ValidateAddressWithLocationSoapIn"/>
+         <wsdl:output message="tns:ValidateAddressWithLocationSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="ValidateAddressWithoutLocation">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Given an address in parts without city, state, or zipcode, returns all possible matches. Use this method for more accurate results.</documentation>
+         <wsdl:input message="tns:ValidateAddressWithoutLocationSoapIn"/>
+         <wsdl:output message="tns:ValidateAddressWithoutLocationSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GeneralSearch">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Searches for an address and returns up to 100 matches.  No search is done on state or zipcode.</documentation>
+         <wsdl:input message="tns:GeneralSearchSoapIn"/>
+         <wsdl:output message="tns:GeneralSearchSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="LookupTaxPropertyID">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Lookup the Tax Property ID of an address.</documentation>
+         <wsdl:input message="tns:LookupTaxPropertyIDSoapIn"/>
+         <wsdl:output message="tns:LookupTaxPropertyIDSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="LookupTaxUnitDMV">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Lookup the Tax Unit used by the DMV of an address.</documentation>
+         <wsdl:input message="tns:LookupTaxUnitDMVSoapIn"/>
+         <wsdl:output message="tns:LookupTaxUnitDMVSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetDirectionDomain">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get the domain of street directions.</documentation>
+         <wsdl:input message="tns:GetDirectionDomainSoapIn"/>
+         <wsdl:output message="tns:GetDirectionDomainSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetStreetNameDomain">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get the domain of street names.</documentation>
+         <wsdl:input message="tns:GetStreetNameDomainSoapIn"/>
+         <wsdl:output message="tns:GetStreetNameDomainSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetStreetTypeDomain">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get the domain of street types.</documentation>
+         <wsdl:input message="tns:GetStreetTypeDomainSoapIn"/>
+         <wsdl:output message="tns:GetStreetTypeDomainSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetSecUnitDesDomain">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get the domain of secondary unit designators.</documentation>
+         <wsdl:input message="tns:GetSecUnitDesDomainSoapIn"/>
+         <wsdl:output message="tns:GetSecUnitDesDomainSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCityTownshipDomain">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get the domain of city and townships.</documentation>
+         <wsdl:input message="tns:GetCityTownshipDomainSoapIn"/>
+         <wsdl:output message="tns:GetCityTownshipDomainSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetZipCodeDomain">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get the domain of ZIP codes.</documentation>
+         <wsdl:input message="tns:GetZipCodeDomainSoapIn"/>
+         <wsdl:output message="tns:GetZipCodeDomainSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AIMSAddressWebServiceSoap" type="tns:AIMSAddressWebServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="ValidateAddressLine">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/ValidateAddressLine"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ValidateAddressWithLocation">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/ValidateAddressWithLocation"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ValidateAddressWithoutLocation">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/ValidateAddressWithoutLocation"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GeneralSearch">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/GeneralSearch" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LookupTaxPropertyID">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/LookupTaxPropertyID"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LookupTaxUnitDMV">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/LookupTaxUnitDMV"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetDirectionDomain">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/GetDirectionDomain"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStreetNameDomain">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/GetStreetNameDomain"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStreetTypeDomain">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/GetStreetTypeDomain"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSecUnitDesDomain">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/GetSecUnitDesDomain"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCityTownshipDomain">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/GetCityTownshipDomain"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetZipCodeDomain">
+         <soap:operation soapAction="http://ims.jocogov.org/webservices/GetZipCodeDomain"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AIMSAddressWebService">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">A web service to search and validate Johnson County Kansas addresses.</documentation>
+      <wsdl:port name="AIMSAddressWebServiceSoap" binding="tns:AIMSAddressWebServiceSoap">
+         <soap:address location="http://ws.soatrader.com/jocogov.org/0.1/AIMSAddressWebService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

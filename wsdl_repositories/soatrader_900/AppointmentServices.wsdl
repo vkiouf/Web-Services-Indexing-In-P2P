@@ -1,0 +1,228 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://www.usps.com/postalone/services/AppointmentService"
+                  xmlns:auth="http://www.usps.com/postalone/services/UserAuthenticationSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  name="AppointmentService"
+                  targetNamespace="http://www.usps.com/postalone/services/AppointmentService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:documentation>Version 1.0.0</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema xmlns="http://www.usps.com/postalone/services/AppointmentService"
+                  targetNamespace="http://www.usps.com/postalone/services/AppointmentService">
+			      <xsd:import namespace="http://www.usps.com/postalone/services/UserAuthenticationSchema"
+                     schemaLocation="UserAuthenticationInfo.xsd"/>
+			      <xsd:element name="apptCancel" type="xsd:string"/>
+			      <xsd:element name="apptCloseout" type="xsd:string"/>
+			      <xsd:element name="fault" type="xsd:string"/>
+			      <xsd:element name="apptUpdate" type="xsd:string"/>
+			      <xsd:element name="apptResponseRetrieval" type="xsd:string"/>
+			      <xsd:element name="apptRequest" type="xsd:string"/>
+			      <xsd:element name="result" type="xsd:string"/>
+			      <xsd:element name="apptStatus" type="xsd:string"/>
+			      <xsd:element name="apptQuery" type="xsd:string"/>
+		    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="DeliveryApptCancelRequest">
+      <wsdl:part name="authInfo" element="auth:AuthenticationInfo"/>
+      <wsdl:part name="apptCancel" element="tns:apptCancel"/>
+  </wsdl:message>
+  <wsdl:message name="AllDeliveryApptCloseoutRequest">
+      <wsdl:part name="authInfo" element="auth:AuthenticationInfo"/>
+      <wsdl:part name="apptCloseout" element="tns:apptCloseout"/>
+  </wsdl:message>
+  <wsdl:message name="AppointmentServiceFault">
+      <wsdl:part name="fault" element="tns:fault"/>
+  </wsdl:message>
+  <wsdl:message name="DeliveryApptUpdateRequest">
+      <wsdl:part name="authInfo" element="auth:AuthenticationInfo"/>
+      <wsdl:part name="apptUpdate" element="tns:apptUpdate"/>
+  </wsdl:message>
+  <wsdl:message name="ApptResponseRetrieval">
+      <wsdl:part name="authInfo" element="auth:AuthenticationInfo"/>
+      <wsdl:part name="apptResponseRetrieval" element="tns:apptResponseRetrieval"/>
+  </wsdl:message>
+  <wsdl:message name="DeliveryApptRequest">
+      <wsdl:part name="authInfo" element="auth:AuthenticationInfo"/>
+      <wsdl:part name="apptRequest" element="tns:apptRequest"/>
+  </wsdl:message>
+  <wsdl:message name="AppointmentServiceResponse">
+      <wsdl:part name="result" element="tns:result"/>
+  </wsdl:message>
+  <wsdl:message name="DeliveryApptStatusRequest">
+      <wsdl:part name="authInfo" element="auth:AuthenticationInfo"/>
+      <wsdl:part name="apptStatus" element="tns:apptStatus"/>
+  </wsdl:message>
+  <wsdl:message name="DeliveryApptQueryRequest">
+      <wsdl:part name="authInfo" element="auth:AuthenticationInfo"/>
+      <wsdl:part name="apptQuery" element="tns:apptQuery"/>
+  </wsdl:message>
+  <wsdl:portType name="AppointmentServicesPortType">
+      <wsdl:operation name="QueryDeliveryAppt">
+         <wsdl:input name="DeliveryApptQueryRequest" message="tns:DeliveryApptQueryRequest"/>
+         <wsdl:output name="DeliveryApptQueryResponse" message="tns:AppointmentServiceResponse"/>
+         <wsdl:fault name="DeliveryApptQueryFault" message="tns:AppointmentServiceFault"/>
+      </wsdl:operation>
+      <wsdl:operation name="RequestDeliveryAppt">
+         <wsdl:input name="DeliveryApptRequest" message="tns:DeliveryApptRequest"/>
+         <wsdl:output name="DeliveryApptResponse" message="tns:AppointmentServiceResponse"/>
+         <wsdl:fault name="DeliveryApptFault" message="tns:AppointmentServiceFault"/>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateDeliveryAppt">
+         <wsdl:input name="DeliveryApptUpdateRequest" message="tns:DeliveryApptUpdateRequest"/>
+         <wsdl:output name="DeliveryApptUpdateResponse" message="tns:AppointmentServiceResponse"/>
+         <wsdl:fault name="DeliveryApptUpdateFault" message="tns:AppointmentServiceFault"/>
+      </wsdl:operation>
+      <wsdl:operation name="CancelDeliveryAppt">
+         <wsdl:input name="DeliveryApptCancelRequest" message="tns:DeliveryApptCancelRequest"/>
+         <wsdl:output name="DeliveryApptCancelResponse" message="tns:AppointmentServiceResponse"/>
+         <wsdl:fault name="DeliveryApptCancelFault" message="tns:AppointmentServiceFault"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetDeliveryApptStatus">
+         <wsdl:input name="DeliveryApptStatusRequest" message="tns:DeliveryApptStatusRequest"/>
+         <wsdl:output name="DeliveryApptStatusResponse" message="tns:AppointmentServiceResponse"/>
+         <wsdl:fault name="DeliveryApptStatusFault" message="tns:AppointmentServiceFault"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllDeliveryApptCloseouts">
+         <wsdl:input name="AllDeliveryApptCloseoutRequest"
+                     message="tns:AllDeliveryApptCloseoutRequest"/>
+         <wsdl:output name="AllDeliveryApptCloseoutResponse" message="tns:AppointmentServiceResponse"/>
+         <wsdl:fault name="AllDeliveryApptCloseoutFault" message="tns:AppointmentServiceFault"/>
+      </wsdl:operation>
+      <wsdl:operation name="RetrieveAppointmentResponses">
+         <wsdl:input name="ApptResponseRetrievalRequest" message="tns:ApptResponseRetrieval"/>
+         <wsdl:output name="ApptResponseRetrievalResponse" message="tns:AppointmentServiceResponse"/>
+         <wsdl:fault name="ApptResponseRetrievalFault" message="tns:AppointmentServiceFault"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AppointmentServicesSoapBinding" type="tns:AppointmentServicesPortType">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="QueryDeliveryAppt">
+         <soap:operation soapAction="https://www.uspspostalone.com/fast/services/AppointmentService/queryDeliveryAppt"/>
+         <wsdl:input name="DeliveryApptQueryRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="DeliveryApptQueryResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="DeliveryApptQueryFault">
+            <soap:fault name="DeliveryApptQueryFault" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="RequestDeliveryAppt">
+         <soap:operation soapAction="https://www.uspspostalone.com/fast/services/AppointmentService/requestDeliveryAppt"/>
+         <wsdl:input name="DeliveryApptRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="DeliveryApptResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="DeliveryApptFault">
+            <soap:fault name="DeliveryApptFault" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateDeliveryAppt">
+         <soap:operation soapAction="https://www.uspspostalone.com/fast/services/AppointmentService/updateDeliveryAppt"/>
+         <wsdl:input name="DeliveryApptUpdateRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="DeliveryApptUpdateResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="DeliveryApptUpdateFault">
+            <soap:fault name="DeliveryApptUpdateFault" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="CancelDeliveryAppt">
+         <soap:operation soapAction="https://www.uspspostalone.com/fast/services/AppointmentService/cancelDeliveryAppt"/>
+         <wsdl:input name="DeliveryApptCancelRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="DeliveryApptCancelResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="DeliveryApptCancelFault">
+            <soap:fault name="DeliveryApptCancelFault" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="GetDeliveryApptStatus">
+         <soap:operation soapAction="https://www.uspspostalone.com/fast/services/AppointmentService/getDeliveryApptStatus"/>
+         <wsdl:input name="DeliveryApptStatusRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="DeliveryApptStatusResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="DeliveryApptStatusFault">
+            <soap:fault name="DeliveryApptStatusFault" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllDeliveryApptCloseouts">
+         <soap:operation soapAction="https://www.uspspostalone.com/fast/services/AppointmentService/getAllDeliveryApptCloseouts"/>
+         <wsdl:input name="AllDeliveryApptCloseoutRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="AllDeliveryApptCloseoutResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="AllDeliveryApptCloseoutFault">
+            <soap:fault name="AllDeliveryApptCloseoutFault" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="RetrieveAppointmentResponses">
+         <soap:operation soapAction="https://www.uspspostalone.com/fast/services/AppointmentService/retrieveAppointmentResponses"/>
+         <wsdl:input name="ApptResponseRetrievalRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="ApptResponseRetrievalResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="ApptResponseRetrievalFault">
+            <soap:fault name="ApptResponseRetrievalFault" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AppointmentServices">
+      <wsdl:port name="AppointmentServices" binding="tns:AppointmentServicesSoapBinding">
+         <soap:address location="http://ws.soatrader.com/uspspostalone.com/0.2/AppointmentServices"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

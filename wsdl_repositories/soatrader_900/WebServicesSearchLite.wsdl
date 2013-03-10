@@ -1,0 +1,590 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.wslite.strikeiron.com"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.wslite.strikeiron.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Retrieve all StrikeIron Lite Web Services.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.wslite.strikeiron.com">
+         <s:element name="SearchByName">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchByNameResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchByNameResult"
+                             type="tns:WSServiceOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="WSServiceOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ServiceOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="tns:WSServiceResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ServiceOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ServiceStatus" type="tns:SIWsStatus"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RemainingHits" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="StatusNbr" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WSServiceResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="WebServices" type="tns:ArrayOfWSServiceInfo"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIWsResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfWSServiceInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="WSServiceInfo" nillable="true"
+                          type="tns:WSServiceInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WSServiceInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Wsdl" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MaxHits" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Period" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SearchByDescription">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchByDescriptionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchByDescriptionResult"
+                             type="tns:WSServiceOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllServices">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAllServicesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllServicesResult"
+                             type="tns:WSServiceOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllStatuses">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAllStatusesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllStatusesResult"
+                             type="tns:StatusCodeOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="StatusCodeOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ServiceOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="tns:StatusCodeResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="StatusCodeResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Statuses" type="tns:ArrayOfSIWsStatus"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfSIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIWsStatus" nillable="true"
+                          type="tns:SIWsStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetServiceInfo">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetServiceInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetServiceInfoResult"
+                             type="tns:ServiceInfoOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ServiceInfoOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ServiceOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="tns:SIServiceInfoResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIServiceInfoResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceInfo"
+                                type="tns:ArrayOfServiceInfoRecord"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceInfoRecord" nillable="true"
+                          type="tns:ServiceInfoRecord"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoKey" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoValue" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetRemainingHits">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetRemainingHitsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRemainingHitsResult"
+                             type="tns:ServiceOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="WSServiceOutput" nillable="true" type="tns:WSServiceOutput"/>
+         <s:element name="StatusCodeOutput" nillable="true" type="tns:StatusCodeOutput"/>
+         <s:element name="ServiceInfoOutput" nillable="true" type="tns:ServiceInfoOutput"/>
+         <s:element name="ServiceOutput" nillable="true" type="tns:ServiceOutput"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.wslite.strikeiron.com">
+         <s:element name="SearchByName">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchByNameResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchByNameResult"
+                             type="tns:WSServiceOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="WSServiceOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ServiceOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="tns:WSServiceResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ServiceOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ServiceStatus" type="tns:SIWsStatus"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RemainingHits" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="StatusNbr" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WSServiceResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="WebServices" type="tns:ArrayOfWSServiceInfo"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIWsResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfWSServiceInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="WSServiceInfo" nillable="true"
+                          type="tns:WSServiceInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WSServiceInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Wsdl" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MaxHits" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Period" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SearchByDescription">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchByDescriptionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchByDescriptionResult"
+                             type="tns:WSServiceOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllServices">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAllServicesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllServicesResult"
+                             type="tns:WSServiceOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllStatuses">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAllStatusesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllStatusesResult"
+                             type="tns:StatusCodeOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="StatusCodeOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ServiceOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="tns:StatusCodeResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="StatusCodeResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Statuses" type="tns:ArrayOfSIWsStatus"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfSIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIWsStatus" nillable="true"
+                          type="tns:SIWsStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetServiceInfo">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetServiceInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetServiceInfoResult"
+                             type="tns:ServiceInfoOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ServiceInfoOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ServiceOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="tns:SIServiceInfoResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIServiceInfoResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceInfo"
+                                type="tns:ArrayOfServiceInfoRecord"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceInfoRecord" nillable="true"
+                          type="tns:ServiceInfoRecord"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoKey" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoValue" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetRemainingHits">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetRemainingHitsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRemainingHitsResult"
+                             type="tns:ServiceOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="WSServiceOutput" nillable="true" type="tns:WSServiceOutput"/>
+         <s:element name="StatusCodeOutput" nillable="true" type="tns:StatusCodeOutput"/>
+         <s:element name="ServiceInfoOutput" nillable="true" type="tns:ServiceInfoOutput"/>
+         <s:element name="ServiceOutput" nillable="true" type="tns:ServiceOutput"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchByNameSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchByName"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByNameSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchByNameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByDescriptionSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchByDescription"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByDescriptionSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchByDescriptionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllServicesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAllServices"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllServicesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAllServicesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAllStatuses"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAllStatusesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:GetServiceInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:GetServiceInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByNameHttpGetIn">
+      <wsdl:part name="Name" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByNameHttpGetOut">
+      <wsdl:part name="Body" element="tns:WSServiceOutput"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByDescriptionHttpGetIn">
+      <wsdl:part name="Description" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByDescriptionHttpGetOut">
+      <wsdl:part name="Body" element="tns:WSServiceOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllServicesHttpGetIn"/>
+  <wsdl:message name="GetAllServicesHttpGetOut">
+      <wsdl:part name="Body" element="tns:WSServiceOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesHttpGetIn"/>
+  <wsdl:message name="GetAllStatusesHttpGetOut">
+      <wsdl:part name="Body" element="tns:StatusCodeOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoHttpGetIn"/>
+  <wsdl:message name="GetServiceInfoHttpGetOut">
+      <wsdl:part name="Body" element="tns:ServiceInfoOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsHttpGetIn"/>
+  <wsdl:message name="GetRemainingHitsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ServiceOutput"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByNameHttpPostIn">
+      <wsdl:part name="Name" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByNameHttpPostOut">
+      <wsdl:part name="Body" element="tns:WSServiceOutput"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByDescriptionHttpPostIn">
+      <wsdl:part name="Description" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByDescriptionHttpPostOut">
+      <wsdl:part name="Body" element="tns:WSServiceOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllServicesHttpPostIn"/>
+  <wsdl:message name="GetAllServicesHttpPostOut">
+      <wsdl:part name="Body" element="tns:WSServiceOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesHttpPostIn"/>
+  <wsdl:message name="GetAllStatusesHttpPostOut">
+      <wsdl:part name="Body" element="tns:StatusCodeOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoHttpPostIn"/>
+  <wsdl:message name="GetServiceInfoHttpPostOut">
+      <wsdl:part name="Body" element="tns:ServiceInfoOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsHttpPostIn"/>
+  <wsdl:message name="GetRemainingHitsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ServiceOutput"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="WebServicesSearchLiteSoap" type="tns:WebServicesSearchLiteSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="SearchByName">
+         <soap:operation soapAction="http://www.wslite.strikeiron.com/SearchByName" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchByDescription">
+         <soap:operation soapAction="http://www.wslite.strikeiron.com/SearchByDescription"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllServices">
+         <soap:operation soapAction="http://www.wslite.strikeiron.com/GetAllServices" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllStatuses">
+         <soap:operation soapAction="http://www.wslite.strikeiron.com/GetAllStatuses" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetServiceInfo">
+         <soap:operation soapAction="http://www.wslite.strikeiron.com/GetServiceInfo" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation soapAction="http://www.wslite.strikeiron.com/GetRemainingHits" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="WebServicesSearchLite">
+      <wsdl:documentation>Retrieve all StrikeIron Lite Web Services.</wsdl:documentation>
+      <wsdl:port name="WebServicesSearchLiteSoap" binding="tns:WebServicesSearchLiteSoap">
+         <soap:address location="http://ws.soatrader.com/strikeiron.com/0.1/WebServicesSearchLite"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

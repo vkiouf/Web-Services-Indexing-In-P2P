@@ -1,0 +1,203 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="urn:msa"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="urn:msa"
+                  xmlns:intf="urn:msa"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="urn:msa">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:documentation>
+      <date xmlns="http://schemas.xmlsoap.org/wsdl/">14:16:4616 August 2006</date>
+      <version xmlns="http://schemas.xmlsoap.org/wsdl/">0ba65866e37ea17fd973cb8be13080ea</version>
+   </wsdl:documentation>
+   <wsdl:message name="acknowledgeRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+      <wsdl:part name="in1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="acknowledgeResponse">
+      <wsdl:part name="acknowledgeReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="protein_AlignmentResponse">
+      <wsdl:part name="protein_AlignmentReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="aboutOperationsResponse">
+      <wsdl:part name="aboutOperationsReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="aboutOperationsRequest"/>
+   <wsdl:message name="aboutServiceResponse">
+      <wsdl:part name="aboutServiceReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="nucleotide_AlignmentRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+      <wsdl:part name="in1" type="xsd:string"/>
+      <wsdl:part name="in2" type="xsd:string"/>
+      <wsdl:part name="in3" type="xsd:float"/>
+      <wsdl:part name="in4" type="xsd:float"/>
+      <wsdl:part name="in5" type="xsd:float"/>
+      <wsdl:part name="in6" type="xsd:float"/>
+      <wsdl:part name="in7" type="xsd:int"/>
+      <wsdl:part name="in8" type="xsd:float"/>
+      <wsdl:part name="in9" type="xsd:string"/>
+      <wsdl:part name="in10" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="aboutServiceRequest"/>
+   <wsdl:message name="protein_AlignmentRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+      <wsdl:part name="in1" type="xsd:string"/>
+      <wsdl:part name="in2" type="xsd:string"/>
+      <wsdl:part name="in3" type="xsd:float"/>
+      <wsdl:part name="in4" type="xsd:float"/>
+      <wsdl:part name="in5" type="xsd:float"/>
+      <wsdl:part name="in6" type="xsd:float"/>
+      <wsdl:part name="in7" type="xsd:int"/>
+      <wsdl:part name="in8" type="xsd:int"/>
+      <wsdl:part name="in9" type="xsd:string"/>
+      <wsdl:part name="in10" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="nucleotide_AlignmentResponse">
+      <wsdl:part name="nucleotide_AlignmentReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:portType name="Msa">
+      <wsdl:operation name="nucleotide_Alignment"
+                      parameterOrder="in0 in1 in2 in3 in4 in5 in6 in7 in8 in9 in10">
+         <wsdl:input message="impl:nucleotide_AlignmentRequest" name="nucleotide_AlignmentRequest"/>
+         <wsdl:output message="impl:nucleotide_AlignmentResponse" name="nucleotide_AlignmentResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="protein_Alignment"
+                      parameterOrder="in0 in1 in2 in3 in4 in5 in6 in7 in8 in9 in10">
+         <wsdl:input message="impl:protein_AlignmentRequest" name="protein_AlignmentRequest"/>
+         <wsdl:output message="impl:protein_AlignmentResponse" name="protein_AlignmentResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="aboutService">
+         <wsdl:input message="impl:aboutServiceRequest" name="aboutServiceRequest"/>
+         <wsdl:output message="impl:aboutServiceResponse" name="aboutServiceResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="aboutOperations">
+         <wsdl:input message="impl:aboutOperationsRequest" name="aboutOperationsRequest"/>
+         <wsdl:output message="impl:aboutOperationsResponse" name="aboutOperationsResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="acknowledge" parameterOrder="in0 in1">
+         <wsdl:input message="impl:acknowledgeRequest" name="acknowledgeRequest"/>
+         <wsdl:output message="impl:acknowledgeResponse" name="acknowledgeResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="msaSoapBinding" type="impl:Msa">
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="nucleotide_Alignment">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="nucleotide_AlignmentRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:msa"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="nucleotide_AlignmentResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:msa"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="protein_Alignment">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="protein_AlignmentRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:msa"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="protein_AlignmentResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:msa"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="aboutService">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="aboutServiceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:msa"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="aboutServiceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:msa"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="aboutOperations">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="aboutOperationsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:msa"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="aboutOperationsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:msa"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="acknowledge">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="acknowledgeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:msa"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="acknowledgeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:msa"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="MsaService">
+      <wsdl:port binding="impl:msaSoapBinding" name="msa">
+         <wsdlsoap:address location="http://ws.soatrader.com/vbi.vt.edu/0.1/MsaService"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

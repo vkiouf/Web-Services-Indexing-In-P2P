@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="com.esendex.ems.soapinterface"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="com.esendex.ems.soapinterface">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Implementation of the SendService (for sending text messages) with authentication information passed in as parameters rather than in a header. This allows development/runtime environments without support for the SOAPHeaders to consume the service. Click here for a &lt;a href="https://www.esendex.com/uk/evaluation/evaluation.aspx" title="SMS Service Trial"&gt;free trial&lt;/a&gt;.</wsdl:documentation>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="com.esendex.ems.soapinterface">
+         <s:element name="SendMessage">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="recipient" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendMessageResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SendMessageResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendMessageFull">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="originator" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="recipient" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="validityperiod" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendMessageFullResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SendMessageFullResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendMessageMultipleRecipients">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="recipients" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SendMessageMultipleRecipientsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SendMessageMultipleRecipientsResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendMessageMultipleRecipientsFull">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="originator" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="recipients" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="validityperiod" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendMessageMultipleRecipientsFullResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SendMessageMultipleRecipientsFullResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendMessageBatch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="messages" type="tns:ArrayOfMessagesubmission"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfMessagesubmission">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="messagesubmission" nillable="true"
+                          type="tns:messagesubmission"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="messagesubmission">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="originator" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="recipient" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:MessageContentType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="validityperiod" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="MessageContentType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Text"/>
+               <s:enumeration value="Binary"/>
+               <s:enumeration value="SmartMessage"/>
+               <s:enumeration value="Unicode"/>
+               <s:enumeration value="WapPush"/>
+               <s:enumeration value="LongMessage"/>
+               <s:enumeration value="WDPMessage"/>
+               <s:enumeration value="AdvancedMessage"/>
+               <s:enumeration value="VoiceMessage"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="SendMessageBatchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SendMessageBatchResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMessageStatus">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMessageStatusResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMessageStatusResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendMessageSoapIn">
+      <wsdl:part name="parameters" element="tns:SendMessage"/>
+  </wsdl:message>
+  <wsdl:message name="SendMessageSoapOut">
+      <wsdl:part name="parameters" element="tns:SendMessageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendMessageFullSoapIn">
+      <wsdl:part name="parameters" element="tns:SendMessageFull"/>
+  </wsdl:message>
+  <wsdl:message name="SendMessageFullSoapOut">
+      <wsdl:part name="parameters" element="tns:SendMessageFullResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendMessageMultipleRecipientsSoapIn">
+      <wsdl:part name="parameters" element="tns:SendMessageMultipleRecipients"/>
+  </wsdl:message>
+  <wsdl:message name="SendMessageMultipleRecipientsSoapOut">
+      <wsdl:part name="parameters" element="tns:SendMessageMultipleRecipientsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendMessageMultipleRecipientsFullSoapIn">
+      <wsdl:part name="parameters" element="tns:SendMessageMultipleRecipientsFull"/>
+  </wsdl:message>
+  <wsdl:message name="SendMessageMultipleRecipientsFullSoapOut">
+      <wsdl:part name="parameters" element="tns:SendMessageMultipleRecipientsFullResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendMessageBatchSoapIn">
+      <wsdl:part name="parameters" element="tns:SendMessageBatch"/>
+  </wsdl:message>
+  <wsdl:message name="SendMessageBatchSoapOut">
+      <wsdl:part name="parameters" element="tns:SendMessageBatchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMessageStatusSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMessageStatus"/>
+  </wsdl:message>
+  <wsdl:message name="GetMessageStatusSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMessageStatusResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="SendServiceNoHeaderSoap" type="tns:SendServiceNoHeaderSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="SendMessage">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/SendMessage" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendMessageFull">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/SendMessageFull" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendMessageMultipleRecipients">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/SendMessageMultipleRecipients"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendMessageMultipleRecipientsFull">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/SendMessageMultipleRecipientsFull"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendMessageBatch">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/SendMessageBatch" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMessageStatus">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetMessageStatus" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="SendServiceNoHeader">
+      <wsdl:documentation>Implementation of the SendService (for sending text messages) with authentication information passed in as parameters rather than in a header. This allows development/runtime environments without support for the SOAPHeaders to consume the service. Click here for a &lt;a href="https://www.esendex.com/uk/evaluation/evaluation.aspx" title="SMS Service Trial"&gt;free trial&lt;/a&gt;.</wsdl:documentation>
+      <wsdl:port name="SendServiceNoHeaderSoap" binding="tns:SendServiceNoHeaderSoap">
+         <soap:address location="http://ws.soatrader.com/esendex.com/0.1/SendServiceNoHeader"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

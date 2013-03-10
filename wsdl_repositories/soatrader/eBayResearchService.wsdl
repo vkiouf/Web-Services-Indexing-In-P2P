@@ -1,0 +1,916 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://www.strikeiron.com"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://ws.strikeiron.com"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:si="http://www.strikeiron.com"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.strikeiron.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.strikeiron.com">
+         <s:element name="eBayResearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="SearchValues" nillable="true"
+                             type="si:Search"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Search">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchQuery" type="si:SearchQuery"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchQuery">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PriceCeiling" type="s:float"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PriceFloor" type="s:float"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CategoryLimit" type="si:CategoryLimit"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Dates" type="si:RequestDates"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ListingLimit" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ResultSet" type="si:ResultSet"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CategoryLimit">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CategoryID" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RequestDates">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:date"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:date"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DayOfWeek" type="si:DaysOfWeek"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DateRange" type="si:DateRanges"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Date" type="s:date"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="DaysOfWeek">
+            <s:restriction base="s:string">
+               <s:enumeration value="Sunday"/>
+               <s:enumeration value="Monday"/>
+               <s:enumeration value="Tuesday"/>
+               <s:enumeration value="Wednesday"/>
+               <s:enumeration value="Thursday"/>
+               <s:enumeration value="Friday"/>
+               <s:enumeration value="Saturday"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="DateRanges">
+            <s:restriction base="s:string">
+               <s:enumeration value="Day"/>
+               <s:enumeration value="Week"/>
+               <s:enumeration value="SevenDays"/>
+               <s:enumeration value="ThirtyDays"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ResultSet">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnHourlyData" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnPricingInformation" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnFeatureInformation" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnDurationData" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnListingTypes" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnPriceBuckets" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnDailyData" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnCategoryInformation" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnItemList" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnAllData" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="eBayResearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="eBayResearchResult"
+                             type="si:GetSearchResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GetSearchResults">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Timestamp" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ProcessingTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ImageURL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LinkURL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Errors" type="si:Errors"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ModifiedQuery" type="si:ModifiedQuery"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchResults" type="si:SearchResults"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Errors">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Error" type="si:Error"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Error">
+            <s:simpleContent>
+               <s:extension base="s:string">
+                  <s:attribute name="id" type="s:string"/>
+               </s:extension>
+            </s:simpleContent>
+         </s:complexType>
+         <s:complexType name="ModifiedQuery">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="RemovedWords" type="si:ArrayOfRemovedWord"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Dates" type="si:Dates"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfRemovedWord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="RemovedWord" nillable="true"
+                          type="si:RemovedWord"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RemovedWord">
+            <s:simpleContent>
+               <s:extension base="s:string">
+                  <s:attribute name="reason" type="s:string"/>
+               </s:extension>
+            </s:simpleContent>
+         </s:complexType>
+         <s:complexType name="Dates">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchResults">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Statistics" type="si:Statistics"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Categories" type="si:ArrayOfCategory"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Items" type="si:ArrayOfItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Statistics">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Revenue" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Bids" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsSold" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsOffered" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sellers" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Pricing" type="si:Pricing"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HourlyData" type="si:ArrayOfHour"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Features" type="si:ArrayOfFeature"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ListingDurations"
+                          type="si:ArrayOfListingDuration"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PriceBuckets" type="si:ArrayOfPriceBucket"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ListingTypes" type="si:ArrayOfListingType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DailyData" type="si:ArrayOfWeekDay"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Pricing">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="EndPrice" type="si:EndPrice"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartPrice" type="si:StartPrice"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="EndPrice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Highest" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Average" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FrequentPrice" type="si:FrequentPrice"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Lowest" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StandardDeviation" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="FrequentPrice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Occurrences" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="StartPrice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Highest" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Average" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Median" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FrequentPrice"
+                          type="si:StartPriceFrequentPrice"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Lowest" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StandardDeviation" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="StartPriceFrequentPrice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Occurrences" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHour">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Hour" nillable="true" type="si:Hour"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Hour">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Revenue" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsSold" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfFeature">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Feature" nillable="true"
+                          type="si:Feature"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Feature">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="name" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfListingDuration">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ListingDuration" nillable="true"
+                          type="si:ListingDuration"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ListingDuration">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="days" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfPriceBucket">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PriceBucket" nillable="true"
+                          type="si:PriceBucket"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PriceBucket">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="low" type="s:string"/>
+            <s:attribute name="high" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfListingType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ListingType" nillable="true"
+                          type="si:ListingType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ListingType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="type" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfWeekDay">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="WeekDay" nillable="true"
+                          type="si:WeekDay"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WeekDay">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Revenue" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Bids" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsSold" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsOffered" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sellers" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="id" type="s:string"/>
+            <s:attribute name="name" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfCategory">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Category" nillable="true"
+                          type="si:Category"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Category">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FullName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Statistics" type="si:CategoryStatistics"/>
+            </s:sequence>
+            <s:attribute name="id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="CategoryStatistics">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="si:Item"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Item">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Subtitle" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ListingDetails" type="si:ListingDetails"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Site" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AuctionType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Flags" type="si:Flags"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemStatistics" type="si:ItemStatistics"/>
+            </s:sequence>
+            <s:attribute name="id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ListingDetails">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ViewItemURL" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Flags">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Gallery" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ItemStatistics">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StartPrice" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndPrice" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Bids" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsOffered" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsSold" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.strikeiron.com">
+         <s:element name="eBayResearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="SearchValues" nillable="true"
+                             type="si:Search"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Search">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchQuery" type="si:SearchQuery"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchQuery">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PriceCeiling" type="s:float"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PriceFloor" type="s:float"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CategoryLimit" type="si:CategoryLimit"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Dates" type="si:RequestDates"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ListingLimit" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ResultSet" type="si:ResultSet"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CategoryLimit">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CategoryID" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RequestDates">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:date"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:date"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DayOfWeek" type="si:DaysOfWeek"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DateRange" type="si:DateRanges"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Date" type="s:date"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="DaysOfWeek">
+            <s:restriction base="s:string">
+               <s:enumeration value="Sunday"/>
+               <s:enumeration value="Monday"/>
+               <s:enumeration value="Tuesday"/>
+               <s:enumeration value="Wednesday"/>
+               <s:enumeration value="Thursday"/>
+               <s:enumeration value="Friday"/>
+               <s:enumeration value="Saturday"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="DateRanges">
+            <s:restriction base="s:string">
+               <s:enumeration value="Day"/>
+               <s:enumeration value="Week"/>
+               <s:enumeration value="SevenDays"/>
+               <s:enumeration value="ThirtyDays"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ResultSet">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnHourlyData" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnPricingInformation" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnFeatureInformation" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnDurationData" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnListingTypes" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnPriceBuckets" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnDailyData" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnCategoryInformation" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnItemList" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnAllData" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="eBayResearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="eBayResearchResult"
+                             type="si:GetSearchResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GetSearchResults">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Timestamp" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ProcessingTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ImageURL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LinkURL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Errors" type="si:Errors"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ModifiedQuery" type="si:ModifiedQuery"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchResults" type="si:SearchResults"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Errors">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Error" type="si:Error"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Error">
+            <s:simpleContent>
+               <s:extension base="s:string">
+                  <s:attribute name="id" type="s:string"/>
+               </s:extension>
+            </s:simpleContent>
+         </s:complexType>
+         <s:complexType name="ModifiedQuery">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="RemovedWords" type="si:ArrayOfRemovedWord"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Dates" type="si:Dates"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfRemovedWord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="RemovedWord" nillable="true"
+                          type="si:RemovedWord"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RemovedWord">
+            <s:simpleContent>
+               <s:extension base="s:string">
+                  <s:attribute name="reason" type="s:string"/>
+               </s:extension>
+            </s:simpleContent>
+         </s:complexType>
+         <s:complexType name="Dates">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchResults">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Statistics" type="si:Statistics"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Categories" type="si:ArrayOfCategory"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Items" type="si:ArrayOfItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Statistics">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Revenue" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Bids" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsSold" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsOffered" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sellers" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Pricing" type="si:Pricing"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HourlyData" type="si:ArrayOfHour"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Features" type="si:ArrayOfFeature"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ListingDurations"
+                          type="si:ArrayOfListingDuration"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PriceBuckets" type="si:ArrayOfPriceBucket"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ListingTypes" type="si:ArrayOfListingType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DailyData" type="si:ArrayOfWeekDay"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Pricing">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="EndPrice" type="si:EndPrice"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartPrice" type="si:StartPrice"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="EndPrice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Highest" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Average" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FrequentPrice" type="si:FrequentPrice"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Lowest" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StandardDeviation" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="FrequentPrice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Occurrences" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="StartPrice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Highest" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Average" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Median" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FrequentPrice"
+                          type="si:StartPriceFrequentPrice"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Lowest" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StandardDeviation" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="StartPriceFrequentPrice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Occurrences" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHour">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Hour" nillable="true" type="si:Hour"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Hour">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Revenue" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsSold" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfFeature">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Feature" nillable="true"
+                          type="si:Feature"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Feature">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="name" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfListingDuration">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ListingDuration" nillable="true"
+                          type="si:ListingDuration"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ListingDuration">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="days" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfPriceBucket">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PriceBucket" nillable="true"
+                          type="si:PriceBucket"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PriceBucket">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="low" type="s:string"/>
+            <s:attribute name="high" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfListingType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ListingType" nillable="true"
+                          type="si:ListingType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ListingType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="type" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfWeekDay">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="WeekDay" nillable="true"
+                          type="si:WeekDay"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WeekDay">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Revenue" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Bids" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsSold" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsOffered" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sellers" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="id" type="s:string"/>
+            <s:attribute name="name" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfCategory">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Category" nillable="true"
+                          type="si:Category"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Category">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FullName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Statistics" type="si:CategoryStatistics"/>
+            </s:sequence>
+            <s:attribute name="id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="CategoryStatistics">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Listings" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="si:Item"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Item">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Subtitle" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ListingDetails" type="si:ListingDetails"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Site" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AuctionType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Flags" type="si:Flags"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemStatistics" type="si:ItemStatistics"/>
+            </s:sequence>
+            <s:attribute name="id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ListingDetails">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ViewItemURL" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Flags">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Successful" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Gallery" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ItemStatistics">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StartPrice" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndPrice" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Bids" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsOffered" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsSold" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns1="http://ws.strikeiron.com"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified"
+                targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </s:schema>
+      <s:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns1="http://ws.strikeiron.com"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified"
+                targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="eBayResearchSoapIn">
+      <wsdl:part name="parameters" element="si:eBayResearch"/>
+  </wsdl:message>
+  <wsdl:message name="eBayResearchSoapOut">
+      <wsdl:part name="parameters" element="si:eBayResearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="s1:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="s1:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseInfoMessage">
+      <wsdl:part name="LicenseInfo" element="s1:LicenseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SubscriptionInfoMessage">
+      <wsdl:part name="SubscriptionInfo" element="s1:SubscriptionInfo"/>
+  </wsdl:message>
+  <wsdl:portType name="eBayResearchServiceSoap">
+      <wsdl:operation name="eBayResearch">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">eBay Research - the highest quality eBay market research data available</documentation>
+         <wsdl:input message="si:eBayResearchSoapIn"/>
+         <wsdl:output message="si:eBayResearchSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <wsdl:input message="si:GetRemainingHitsSoapIn"/>
+         <wsdl:output message="si:GetRemainingHitsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="eBayResearchServiceSoap" type="si:eBayResearchServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="eBayResearch">
+         <soap:operation soapAction="http://www.strikeiron.com/eBayResearch" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <si:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>Regex(//tns:StartDate[^(200[5-9]|201\d)-(0[1-9]|1[012])-(0\d|1\d|2\d|3[01])])</tns:expression>
+                     <tns:description>StartDate must be in yyyy-mm-dd format, and 2005 or later</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>Regex(//tns:EndDate[^(200[5-9]|201\d)-(0[1-9]|1[012])-(0\d|1\d|2\d|3[01])])</tns:expression>
+                     <tns:description>EndDate must be in yyyy-mm-dd format, and 2005 or later</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>((string-length(//tns:ReturnAllData) = 0) or (//tns:ReturnAllData = 'true') or (//tns:ReturnAllData = 'false'))</tns:expression>
+                     <tns:description>Invalid boolean value for 'ReturnAllData'</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>((string-length(//tns:ReturnPricingInformation) = 0) or (//tns:ReturnPricingInformation = 'true') or (//tns:ReturnPricingInformation = 'false'))</tns:expression>
+                     <tns:description>Invalid boolean value for 'ReturnPricingInformation'</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>((string-length(//tns:ReturnFeatureInformation) = 0) or (//tns:ReturnFeatureInformation = 'true') or (//tns:ReturnFeatureInformation = 'false'))</tns:expression>
+                     <tns:description>Invalid boolean value for 'ReturnFeatureInformation'</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>((string-length(//tns:ReturnItemList) = 0) or (//tns:ReturnItemList = 'true') or (//tns:ReturnItemList = 'false'))</tns:expression>
+                     <tns:description>Invalid boolean value for 'ReturnItemList'</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>(string-length(//tns:Keywords) &gt; 0)</tns:expression>
+                     <tns:description>Missing required input field 'KeyWords'</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>((string-length(//tns:ReturnHourlyData) = 0) or (//tns:ReturnHourlyData = 'true') or (//tns:ReturnHourlyData = 'false'))</tns:expression>
+                     <tns:description>Invalid boolean value for 'ReturnHourlyData'</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>Regex(//tns:Date[^(200[5-9]|201\d)-(0[1-9]|1[012])-(0\d|1\d|2\d|3[01])])</tns:expression>
+                     <tns:description>Date must be in yyyy-mm-dd format, and 2005 or later</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>((string-length(//tns:ReturnListingTypes) = 0) or (//tns:ReturnListingTypes = 'true') or (//tns:ReturnListingTypes = 'false'))</tns:expression>
+                     <tns:description>Invalid boolean value for 'ReturnListingTypes'</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>((string-length(//tns:ReturnDailyData) = 0) or (//tns:ReturnDailyData = 'true') or (//tns:ReturnDailyData = 'false'))</tns:expression>
+                     <tns:description>Invalid boolean value for 'ReturnDailyData'</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>((string-length(//tns:ReturnDurationData) = 0) or (//tns:ReturnDurationData = 'true') or (//tns:ReturnDurationData = 'false'))</tns:expression>
+                     <tns:description>Invalid boolean value for 'ReturnDurationData'</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>((string-length(//tns:ReturnCategoryInformation) = 0) or (//tns:ReturnCategoryInformation = 'true') or (//tns:ReturnCategoryInformation = 'false'))</tns:expression>
+                     <tns:description>Invalid boolean value for 'ReturnCategoryInformation'</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>((string-length(//tns:ReturnPriceBuckets) = 0) or (//tns:ReturnPriceBuckets = 'true') or (//tns:ReturnPriceBuckets = 'false'))</tns:expression>
+                     <tns:description>Invalid boolean value for 'ReturnPriceBuckets'</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </si:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation soapAction="http://ws.strikeiron.com/StrikeIron/eBayResearch/eBayResearchService/GetRemainingHits"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="eBayResearchService">
+      <wsdl:port name="eBayResearchServiceSoap" binding="si:eBayResearchServiceSoap">
+         <soap:address location="http://ws.soatrader.com/strikeiron.com/0.1/eBayResearchService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

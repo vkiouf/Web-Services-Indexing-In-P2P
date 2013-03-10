@@ -1,0 +1,481 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://www.arcwebservices.com/v2006_1"
+                  xmlns:ns4="http://www.arcwebservices.com/v2006_1/com.esri.aws.dto.addressmanager/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"
+                  xmlns:ns1="http://www.arcwebservices.com/v2006_1/com.esri.aws.dto.addressfinder/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:ns3="http://www.arcwebservices.com/v2006_1/com.esri.aws.dto.geom/"
+                  xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding"
+                  xmlns:ns2="http://www.arcwebservices.com/v2006_1/com.esri.aws.dto/"
+                  xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:ns5="http://www.arcwebservices.com/v2006_1/schemaArray/"
+                  targetNamespace="http://www.arcwebservices.com/v2006_1">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema targetNamespace="http://www.arcwebservices.com/v2006_1/schemaArray/">
+         <xsd:complexType name="ArrayOfString">
+            <xsd:sequence>
+               <xsd:element name="string" type="xsd:string" nillable="true" maxOccurs="unbounded"/> 
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>   
+      <xsd:schema targetNamespace="http://www.arcwebservices.com/v2006_1"
+                  elementFormDefault="qualified"
+                  attributeFormDefault="qualified">
+         <xsd:element name="getVersion">
+            <xsd:complexType/>
+         </xsd:element>
+         <xsd:element name="getVersionResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="version" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="getInfo">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="dataSources" type="ns5:ArrayOfString" nillable="true" minOccurs="1"
+                               maxOccurs="1"/>
+                  <xsd:element name="token" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="getInfoResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="addressFinderInfos" type="ns1:ArrayOfAddressFinderInfo" nillable="true"
+                               minOccurs="1"
+                               maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="findLocationsByIP">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="ipAddresses" type="ns5:ArrayOfString" nillable="true" minOccurs="1"
+                               maxOccurs="1"/>
+                  <xsd:element name="addressFinderOptions" type="ns1:AddressFinderOptions" nillable="true"
+                               minOccurs="1"
+                               maxOccurs="1"/>
+                  <xsd:element name="token" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="findLocationsByIPResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="geocodeInfos" type="ns2:ArrayOfGeocodeInfo" nillable="true" minOccurs="1"
+                               maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="findLocationsByPhoneNumber">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="phoneNumbers" type="ns5:ArrayOfString" nillable="true" minOccurs="1"
+                               maxOccurs="1"/>
+                  <xsd:element name="addressFinderOptions" type="ns1:AddressFinderOptions" nillable="true"
+                               minOccurs="1"
+                               maxOccurs="1"/>
+                  <xsd:element name="token" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="findLocationsByPhoneNumberResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="geocodeInfos" type="ns2:ArrayOfGeocodeInfo" nillable="true" minOccurs="1"
+                               maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="findAddressesByPoint">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="points" type="ns3:ArrayOfPoint" nillable="true" minOccurs="1"
+                               maxOccurs="1"/>
+                  <xsd:element name="addressFinderOptions" type="ns1:AddressFinderOptions" nillable="true"
+                               minOccurs="1"
+                               maxOccurs="1"/>
+                  <xsd:element name="token" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="findAddressesByPointResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="addressInfos" type="ns4:ArrayOfAddressInfo" nillable="true" minOccurs="1"
+                               maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="findLocationsByAddress">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="addresses" type="ns2:ArrayOfAddress" nillable="true" minOccurs="1"
+                               maxOccurs="1"/>
+                  <xsd:element name="addressFinderOptions" type="ns1:AddressFinderOptions" nillable="true"
+                               minOccurs="1"
+                               maxOccurs="1"/>
+                  <xsd:element name="token" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="findLocationsByAddressResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="geocodeInfos" type="ns2:ArrayOfGeocodeInfo" nillable="true" minOccurs="1"
+                               maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+
+      <xsd:schema targetNamespace="http://www.arcwebservices.com/v2006_1/com.esri.aws.dto.addressfinder/"
+                  elementFormDefault="qualified"
+                  attributeFormDefault="qualified">
+         <xsd:complexType name="ArrayOfAddressFinderInfo">
+            <xsd:sequence>
+               <xsd:element name="AddressFinderInfo" type="ns1:AddressFinderInfo" nillable="true"
+                            minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="AddressFinderInfo">
+            <xsd:sequence>
+               <xsd:element name="countryCodes" type="ns2:ArrayOfKeyValue" nillable="true"/>
+               <xsd:element name="dataSource" type="xsd:string" nillable="true"/>
+               <xsd:element name="extendedPostalCode" type="xsd:boolean"/>
+               <xsd:element name="partialAddress" type="xsd:boolean"/>
+               <xsd:element name="reverseGeocode" type="xsd:boolean"/>
+               <xsd:element name="snapTypes" type="ns5:ArrayOfString" nillable="true"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="AddressFinderOptions">
+            <xsd:sequence>
+               <xsd:element name="dataSource" type="xsd:string" nillable="true"/>
+               <xsd:element name="extendedPostalCode" type="xsd:boolean"/>
+               <xsd:element name="partialAddress" type="xsd:boolean"/>
+               <xsd:element name="resultSetRange" type="ns2:ResultSetRange" nillable="true"/>
+               <xsd:element name="snapType" type="xsd:string" nillable="true"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+
+      <xsd:schema targetNamespace="http://www.arcwebservices.com/v2006_1/com.esri.aws.dto/"
+                  elementFormDefault="qualified"
+                  attributeFormDefault="qualified">
+         <xsd:complexType name="ArrayOfKeyValue">
+            <xsd:sequence>
+               <xsd:element name="KeyValue" type="ns2:KeyValue" nillable="true" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="KeyValue">
+            <xsd:sequence>
+               <xsd:element name="key" type="xsd:string" nillable="true"/>
+               <xsd:element name="value" type="xsd:string" nillable="true"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ResultSetRange">
+            <xsd:sequence>
+               <xsd:element name="count" type="xsd:int"/>
+               <xsd:element name="startIndex" type="xsd:int"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ArrayOfGeocodeInfo">
+            <xsd:sequence>
+               <xsd:element name="GeocodeInfo" type="ns2:GeocodeInfo" nillable="true" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="GeocodeInfo">
+            <xsd:sequence>
+               <xsd:element name="candidates" type="ns2:ArrayOfGeocodeCandidate" nillable="true"/>
+               <xsd:element name="errorMessage" type="xsd:string" nillable="true"/>
+               <xsd:element name="hasMore" type="xsd:boolean"/>
+               <xsd:element name="matchType" type="xsd:string" nillable="true"/>
+               <xsd:element name="totalCount" type="xsd:int"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ArrayOfGeocodeCandidate">
+            <xsd:sequence>
+               <xsd:element name="GeocodeCandidate" type="ns2:GeocodeCandidate" nillable="true"
+                            minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="GeocodeCandidate">
+            <xsd:sequence>
+               <xsd:element name="address" type="ns2:Address" nillable="true"/>
+               <xsd:element name="desc1" type="xsd:string" nillable="true"/>
+               <xsd:element name="desc2" type="xsd:string" nillable="true"/>
+               <xsd:element name="extent" type="ns3:Envelope" nillable="true"/>
+               <xsd:element name="matchType" type="xsd:string" nillable="true"/>
+               <xsd:element name="point" type="ns3:Point" nillable="true"/>
+               <xsd:element name="score" type="xsd:double"/>
+               <xsd:element name="type" type="xsd:string" nillable="true"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="Address">
+            <xsd:sequence>
+               <xsd:element name="city" type="xsd:string" nillable="true"/>
+               <xsd:element name="country" type="xsd:string" nillable="true"/>
+               <xsd:element name="houseNumber" type="xsd:string" nillable="true"/>
+               <xsd:element name="intersection" type="xsd:string" nillable="true"/>
+               <xsd:element name="postalCode" type="xsd:string" nillable="true"/>
+               <xsd:element name="stateProvince" type="xsd:string" nillable="true"/>
+               <xsd:element name="street" type="xsd:string" nillable="true"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ArrayOfAddress">
+            <xsd:sequence>
+               <xsd:element name="Address" type="ns2:Address" nillable="true" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+
+      <xsd:schema targetNamespace="http://www.arcwebservices.com/v2006_1/com.esri.aws.dto.geom/"
+                  elementFormDefault="qualified"
+                  attributeFormDefault="qualified">
+         <xsd:complexType name="Point">
+            <xsd:sequence>
+               <xsd:element name="coordSys" type="ns3:CoordSys" nillable="true"/>
+               <xsd:element name="x" type="xsd:double"/>
+               <xsd:element name="y" type="xsd:double"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="CoordSys">
+            <xsd:sequence>
+               <xsd:element name="datumTransformation" type="xsd:string" nillable="true"/>
+               <xsd:element name="projection" type="xsd:string" nillable="true"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="Envelope">
+            <xsd:sequence>
+               <xsd:element name="coordSys" type="ns3:CoordSys" nillable="true"/>
+               <xsd:element name="maxX" type="xsd:double"/>
+               <xsd:element name="maxY" type="xsd:double"/>
+               <xsd:element name="minX" type="xsd:double"/>
+               <xsd:element name="minY" type="xsd:double"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ArrayOfPoint">
+            <xsd:sequence>
+               <xsd:element name="Point" type="ns3:Point" nillable="true" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+
+      <xsd:schema targetNamespace="http://www.arcwebservices.com/v2006_1/com.esri.aws.dto.addressmanager/"
+                  elementFormDefault="qualified"
+                  attributeFormDefault="qualified">
+         <xsd:complexType name="ArrayOfAddressInfo">
+            <xsd:sequence>
+               <xsd:element name="AddressInfo" type="ns4:AddressInfo" nillable="true" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="AddressInfo">
+            <xsd:sequence>
+               <xsd:element name="address" type="ns2:Address" nillable="true"/>
+               <xsd:element name="errorMessage" type="xsd:string" nillable="true"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+
+  </wsdl:types>
+  <wsdl:message name="getInfoRequest">
+      <wsdl:part name="parameters" element="tns:getInfo"/>
+  </wsdl:message>
+  <wsdl:message name="findAddressesByPointRequest">
+      <wsdl:part name="parameters" element="tns:findAddressesByPoint"/>
+  </wsdl:message>
+  <wsdl:message name="getVersionRequest">
+      <wsdl:part name="parameters" element="tns:getVersion"/>
+  </wsdl:message>
+  <wsdl:message name="findLocationsByPhoneNumberRequest">
+      <wsdl:part name="parameters" element="tns:findLocationsByPhoneNumber"/>
+  </wsdl:message>
+  <wsdl:message name="findAddressesByPointResponse">
+      <wsdl:part name="parameters" element="tns:findAddressesByPointResponse"/>
+  </wsdl:message>
+  <wsdl:message name="findLocationsByPhoneNumberResponse">
+      <wsdl:part name="parameters" element="tns:findLocationsByPhoneNumberResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getInfoResponse">
+      <wsdl:part name="parameters" element="tns:getInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="findLocationsByIPResponse">
+      <wsdl:part name="parameters" element="tns:findLocationsByIPResponse"/>
+  </wsdl:message>
+  <wsdl:message name="findLocationsByIPRequest">
+      <wsdl:part name="parameters" element="tns:findLocationsByIP"/>
+  </wsdl:message>
+  <wsdl:message name="findLocationsByAddressResponse">
+      <wsdl:part name="parameters" element="tns:findLocationsByAddressResponse"/>
+  </wsdl:message>
+  <wsdl:message name="findLocationsByAddressRequest">
+      <wsdl:part name="parameters" element="tns:findLocationsByAddress"/>
+  </wsdl:message>
+  <wsdl:message name="getVersionResponse">
+      <wsdl:part name="parameters" element="tns:getVersionResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="IAddressManager">
+      <wsdl:operation name="getVersion">
+         <wsdl:input name="getVersionRequest" message="tns:getVersionRequest"/>
+         <wsdl:output name="getVersionResponse" message="tns:getVersionResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getInfo">
+         <wsdl:input name="getInfoRequest" message="tns:getInfoRequest"/>
+         <wsdl:output name="getInfoResponse" message="tns:getInfoResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="findLocationsByIP">
+         <wsdl:input name="findLocationsByIPRequest" message="tns:findLocationsByIPRequest"/>
+         <wsdl:output name="findLocationsByIPResponse" message="tns:findLocationsByIPResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="findLocationsByPhoneNumber">
+         <wsdl:input name="findLocationsByPhoneNumberRequest"
+                     message="tns:findLocationsByPhoneNumberRequest"/>
+         <wsdl:output name="findLocationsByPhoneNumberResponse"
+                      message="tns:findLocationsByPhoneNumberResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="findAddressesByPoint">
+         <wsdl:input name="findAddressesByPointRequest" message="tns:findAddressesByPointRequest"/>
+         <wsdl:output name="findAddressesByPointResponse" message="tns:findAddressesByPointResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="findLocationsByAddress">
+         <wsdl:input name="findLocationsByAddressRequest"
+                     message="tns:findLocationsByAddressRequest"/>
+         <wsdl:output name="findLocationsByAddressResponse"
+                      message="tns:findLocationsByAddressResponse"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AddressManagerHttpBinding" type="tns:IAddressManager">
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="getVersion">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getVersionRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getVersionResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getInfo">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getInfoRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getInfoResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="findLocationsByIP">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="findLocationsByIPRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="findLocationsByIPResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="findLocationsByPhoneNumber">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="findLocationsByPhoneNumberRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="findLocationsByPhoneNumberResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="findAddressesByPoint">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="findAddressesByPointRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="findAddressesByPointResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="findLocationsByAddress">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="findLocationsByAddressRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="findLocationsByAddressResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AddressManager">
+      <wsdl:port name="AddressManagerHttpPort" binding="tns:AddressManagerHttpBinding">
+         <wsdlsoap:address location="http://ws.soatrader.com/arcwebservices.com/0.1/AddressManager"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

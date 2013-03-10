@@ -1,0 +1,425 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.data-8.co.uk/integr8"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.data-8.co.uk/integr8">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.data-8.co.uk/integr8">
+         <s:element name="DirectoryLookupSimple">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="forename" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="middleName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="surname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="postcodes" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="towns" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DirectoryLookupSimpleResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DirectoryLookupSimpleResult"
+                             type="tns:TelephoneDirectoryOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="TelephoneDirectoryOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Status" type="tns:Status"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Results"
+                          type="tns:ArrayOfDirectoryLookupResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Status">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Success" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CreditsRemaining" type="s:float"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfDirectoryLookupResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="DirectoryLookupResult"
+                          nillable="true"
+                          type="tns:DirectoryLookupResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="DirectoryLookupResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:DbObject">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="TelephoneNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Name" type="tns:Name"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="Address" type="tns:Address"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="DbObject" abstract="true"/>
+         <s:complexType name="Name">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Forename" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Surname" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Address">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Lines" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="DirectoryLookup">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="tns:Name"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="postcodes" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="towns" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfOption">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Option" nillable="true"
+                          type="tns:Option"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Option">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="DirectoryLookupResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DirectoryLookupResult"
+                             type="tns:TelephoneDirectoryOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DirectoryLookupMultiple">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requests" type="tns:ArrayOfDirectorySearch"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDirectorySearch">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="DirectorySearch" nillable="true"
+                          type="tns:DirectorySearch"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="DirectorySearch">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="tns:Name"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Towns" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Postcodes" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="DirectoryLookupMultipleResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DirectoryLookupMultipleResult"
+                             type="tns:ArrayOfTelephoneDirectoryOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfTelephoneDirectoryOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="TelephoneDirectoryOutput"
+                          nillable="true"
+                          type="tns:TelephoneDirectoryOutput"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="TelephoneDirectoryOutput" nillable="true"
+                    type="tns:TelephoneDirectoryOutput"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.data-8.co.uk/integr8">
+         <s:element name="DirectoryLookupSimple">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="forename" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="middleName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="surname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="postcodes" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="towns" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DirectoryLookupSimpleResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DirectoryLookupSimpleResult"
+                             type="tns:TelephoneDirectoryOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="TelephoneDirectoryOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Status" type="tns:Status"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Results"
+                          type="tns:ArrayOfDirectoryLookupResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Status">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Success" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CreditsRemaining" type="s:float"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfDirectoryLookupResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="DirectoryLookupResult"
+                          nillable="true"
+                          type="tns:DirectoryLookupResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="DirectoryLookupResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:DbObject">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="TelephoneNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Name" type="tns:Name"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="Address" type="tns:Address"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="DbObject" abstract="true"/>
+         <s:complexType name="Name">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Forename" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Surname" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Address">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Lines" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="DirectoryLookup">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="tns:Name"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="postcodes" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="towns" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfOption">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Option" nillable="true"
+                          type="tns:Option"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Option">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="DirectoryLookupResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DirectoryLookupResult"
+                             type="tns:TelephoneDirectoryOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DirectoryLookupMultiple">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requests" type="tns:ArrayOfDirectorySearch"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDirectorySearch">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="DirectorySearch" nillable="true"
+                          type="tns:DirectorySearch"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="DirectorySearch">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="tns:Name"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Towns" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Postcodes" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="DirectoryLookupMultipleResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DirectoryLookupMultipleResult"
+                             type="tns:ArrayOfTelephoneDirectoryOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfTelephoneDirectoryOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="TelephoneDirectoryOutput"
+                          nillable="true"
+                          type="tns:TelephoneDirectoryOutput"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="TelephoneDirectoryOutput" nillable="true"
+                    type="tns:TelephoneDirectoryOutput"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="DirectoryLookupSimpleSoapIn">
+      <wsdl:part name="parameters" element="tns:DirectoryLookupSimple"/>
+  </wsdl:message>
+  <wsdl:message name="DirectoryLookupSimpleSoapOut">
+      <wsdl:part name="parameters" element="tns:DirectoryLookupSimpleResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DirectoryLookupSoapIn">
+      <wsdl:part name="parameters" element="tns:DirectoryLookup"/>
+  </wsdl:message>
+  <wsdl:message name="DirectoryLookupSoapOut">
+      <wsdl:part name="parameters" element="tns:DirectoryLookupResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DirectoryLookupMultipleSoapIn">
+      <wsdl:part name="parameters" element="tns:DirectoryLookupMultiple"/>
+  </wsdl:message>
+  <wsdl:message name="DirectoryLookupMultipleSoapOut">
+      <wsdl:part name="parameters" element="tns:DirectoryLookupMultipleResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DirectoryLookupSimpleHttpGetIn">
+      <wsdl:part name="username" type="s:string"/>
+      <wsdl:part name="password" type="s:string"/>
+      <wsdl:part name="forename" type="s:string"/>
+      <wsdl:part name="middleName" type="s:string"/>
+      <wsdl:part name="surname" type="s:string"/>
+      <wsdl:part name="postcodes" type="s:string"/>
+      <wsdl:part name="towns" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="DirectoryLookupSimpleHttpGetOut">
+      <wsdl:part name="Body" element="tns:TelephoneDirectoryOutput"/>
+  </wsdl:message>
+  <wsdl:message name="DirectoryLookupSimpleHttpPostIn">
+      <wsdl:part name="username" type="s:string"/>
+      <wsdl:part name="password" type="s:string"/>
+      <wsdl:part name="forename" type="s:string"/>
+      <wsdl:part name="middleName" type="s:string"/>
+      <wsdl:part name="surname" type="s:string"/>
+      <wsdl:part name="postcodes" type="s:string"/>
+      <wsdl:part name="towns" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="DirectoryLookupSimpleHttpPostOut">
+      <wsdl:part name="Body" element="tns:TelephoneDirectoryOutput"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="TelephoneDirectorySoap" type="tns:TelephoneDirectorySoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="DirectoryLookupSimple">
+         <soap:operation soapAction="http://www.data-8.co.uk/integr8/DirectoryLookupSimple"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DirectoryLookup">
+         <soap:operation soapAction="http://www.data-8.co.uk/integr8/DirectoryLookup" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DirectoryLookupMultiple">
+         <soap:operation soapAction="http://www.data-8.co.uk/integr8/DirectoryLookupMultiple"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="TelephoneDirectory">
+      <wsdl:port name="TelephoneDirectorySoap" binding="tns:TelephoneDirectorySoap">
+         <soap:address location="http://ws.soatrader.com/data-8.co.uk/0.1/TelephoneDirectory"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

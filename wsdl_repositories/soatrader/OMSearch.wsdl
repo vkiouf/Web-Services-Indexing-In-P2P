@@ -1,0 +1,439 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://infrawebs.aspasia-systems.de/OM/encodedTypes"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s0="http://infrawebs.aspasia-systems.de/OM/Types"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://infrawebs.aspasia-systems.de/OM/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://infrawebs.aspasia-systems.de/OM/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema targetNamespace="http://infrawebs.aspasia-systems.de/OM/Types">
+         <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <s:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+         <s:import namespace="http://infrawebs.aspasia-systems.de/OM/encodedTypes"/>
+         <s:complexType name="Message">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="type" type="s0:MessageType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="senderURI" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="senderType" type="s0:SenderType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="objects" type="s0:ArrayOfMessageObject"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="MessageType">
+            <s:restriction base="s:string">
+               <s:enumeration value="NewOrModifiedObjects"/>
+               <s:enumeration value="Advertisement"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="SenderType">
+            <s:restriction base="s:string">
+               <s:enumeration value="DSWSRepository"/>
+               <s:enumeration value="SIR"/>
+               <s:enumeration value="Registry"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfMessageObject">
+            <s:complexContent mixed="false">
+               <s:restriction base="soapenc:Array">
+                  <s:attribute wsdl:arrayType="s0:MessageObject[]" ref="soapenc:arrayType"/>
+               </s:restriction>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="MessageObject">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="type" type="s0:ObjectType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="status" type="s0:ObjectStatus"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iri" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="ObjectType">
+            <s:restriction base="s:string">
+               <s:enumeration value="all"/>
+               <s:enumeration value="service"/>
+               <s:enumeration value="goal"/>
+               <s:enumeration value="mediator"/>
+               <s:enumeration value="ontology"/>
+               <s:enumeration value="wsdl"/>
+               <s:enumeration value="bpel"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="ObjectStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="added"/>
+               <s:enumeration value="modified"/>
+               <s:enumeration value="deleted"/>
+               <s:enumeration value="unchanged"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="WsdlQuery">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="content" type="s0:WeightedKeywordsString"/>
+               <s:element minOccurs="1" maxOccurs="1" name="metadata" type="s0:WeightedKeywordsString"/>
+               <s:element minOccurs="1" maxOccurs="1" name="categorization"
+                          type="s0:WeightedKeywordsString"/>
+               <s:element minOccurs="1" maxOccurs="1" name="maxResult" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="similarityThreshold" type="s:float"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WeightedKeywordsString">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="keywords" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="weight" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="searchTime" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="resultSet" type="s0:ResultSet"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ResultSet">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="resultElement" type="s0:ArrayOfResultElement"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfResultElement">
+            <s:complexContent mixed="false">
+               <s:restriction base="soapenc:Array">
+                  <s:attribute wsdl:arrayType="s0:ResultElement[]" ref="soapenc:arrayType"/>
+               </s:restriction>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ResultElement">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ontologySimilarity" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="lexicalSimilarity" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="indentifier" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="objectType" type="s0:ObjectType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="annotation" type="s0:Annotation"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Annotation">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="annotationElements"
+                          type="s0:ArrayOfAnnotationElement"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfAnnotationElement">
+            <s:complexContent mixed="false">
+               <s:restriction base="soapenc:Array">
+                  <s:attribute wsdl:arrayType="s0:AnnotationElement[]" ref="soapenc:arrayType"/>
+               </s:restriction>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="AnnotationElement">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="key" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="value" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Query">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="objectType" type="s0:ObjectType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="maxResult" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="similarityThreshold" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="nfp" type="s0:NFP"/>
+               <s:element minOccurs="1" maxOccurs="1" name="importedOntologies"
+                          type="s0:ImportedOntologies"/>
+               <s:element minOccurs="1" maxOccurs="1" name="capability" type="s0:Capability"/>
+               <s:element minOccurs="1" maxOccurs="1" name="wsdlObject" type="s0:WsdlObject"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="NFP">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="weight" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="content" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ImportedOntologies">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ontologyName" type="s1:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Capability">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="assumption" type="s0:Assumption"/>
+               <s:element minOccurs="1" maxOccurs="1" name="precondition" type="s0:Precondition"/>
+               <s:element minOccurs="1" maxOccurs="1" name="postcondition" type="s0:Postcondition"/>
+               <s:element minOccurs="1" maxOccurs="1" name="effect" type="s0:Effect"/>
+               <s:element minOccurs="1" maxOccurs="1" name="serviceFunctionality"
+                          type="s0:ServiceFunctionality"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Assumption">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="weight" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="byExample" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="content" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Precondition">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="weight" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="byExample" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="content" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Postcondition">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="weight" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="byExample" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="content" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Effect">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="weight" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="byExample" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="content" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ServiceFunctionality">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="weight" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="content" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WsdlObject">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="weight" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="byExample" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="content" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema targetNamespace="http://infrawebs.aspasia-systems.de/OM/encodedTypes">
+         <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <s:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+         <s:complexType name="ArrayOfString">
+            <s:complexContent mixed="false">
+               <s:restriction base="soapenc:Array">
+                  <s:attribute wsdl:arrayType="s:string[]" ref="soapenc:arrayType"/>
+               </s:restriction>
+            </s:complexContent>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetWsdlUriByIdSoapIn">
+      <wsdl:part name="id" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetWsdlUriByIdSoapOut">
+      <wsdl:part name="uri" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="StartSoapIn"/>
+  <wsdl:message name="StartSoapOut">
+      <wsdl:part name="StartResult" type="s:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="ShutDownSoapIn"/>
+  <wsdl:message name="ShutDownSoapOut">
+      <wsdl:part name="isShuttingDown" type="s:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="IsAliveSoapIn"/>
+  <wsdl:message name="IsAliveSoapOut">
+      <wsdl:part name="isAlive" type="s:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="NewOrModifiedObjectsSoapIn">
+      <wsdl:part name="message" type="s0:Message"/>
+  </wsdl:message>
+  <wsdl:message name="NewOrModifiedObjectsSoapOut">
+      <wsdl:part name="success" type="s:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="SearchForWSDLObjectsSoapIn">
+      <wsdl:part name="wsdlQuery" type="s0:WsdlQuery"/>
+  </wsdl:message>
+  <wsdl:message name="SearchForWSDLObjectsSoapOut">
+      <wsdl:part name="searchResult" type="s0:SearchResult"/>
+  </wsdl:message>
+  <wsdl:message name="SearchForSimilarObjectsSoapIn">
+      <wsdl:part name="obj" type="s:string"/>
+      <wsdl:part name="objectType" type="s0:ObjectType"/>
+      <wsdl:part name="maxResult" type="s:int"/>
+  </wsdl:message>
+  <wsdl:message name="SearchForSimilarObjectsSoapOut">
+      <wsdl:part name="return" type="s0:SearchResult"/>
+  </wsdl:message>
+  <wsdl:message name="SearchForWSMOObjectsSoapIn">
+      <wsdl:part name="query" type="s0:Query"/>
+  </wsdl:message>
+  <wsdl:message name="SearchForWSMOObjectsSoapOut">
+      <wsdl:part name="return" type="s0:SearchResult"/>
+  </wsdl:message>
+  <wsdl:portType name="OMSearchSoap">
+      <wsdl:operation name="GetWsdlUriById">
+         <wsdl:input message="tns:GetWsdlUriByIdSoapIn"/>
+         <wsdl:output message="tns:GetWsdlUriByIdSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="Start">
+         <wsdl:input message="tns:StartSoapIn"/>
+         <wsdl:output message="tns:StartSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="ShutDown">
+         <wsdl:input message="tns:ShutDownSoapIn"/>
+         <wsdl:output message="tns:ShutDownSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="IsAlive">
+         <wsdl:input message="tns:IsAliveSoapIn"/>
+         <wsdl:output message="tns:IsAliveSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="NewOrModifiedObjects">
+         <wsdl:input message="tns:NewOrModifiedObjectsSoapIn"/>
+         <wsdl:output message="tns:NewOrModifiedObjectsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SearchForWSDLObjects">
+         <wsdl:input message="tns:SearchForWSDLObjectsSoapIn"/>
+         <wsdl:output message="tns:SearchForWSDLObjectsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SearchForSimilarObjects">
+         <wsdl:input message="tns:SearchForSimilarObjectsSoapIn"/>
+         <wsdl:output message="tns:SearchForSimilarObjectsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SearchForWSMOObjects">
+         <wsdl:input message="tns:SearchForWSMOObjectsSoapIn"/>
+         <wsdl:output message="tns:SearchForWSMOObjectsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OMSearchSoap" type="tns:OMSearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetWsdlUriById">
+         <soap:operation soapAction="http://infrawebs.aspasia-systems.de/OM/GetWsdlUriById" style="rpc"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Start">
+         <soap:operation soapAction="http://infrawebs.aspasia-systems.de/OM/Start" style="rpc"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ShutDown">
+         <soap:operation soapAction="http://infrawebs.aspasia-systems.de/OM/ShutDown" style="rpc"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="IsAlive">
+         <soap:operation soapAction="http://infrawebs.aspasia-systems.de/OM/IsAlive" style="rpc"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="NewOrModifiedObjects">
+         <soap:operation soapAction="http://infrawebs.aspasia-systems.de/OM/NewOrModifiedObjects"
+                         style="rpc"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchForWSDLObjects">
+         <soap:operation soapAction="http://infrawebs.aspasia-systems.de/OM/SearchForWSDLObjects"
+                         style="rpc"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchForSimilarObjects">
+         <soap:operation soapAction="http://infrawebs.aspasia-systems.de/OM/SearchForSimilarObjects"
+                         style="rpc"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchForWSMOObjects">
+         <soap:operation soapAction="http://infrawebs.aspasia-systems.de/OM/SearchForWSMOObjects"
+                         style="rpc"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://infrawebs.aspasia-systems.de/OM/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OMSearch">
+      <wsdl:port name="OMSearchSoap" binding="tns:OMSearchSoap">
+         <soap:address location="http://ws.soatrader.com/82.103.112.243/0.1/OMSearch"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,34 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:fd="http://services.webtools.easylink.com/SendFaxManagement/Description"
+                  xmlns:tns="http://services.webtools.easylink.com/SendFaxManagement/Service"
+                  targetNamespace="http://services.webtools.easylink.com/SendFaxManagement/Service">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <wsdl:import namespace="http://services.webtools.easylink.com/SendFaxManagement/Description"
+                location="SendFaxManagement.wsdl"/>
+	  <wsdl:service name="SendFaxManagerService">
+		    <wsdl:port name="SendFaxManagerService" binding="fd:SendFaxManagerSoapBinding">
+			      <soap:address location="http://ws.soatrader.com/easylink.com/0.1/SendFaxManagerService"/>
+		    </wsdl:port>
+	  </wsdl:service>
+</wsdl:definitions>

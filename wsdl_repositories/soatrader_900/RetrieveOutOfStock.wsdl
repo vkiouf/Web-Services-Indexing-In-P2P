@@ -1,0 +1,601 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://pharmx.com.au/invoice/rerieveoutofstock"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://pharmx.com.au/invoice/rerieveoutofstock">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://pharmx.com.au/invoice/rerieveoutofstock">
+         <s:element name="ListNewOutOfStocks">
+            <s:complexType/>
+         </s:element>
+         <s:element name="ListNewOutOfStocksResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListNewOutOfStocksResult"
+                             type="tns:ArrayOfOutOfStockDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfOutOfStockDetail">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="OutOfStockDetail" nillable="true"
+                          type="tns:OutOfStockDetail"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="OutOfStockDetail">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SupplierID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OrderID" nillable="true" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SupplierName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Vendor" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="WholesalerCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Created" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastRetrieved" nillable="true"
+                          type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Processed" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ListNewOutOfStocksForSupplier">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="SupplierID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListNewOutOfStocksForSupplierResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListNewOutOfStocksForSupplierResult"
+                             type="tns:ArrayOfOutOfStockDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListNewOutOfStocksForAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="SupplierID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListNewOutOfStocksForAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListNewOutOfStocksForAccountResult"
+                             type="tns:ArrayOfOutOfStockDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListNewOutOfStockForOrder">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OrderID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListNewOutOfStockForOrderResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListNewOutOfStockForOrderResult"
+                             type="tns:ArrayOfOutOfStockDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListOutOfStocksForOrder">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OrderID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListOutOfStocksForOrderResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListOutOfStocksForOrderResult"
+                             type="tns:ArrayOfOutOfStockDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListNewOutOfStockForOrderReference">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListNewOutOfStockForOrderReferenceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListNewOutOfStockForOrderReferenceResult"
+                             type="tns:ArrayOfOutOfStockDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListOutOfStocksForOrderReference">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListOutOfStocksForOrderReferenceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListOutOfStocksForOrderReferenceResult"
+                             type="tns:ArrayOfOutOfStockDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetOutOfStock">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OutOfStockID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MarkAsReceived" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetOutOfStockResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetOutOfStockResult"
+                             type="tns:GatewayOutOfStockDocument"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GatewayOutOfStockDocument">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:OutOfStockDocument">
+                  <s:sequence>
+                     <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="OrderID" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="Processed" type="s:boolean"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="Created" type="s:dateTime"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="OrderReference" type="s:string"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="OutOfStockDocument">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="SupplierID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="WholesalerCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Lines" type="tns:ArrayOfOutOfStockLine"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfOutOfStockLine">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="OutOfStockLine" nillable="true"
+                          type="tns:OutOfStockLine"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="OutOfStockLine">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="AlternativeWarehouse" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Expected" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="QuantityOrdered" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="QuantityBackordered" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="QuantityOutOfStock" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RetailPrice" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReorderNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Condition" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetOutOfStockDocument">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OutOfStockID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MarkAsReceived" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="IncludeAlternativeWarehouse" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetOutOfStockDocumentResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetOutOfStockDocumentResult"
+                             type="tns:GatewayOutOfStockDocument"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="MarkOutOfStockRangeAsReceived">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Start" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="End" type="s:dateTime"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="SupplierID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="MarkOutOfStockRangeAsReceivedResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="MarkOutOfStockRangeAsReceivedForUser">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Start" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="End" type="s:dateTime"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="SupplierID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="MarkOutOfStockRangeAsReceivedForUserResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="MarkOutOfStockAsReceived">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OutOfStockID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="MarkOutOfStockAsReceivedResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="MarkOutOfStockAsNotReceived">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OutOfStockID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="MarkOutOfStockAsNotReceivedResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="MarkOutOfStockAsNotReceivedForUser">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OutOfStockID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="MarkOutOfStockAsNotReceivedForUserResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="MarkOutOfStockAsNotReceivedForVendor">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OutOfStockID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="MarkOutOfStockAsNotReceivedForVendorResponse">
+            <s:complexType/>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ListNewOutOfStocksSoapIn">
+      <wsdl:part name="parameters" element="tns:ListNewOutOfStocks"/>
+  </wsdl:message>
+  <wsdl:message name="ListNewOutOfStocksSoapOut">
+      <wsdl:part name="parameters" element="tns:ListNewOutOfStocksResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListNewOutOfStocksForSupplierSoapIn">
+      <wsdl:part name="parameters" element="tns:ListNewOutOfStocksForSupplier"/>
+  </wsdl:message>
+  <wsdl:message name="ListNewOutOfStocksForSupplierSoapOut">
+      <wsdl:part name="parameters" element="tns:ListNewOutOfStocksForSupplierResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListNewOutOfStocksForAccountSoapIn">
+      <wsdl:part name="parameters" element="tns:ListNewOutOfStocksForAccount"/>
+  </wsdl:message>
+  <wsdl:message name="ListNewOutOfStocksForAccountSoapOut">
+      <wsdl:part name="parameters" element="tns:ListNewOutOfStocksForAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListNewOutOfStockForOrderSoapIn">
+      <wsdl:part name="parameters" element="tns:ListNewOutOfStockForOrder"/>
+  </wsdl:message>
+  <wsdl:message name="ListNewOutOfStockForOrderSoapOut">
+      <wsdl:part name="parameters" element="tns:ListNewOutOfStockForOrderResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListOutOfStocksForOrderSoapIn">
+      <wsdl:part name="parameters" element="tns:ListOutOfStocksForOrder"/>
+  </wsdl:message>
+  <wsdl:message name="ListOutOfStocksForOrderSoapOut">
+      <wsdl:part name="parameters" element="tns:ListOutOfStocksForOrderResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListNewOutOfStockForOrderReferenceSoapIn">
+      <wsdl:part name="parameters" element="tns:ListNewOutOfStockForOrderReference"/>
+  </wsdl:message>
+  <wsdl:message name="ListNewOutOfStockForOrderReferenceSoapOut">
+      <wsdl:part name="parameters" element="tns:ListNewOutOfStockForOrderReferenceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListOutOfStocksForOrderReferenceSoapIn">
+      <wsdl:part name="parameters" element="tns:ListOutOfStocksForOrderReference"/>
+  </wsdl:message>
+  <wsdl:message name="ListOutOfStocksForOrderReferenceSoapOut">
+      <wsdl:part name="parameters" element="tns:ListOutOfStocksForOrderReferenceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetOutOfStockSoapIn">
+      <wsdl:part name="parameters" element="tns:GetOutOfStock"/>
+  </wsdl:message>
+  <wsdl:message name="GetOutOfStockSoapOut">
+      <wsdl:part name="parameters" element="tns:GetOutOfStockResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetOutOfStockDocumentSoapIn">
+      <wsdl:part name="parameters" element="tns:GetOutOfStockDocument"/>
+  </wsdl:message>
+  <wsdl:message name="GetOutOfStockDocumentSoapOut">
+      <wsdl:part name="parameters" element="tns:GetOutOfStockDocumentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockRangeAsReceivedSoapIn">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockRangeAsReceived"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockRangeAsReceivedSoapOut">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockRangeAsReceivedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockRangeAsReceivedForUserSoapIn">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockRangeAsReceivedForUser"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockRangeAsReceivedForUserSoapOut">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockRangeAsReceivedForUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockAsReceivedSoapIn">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockAsReceived"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockAsReceivedSoapOut">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockAsReceivedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockAsNotReceivedSoapIn">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockAsNotReceived"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockAsNotReceivedSoapOut">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockAsNotReceivedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockAsNotReceivedForUserSoapIn">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockAsNotReceivedForUser"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockAsNotReceivedForUserSoapOut">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockAsNotReceivedForUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockAsNotReceivedForVendorSoapIn">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockAsNotReceivedForVendor"/>
+  </wsdl:message>
+  <wsdl:message name="MarkOutOfStockAsNotReceivedForVendorSoapOut">
+      <wsdl:part name="parameters" element="tns:MarkOutOfStockAsNotReceivedForVendorResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="RetrieveOutOfStockSoap" type="tns:RetrieveOutOfStockSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="ListNewOutOfStocks">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/ListNewOutOfStocks"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListNewOutOfStocksForSupplier">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/ListNewOutOfStocksForSupplier"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListNewOutOfStocksForAccount">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/ListNewOutOfStocksForAccount"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListNewOutOfStockForOrder">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/ListNewOutOfStockForOrder"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListOutOfStocksForOrder">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/ListOutOfStocksForOrder"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListNewOutOfStockForOrderReference">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/ListNewOutOfStockForOrderReference"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListOutOfStocksForOrderReference">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/ListOutOfStocksForOrderReference"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetOutOfStock">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/GetOutOfStock"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetOutOfStockDocument">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/GetOutOfStockDocument"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="MarkOutOfStockRangeAsReceived">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/MarkOutOfStockRangeAsReceived"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="MarkOutOfStockRangeAsReceivedForUser">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/MarkOutOfStockRangeAsReceivedForUser"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="MarkOutOfStockAsReceived">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/MarkOutOfStockAsReceived"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="MarkOutOfStockAsNotReceived">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/MarkOutOfStockAsNotReceived"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="MarkOutOfStockAsNotReceivedForUser">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/MarkOutOfStockAsNotReceivedForUser"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="MarkOutOfStockAsNotReceivedForVendor">
+         <soap:operation soapAction="http://pharmx.com.au/invoice/rerieveoutofstock/MarkOutOfStockAsNotReceivedForVendor"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="RetrieveOutOfStock">
+      <wsdl:port name="RetrieveOutOfStockSoap" binding="tns:RetrieveOutOfStockSoap">
+         <soap:address location="http://ws.soatrader.com/pharmx.com.au/0.1/RetrieveOutOfStock"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

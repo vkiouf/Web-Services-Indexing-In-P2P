@@ -1,0 +1,183 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:i0="http://tempuri.org/BS7666AddressDS.xsd"
+                  xmlns:tns="http://tempuri.org/EACBSNLPGWS/BSAddressSearch"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/EACBSNLPGWS/BSAddressSearch">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:import namespace="http://tempuri.org/BS7666AddressDS.xsd"
+                location="http://ws.east-ayrshire.gov.uk/nlpg/eacbsnlpgws/bsaddresssearch.asmx?schema=BS7666AddressDS"/>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://tempuri.org/EACBSNLPGWS/BSAddressSearch">
+         <s:import namespace="http://tempuri.org/BS7666AddressDS.xsd"/>
+         <s:element name="GetAddressDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UIN" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAddressDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAddressDetailsResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="http://tempuri.org/BS7666AddressDS.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strProperty" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strStreet" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strTown" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strPostcode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchDetailsResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="http://tempuri.org/BS7666AddressDS.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BS7666AddressDS" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:any namespace="http://tempuri.org/BS7666AddressDS.xsd"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAddressDetailsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAddressDetails"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressDetailsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAddressDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchDetailsSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchDetails"/>
+  </wsdl:message>
+  <wsdl:message name="SearchDetailsSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressDetailsHttpGetIn">
+      <wsdl:part name="UIN" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressDetailsHttpGetOut">
+      <wsdl:part name="Body" element="tns:BS7666AddressDS"/>
+  </wsdl:message>
+  <wsdl:message name="SearchDetailsHttpGetIn">
+      <wsdl:part name="strProperty" type="s:string"/>
+      <wsdl:part name="strStreet" type="s:string"/>
+      <wsdl:part name="strTown" type="s:string"/>
+      <wsdl:part name="strPostcode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchDetailsHttpGetOut">
+      <wsdl:part name="Body" element="tns:BS7666AddressDS"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressDetailsHttpPostIn">
+      <wsdl:part name="UIN" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressDetailsHttpPostOut">
+      <wsdl:part name="Body" element="tns:BS7666AddressDS"/>
+  </wsdl:message>
+  <wsdl:message name="SearchDetailsHttpPostIn">
+      <wsdl:part name="strProperty" type="s:string"/>
+      <wsdl:part name="strStreet" type="s:string"/>
+      <wsdl:part name="strTown" type="s:string"/>
+      <wsdl:part name="strPostcode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchDetailsHttpPostOut">
+      <wsdl:part name="Body" element="tns:BS7666AddressDS"/>
+  </wsdl:message>
+  <wsdl:portType name="BSAddressSearchSoap">
+      <wsdl:operation name="GetAddressDetails">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a dataset BS containing one address from the East Ayrshire NLPG database which matches a given UPRN</documentation>
+         <wsdl:input message="tns:GetAddressDetailsSoapIn"/>
+         <wsdl:output message="tns:GetAddressDetailsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SearchDetails">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Full search which returns a dataset BS of addresses from the East Ayrshire NLPG database which match the given search criteria.</documentation>
+         <wsdl:input message="tns:SearchDetailsSoapIn"/>
+         <wsdl:output message="tns:SearchDetailsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="BSAddressSearchSoap" type="tns:BSAddressSearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetAddressDetails">
+         <soap:operation soapAction="http://tempuri.org/EACBSNLPGWS/BSAddressSearch/GetAddressDetails"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchDetails">
+         <soap:operation soapAction="http://tempuri.org/EACBSNLPGWS/BSAddressSearch/SearchDetails"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="BSAddressSearch">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/"/>
+      <wsdl:port name="BSAddressSearchSoap" binding="tns:BSAddressSearchSoap">
+         <soap:address location="http://ws.soatrader.com/east-ayrshire.gov.uk/0.1/BSAddressSearch"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

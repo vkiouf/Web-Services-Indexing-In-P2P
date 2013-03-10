@@ -1,0 +1,95 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://studio.m-qube.us/campaignapp/services/IvrWS"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://studio.m-qube.us/campaignapp/services/IvrWS"
+                  xmlns:intf="http://studio.m-qube.us/campaignapp/services/IvrWS"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="urn:CMPIntegrationWS"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://studio.m-qube.us/campaignapp/services/IvrWS">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:CMPIntegrationWS">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="GUIDString">
+            <sequence>
+               <element name="uuid" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:CMPIntegrationWS">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="GUIDString">
+            <sequence>
+               <element name="uuid" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+  <wsdl:message name="registerMessageRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+      <wsdl:part name="in1" type="xsd:string"/>
+      <wsdl:part name="in2" type="xsd:boolean"/>
+      <wsdl:part name="in3" type="xsd:string"/>
+      <wsdl:part name="in4" type="xsd:dateTime"/>
+      <wsdl:part name="in5" type="xsd:int"/>
+      <wsdl:part name="in6" type="xsd:string"/>
+      <wsdl:part name="in7" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="registerMessageResponse">
+      <wsdl:part name="registerMessageReturn" type="xsd:boolean"/>
+  </wsdl:message>
+  <wsdl:portType name="IvrWS">
+      <wsdl:operation name="registerMessage" parameterOrder="in0 in1 in2 in3 in4 in5 in6 in7">
+         <wsdl:input message="impl:registerMessageRequest" name="registerMessageRequest"/>
+         <wsdl:output message="impl:registerMessageResponse" name="registerMessageResponse"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IvrWSSoapBinding" type="impl:IvrWS">
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="registerMessage">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="registerMessageRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://webservices.campaignapp.proteusmobile.com"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="registerMessageResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://studio.m-qube.us/campaignapp/services/IvrWS"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IvrWSService">
+      <wsdl:port binding="impl:IvrWSSoapBinding" name="IvrWS">
+         <wsdlsoap:address location="http://ws.soatrader.com/m-qube.us/0.1/IvrWSService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,371 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="Messaging/WebServices/Outbound/Fax/1.0"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:s="http://www.w3.org/2001/XMLSchema"
+             xmlns:s0="Messaging/WebServices/Outbound/Fax/1.0"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             targetNamespace="Messaging/WebServices/Outbound/Fax/1.0">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="Messaging/WebServices/Outbound/Fax/1.0">
+         <s:element name="SendFax">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GeneralSettings" type="s0:GeneralSettings"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FaxSettings" type="s0:FaxSettings"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Document" type="s0:Document"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FaxRecipients" type="s0:FaxRecipientList"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GeneralSettings">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AccountID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="JobID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeliveryTime" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxAttempts" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Creator" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MessageType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sender" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SenderName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StopTime" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Timezone" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RetryLogic" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AutoResendSuccessPercent" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AutoResendAttempts" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ConfirmationUrl" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Broadcast" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Priority" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CustomTags" type="s0:ArrayOfCustomTag"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfCustomTag">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CustomTag" nillable="true"
+                          type="s0:CustomTag"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CustomTag">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FieldName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FieldValue" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="FaxSettings">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CSID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Resolution" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CoverPage" type="s0:CoverPage"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HeaderFormat" type="s0:FaxHeaderFormat"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CustomTags" type="s0:ArrayOfCustomTag"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CoverPage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Memo" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TemplateName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="FaxHeaderFormat">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="HeaderFormat" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UseHeader" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HonorFormat" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DateFormat" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TimeFormat" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PageFormat" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CustomTags" type="s0:ArrayOfCustomTag"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Document">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Contents" type="s0:ArrayOfContent"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CustomTags" type="s0:ArrayOfCustomTag"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfContent">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Content" nillable="true"
+                          type="s0:Content"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Content">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ContentId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ContentType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CompressionType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ContentFile" type="s0:ContentFile"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AttachmentFile" type="s0:AttachmentFile"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CustomTags" type="s0:ArrayOfCustomTag"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ContentFile">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FileData" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TransferEncoding" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AttachmentFile">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AttachmentId" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Chunked" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="FaxRecipientList">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FaxRecipients" type="s0:ArrayOfFaxRecipient"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Content" type="s0:Content"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CustomTags" type="s0:ArrayOfCustomTag"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfFaxRecipient">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="FaxRecipient" nillable="true"
+                          type="s0:FaxRecipient"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="FaxRecipient">
+            <s:complexContent mixed="false">
+               <s:extension base="s0:Recipient">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Header" type="s:string"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Recipient">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="TransactionID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Destination" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AccountingCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CustomTags" type="s0:ArrayOfCustomTag"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SendFaxResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SendFaxResult" type="s0:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AuthHeader" type="s0:AuthHeader"/>
+         <s:complexType name="AuthHeader">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="User" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetJobStatus">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="JobID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetJobStatusResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetJobStatusResult" type="s0:Status"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Status">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="StatusCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="RequestJobCDR">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="JobID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="DeliveryURL" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Timezone" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RequestJobCDRResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="RequestJobResend">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="JobID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StatusGroups" type="s0:ArrayOfStatusGroup"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfStatusGroup">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="StatusGroup" type="s0:StatusGroup"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="StatusGroup">
+            <s:restriction base="s:string">
+               <s:enumeration value="Busy"/>
+               <s:enumeration value="InAccessible"/>
+               <s:enumeration value="NoAnswer"/>
+               <s:enumeration value="Disconnected"/>
+               <s:enumeration value="Cancelled"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="RequestJobResendResponse">
+            <s:complexType/>
+         </s:element>
+      </s:schema>
+  </types>
+  <message name="SendFaxSoapIn">
+      <part name="parameters" element="s0:SendFax"/>
+  </message>
+  <message name="SendFaxSoapOut">
+      <part name="parameters" element="s0:SendFaxResponse"/>
+  </message>
+  <message name="SendFaxAuthHeader">
+      <part name="AuthHeader" element="s0:AuthHeader"/>
+  </message>
+  <message name="GetJobStatusSoapIn">
+      <part name="parameters" element="s0:GetJobStatus"/>
+  </message>
+  <message name="GetJobStatusSoapOut">
+      <part name="parameters" element="s0:GetJobStatusResponse"/>
+  </message>
+  <message name="GetJobStatusAuthHeader">
+      <part name="AuthHeader" element="s0:AuthHeader"/>
+  </message>
+  <message name="RequestJobCDRSoapIn">
+      <part name="parameters" element="s0:RequestJobCDR"/>
+  </message>
+  <message name="RequestJobCDRSoapOut">
+      <part name="parameters" element="s0:RequestJobCDRResponse"/>
+  </message>
+  <message name="RequestJobCDRAuthHeader">
+      <part name="AuthHeader" element="s0:AuthHeader"/>
+  </message>
+  <message name="RequestJobResendSoapIn">
+      <part name="parameters" element="s0:RequestJobResend"/>
+  </message>
+  <message name="RequestJobResendSoapOut">
+      <part name="parameters" element="s0:RequestJobResendResponse"/>
+  </message>
+  <message name="RequestJobResendAuthHeader">
+      <part name="AuthHeader" element="s0:AuthHeader"/>
+  </message>
+  <portType name="FaxMessagingServiceSoap">
+      <operation name="SendFax">
+         <documentation>Submits fax to the system.</documentation>
+         <input message="s0:SendFaxSoapIn"/>
+         <output message="s0:SendFaxSoapOut"/>
+      </operation>
+      <operation name="GetJobStatus">
+         <documentation>Retrieves the job status information for the given job ID.</documentation>
+         <input message="s0:GetJobStatusSoapIn"/>
+         <output message="s0:GetJobStatusSoapOut"/>
+      </operation>
+      <operation name="RequestJobCDR">
+         <documentation>Submits a request for the Call Detail Log for the given job ID.</documentation>
+         <input message="s0:RequestJobCDRSoapIn"/>
+         <output message="s0:RequestJobCDRSoapOut"/>
+      </operation>
+      <operation name="RequestJobResend">
+         <documentation>Submits a resend request for the given job ID per status groups.</documentation>
+         <input message="s0:RequestJobResendSoapIn"/>
+         <output message="s0:RequestJobResendSoapOut"/>
+      </operation>
+  </portType>
+  <binding name="FaxMessagingServiceSoap" type="s0:FaxMessagingServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <operation name="SendFax">
+         <soap:operation soapAction="Messaging/WebServices/Outbound/Fax/1.0/SendFax" style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="s0:SendFaxAuthHeader" part="AuthHeader" use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+      <operation name="GetJobStatus">
+         <soap:operation soapAction="Messaging/WebServices/Outbound/Fax/1.0/GetJobStatus"
+                         style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="s0:GetJobStatusAuthHeader" part="AuthHeader" use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+      <operation name="RequestJobCDR">
+         <soap:operation soapAction="Messaging/WebServices/Outbound/Fax/1.0/RequestJobCDR"
+                         style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="s0:RequestJobCDRAuthHeader" part="AuthHeader" use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+      <operation name="RequestJobResend">
+         <soap:operation soapAction="Messaging/WebServices/Outbound/Fax/1.0/RequestJobResend"
+                         style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="s0:RequestJobResendAuthHeader" part="AuthHeader" use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="FaxMessagingService">
+      <port name="FaxMessagingServiceSoap" binding="s0:FaxMessagingServiceSoap">
+         <soap:address location="http://ws.soatrader.com/mail-archive.com/0.1/FaxMessagingService"/>
+      </port>
+  </service>
+</definitions>

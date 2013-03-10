@@ -1,0 +1,290 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://bearmini.net/LivedoorWeatherHacks"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://bearmini.net/LivedoorWeatherHacks">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://bearmini.net/LivedoorWeatherHacks">
+         <s:element name="GetWeatherInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="city" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="day" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetWeatherInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetWeatherInfoResult"
+                             type="tns:LivedoorWeatherInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="LivedoorWeatherInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Author" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Location" type="tns:Location_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ForecastDay" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Day" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ForecastDate" type="tns:DateTime_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Published" type="tns:DateTime_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Telop" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Image" type="tns:Image_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Temperature"
+                          type="tns:TemperatureMaxAndMin_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Pinpoint" type="tns:ArrayOfPinpoint_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Copyright" type="tns:Copyright_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Location_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Area" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Pref" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="DateTime_t">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Year" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Month" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Day" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Hour" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Minute" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Second" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Image_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="TemperatureMaxAndMin_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Max" type="tns:TemperatureSet_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Min" type="tns:TemperatureSet_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="TemperatureSet_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Celsius" type="tns:Temperature_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Fahrenheit" type="tns:Temperature_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Temperature_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfPinpoint_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Pinpoint_t" nillable="true"
+                          type="tns:Pinpoint_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Pinpoint_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Published" type="tns:DateTime_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Copyright_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Image" type="tns:Image_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Provider" type="tns:ArrayOfProvider_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfProvider_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Provider_t" nillable="true"
+                          type="tns:Provider_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Provider_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://bearmini.net/LivedoorWeatherHacks">
+         <s:element name="GetWeatherInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="city" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="day" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetWeatherInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetWeatherInfoResult"
+                             type="tns:LivedoorWeatherInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="LivedoorWeatherInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Author" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Location" type="tns:Location_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ForecastDay" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Day" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ForecastDate" type="tns:DateTime_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Published" type="tns:DateTime_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Telop" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Image" type="tns:Image_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Temperature"
+                          type="tns:TemperatureMaxAndMin_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Pinpoint" type="tns:ArrayOfPinpoint_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Copyright" type="tns:Copyright_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Location_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Area" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Pref" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="DateTime_t">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Year" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Month" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Day" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Hour" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Minute" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Second" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Image_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="TemperatureMaxAndMin_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Max" type="tns:TemperatureSet_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Min" type="tns:TemperatureSet_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="TemperatureSet_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Celsius" type="tns:Temperature_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Fahrenheit" type="tns:Temperature_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Temperature_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfPinpoint_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Pinpoint_t" nillable="true"
+                          type="tns:Pinpoint_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Pinpoint_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Published" type="tns:DateTime_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Copyright_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Image" type="tns:Image_t"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Provider" type="tns:ArrayOfProvider_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfProvider_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Provider_t" nillable="true"
+                          type="tns:Provider_t"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Provider_t">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Link" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetWeatherInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:GetWeatherInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:GetWeatherInfoResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="LivedoorWeatherHacksSoap" type="tns:LivedoorWeatherHacksSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetWeatherInfo">
+         <soap:operation soapAction="http://bearmini.net/LivedoorWeatherHacks/GetWeatherInfo"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="LivedoorWeatherHacks">
+      <wsdl:port name="LivedoorWeatherHacksSoap" binding="tns:LivedoorWeatherHacksSoap">
+         <soap:address location="http://ws.soatrader.com/bearmini.net/0.1/LivedoorWeatherHacks"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,529 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://www.monster.com/definitions"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:monster="http://schemas.monster.com/Monster"
+             xmlns:mh="http://schemas.monster.com/MonsterHeader"
+             xmlns:cat="http://webservices.monster.com/MonsterPortal"
+             name="MonsterBusinessGatewayService"
+             targetNamespace="http://www.monster.com/definitions">
+   <wsdl:types xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+	  <import namespace="http://schemas.monster.com/Monster"
+           location="http://schemas.monster.com/current/xsd/MonsterFlat.xsd"/>
+	
+	  <import namespace="http://schemas.monster.com/MonsterHeader"
+           location="http://schemas.monster.com/current/xsd/MonsterHeader.xsd"/>
+
+	  <import namespace="http://webservices.monster.com/MonsterPortal"
+           location="http://schemas.monster.com/current/xsd/AuthenticateByCompanyAccessTicket.xsd"/>
+	
+  	<message name="AddOrUpdateSeekersIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+   		<part name="body" element="monster:JobSeekers"/>
+  	</message>
+
+  	<message name="AddOrUpdateSeekerIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:JobSeeker"/>
+  	</message>
+
+   	<message name="AddOrUpdateSeekersOut">
+    		<part name="header" element="mh:MonsterHeader"/>
+    		<part name="body" element="monster:JobSeekersResponse"/>
+  	</message>
+
+  	<message name="UpdateJobsIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:Jobs"/>
+  	</message>
+
+  	<message name="UpdateJobIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:Job"/>
+  	</message>
+
+   	<message name="UpdateJobsOut">
+    		<part name="header" element="mh:MonsterHeader"/>
+    		<part name="body" element="monster:JobsResponse"/>
+  	</message>
+
+ 	<message name="AddOrUpdateJobApplicantsIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:JobApplicants"/>
+  	</message>
+
+ 	<message name="AddOrUpdateJobApplicantIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:JobApplicant"/>
+  	</message>
+
+   	<message name="AddOrUpdateJobApplicantsOut">
+    		<part name="header" element="mh:MonsterHeader"/>
+    		<part name="body" element="monster:JobsApplicantsResponse"/>
+  	</message>
+
+ 	<message name="FoldersIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:Folders"/>
+  	</message>
+
+ 	<message name="FolderIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:Folder"/>
+  	</message>
+
+   	<message name="FoldersOut">
+    		<part name="header" element="mh:MonsterHeader"/>
+    		<part name="body" element="monster:FoldersResponse"/>
+  	</message>
+
+  	<message name="QueriesIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:Queries"/>
+  	</message>
+
+  	<message name="QueryIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:Query"/>
+  	</message>
+  	
+  	<message name="QueriesOut">
+    		<part name="header" element="mh:MonsterHeader"/>
+    		<part name="body" element="monster:QueriesResponse"/>
+  	</message>
+
+   	<message name="DeletesIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:Deletes"/>
+  	</message>
+
+   	<message name="DeleteIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:Delete"/>
+  	</message>
+  	
+  	<message name="DeletesOut">
+    		<part name="header" element="mh:MonsterHeader"/>
+    		<part name="body" element="monster:DeletesResponse"/>
+  	</message>
+
+   	<message name="JobApplicantScoringsIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:JobApplicantScorings"/>
+  	</message>
+
+   	<message name="JobApplicantScoringIn">
+    		<part name="header" element="mh:MonsterHeader"/>
+     		<part name="catheader" element="cat:CompanyAuthHeader"/>
+    		<part name="body" element="monster:JobApplicantScoring"/>
+  	</message>
+
+   	<message name="JobApplicantScoringsOut">
+    		<part name="header" element="mh:MonsterHeader"/>
+    		<part name="body" element="monster:JobsApplicantScoringsResponse"/>
+  	</message>
+
+	  <portType name="BusinessGatewayInterface">
+	
+		    <operation name="AddOrUpdateSeekers">
+			      <input message="tns:AddOrUpdateSeekersIn"/>
+			      <output message="tns:AddOrUpdateSeekersOut"/>
+		    </operation>
+		
+		    <operation name="AddOrUpdateSeeker">
+			      <input message="tns:AddOrUpdateSeekerIn"/>
+			      <output message="tns:AddOrUpdateSeekersOut"/>
+		    </operation>
+		
+		    <operation name="UpdateJobs">
+			      <input message="tns:UpdateJobsIn"/>
+			      <output message="tns:UpdateJobsOut"/>
+		    </operation>
+		
+		    <operation name="UpdateJob">
+			      <input message="tns:UpdateJobIn"/>
+			      <output message="tns:UpdateJobsOut"/>
+		    </operation>
+		
+		    <operation name="AddOrUpdateJobApplicants">
+			      <input message="tns:AddOrUpdateJobApplicantsIn"/>
+			      <output message="tns:AddOrUpdateJobApplicantsOut"/>
+		    </operation>
+
+		    <operation name="AddOrUpdateJobApplicant">
+			      <input message="tns:AddOrUpdateJobApplicantIn"/>
+			      <output message="tns:AddOrUpdateJobApplicantsOut"/>
+		    </operation>
+
+		    <operation name="UpdateFolders">
+			      <input message="tns:FoldersIn"/>
+			      <output message="tns:FoldersOut"/>
+		    </operation>
+
+		    <operation name="UpdateFolder">
+			      <input message="tns:FolderIn"/>
+			      <output message="tns:FoldersOut"/>
+		    </operation>
+
+		    <operation name="ExecuteQueries">
+			      <input message="tns:QueriesIn"/>
+			      <output message="tns:QueriesOut"/>
+		    </operation>
+
+		    <operation name="ExecuteQuery">
+			      <input message="tns:QueryIn"/>
+			      <output message="tns:QueriesOut"/>
+		    </operation>
+
+		    <operation name="ExecuteDeletes">
+			      <input message="tns:DeletesIn"/>
+			      <output message="tns:DeletesOut"/>
+		    </operation>
+		
+		    <operation name="ExecuteDelete">
+			      <input message="tns:DeleteIn"/>
+			      <output message="tns:DeletesOut"/>
+		    </operation>
+		
+		    <operation name="UpdateJobApplicantScorings">
+			      <input message="tns:JobApplicantScoringsIn"/>
+			      <output message="tns:JobApplicantScoringsOut"/>
+		    </operation>
+
+		
+		    <operation name="UpdateJobApplicantScoring">
+			      <input message="tns:JobApplicantScoringIn"/>
+			      <output message="tns:JobApplicantScoringsOut"/>
+		    </operation>
+
+
+	  </portType>
+	
+	  <binding name="BusinessGatewayImpl" type="tns:BusinessGatewayInterface">
+	
+		    <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		    <operation name="AddOrUpdateSeekers">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:AddOrUpdateSeekersIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateSeekersIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateSeekersIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:AddOrUpdateSeekersOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateSeekersOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+		    <operation name="AddOrUpdateSeeker">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:AddOrUpdateSeekerIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateSeekerIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateSeekerIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:AddOrUpdateSeekersOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateSeekersOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+		    <operation name="UpdateJobs">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:UpdateJobsIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:UpdateJobsIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:UpdateJobsIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:UpdateJobsOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:UpdateJobsOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+
+		    <operation name="UpdateJob">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:UpdateJobIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:UpdateJobIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:UpdateJobIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:UpdateJobsOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:UpdateJobsOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+
+		    <operation name="AddOrUpdateJobApplicants">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:AddOrUpdateJobApplicantsIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateJobApplicantsIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateJobApplicantsIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:AddOrUpdateJobApplicantsOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateJobApplicantsOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+		    <operation name="AddOrUpdateJobApplicant">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:AddOrUpdateJobApplicantIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateJobApplicantIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateJobApplicantIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:AddOrUpdateJobApplicantsOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:AddOrUpdateJobApplicantsOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+		    <operation name="UpdateFolders">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:FoldersIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:FoldersIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:FoldersIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:FoldersOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:FoldersOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+		    <operation name="UpdateFolder">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:FolderIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:FolderIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:FolderIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:FoldersOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:FoldersOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+		    <operation name="ExecuteQueries">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:QueriesIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:QueriesIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:QueriesIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:QueriesOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:QueriesOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+		    <operation name="ExecuteQuery">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:QueryIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:QueryIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:QueryIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:QueriesOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:QueriesOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+		    <operation name="ExecuteDeletes">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:DeletesIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:DeletesIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:DeletesIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:DeletesOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:DeletesOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+		    <operation name="ExecuteDelete">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:DeleteIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:DeleteIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:DeleteIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:DeletesOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:DeletesOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+		    <operation name="UpdateJobApplicantScorings">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:JobApplicantScoringsIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:JobApplicantScoringsIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:JobApplicantScoringsIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:JobApplicantScoringsOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:JobApplicantScoringsOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+		    <operation name="UpdateJobApplicantScoring">
+			      <soapbind:operation soapAction="" style="document"/>
+			      <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+        			<soapbind:body message="tns:JobApplicantScoringIn" part="body" use="literal"/>
+        			<soapbind:header message="tns:JobApplicantScoringIn" part="header" use="literal"/>
+        			<soapbind:header message="tns:JobApplicantScoringIn" part="catheader" use="literal"/>
+      			</input>
+      			<output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+        			<soapbind:body message="tns:JobApplicantScoringsOut" part="body" use="literal"/>
+        			<soapbind:header message="tns:JobApplicantScoringsOut" part="header" use="literal"/>
+      			</output>
+    		</operation>
+    		
+  	</binding>
+
+	  <service name="MonsterBusinessGatewayService">
+		    <documentation/>
+		    <port name="BusinessGatewayEndpoint" binding="tns:BusinessGatewayImpl">
+			      <soapbind:address location="http://ws.soatrader.com/monster.com/0.3/MonsterBusinessGatewayService"/>
+		    </port>
+	  </service>
+
+
+</definitions>

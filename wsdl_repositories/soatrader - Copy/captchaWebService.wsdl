@@ -1,0 +1,148 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://axisebusiness.com/webservices/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://axisebusiness.com/webservices/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://axisebusiness.com/webservices/">
+         <s:element name="getCaptcha">
+            <s:complexType/>
+         </s:element>
+         <s:element name="getCaptchaResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getCaptchaResult" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="generateImage">
+            <s:complexType/>
+         </s:element>
+         <s:element name="generateImageResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="generateImageResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="selectWord">
+            <s:complexType/>
+         </s:element>
+         <s:element name="selectWordResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="selectWordResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="base64Binary" nillable="true" type="s:base64Binary"/>
+         <s:element name="string" nillable="true" type="s:string"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getCaptchaSoapIn">
+      <wsdl:part name="parameters" element="tns:getCaptcha"/>
+  </wsdl:message>
+  <wsdl:message name="getCaptchaSoapOut">
+      <wsdl:part name="parameters" element="tns:getCaptchaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="generateImageSoapIn">
+      <wsdl:part name="parameters" element="tns:generateImage"/>
+  </wsdl:message>
+  <wsdl:message name="generateImageSoapOut">
+      <wsdl:part name="parameters" element="tns:generateImageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="selectWordSoapIn">
+      <wsdl:part name="parameters" element="tns:selectWord"/>
+  </wsdl:message>
+  <wsdl:message name="selectWordSoapOut">
+      <wsdl:part name="parameters" element="tns:selectWordResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getCaptchaHttpGetIn"/>
+  <wsdl:message name="getCaptchaHttpGetOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="generateImageHttpGetIn"/>
+  <wsdl:message name="generateImageHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="selectWordHttpGetIn"/>
+  <wsdl:message name="selectWordHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  
+  
+  <wsdl:binding name="captchaWebServiceSoap" type="tns:captchaWebServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="getCaptcha">
+         <soap:operation soapAction="http://axisebusiness.com/webservices/getCaptcha" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="generateImage">
+         <soap:operation soapAction="http://axisebusiness.com/webservices/generateImage"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="selectWord">
+         <soap:operation soapAction="http://axisebusiness.com/webservices/selectWord" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="captchaWebService">
+      <wsdl:port name="captchaWebServiceSoap" binding="tns:captchaWebServiceSoap">
+         <soap:address location="http://ws.soatrader.com/axisebusiness.com/0.1/captchaWebService"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

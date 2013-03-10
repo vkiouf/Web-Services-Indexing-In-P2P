@@ -1,0 +1,302 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://wslite.strikeiron.com"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://wslite.strikeiron.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Returns a world map with a dot representing the IP Address location. The country name is returned as part of the map.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://wslite.strikeiron.com">
+         <s:element name="GetIPMap">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="IPAddress" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetIPMapResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetIPMapResult" type="tns:SIIPGeoLocOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SIIPGeoLocOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ServiceOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="tns:SIIPGeoLocResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ServiceOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ServiceStatus" type="tns:SIWsStatus"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RemainingHits" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="StatusNbr" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SIIPGeoLocResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="IPGeoImage" type="s:base64Binary"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIWsResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetAllStatuses">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAllStatusesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllStatusesResult"
+                             type="tns:StatusCodeOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="StatusCodeOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ServiceOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="tns:StatusCodeResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="StatusCodeResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Statuses" type="tns:ArrayOfSIWsStatus"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfSIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIWsStatus" nillable="true"
+                          type="tns:SIWsStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetServiceInfo">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetServiceInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetServiceInfoResult"
+                             type="tns:ServiceInfoOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ServiceInfoOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ServiceOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="tns:SIServiceInfoResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIServiceInfoResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceInfo"
+                                type="tns:ArrayOfServiceInfoRecord"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceInfoRecord" nillable="true"
+                          type="tns:ServiceInfoRecord"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoKey" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoValue" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetRemainingHits">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetRemainingHitsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRemainingHitsResult"
+                             type="tns:ServiceOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SIIPGeoLocOutput" nillable="true" type="tns:SIIPGeoLocOutput"/>
+         <s:element name="StatusCodeOutput" nillable="true" type="tns:StatusCodeOutput"/>
+         <s:element name="ServiceInfoOutput" nillable="true" type="tns:ServiceInfoOutput"/>
+         <s:element name="ServiceOutput" nillable="true" type="tns:ServiceOutput"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetIPMapSoapIn">
+      <wsdl:part name="parameters" element="tns:GetIPMap"/>
+  </wsdl:message>
+  <wsdl:message name="GetIPMapSoapOut">
+      <wsdl:part name="parameters" element="tns:GetIPMapResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAllStatuses"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAllStatusesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:GetServiceInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:GetServiceInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetIPMapHttpGetIn">
+      <wsdl:part name="IPAddress" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetIPMapHttpGetOut">
+      <wsdl:part name="Body" element="tns:SIIPGeoLocOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesHttpGetIn"/>
+  <wsdl:message name="GetAllStatusesHttpGetOut">
+      <wsdl:part name="Body" element="tns:StatusCodeOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoHttpGetIn"/>
+  <wsdl:message name="GetServiceInfoHttpGetOut">
+      <wsdl:part name="Body" element="tns:ServiceInfoOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsHttpGetIn"/>
+  <wsdl:message name="GetRemainingHitsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ServiceOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetIPMapHttpPostIn">
+      <wsdl:part name="IPAddress" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetIPMapHttpPostOut">
+      <wsdl:part name="Body" element="tns:SIIPGeoLocOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesHttpPostIn"/>
+  <wsdl:message name="GetAllStatusesHttpPostOut">
+      <wsdl:part name="Body" element="tns:StatusCodeOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoHttpPostIn"/>
+  <wsdl:message name="GetServiceInfoHttpPostOut">
+      <wsdl:part name="Body" element="tns:ServiceInfoOutput"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsHttpPostIn"/>
+  <wsdl:message name="GetRemainingHitsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ServiceOutput"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="IPLocationLiteSoap" type="tns:IPLocationLiteSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetIPMap">
+         <soap:operation soapAction="http://wslite.strikeiron.com/GetIPMap" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllStatuses">
+         <soap:operation soapAction="http://wslite.strikeiron.com/GetAllStatuses" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetServiceInfo">
+         <soap:operation soapAction="http://wslite.strikeiron.com/GetServiceInfo" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation soapAction="http://wslite.strikeiron.com/GetRemainingHits" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="IPLocationLite">
+      <wsdl:documentation>Returns a world map with a dot representing the IP Address location. The country name is returned as part of the map.</wsdl:documentation>
+      <wsdl:port name="IPLocationLiteSoap" binding="tns:IPLocationLiteSoap">
+         <soap:address location="http://ws.soatrader.com/strikeiron.com/0.1/IPLocationLite"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

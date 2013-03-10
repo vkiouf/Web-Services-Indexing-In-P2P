@@ -1,0 +1,87 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="http://www.borland.com/soapServices/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:ns1="urn:RegMp3Class"
+             xmlns:ns2="urn:WSDLSoap"
+             xmlns:ns3="urn:Types"
+             name="ISoapFindMP3service"
+             targetNamespace="http://www.borland.com/soapServices/">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xs:schema targetNamespace="urn:RegMp3Class">
+         <xs:complexType name="TMP3Results">
+    <!--xs:complexContent>
+      <xs:restriction base="soapenc:Array">
+        <xs:sequence/>
+        <xs:attribute ref="soapenc:arrayType" n1:arrayType="ns1:TMP3Result[]" xmlns:n1="http://schemas.xmlsoap.org/wsdl/"/-->
+      <element name="Dimension1" type="ns1:TMP3Result" maxOccurs="unbounded"/>
+            <!--/xs:restriction>
+    </xs:complexContent-->
+  </xs:complexType>
+         <xs:complexType name="TMP3Result">
+            <xs:sequence>
+               <xs:element name="URL" type="xs:string"/>
+               <xs:element name="FileName" type="xs:string"/>
+               <xs:element name="Size" type="xs:string"/>
+               <xs:element name="Speed" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+  </types>
+  <message name="SearchMP3Request">
+      <part name="SearchString" type="xs:string"/>
+      <part name="NumResults" type="xs:int"/>
+  </message>
+  <message name="SearchMP3Response">
+      <part name="return" type="ns1:TMP3Results"/>
+  </message>
+  <portType name="ISoapFindMP3">
+      <operation name="SearchMP3">
+         <input message="tns:SearchMP3Request"/>
+         <output message="tns:SearchMP3Response"/>
+      </operation>
+  </portType>
+  <binding name="ISoapFindMP3binding" type="tns:ISoapFindMP3">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="SearchMP3">
+         <soap:operation soapAction="urn:SoapFindMP3Intf-ISoapFindMP3#SearchMP3"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:SoapFindMP3Intf-ISoapFindMP3"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:SoapFindMP3Intf-ISoapFindMP3"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="ISoapFindMP3service">
+      <port name="ISoapFindMP3Port" binding="tns:ISoapFindMP3binding">
+      <!--soap:address location="http://localhost:1024/soapwatest.mp3searchtest/soap/ISoapFindMP3"/-->
+        <soap:address location="http://ws.soatrader.com/agnisoft.com/0.1/ISoapFindMP3service"/>
+      </port>
+  </service>
+</definitions>

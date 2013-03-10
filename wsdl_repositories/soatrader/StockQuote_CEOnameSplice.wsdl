@@ -1,0 +1,594 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://splices.xignite.com/services/"
+                  xmlns:s1="http://www.xignite.com/services/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://splices.xignite.com/services/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://splices.xignite.com/services/">
+         <s:import namespace="http://www.xignite.com/services/"/>
+         <s:element name="leochan_StockQuote_CEOname">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Type" type="s1:FundamentalTypes"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="tns:IdentifierTypes"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="IdentifierTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Symbol"/>
+               <s:enumeration value="CIK"/>
+               <s:enumeration value="CUSIP"/>
+               <s:enumeration value="ISIN"/>
+               <s:enumeration value="Valoren"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="leochan_StockQuote_CEOnameResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="leochan_StockQuote_CEOnameResult"
+                             type="tns:Untitled"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Untitled">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:AbstractReturnObject">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="GetFundamentalsReturnObject"
+                                type="tns:ArrayOfGetFundamentalsReturnObject"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GetQuoteReturnObject"
+                                type="tns:GetQuoteReturnObject"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="AbstractReturnObject" abstract="true">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Common">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Outcome" type="tns:OutcomeTypes"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Identity" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Delay" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="OutcomeTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Success"/>
+               <s:enumeration value="SystemError"/>
+               <s:enumeration value="RequestError"/>
+               <s:enumeration value="RegistrationError"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfGetFundamentalsReturnObject">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="GetFundamentalsReturnObject"
+                          nillable="true"
+                          type="tns:GetFundamentalsReturnObject"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="GetFundamentalsReturnObject">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CEO_NAME" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="GetQuoteReturnObject">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="PRICE_52WEEKHIGH" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PRICE_52WEEKLOW" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SYMBOL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LAST" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Header" type="tns:Header"/>
+         <s:complexType name="Header">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+            </s:sequence>
+            <s:anyAttribute/>
+         </s:complexType>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.xignite.com/services/">
+         <s:simpleType name="FundamentalTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Name"/>
+               <s:enumeration value="Ticker"/>
+               <s:enumeration value="CUSIP"/>
+               <s:enumeration value="CIK"/>
+               <s:enumeration value="Category"/>
+               <s:enumeration value="Exchange"/>
+               <s:enumeration value="Industry"/>
+               <s:enumeration value="IndustryGroup"/>
+               <s:enumeration value="Sector"/>
+               <s:enumeration value="Logo"/>
+               <s:enumeration value="IRSNumber"/>
+               <s:enumeration value="DUNS"/>
+               <s:enumeration value="SECName"/>
+               <s:enumeration value="ExchangeName"/>
+               <s:enumeration value="AddressName"/>
+               <s:enumeration value="LongName"/>
+               <s:enumeration value="Description"/>
+               <s:enumeration value="LongDescription"/>
+               <s:enumeration value="MGNumber"/>
+               <s:enumeration value="MGNumberOtherCommon"/>
+               <s:enumeration value="PrimarySICCode"/>
+               <s:enumeration value="SecondarySICCode1"/>
+               <s:enumeration value="SecondarySICCode2"/>
+               <s:enumeration value="SecondarySICCode3"/>
+               <s:enumeration value="SecondarySICCode4"/>
+               <s:enumeration value="SecondarySICCode5"/>
+               <s:enumeration value="SecondarySICCode6"/>
+               <s:enumeration value="SecondarySICCode7"/>
+               <s:enumeration value="SecondarySICCode8"/>
+               <s:enumeration value="SecondarySICCode9"/>
+               <s:enumeration value="SecondarySICCode10"/>
+               <s:enumeration value="NAICSCode"/>
+               <s:enumeration value="Address1"/>
+               <s:enumeration value="Address2"/>
+               <s:enumeration value="City"/>
+               <s:enumeration value="State"/>
+               <s:enumeration value="Zip"/>
+               <s:enumeration value="Country"/>
+               <s:enumeration value="Phone"/>
+               <s:enumeration value="FAX"/>
+               <s:enumeration value="StateOfIncorporation"/>
+               <s:enumeration value="Email"/>
+               <s:enumeration value="CEO"/>
+               <s:enumeration value="Employees"/>
+               <s:enumeration value="WebDomain"/>
+               <s:enumeration value="WebSite"/>
+               <s:enumeration value="SAndPRating"/>
+               <s:enumeration value="FiscalYear"/>
+               <s:enumeration value="MostRecentQuarter"/>
+               <s:enumeration value="LastAnnualReport"/>
+               <s:enumeration value="LastQuarterly"/>
+               <s:enumeration value="LastProxyStatement"/>
+               <s:enumeration value="LastDelayedPrice"/>
+               <s:enumeration value="LastRealTimePrice"/>
+               <s:enumeration value="LastTradeDate"/>
+               <s:enumeration value="LastOpen"/>
+               <s:enumeration value="LastHigh"/>
+               <s:enumeration value="LastLow"/>
+               <s:enumeration value="LastMarketClosePrice"/>
+               <s:enumeration value="LastVolume"/>
+               <s:enumeration value="LastFiscalYearAveragePrice"/>
+               <s:enumeration value="AveragePriceThisFiscalQuarter"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus1"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus2"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus3"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus4"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus5"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus6"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus7"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus8"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus9"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus10"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus11"/>
+               <s:enumeration value="AveragePriceFiscalQuarterMinus12"/>
+               <s:enumeration value="AveragePriceThisFiscalYear"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus1"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus2"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus3"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus4"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus5"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus6"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus7"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus8"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus9"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus10"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus11"/>
+               <s:enumeration value="AveragePriceFiscalYearMinus12"/>
+               <s:enumeration value="AverageVolumeThisFiscalYear"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus1"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus2"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus3"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus4"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus5"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus6"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus7"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus8"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus9"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus10"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus11"/>
+               <s:enumeration value="AverageVolumeFiscalYearMinus12"/>
+               <s:enumeration value="HighPriceThisFiscalYear"/>
+               <s:enumeration value="HighPriceFiscalYearMinus1"/>
+               <s:enumeration value="HighPriceFiscalYearMinus2"/>
+               <s:enumeration value="HighPriceFiscalYearMinus3"/>
+               <s:enumeration value="HighPriceFiscalYearMinus4"/>
+               <s:enumeration value="HighPriceFiscalYearMinus5"/>
+               <s:enumeration value="HighPriceFiscalYearMinus6"/>
+               <s:enumeration value="HighPriceFiscalYearMinus7"/>
+               <s:enumeration value="HighPriceFiscalYearMinus8"/>
+               <s:enumeration value="HighPriceFiscalYearMinus9"/>
+               <s:enumeration value="HighPriceFiscalYearMinus10"/>
+               <s:enumeration value="HighPriceFiscalYearMinus11"/>
+               <s:enumeration value="HighPriceFiscalYearMinus12"/>
+               <s:enumeration value="LowPriceThisFiscalYear"/>
+               <s:enumeration value="LowPriceFiscalYearMinus1"/>
+               <s:enumeration value="LowPriceFiscalYearMinus2"/>
+               <s:enumeration value="LowPriceFiscalYearMinus3"/>
+               <s:enumeration value="LowPriceFiscalYearMinus4"/>
+               <s:enumeration value="LowPriceFiscalYearMinus5"/>
+               <s:enumeration value="LowPriceFiscalYearMinus6"/>
+               <s:enumeration value="LowPriceFiscalYearMinus7"/>
+               <s:enumeration value="LowPriceFiscalYearMinus8"/>
+               <s:enumeration value="LowPriceFiscalYearMinus9"/>
+               <s:enumeration value="LowPriceFiscalYearMinus10"/>
+               <s:enumeration value="LowPriceFiscalYearMinus11"/>
+               <s:enumeration value="LowPriceFiscalYearMinus12"/>
+               <s:enumeration value="HighPriceLast4Weeks"/>
+               <s:enumeration value="HighPriceLast13Weeks"/>
+               <s:enumeration value="HighPriceLast26Weeks"/>
+               <s:enumeration value="HighPriceLast52Weeks"/>
+               <s:enumeration value="HighPriceLastMonth"/>
+               <s:enumeration value="HighPriceLast3Months"/>
+               <s:enumeration value="HighPriceLast6Months"/>
+               <s:enumeration value="HighPriceLast9Months"/>
+               <s:enumeration value="HighPriceLast12Months"/>
+               <s:enumeration value="HighPriceYearToDate"/>
+               <s:enumeration value="LowPriceLast4Weeks"/>
+               <s:enumeration value="LowPriceLast13Weeks"/>
+               <s:enumeration value="LowPriceLast26Weeks"/>
+               <s:enumeration value="LowPriceLast52Weeks"/>
+               <s:enumeration value="LowPriceLastMonth"/>
+               <s:enumeration value="LowPriceLast3Months"/>
+               <s:enumeration value="LowPriceLast6Months"/>
+               <s:enumeration value="LowPriceLast9Months"/>
+               <s:enumeration value="LowPriceLast12Months"/>
+               <s:enumeration value="LowPriceYearToDate"/>
+               <s:enumeration value="ClosePrice4WeeksAgo"/>
+               <s:enumeration value="ClosePrice13WeeksAgo"/>
+               <s:enumeration value="ClosePrice26WeeksAgo"/>
+               <s:enumeration value="ClosePrice52WeeksAgo"/>
+               <s:enumeration value="ClosePriceLastMonth"/>
+               <s:enumeration value="ClosePrice3MonthsAgo"/>
+               <s:enumeration value="ClosePrice6MonthsAgo"/>
+               <s:enumeration value="ClosePrice9MonthsAgo"/>
+               <s:enumeration value="ClosePrice12MonthsAgo"/>
+               <s:enumeration value="FiveYearHighPrice"/>
+               <s:enumeration value="FiveYearLowPrice"/>
+               <s:enumeration value="PeriodAveragePrice"/>
+               <s:enumeration value="OneYearHigh"/>
+               <s:enumeration value="OneYearLow"/>
+               <s:enumeration value="OneYearHighDate"/>
+               <s:enumeration value="OneYearLowDate"/>
+               <s:enumeration value="PercentPriceChange1Week"/>
+               <s:enumeration value="PercentPriceChange4Weeks"/>
+               <s:enumeration value="PercentPriceChange13Weeks"/>
+               <s:enumeration value="PercentPriceChange1Month"/>
+               <s:enumeration value="PercentPriceChangeLast10Days"/>
+               <s:enumeration value="PercentPriceChangeLast26Weeks"/>
+               <s:enumeration value="PercentPriceChangeLast52Weeks"/>
+               <s:enumeration value="PercentPriceChangeYearToDate"/>
+               <s:enumeration value="FiveDayMovingAverage"/>
+               <s:enumeration value="TenDayMovingAverage"/>
+               <s:enumeration value="TenWeekMovingAverage"/>
+               <s:enumeration value="ThirtyWeekMovingAverage"/>
+               <s:enumeration value="TwoHundredDayMovingAverage"/>
+               <s:enumeration value="LatestCloseAsPercentOf5DayAverage"/>
+               <s:enumeration value="LatestCloseAsPercentOf10DayAverage"/>
+               <s:enumeration value="LatestCloseAsPercentOf10WeekAverage"/>
+               <s:enumeration value="LatestCloseAsPercentOf30WeekAverage"/>
+               <s:enumeration value="LatestCloseAsPercentOf200DayAverage"/>
+               <s:enumeration value="LatestCloseAsPercentOf52WeekHigh"/>
+               <s:enumeration value="LatestCloseAsPercentOf52WeekLow"/>
+               <s:enumeration value="LatestCloseAsPercentOf5YearHigh"/>
+               <s:enumeration value="LatestCloseAsPercentOf5YearLow"/>
+               <s:enumeration value="PriceChangeVsMarket1Week"/>
+               <s:enumeration value="PriceChangeVsMarket4Weeks"/>
+               <s:enumeration value="PriceChangeVsMarket13Weeks"/>
+               <s:enumeration value="PriceChangeVsMarket26Weeks"/>
+               <s:enumeration value="PriceChangeVsMarket52Weeks"/>
+               <s:enumeration value="PriceChangeVsMarketThisMonth"/>
+               <s:enumeration value="PriceChangeVsMarket3Months"/>
+               <s:enumeration value="PriceChangeVsMarket6Months"/>
+               <s:enumeration value="PriceChangeVsMarket9Months"/>
+               <s:enumeration value="PriceChangeVsMarket12Months"/>
+               <s:enumeration value="PriceChangeVsMarketYearToDate"/>
+               <s:enumeration value="TwoHundredDayPriceIndexVsMarket"/>
+               <s:enumeration value="PriceMomentumThisWeek"/>
+               <s:enumeration value="PriceMomentumPriorWeek"/>
+               <s:enumeration value="Beta60Month"/>
+               <s:enumeration value="Beta36Month"/>
+               <s:enumeration value="TotalVolumeThisWeek"/>
+               <s:enumeration value="TotalVolumeLast10Days"/>
+               <s:enumeration value="TotalVolumeLast20Days"/>
+               <s:enumeration value="TotalVolumeLast2Weeks"/>
+               <s:enumeration value="TotalVolumeLast4Weeks"/>
+               <s:enumeration value="TotalVolumeLast13Weeks"/>
+               <s:enumeration value="TotalVolumeLast26Weeks"/>
+               <s:enumeration value="TotalVolumeLast52Weeks"/>
+               <s:enumeration value="TotalVolumeThisMonth"/>
+               <s:enumeration value="TotalVolumeLast3Months"/>
+               <s:enumeration value="TotalVolumeLast6Months"/>
+               <s:enumeration value="TotalVolumeLast9Months"/>
+               <s:enumeration value="TotalVolumeLast12Months"/>
+               <s:enumeration value="TotalVolumeYearToDate"/>
+               <s:enumeration value="AverageDailyVolumeLast10Days"/>
+               <s:enumeration value="AverageDailyVolumeLast20Days"/>
+               <s:enumeration value="AverageDailyVolumeLast2Weeks"/>
+               <s:enumeration value="AverageDailyVolumeLast4Weeks"/>
+               <s:enumeration value="AverageDailyVolumeLast13Weeks"/>
+               <s:enumeration value="AverageDailyVolumeLast26Weeks"/>
+               <s:enumeration value="AverageDailyVolumeLast52Weeks"/>
+               <s:enumeration value="AverageDailyVolumeThisMonth"/>
+               <s:enumeration value="AverageDailyVolumeLast3Months"/>
+               <s:enumeration value="AverageDailyVolumeLast6Months"/>
+               <s:enumeration value="AverageDailyVolumeLast9Months"/>
+               <s:enumeration value="AverageDailyVolumeLast12Months"/>
+               <s:enumeration value="AverageDailyVolumeYearToDate"/>
+               <s:enumeration value="DailyVolumeAsPercentOf10DayAverageVolume"/>
+               <s:enumeration value="ThisWeekVolumeTimesWeeksChange"/>
+               <s:enumeration value="ThisWeeksDollarVolume"/>
+               <s:enumeration value="WeeklyVolumeAsPercentOfSharesOutstanding"/>
+               <s:enumeration value="LiquidityRatio"/>
+               <s:enumeration value="OnBalanceVolumeIndexLast4Weeks"/>
+               <s:enumeration value="LastYearClose"/>
+               <s:enumeration value="OneYearClose"/>
+               <s:enumeration value="NineMonthClose"/>
+               <s:enumeration value="SixMonthClose"/>
+               <s:enumeration value="ThreeMonthClose"/>
+               <s:enumeration value="OneMonthClose"/>
+               <s:enumeration value="LastSplitRatio"/>
+               <s:enumeration value="LastSplitDate"/>
+               <s:enumeration value="SplitFactorDate"/>
+               <s:enumeration value="SplitFactor"/>
+               <s:enumeration value="ManagementShares"/>
+               <s:enumeration value="ManagementOwnership"/>
+               <s:enumeration value="TotalAssets"/>
+               <s:enumeration value="TotalLiabilities"/>
+               <s:enumeration value="TotalDebt"/>
+               <s:enumeration value="TotalCash"/>
+               <s:enumeration value="TotalRevenue"/>
+               <s:enumeration value="TotalExpenses"/>
+               <s:enumeration value="TotalOperatingExpenses"/>
+               <s:enumeration value="OperatingIncome"/>
+               <s:enumeration value="NetIncome"/>
+               <s:enumeration value="TotalEnterpriseValue"/>
+               <s:enumeration value="TotalBookValue"/>
+               <s:enumeration value="TangibleBookValue"/>
+               <s:enumeration value="EBIT"/>
+               <s:enumeration value="EBITDA"/>
+               <s:enumeration value="RevenuePerShare"/>
+               <s:enumeration value="RevenueGrowth"/>
+               <s:enumeration value="EarningGrowth"/>
+               <s:enumeration value="Beta"/>
+               <s:enumeration value="Auditors"/>
+               <s:enumeration value="MostRecentAuditorsReport"/>
+               <s:enumeration value="StockOptionsIndicator"/>
+               <s:enumeration value="MaintainsMailingList"/>
+               <s:enumeration value="Currency"/>
+               <s:enumeration value="CommonIssueType"/>
+               <s:enumeration value="InBankruptcy"/>
+               <s:enumeration value="DividendReinvestment"/>
+               <s:enumeration value="DomicileIndicatorCode"/>
+               <s:enumeration value="ADRToOrdinaryRatio"/>
+               <s:enumeration value="DowJonesMembership"/>
+               <s:enumeration value="SAndPMembership"/>
+               <s:enumeration value="SAndPMidCapMembership"/>
+               <s:enumeration value="SAndPSmallCapMembership"/>
+               <s:enumeration value="Russell1000Membership"/>
+               <s:enumeration value="Russell2000Membership"/>
+               <s:enumeration value="Forbes500Membership"/>
+               <s:enumeration value="Fortune500IndustrialMembership"/>
+               <s:enumeration value="Fortune500ServicesMembership"/>
+               <s:enumeration value="SAndPTop100Membership"/>
+               <s:enumeration value="ShortInterestShares"/>
+               <s:enumeration value="ShortInterestRatio"/>
+               <s:enumeration value="ShortInterestAsAPercentageOfFloat"/>
+               <s:enumeration value="InsiderSharesBought"/>
+               <s:enumeration value="InsiderSharesSold"/>
+               <s:enumeration value="NetInsiderTransactions"/>
+               <s:enumeration value="PercentOfSharesOutstandingHeldByInsiders"/>
+               <s:enumeration value="NumberOfInstitutionalSharesBought"/>
+               <s:enumeration value="NumberOfInstitutionalSharesSold"/>
+               <s:enumeration value="SharesHeldByInstitutions"/>
+               <s:enumeration value="NumberOfInstitutionsHoldingShares"/>
+               <s:enumeration value="PercentOfSharesOutstandingHeldByInstitutions"/>
+               <s:enumeration value="TorontoMembership"/>
+               <s:enumeration value="TorontoIndustrySectorCode"/>
+               <s:enumeration value="MarketCapitalization"/>
+               <s:enumeration value="MarketCapitalizationAllShares"/>
+               <s:enumeration value="MarketValueAsPercentOfRevenues"/>
+               <s:enumeration value="SharesOutstanding"/>
+               <s:enumeration value="SharesOutstandingClassA"/>
+               <s:enumeration value="SharesOutstandingClassB"/>
+               <s:enumeration value="DateOfSharesOutstanding"/>
+               <s:enumeration value="LatestBalanceSheetSharesOutstanding"/>
+               <s:enumeration value="LatestBalanceSheetDate"/>
+               <s:enumeration value="Float"/>
+               <s:enumeration value="FloatAsAPercentOfSharesOutstanding"/>
+               <s:enumeration value="LatestFiscalDate"/>
+               <s:enumeration value="LatestFiscalRevenue"/>
+               <s:enumeration value="LatestFiscalEPS"/>
+               <s:enumeration value="LatestFiscalDividendsPerShare"/>
+               <s:enumeration value="BasicEPS"/>
+               <s:enumeration value="DilutedEPS"/>
+               <s:enumeration value="LTMDate"/>
+               <s:enumeration value="LatestQuarterIndicator"/>
+               <s:enumeration value="LTMRevenue"/>
+               <s:enumeration value="LTMIncomeFromContinuingOperations"/>
+               <s:enumeration value="LTMIncomeFromTotalOperations"/>
+               <s:enumeration value="LTMDilutedEPSFromContinuingOperations"/>
+               <s:enumeration value="LTMDilutedEPSFromTotalOperations"/>
+               <s:enumeration value="LTMDilutedEPSFromTotalOperations1YearAgo"/>
+               <s:enumeration value="LTMProfitMarginFromContinuingOperations"/>
+               <s:enumeration value="LTMProfitMarginFromTotalOperations"/>
+               <s:enumeration value="PriceSales"/>
+               <s:enumeration value="CurrentRevenuePerShare"/>
+               <s:enumeration value="CurrentRevenuePerEmployee"/>
+               <s:enumeration value="CurrentNetIncomeFromTotalOperationsPerEmployee"/>
+               <s:enumeration value="PercentChangeRevenueThisYearToDateVsLastYTD"/>
+               <s:enumeration value="PercentChangeRevenueCurrentQuarterVsQuarter1YearAgo"/>
+               <s:enumeration value="PercentChangeRevenueAnnualVsLastAnnual"/>
+               <s:enumeration value="PercentChangeEarningsThisYearToDateVsLastYTD"/>
+               <s:enumeration value="PercentChangeEarningsCurrentQuarterVsQuarter1YearAgo"/>
+               <s:enumeration value="PercentChangeEarningsAnnualVsLastAnnual"/>
+               <s:enumeration value="ChangeInEPSThisYearToDateVsLastYTD"/>
+               <s:enumeration value="ChangeInEPSThisQuarterVs1YearAgo"/>
+               <s:enumeration value="ChangeInEPSThisFiscalYearVs1YearAgo"/>
+               <s:enumeration value="ChangeIn12MonthEPSVs1YearAgo"/>
+               <s:enumeration value="PercentChangeInEPSThisYearToDateVsLastYTD"/>
+               <s:enumeration value="PercentChangeInEPSThisQuarterVs1YrAgo"/>
+               <s:enumeration value="PercentChangeInEPSThisYearVs1YearAgo"/>
+               <s:enumeration value="PercentChangeIn12MonthEPSvs1YearAgo"/>
+               <s:enumeration value="LastDividendDate"/>
+               <s:enumeration value="LastDividendExDate"/>
+               <s:enumeration value="DividendCode"/>
+               <s:enumeration value="DividendRate"/>
+               <s:enumeration value="LastDividendYield"/>
+               <s:enumeration value="PayoutFromTotalOperationsLatestFiscalYear"/>
+               <s:enumeration value="PayoutRatio"/>
+               <s:enumeration value="Payout5YearAverageFromTotalOperations"/>
+               <s:enumeration value="DividendYield5YearAverage"/>
+               <s:enumeration value="FiveYearAnnualRevenueGrowthRate"/>
+               <s:enumeration value="ConsistencyOf5YearRevenueGrowthRate"/>
+               <s:enumeration value="ThreeYearAnnualRevenueGrowthRate"/>
+               <s:enumeration value="FiveYearAnnualIncomeGrowthRate"/>
+               <s:enumeration value="ConsistencyOfFiveYearIncomeGrowthRate"/>
+               <s:enumeration value="ThreeYearAnnualIncomeGrowthRate"/>
+               <s:enumeration value="FiveYearAnnualDividendGrowthRate"/>
+               <s:enumeration value="ConsistencyOfFiveYearDividendGrowthRate"/>
+               <s:enumeration value="ThreeYearAnnualDividendGrowthRate"/>
+               <s:enumeration value="FiveYearAnnualCapitalSpendingGrowthRate"/>
+               <s:enumeration value="ThreeYearAnnualCapitalSpendingGrowthRate"/>
+               <s:enumeration value="FiveYearAnnualRAndDGrowthRate"/>
+               <s:enumeration value="ThreeYearAnnualRAndDGrowthRate"/>
+               <s:enumeration value="FiveYearAnnualNormalizedIncomeGrowthRate"/>
+               <s:enumeration value="ThreeYearAnnualNormalizedIncomeGrowthRate"/>
+               <s:enumeration value="PERatio"/>
+               <s:enumeration value="TrailingPE"/>
+               <s:enumeration value="ForwardPE"/>
+               <s:enumeration value="PERatio1MonthAgo"/>
+               <s:enumeration value="PERatio26WeeksAgo"/>
+               <s:enumeration value="PERatio52WeeksAgo"/>
+               <s:enumeration value="FiveYearHighPERatio"/>
+               <s:enumeration value="FiveYearAverageHighPERatio"/>
+               <s:enumeration value="FiveYearLowPERatio"/>
+               <s:enumeration value="FiveYearAverageLowPERatio"/>
+               <s:enumeration value="FiveYearAveragePERatio"/>
+               <s:enumeration value="CurrentPEAsPercentOf5YearAveragePERatio"/>
+               <s:enumeration value="PERatioAsPercentOfIndustryGroupPERatio"/>
+               <s:enumeration value="PERatioAsPercentOfIndustryPERatio"/>
+               <s:enumeration value="Current12MonthNormalizedPERatio"/>
+               <s:enumeration value="LatestFullContextQuarterEndingDate"/>
+               <s:enumeration value="GrossMargin"/>
+               <s:enumeration value="EBITMargin"/>
+               <s:enumeration value="EBITDAMargin"/>
+               <s:enumeration value="EBITPerShare"/>
+               <s:enumeration value="EBITDAPerShare"/>
+               <s:enumeration value="PreTaxProfitMargin"/>
+               <s:enumeration value="InterestCoverage"/>
+               <s:enumeration value="CurrentRatio"/>
+               <s:enumeration value="QuickRatio"/>
+               <s:enumeration value="LeverageRatio"/>
+               <s:enumeration value="ReceivablesTurnover"/>
+               <s:enumeration value="InventoryTurnover"/>
+               <s:enumeration value="AssetTurnover"/>
+               <s:enumeration value="RevenueToAssets"/>
+               <s:enumeration value="ROEFromTotalOperations"/>
+               <s:enumeration value="ReturnOnInvestedCapital"/>
+               <s:enumeration value="ReturnOnAssets"/>
+               <s:enumeration value="DebtCommonEquityRatio"/>
+               <s:enumeration value="PriceBook"/>
+               <s:enumeration value="BookValue"/>
+               <s:enumeration value="BookValuePerShare"/>
+               <s:enumeration value="TotalDebtEquityRatio"/>
+               <s:enumeration value="LongTermDebtToTotalCapital"/>
+               <s:enumeration value="SGAndAAsPercentOfSales"/>
+               <s:enumeration value="RAndDAsPercentOfSales"/>
+               <s:enumeration value="ReceivablesPerDaySales"/>
+               <s:enumeration value="DaysCGSInInventory"/>
+               <s:enumeration value="WorkingCapitalPerShare"/>
+               <s:enumeration value="CashPerShare"/>
+               <s:enumeration value="CashFlowPerShare"/>
+               <s:enumeration value="FreeCashFlowPerShare"/>
+               <s:enumeration value="TangibleBookValuePerShare"/>
+               <s:enumeration value="PriceCashFlowRatio"/>
+               <s:enumeration value="PriceFreeCashFlowRatio"/>
+               <s:enumeration value="PriceTangibleBook"/>
+               <s:enumeration value="FiveYearAverageReturnOnEquity"/>
+               <s:enumeration value="FiveYearAverageReturnOnAssets"/>
+               <s:enumeration value="FiveYearAverageReturnOnInvestedCapital"/>
+               <s:enumeration value="FiveYearAverageGrossProfitMargin"/>
+               <s:enumeration value="FiveYearAveragePreTaxProfitMargin"/>
+               <s:enumeration value="FiveYearAveragePostTaxProfitMargin"/>
+               <s:enumeration value="FiveYearAverageNetProfitMargin"/>
+               <s:enumeration value="FiveYearAverageRAndDAsAPercentOfSales"/>
+               <s:enumeration value="FiveYearAverageSGAndAAsAPercentOfSales"/>
+               <s:enumeration value="FiveYearAverageDebtEquityRatio"/>
+               <s:enumeration value="FiveYearAverageTotalDebtEquityRatio"/>
+               <s:enumeration value="None"/>
+            </s:restriction>
+         </s:simpleType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="leochan_StockQuote_CEOnameSoapIn">
+      <wsdl:part name="parameters" element="tns:leochan_StockQuote_CEOname"/>
+  </wsdl:message>
+  <wsdl:message name="leochan_StockQuote_CEOnameSoapOut">
+      <wsdl:part name="parameters" element="tns:leochan_StockQuote_CEOnameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="leochan_StockQuote_CEOnameHeader">
+      <wsdl:part name="Header" element="tns:Header"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="StockQuote_CEOnameSpliceSoap" type="tns:StockQuote_CEOnameSpliceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="leochan_StockQuote_CEOname">
+         <soap:operation soapAction="http://splices.xignite.com/services/leochan_StockQuote_CEOname"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:leochan_StockQuote_CEOnameHeader" part="Header" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="StockQuote_CEOnameSplice">
+      <wsdl:port name="StockQuote_CEOnameSpliceSoap" binding="tns:StockQuote_CEOnameSpliceSoap">
+         <soap:address location="http://ws.soatrader.com/xignite.com/0.1/StockQuote_CEOnameSplice"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

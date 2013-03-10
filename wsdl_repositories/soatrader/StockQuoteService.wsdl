@@ -1,0 +1,102 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://quickstart.samples/quotes/"
+                  xmlns:ns="http://quickstart.samples/quotes/xsd"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  targetNamespace="http://quickstart.samples/quotes/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://quickstart.samples/quotes/xsd">
+			      <xs:element name="getPrice">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element name="symbol" type="xs:string"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:element name="getPriceResponse">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element name="return" nillable="true" type="xs:double"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:element name="update">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element name="symbol" type="xs:string"/>
+						            <xs:element name="price" nillable="true" type="xs:double"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+		    </xs:schema>
+	  </wsdl:types>
+	  <wsdl:message name="updateMessage">
+		    <wsdl:part name="part1" element="ns:update"/>
+	  </wsdl:message>
+	  <wsdl:message name="getPriceMessage">
+		    <wsdl:part name="part1" element="ns:getPrice"/>
+	  </wsdl:message>
+	  <wsdl:message name="getPriceResponseMessage">
+		    <wsdl:part name="part1" element="ns:getPriceResponse"/>
+	  </wsdl:message>
+	  <!-- SEI = service endpoint interface, the WS-provided API -->
+	<wsdl:portType name="StockQuoteSEI">
+		    <wsdl:operation name="update">
+			      <wsdl:input message="tns:updateMessage"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="getPrice">
+			      <wsdl:input message="tns:getPriceMessage"/>
+			      <wsdl:output message="tns:getPriceResponseMessage"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+	  <wsdl:binding name="StockQuoteServiceSOAP11Binding" type="tns:StockQuoteSEI">
+		    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+		    <wsdl:operation name="update">
+			      <soap:operation soapAction="" style="document"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+		    </wsdl:operation>
+		    <wsdl:operation name="getPrice">
+			      <soap:operation soapAction="" style="document"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+	  </wsdl:binding>
+	  <wsdl:service name="StockQuoteService">
+		    <wsdl:port name="StockQuoteServiceSOAP11port_http"
+                 binding="tns:StockQuoteServiceSOAP11Binding">
+			      <soap:address location="http://ws.soatrader.com/cs.umb.edu/0.1/StockQuoteService"/>
+		    </wsdl:port>
+	  </wsdl:service>
+</wsdl:definitions>

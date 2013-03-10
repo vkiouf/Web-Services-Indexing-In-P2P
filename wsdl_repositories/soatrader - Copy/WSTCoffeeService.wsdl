@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://www.ebi.ac.uk/WSTCoffee"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             name="WSTCoffee"
+             targetNamespace="http://www.ebi.ac.uk/WSTCoffee">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	
+	  <documentation> 
+	Documentation for this service can be found at http://www.ebi.ac.uk/Tools/webservices
+	</documentation>
+	
+	  <types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+		    <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+              targetNamespace="http://www.ebi.ac.uk/WSTCoffee">
+
+                    <xsd:complexType name="inputParams">
+				        <xsd:all>
+				           <xsd:element name="email" type="xsd:string" nillable="false"/>
+				           <xsd:element name="async" type="xsd:boolean" nillable="true"/>
+				           <xsd:element name="alignment" type="xsd:string" nillable="true"/>
+				           <xsd:element name="output" type="xsd:string" nillable="true"/>
+				           <xsd:element name="tossgaps" type="xsd:boolean" nillable="true"/>
+				           <xsd:element name="gapdist" type="xsd:int" nillable="true"/>
+    				       <xsd:element name="topdiags" type="xsd:int" nillable="true"/>
+    				       <xsd:element name="pairgap" type="xsd:int" nillable="true"/>
+				           <xsd:element name="ktup" type="xsd:int" nillable="true"/>
+				           <xsd:element name="window" type="xsd:int" nillable="true"/>
+				           <xsd:element name="gapopen" type="xsd:int" nillable="true"/>
+				           <xsd:element name="gapclose" type="xsd:int" nillable="true"/>
+				           <xsd:element name="gapext" type="xsd:float" nillable="true"/>
+				           <xsd:element name="outputtree" type="xsd:string" nillable="true"/>
+				           <xsd:element name="matrix" type="xsd:string" nillable="true"/>
+				           <xsd:element name="cpu" type="xsd:string" nillable="true"/>
+				           <xsd:element name="kimura" type="xsd:boolean" nillable="true"/>
+				           <xsd:element name="tree" type="xsd:boolean" nillable="true"/>
+				           <xsd:element name="align" type="xsd:boolean" nillable="true"/>
+				           <xsd:element name="quicktree" type="xsd:boolean" nillable="true"/>
+				           <xsd:element name="scores" type="xsd:string" nillable="true"/>
+				           <xsd:element name="outorder" type="xsd:string" nillable="true"/>
+				        </xsd:all>
+                    </xsd:complexType>
+         <xsd:complexType name="EBIParams">
+            <xsd:all>
+               <xsd:element name="email" type="xsd:string"/>
+               <xsd:element name="async" type="xsd:boolean"/>
+            </xsd:all>
+         </xsd:complexType>
+
+         <xsd:complexType name="data">
+            <xsd:all>
+               <xsd:element name="type" type="xsd:string"/>
+               <xsd:element name="content" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+
+         <xsd:complexType name="ArrayOf_xsd_string">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+
+         <xsd:complexType name="WSArrayofFile">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="tns:WSFile[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+
+         <xsd:complexType name="WSArrayofData">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="tns:data[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+
+         <xsd:complexType name="WSFile">
+            <xsd:all>
+               <xsd:element name="type" type="xsd:string"/>
+               <xsd:element name="ext" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+      </schema>
+   </types>
+
+   <message name="statusRequest">
+      <part name="jobid" type="xsd:string"/>
+      <documentation> poll takes the jobid returned by the service on an asynchronous job submission.</documentation>
+   </message>
+   <message name="statusResponse">
+      <part name="status" type="xsd:string"/>
+      <documentation> poll returns the status of the job or if the job is finished, the result </documentation>
+   </message>
+   <message name="resultsRequest">
+      <part name="jobid" type="xsd:string">
+         <documentation> poll takes the jobid returned by the service on an asynchronous job submission.</documentation>
+      </part>
+   </message>
+   <message name="resultsResponse">
+      <part name="results" type="tns:WSArrayofFile"/>
+      <documentation> poll returns the status of the job or if the job is finished, the result </documentation>
+   </message>
+   <message name="pollRequest">
+      <part name="jobid" type="xsd:string"/>
+      <part name="type" type="xsd:string"/>
+      <documentation> poll takes the jobid returned by the service on an asynchronous job submission.</documentation>
+   </message>
+   <message name="pollResponse">
+      <part name="output" type="xsd:base64Binary"/>	
+      <documentation> poll returns the status of the job or if the job is finished, the result </documentation>
+   </message>
+	
+   <message name="runTCoffeeRequest">
+      <part name="params" type="tns:inputParams"/>
+      <part name="content" type="tns:WSArrayofData"/>       
+   </message>
+	
+   <message name="runTCoffeeResponse">
+      <part name="jobid" type="xsd:string"/>	
+   </message>
+	
+	
+	  <portType name="WSTCoffee">
+		    <operation name="poll" parameterOrder="jobid type">
+			      <input name="pollRequest" message="tns:pollRequest"/>
+			      <output name="pollResponse" message="tns:pollResponse"/>
+		    </operation>		
+		    <operation name="runTCoffee" parameterOrder="params content">
+			      <input name="runTCoffeeRequest" message="tns:runTCoffeeRequest"/>
+			      <output name="runTCoffeeResponse" message="tns:runTCoffeeResponse"/>
+		    </operation>
+	    <operation name="checkStatus" parameterOrder="jobid">
+			      <input name="statusRequest" message="tns:statusRequest"/>
+			      <output name="statusResponse" message="tns:statusResponse"/>
+		    </operation>
+		    <operation name="getResults" parameterOrder="jobid">
+			      <input name="resultsRequest" message="tns:resultsRequest"/>
+			      <output name="resultsResponse" message="tns:resultsResponse"/>
+		    </operation>
+	  </portType>
+	
+	  <binding name="WSTCoffeeSoapBinding" type="tns:WSTCoffee">
+		    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <operation name="poll">
+			      <soap:operation soapAction="http://www.ebi.ac.uk/WSTCoffee#poll"/>
+			      <input name="pollRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSTCoffee"
+                       use="encoded"/>
+			      </input>
+			      <output name="pollResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSTCoffee"
+                       use="encoded"/>
+			      </output>
+		    </operation>
+		
+		    <operation name="runTCoffee">
+			      <soap:operation soapAction="http://www.ebi.ac.uk/WSTCoffee#runTCoffee"/>
+			      <input name="runTCoffeeRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSTCoffee"
+                       use="encoded"/>
+			      </input>
+			      <output name="runTCoffeeResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSTCoffee"
+                       use="encoded"/>
+			      </output>
+		    </operation>
+
+		    <operation name="checkStatus">
+			      <soap:operation soapAction="http://www.ebi.ac.uk/WSTCoffee#checkStatus"/>
+			      <input name="statusRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSTCoffee"
+                       use="encoded"/>
+			      </input>
+			      <output name="statusResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSTCoffee"
+                       use="encoded"/>
+			      </output>
+		    </operation>
+		    <operation name="getResults">
+			      <soap:operation soapAction="http://www.ebi.ac.uk/WSTCoffee#getResults"/>
+			      <input name="resultsRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSTCoffee"
+                       use="encoded"/>
+			      </input>
+			      <output name="resultsResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSTCoffee"
+                       use="encoded"/>
+			      </output>
+		    </operation>
+	  </binding>
+	
+	  <service name="WSTCoffeeService">
+		    <port name="WSTCoffee" binding="tns:WSTCoffeeSoapBinding">
+			      <soap:address location="http://ws.soatrader.com/ebi.ac.uk/0.1/WSTCoffeeService"/>
+		    </port>
+	  </service>
+</definitions>

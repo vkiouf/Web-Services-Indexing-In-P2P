@@ -1,0 +1,268 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://currency.niekutis.net/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://currency.niekutis.net/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://currency.niekutis.net/">
+         <s:element name="Login">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LoginResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LoginResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getCurrency">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="date" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getCurrencyResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getCurrencyResult" type="tns:CurrencyInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CurrencyInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="value" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="date" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="error" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="getTodayCurency">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getTodayCurencyResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getTodayCurencyResult"
+                             type="tns:CurrencyInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getCurrencies">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="date" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getCurrenciesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getCurrenciesResult"
+                             type="tns:ArrayOfCurrencyInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCurrencyInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CurrencyInfo" type="tns:CurrencyInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="getCurrencyByPeriod">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="dateFrom" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="dateTo" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getCurrencyByPeriodResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getCurrencyByPeriodResult"
+                             type="tns:ArrayOfCurrencyInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getCurenciesCodes">
+            <s:complexType/>
+         </s:element>
+         <s:element name="getCurenciesCodesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getCurenciesCodesResult"
+                             type="tns:ArrayOfCurrencyCodes"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCurrencyCodes">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CurrencyCodes" nillable="true"
+                          type="tns:CurrencyCodes"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CurrencyCodes">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoginSoapIn">
+      <wsdl:part name="parameters" element="tns:Login"/>
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+      <wsdl:part name="parameters" element="tns:LoginResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getCurrencySoapIn">
+      <wsdl:part name="parameters" element="tns:getCurrency"/>
+  </wsdl:message>
+  <wsdl:message name="getCurrencySoapOut">
+      <wsdl:part name="parameters" element="tns:getCurrencyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getTodayCurencySoapIn">
+      <wsdl:part name="parameters" element="tns:getTodayCurency"/>
+  </wsdl:message>
+  <wsdl:message name="getTodayCurencySoapOut">
+      <wsdl:part name="parameters" element="tns:getTodayCurencyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getCurrenciesSoapIn">
+      <wsdl:part name="parameters" element="tns:getCurrencies"/>
+  </wsdl:message>
+  <wsdl:message name="getCurrenciesSoapOut">
+      <wsdl:part name="parameters" element="tns:getCurrenciesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getCurrencyByPeriodSoapIn">
+      <wsdl:part name="parameters" element="tns:getCurrencyByPeriod"/>
+  </wsdl:message>
+  <wsdl:message name="getCurrencyByPeriodSoapOut">
+      <wsdl:part name="parameters" element="tns:getCurrencyByPeriodResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getCurenciesCodesSoapIn">
+      <wsdl:part name="parameters" element="tns:getCurenciesCodes"/>
+  </wsdl:message>
+  <wsdl:message name="getCurenciesCodesSoapOut">
+      <wsdl:part name="parameters" element="tns:getCurenciesCodesResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="CurrencyServiceSoap" type="tns:CurrencyServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="Login">
+         <soap:operation soapAction="http://currency.niekutis.net/Login" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getCurrency">
+         <soap:operation soapAction="http://currency.niekutis.net/getCurrency" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getTodayCurency">
+         <soap:operation soapAction="http://currency.niekutis.net/getTodayCurency" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getCurrencies">
+         <soap:operation soapAction="http://currency.niekutis.net/getCurrencies" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getCurrencyByPeriod">
+         <soap:operation soapAction="http://currency.niekutis.net/getCurrencyByPeriod" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getCurenciesCodes">
+         <soap:operation soapAction="http://currency.niekutis.net/getCurenciesCodes" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="CurrencyService">
+      <wsdl:port name="CurrencyServiceSoap" binding="tns:CurrencyServiceSoap">
+         <soap:address location="http://ws.soatrader.com/niekutis.net/0.1/CurrencyService"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

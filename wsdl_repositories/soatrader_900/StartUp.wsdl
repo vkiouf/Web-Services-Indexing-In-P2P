@@ -1,0 +1,407 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://timeline.info/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://timeline.info/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>This service provides authentication and application start up infos.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://timeline.info/">
+         <s:element name="GetMandants">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetMandantsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMandantsResult" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetLastMandantID">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetLastMandantIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLastMandantIDResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CheckLogin">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="loginName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="mandant" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NIC" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CheckLoginResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckLoginResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMenuID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMenuIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetMenuIDResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMenu">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="menu_id" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMenuResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMenuResult" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAddress">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAddressResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAddressResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetVersion">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetVersionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetVersionResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DoLogOut">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DoLogOutResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="DoLogOutResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://timeline.info/">
+         <s:element name="GetMandants">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetMandantsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMandantsResult" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetLastMandantID">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetLastMandantIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLastMandantIDResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CheckLogin">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="loginName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="mandant" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NIC" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CheckLoginResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckLoginResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMenuID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMenuIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetMenuIDResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMenu">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="menu_id" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMenuResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMenuResult" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAddress">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAddressResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAddressResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetVersion">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetVersionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetVersionResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DoLogOut">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DoLogOutResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="DoLogOutResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetMandantsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMandants"/>
+  </wsdl:message>
+  <wsdl:message name="GetMandantsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMandantsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLastMandantIDSoapIn">
+      <wsdl:part name="parameters" element="tns:GetLastMandantID"/>
+  </wsdl:message>
+  <wsdl:message name="GetLastMandantIDSoapOut">
+      <wsdl:part name="parameters" element="tns:GetLastMandantIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CheckLoginSoapIn">
+      <wsdl:part name="parameters" element="tns:CheckLogin"/>
+  </wsdl:message>
+  <wsdl:message name="CheckLoginSoapOut">
+      <wsdl:part name="parameters" element="tns:CheckLoginResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMenuIDSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMenuID"/>
+  </wsdl:message>
+  <wsdl:message name="GetMenuIDSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMenuIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMenuSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMenu"/>
+  </wsdl:message>
+  <wsdl:message name="GetMenuSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMenuResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAddress"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAddressResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVersionSoapIn">
+      <wsdl:part name="parameters" element="tns:GetVersion"/>
+  </wsdl:message>
+  <wsdl:message name="GetVersionSoapOut">
+      <wsdl:part name="parameters" element="tns:GetVersionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DoLogOutSoapIn">
+      <wsdl:part name="parameters" element="tns:DoLogOut"/>
+  </wsdl:message>
+  <wsdl:message name="DoLogOutSoapOut">
+      <wsdl:part name="parameters" element="tns:DoLogOutResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="StartUpSoap" type="tns:StartUpSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetMandants">
+         <soap:operation soapAction="http://timeline.info/GetMandants" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetLastMandantID">
+         <soap:operation soapAction="http://timeline.info/GetLastMandantID" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CheckLogin">
+         <soap:operation soapAction="http://timeline.info/CheckLogin" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMenuID">
+         <soap:operation soapAction="http://timeline.info/GetMenuID" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMenu">
+         <soap:operation soapAction="http://timeline.info/GetMenu" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAddress">
+         <soap:operation soapAction="http://timeline.info/GetAddress" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetVersion">
+         <soap:operation soapAction="http://timeline.info/GetVersion" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DoLogOut">
+         <soap:operation soapAction="http://timeline.info/DoLogOut" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="StartUp">
+      <wsdl:documentation>This service provides authentication and application start up infos.</wsdl:documentation>
+      <wsdl:port name="StartUpSoap" binding="tns:StartUpSoap">
+         <soap:address location="http://ws.soatrader.com/timeline-ebusiness.de/0.1/StartUp"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

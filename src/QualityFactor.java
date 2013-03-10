@@ -1,9 +1,8 @@
-import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- * Insert into objectdb as quality factor between two web services
- *
+ * Object db entity to store the five similarity features and quality factor
+ * between two web services , following the paper "Clustering WSDL Documents to Bootstrap the Discovery of Web Services"
  */
 @Entity
 public class QualityFactor
@@ -12,6 +11,7 @@ public class QualityFactor
 	 *					Fields
 	 *=========================================================================*/
 
+	String repository;
 	String Document_1;
 	String Document_2;
 	double content_sim;
@@ -34,10 +34,11 @@ public class QualityFactor
 	 * @param messages_sim
 	 * @param ports_sim
 	 */
-	public QualityFactor(String document_1, String document_2,
+	public QualityFactor(String repository,String document_1, String document_2,
 			double content_sim, double names_sim, double types_sim,
 			double messages_sim, double ports_sim,double theta)
 	{
+		this.repository = repository;
 		Document_1 = document_1;
 		Document_2 = document_2;
 		this.content_sim = content_sim;
@@ -110,12 +111,15 @@ public class QualityFactor
 		return theta;
 	}
 	
+	public String getRepository()
+	{
+		return repository;
+	}
+	
 	/*=========================================================================
 	 *					Methods
 	 *=========================================================================*/
 	
-
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

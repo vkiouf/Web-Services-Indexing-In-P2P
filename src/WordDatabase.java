@@ -7,8 +7,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.persistence.Query;
@@ -18,6 +21,8 @@ import net.billylieurance.azuresearch.AzureSearchCompositeQuery;
 import edu.sussex.nlp.jws.JWS;
 import edu.sussex.nlp.jws.Lin;
 import edu.mit.jwi.morph.WordnetStemmer;
+
+import org.tartarus.martin.*;
 //import edu.sussex.nlp.jws.WuAndPalmer;
 
 /**
@@ -32,10 +37,9 @@ public class WordDatabase
 	
 	// Use wordnet for similarity
 	private static String dir="database/WordNet";
-	private static JWS	ws= new JWS(dir, "3.0","ic-treebank-resnik.dat");
+	private static JWS ws= new JWS(dir, "3.0","ic-treebank-resnik.dat");
 	private Lin lin;
-	//private WuAndPalmer wuPalmer;
-	private static WordnetStemmer stemmer= new WordnetStemmer(ws.getDictionary());;
+	private static  WordnetStemmer stemmer =  new WordnetStemmer(ws.getDictionary());
 	
 	// Word hits
 	private String bingHitsFile = "hits.dat";			// holds a list of words search in google and their corresponding hits 
@@ -45,16 +49,16 @@ public class WordDatabase
 	private static Hashtable<String,String> compositeWords=new Hashtable<String,String>();	// composite words separated by _
 
 	// Function Words
-	private transient String functionWordsFile = "function_words.dat";	// Function words filename
-	private transient String[] functionWords;								// Array of function words
+	private transient static String functionWordsFile = "function_words.dat";	// Function words filename
+	private transient static String[] functionWords;								// Array of function words
 	
-	SimilarityType simType;			// Type of  word similarity computation
-	SearchEngine searchEngine;		// Selected search engine
+	// Search and similarity
+	SimilarityType simType;			// Type of  word similarity computation (NGD or Wordnet Lin measure)
+	SearchEngine searchEngine;		// Selected search engine ( Google or Bing)
+	WebSearch webSearch;			// Web Search engine
+	AzureSearchCompositeQuery  aq;	// Search in Bing
 	
-	WebSearch webSearch;					// Web Search engine
-	AzureSearchCompositeQuery  aq;			// Search in Bing
-	
-	long M = (long) 47e9;				// Total pages inddexed by search engine
+	long M = (long) 47e9;				// Total pages indexed by search engine
 	
 	BufferedWriter out;					// Writer of word hits
 
@@ -76,14 +80,9 @@ public class WordDatabase
 		{
 			// Set search engine and storage of word resuls number file
 			webSearch = new WebSearch(searchEngine);
-			/*if(searchEngine == SearchEngine.BING)
-		        hitsFile = bingHitsFile;
-			else*/
+
 			hitsFile = googleHitsFile;
 	       
-			// Read number of hits for each word from file
-			loadHits();
-	        
 	        // Open file to write new words
 			FileWriter fstream;
 			try
@@ -100,14 +99,16 @@ public class WordDatabase
 		}
 		else	// Initialise lin metric distance for each pair of words
 		{
+			
+			//stemmer= new WordnetStemmer(ws.getDictionary());;
 			lin = ws.getLin();
-			//wuPalmer = ws.getWuAndPalmer();
 		}
 	}
 	
 	protected void finalize() throws Throwable
 	{
-		out.close();
+		if(out!=null)
+			out.close();
 		super.finalize(); //not necessary if extending Object.
 	}
 	
@@ -118,8 +119,11 @@ public class WordDatabase
 	/**
 	 * @return the functionWords
 	 */
-	public String[] getFunctionWords()
+	public static String[] getFunctionWords()
 	{
+		if(functionWords==null)
+			readFunctionWords();
+		
 		return functionWords;
 	}
 	
@@ -132,7 +136,7 @@ public class WordDatabase
 	 *-----------------------------------------------------------------------*/
 	
 	/**
-	 * Get similarity of two words using lin measure and Wordnet database
+	 * Get similarity of two words using lin measure and Wordnet as database
 	 * @param word1 First Word
 	 * @param word2 Second word
 	 * @return Similarity between the two words
@@ -154,54 +158,6 @@ public class WordDatabase
 		return val;
 	}
 	
-	/**
-	 * Return the stem of word as contained in wordnet corpus. (e.g.) For word "bodies" , "body" will be returned and not "bodi".
-	 * @param Word Word to reduce to base
-	 * @return Stem of word
-	 */
-	public static String getWordNetStemWord(String word)
-	{
-		if(word.equals("sms"))
-			return word;
-			
-		List<String> stemmedWords = stemmer.findStems(word);	// List of word stems
-		String stemmedWord =  stemmedWords.size()>0?stemmedWords.get(0):word;	// Return the first one if exists. Otherwise, the original word
-		
-		return stemmedWord;
-	}
-	
-	/**
-	 * Find the composite word as contained in word net 
-	 * @param word
-	 * @return
-	 */
-	private static String getWordNetCompositeWord(String word)
-	{
-		StringBuffer wordBuff=new StringBuffer(word);
-		List<String> stemWords;
-		
-		// Get composite word as contained in word net database ( separate simple words with underscore)
-		if(compositeWords.containsKey(word))
-			return compositeWords.get(word);
-		
-		// Put underscore in i-th place of word and test if this is contained in word net database
-		// (using stemmer)
-		for(int i=1;i<word.length();i++)
-		{
-			wordBuff = new StringBuffer(word);
-			wordBuff.insert(i, "_");
-			
-			stemWords = stemmer.findStems(word);
-			if(stemWords.size()>0)
-			{
-				compositeWords.put(word, stemWords.get(0));
-				return stemWords.get(0);
-			}
-		}
-		
-		// Not found in wordnet. Return word as it is
-		return word;
-	}
 	
 	/**
 	 * Google distance as similarity measure
@@ -308,6 +264,127 @@ public class WordDatabase
 	}
 	
 	/**
+	 * Take into consideration the multiplicity of each word
+	 * @param termFrequencies1 Terms with frequencies in document 1
+	 * @param termFrequencies2 Terms with frequencies in document 2
+	 * @param isDistance True for distance. False for similarity
+	 * @return Similarity Or Distance between two word arrays
+	 */
+	public double correlation(Hashtable<String, Integer> termFrequencies1,Hashtable<String, Integer> termFrequencies2,boolean isDistance)
+	{
+		int i= 0;
+		List<String> words1 = new ArrayList<String>();
+		List<String> words2 = new ArrayList<String>();
+		Iterator<Map.Entry<String,Integer>> termFreqIt = termFrequencies1.entrySet().iterator();
+		Map.Entry<String,Integer> termEntry ;
+		
+		while(termFreqIt.hasNext())
+		{
+			termEntry = termFreqIt.next();
+			for(i=0;i<termEntry.getValue();i++)
+				words1.add(termEntry.getKey());
+		}
+		
+		termFreqIt = termFrequencies2.entrySet().iterator();
+		while(termFreqIt.hasNext())
+		{
+			termEntry = termFreqIt.next();
+			for(i=0;i<termEntry.getValue();i++)
+				words2.add(termEntry.getKey());
+		}
+		
+		return correlation(words1.toArray(new String[words1.size()]),words2.toArray(new String[words2.size()]),isDistance);
+	}
+	
+	
+	
+	/*-----------------------------------------------------------------------
+	 *					Word Operations 
+	 *-----------------------------------------------------------------------*/
+	
+	/**
+	 * Return the stem of word as contained in wordnet corpus. (e.g.) For word "bodies" , "body" will be returned and not "bodi".
+	 * @param Word Word to reduce to base
+	 * @return Stem of word
+	 */
+	public static String getWordNetStemWord(String word)
+	{
+		if(word.equals("sms"))
+			return word;
+			
+		List<String> stemmedWords = stemmer.findStems(word);	// List of word stems
+		String stemmedWord =  stemmedWords.size()>0?stemmedWords.get(0):word;	// Return the first one if exists. Otherwise, the original word
+		
+		return stemmedWord;
+	}
+	
+	/**
+	 * Apply porter stemmer to worder to reduce it in base word
+	 * @param word Word to find its stem
+	 * @return Stemmed word
+	 */
+	public static String getPorterStemmedWord(String word)
+	{
+		String stemmedWord;
+		
+		if(word.equals("sms"))
+			return word;
+		
+		//Stemmer
+		Stemmer porterStemmer = new Stemmer();
+		porterStemmer.add(word.toCharArray(),word.length());
+		porterStemmer.stem();
+		stemmedWord = porterStemmer.toString();
+		
+		return stemmedWord;
+	}
+	
+	/*
+	 * A wrapper to get the stemmed word from word net or porter stemmer
+	 */
+	public static String getStemmedWord(String word)
+	{
+		return getWordNetStemWord(word);
+	}
+	
+	/**
+	 * Find the composite word as contained in word net. 
+	 * E.g., if word is "AstronomicalUnit" then search in word net for composite word by changing the position
+	 * of underscore in word from start until end
+	 *  
+	 * @param word Composite word
+	 * @return Composite word in database with the character '_' separating the two simple words.
+	 * If composite word, not found, return the word passed as parameter
+	 */
+	private  String getWordNetCompositeWord(String word)
+	{
+		StringBuffer wordBuff=new StringBuffer(word);
+		List<String> stemWords;
+		
+		// Get composite word as contained in word net database ( separate simple words with underscore)
+		if(compositeWords.containsKey(word))
+			return compositeWords.get(word);
+		
+		// Put underscore in i-th place of word and test if this is contained in word net database
+		// (using stemmer)
+		for(int i=1;i<word.length();i++)
+		{
+			wordBuff = new StringBuffer(word);
+			wordBuff.insert(i, "_");
+			
+			stemWords = stemmer.findStems(word);
+			if(stemWords.size()>0)
+			{
+				compositeWords.put(word, stemWords.get(0));
+				return stemWords.get(0);
+			}
+		}
+		
+		// Not found in wordnet. Return word as it is
+		return word;
+	}
+	
+	/**
 	 * Find estimated document frequency for a word based on difference of num hits for at least one occurrence
 	 * and at at least two occurrences of word
 	 * @param word Word to estimate
@@ -337,11 +414,10 @@ public class WordDatabase
 		String word;	// current word
 		long numHits;	// hits
 		String strLine; // line read
-	//	hits = new Hashtable<String,Long>();
 		
-		// delete all entries
-		WebServicesClusterer.em.getTransaction().begin();
-		Query query = WebServicesClusterer.em.createQuery(
+		// delete all entries from database
+		ObjectDBConn.em.getTransaction().begin();
+		Query query = ObjectDBConn.em.createQuery(
 			      "DELETE FROM WordHits");
 		query.executeUpdate();
 				
@@ -350,19 +426,20 @@ public class WordDatabase
 			FileInputStream fstream = new FileInputStream(hitsFile);
 
 			// Get the object of DataInputStream
-		   DataInputStream in = new DataInputStream(fstream);
-		   BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			DataInputStream in = new DataInputStream(fstream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		   
-		   //Read File Line By Line
+			//Read File Line By Line
 		   while ((strLine = br.readLine()) != null)   
 		   {
 			  word =strLine.split("\t")[0];
 			  numHits = Long.parseLong(strLine.split("\t")[1]);
-			  WebServicesClusterer.em.persist(new WordHits(word,numHits));
+			  ObjectDBConn.em.persist(new WordHits(word,numHits));
 			 // this.hits.put(word, numHits);
 		   }
 		   
-		   WebServicesClusterer.em.getTransaction().commit();
+		   ObjectDBConn.em.getTransaction().commit();
+		   ObjectDBConn.em.clear();
 		   
 		   //Close the input stream
 		   in.close();
@@ -384,27 +461,37 @@ public class WordDatabase
 	 */
 	public void loadHits()
 	{
-		TypedQuery<WordHits> query = WebServicesClusterer.em.createQuery("SELECT wordhits FROM WordHits wordhits", WordHits.class);
-		List<WordHits> wordsHits = query.getResultList();
+		TypedQuery<WordHits> query = ObjectDBConn.em.createQuery("SELECT wordhits FROM WordHits wordhits", WordHits.class);
+		List<WordHits> wordsHits = query.getResultList();	
 		
-		this.hits = new Hashtable<String,Long>();
+		this.hits = new Hashtable<String,Long>(wordsHits.size());
 		for(WordHits wordHits:wordsHits)
 			this.hits.put(wordHits.getWord(), wordHits.getHits());
+		
 	}
 	
 	/**
-	 * Get number of hits for word. First check if word exists in hits map , otherwise do a query
-	 * to search engine and store result to hits file and map.
-	 * @param word Word 
+	 * Get number of hits for word. First check if word exists in map , otherwise do a query
+	 * to search engine and store result to hits file,map and database.
+	 * @param word Word to get its hits in search engine
 	 */
 	public long getHits(String word)
 	{	
-		if(hits.keySet().contains(word))
+		// In case hits is empty, load the hits from database
+		if(hits == null || hits.isEmpty())
+			loadHits();
+		
+		if(hits.containsKey(word))
 			return hits.get(word);
-		/*TypedQuery<Long> query = WebServicesClusterer.em.createQuery(
-			      "SELECT wordhits.hits  FROM WordHits wordhits, Long.class);
-		if( query.getResultList().size()>0)
-			return query.getResultList().get(0);*/
+		
+		// If word composed from two tokens, check if there is a word with the reversed order of tokens
+		String[] tokens = word.split(" ");
+		if(tokens.length>1)
+		{
+			String reverseWord = tokens[1]+" "+tokens[0];
+			if(hits.containsKey(reverseWord))
+				return hits.get(reverseWord);
+		}
 		
 		// if word not exist, search in bing search engine
 		long numHits=0;
@@ -415,14 +502,16 @@ public class WordDatabase
 			numHits = webSearch.search(word.split(" "));	// If more than one words, split them based on whitespace
 			
 			// update db
-			if(!WebServicesClusterer.em.getTransaction().isActive())
-			{
-				WebServicesClusterer.em.getTransaction().begin();
-				WebServicesClusterer.em.persist(new WordHits(word,numHits));
-				WebServicesClusterer.em.getTransaction().commit();
-			}
-			else
-				WebServicesClusterer.em.persist(new WordHits(word,numHits));
+			//if(!ObjectDBConn.em.getTransaction().isActive())
+			//{
+				ObjectDBConn.em.getTransaction().begin();
+				ObjectDBConn.em.persist(new WordHits(word,numHits));
+				ObjectDBConn.em.getTransaction().commit();
+			//}
+			//else
+				//ObjectDBConn.em.persist(new WordHits(word,numHits));
+			
+			ObjectDBConn.em.clear();
 			
 			// update file
 			out.write(word+"\t"+numHits);
@@ -449,7 +538,7 @@ public class WordDatabase
 	 * @return Array of function words
 	 * @throws IOException 
 	 */
-	public void updateFunctionWordsDBFromFile() 
+	public static void updateFunctionWordsDBFromFile() 
 	{
 		int numFunctionWords=0;						// number of function words contained in file
 		LineNumberReader lineNumberReader=null;		// reader of line number 
@@ -457,8 +546,8 @@ public class WordDatabase
 		FileInputStream fstream = null;
 		
 		// delete all entries
-		WebServicesClusterer.em.getTransaction().begin();
-		Query query = WebServicesClusterer.em.createQuery(
+		ObjectDBConn.em.getTransaction().begin();
+		Query query = ObjectDBConn.em.createQuery(
 			      "DELETE FROM FunctionWord");
 		query.executeUpdate();
 		
@@ -476,7 +565,7 @@ public class WordDatabase
 			numFunctionWords = lineNumberReader.getLineNumber();
 			
 			// Initialise function words
-			this.functionWords = new String[numFunctionWords];
+			functionWords = new String[numFunctionWords];
 			
 			// Reset stream and read each function word
 			fstream.getChannel().position(0);
@@ -487,8 +576,8 @@ public class WordDatabase
 			//	WebServicesClusterer.em.persist(functionWords[i] );
 			}
 			
-			WebServicesClusterer.em.persist(new FunctionWord(functionWords));
-			WebServicesClusterer.em.getTransaction().commit();
+			ObjectDBConn.em.persist(new FunctionWord(functionWords));
+			ObjectDBConn.em.getTransaction().commit();
 			
 			lineNumberReader.close();
 			
@@ -499,6 +588,10 @@ public class WordDatabase
 		{
 			ioex.printStackTrace();
 		}
+		finally
+		{
+			ObjectDBConn.em.clear();
+		}
 		
 	}
 	
@@ -506,15 +599,19 @@ public class WordDatabase
 	 * Read function words from database
 	 * @return Array of function words
 	 */
-	public String[] readFunctionWords()
+	public static String[] readFunctionWords()
 	{
-		TypedQuery<FunctionWord> query = WebServicesClusterer.em.createQuery(
-			      "SELECT fw FROM FunctionWord AS fw ", FunctionWord.class);
-		FunctionWord functionWord = query.getResultList().get(0);
-		
-		this.functionWords = functionWord.getWords();
-		
-		return this.functionWords;
+		// If function words is uninitialised, retrieve the list from database
+		if(functionWords==null)
+		{
+			TypedQuery<FunctionWord> query = ObjectDBConn.em.createQuery(
+				      "SELECT fw FROM FunctionWord AS fw ", FunctionWord.class);
+			FunctionWord functionWord = query.getResultList().get(0);
+			
+			functionWords = functionWord.getWords();
+		}
+	
+		return functionWords;
 	}
 	
 	/*-----------------------------------------------------------------------
@@ -541,9 +638,12 @@ public class WordDatabase
 		words.addAll(abbreviations);	// add abbreviations in words set
 		
 		// add words separated by capital letters
-		simpleWords = wordBuffer.toString().split("(?=\\p{Upper})");
+		simpleWords = wordBuffer.toString().split("_|(?=[A-Z])");
 		for(String simpleWord:simpleWords)
 		{
+			if(simpleWord.isEmpty())
+				continue;
+			
 			if(simpleWord.matches(".*\\d.*")) // if word contains number, remove number
 				simpleWord = simpleWord.replaceAll("\\d","");
 			

@@ -1,0 +1,195 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:element name="GetBalance">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OrderID" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetBalanceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetBalanceResult" type="s:decimal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDueDate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OrderID" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDueDateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetDueDateResult" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetShipDate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OrderID" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetShipDateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetShipDateResult" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetShipStatus">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="OrderID" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetShipStatusResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetShipStatusResult" type="tns:ShipStatus"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="ShipStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="Pending"/>
+               <s:enumeration value="Shipped"/>
+               <s:enumeration value="Backordered"/>
+               <s:enumeration value="Cancelled"/>
+            </s:restriction>
+         </s:simpleType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetBalanceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetBalance"/>
+  </wsdl:message>
+  <wsdl:message name="GetBalanceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetBalanceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDueDateSoapIn">
+      <wsdl:part name="parameters" element="tns:GetDueDate"/>
+  </wsdl:message>
+  <wsdl:message name="GetDueDateSoapOut">
+      <wsdl:part name="parameters" element="tns:GetDueDateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetShipDateSoapIn">
+      <wsdl:part name="parameters" element="tns:GetShipDate"/>
+  </wsdl:message>
+  <wsdl:message name="GetShipDateSoapOut">
+      <wsdl:part name="parameters" element="tns:GetShipDateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetShipStatusSoapIn">
+      <wsdl:part name="parameters" element="tns:GetShipStatus"/>
+  </wsdl:message>
+  <wsdl:message name="GetShipStatusSoapOut">
+      <wsdl:part name="parameters" element="tns:GetShipStatusResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GetOrderInfoSoap">
+      <wsdl:operation name="GetBalance">
+         <wsdl:input message="tns:GetBalanceSoapIn"/>
+         <wsdl:output message="tns:GetBalanceSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetDueDate">
+         <wsdl:input message="tns:GetDueDateSoapIn"/>
+         <wsdl:output message="tns:GetDueDateSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetShipDate">
+         <wsdl:input message="tns:GetShipDateSoapIn"/>
+         <wsdl:output message="tns:GetShipDateSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetShipStatus">
+         <wsdl:input message="tns:GetShipStatusSoapIn"/>
+         <wsdl:output message="tns:GetShipStatusSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetOrderInfoSoap" type="tns:GetOrderInfoSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetBalance">
+         <soap:operation soapAction="http://tempuri.org/GetBalance" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetDueDate">
+         <soap:operation soapAction="http://tempuri.org/GetDueDate" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetShipDate">
+         <soap:operation soapAction="http://tempuri.org/GetShipDate" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetShipStatus">
+         <soap:operation soapAction="http://tempuri.org/GetShipStatus" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetOrderInfo">
+      <wsdl:port name="GetOrderInfoSoap" binding="tns:GetOrderInfoSoap">
+         <soap:address location="http://ws.soatrader.com/nctm.org/0.1/GetOrderInfo"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

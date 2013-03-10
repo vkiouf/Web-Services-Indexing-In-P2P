@@ -1,0 +1,571 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:i1="https://www.tricommerce.co.uk/xGate/AddressInformation.xsd"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:i3="https://www.tricommerce.co.uk/xGate/InvoiceSendingFormatList.xsd"
+                  xmlns:i2="https://www.tricommerce.co.uk/xGate/CustomerTypesList.xsd"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:i0="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"
+                  xmlns:tns="https://www.tricommerce.co.uk/xGate"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="https://www.tricommerce.co.uk/xGate">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:import namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"
+                location="https://www.tricommerce.co.uk/xGateWebservice/Services/Customer.asmx?schema=CustomerInformation"/>
+  <wsdl:import namespace="https://www.tricommerce.co.uk/xGate/AddressInformation.xsd"
+                location="https://www.tricommerce.co.uk/xGateWebservice/Services/Customer.asmx?schema=AddressInformation"/>
+  <wsdl:import namespace="https://www.tricommerce.co.uk/xGate/CustomerTypesList.xsd"
+                location="https://www.tricommerce.co.uk/xGateWebservice/Services/Customer.asmx?schema=CustomerTypesList"/>
+  <wsdl:import namespace="https://www.tricommerce.co.uk/xGate/InvoiceSendingFormatList.xsd"
+                location="https://www.tricommerce.co.uk/xGateWebservice/Services/Customer.asmx?schema=InvoiceSendingFormatList"/>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="https://www.tricommerce.co.uk/xGate">
+         <s:import namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"/>
+         <s:import namespace="https://www.tricommerce.co.uk/xGate/AddressInformation.xsd"/>
+         <s:import namespace="https://www.tricommerce.co.uk/xGate/CustomerTypesList.xsd"/>
+         <s:import namespace="https://www.tricommerce.co.uk/xGate/InvoiceSendingFormatList.xsd"/>
+         <s:element name="GetCustomerInformationFromPostcodeLookup">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Postcode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCustomerInformationFromPostcodeLookupResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1"
+                             name="GetCustomerInformationFromPostcodeLookupResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AuthenticationHeader" type="tns:AuthenticationHeader"/>
+         <s:complexType name="AuthenticationHeader">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AuthenticationToken" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetAddressInformationFromPostcodeLookup">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Postcode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAddressInformationFromPostcodeLookupResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1"
+                             name="GetAddressInformationFromPostcodeLookupResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/AddressInformation.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCustomerInformationFromAccountCodeLookup">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCustomerInformationFromAccountCodeLookupResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1"
+                             name="GetCustomerInformationFromAccountCodeLookupResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetEmptyCustomerInformationObject">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetEmptyCustomerInformationObjectResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetEmptyCustomerInformationObjectResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCustomerInformationFromPreviousOrder">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ServiceType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OrderID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCustomerInformationFromPreviousOrderResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1"
+                             name="GetCustomerInformationFromPreviousOrderResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SaveUsersCustomerInformation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UsersCustomerInformation">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SaveUsersCustomerInformationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="SaveUsersCustomerInformationResult"
+                             type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetListOfCustomerTypes">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetListOfCustomerTypesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetListOfCustomerTypesResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/CustomerTypesList.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetListOfInvoiceSendingFormats">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetListOfInvoiceSendingFormatsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetListOfInvoiceSendingFormatsResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="https://www.tricommerce.co.uk/xGate/InvoiceSendingFormatList.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CustomerInformation" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:any namespace="https://www.tricommerce.co.uk/xGate/CustomerInformation.xsd"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddressInformation" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:any namespace="https://www.tricommerce.co.uk/xGate/AddressInformation.xsd"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CustomerTypesList" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:any namespace="https://www.tricommerce.co.uk/xGate/CustomerTypesList.xsd"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InvoiceSendingFormatList" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:any namespace="https://www.tricommerce.co.uk/xGate/InvoiceSendingFormatList.xsd"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCustomerInformationFromPostcodeLookupSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCustomerInformationFromPostcodeLookup"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPostcodeLookupSoapOut">
+      <wsdl:part name="parameters"
+                 element="tns:GetCustomerInformationFromPostcodeLookupResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPostcodeLookupAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressInformationFromPostcodeLookupSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAddressInformationFromPostcodeLookup"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressInformationFromPostcodeLookupSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAddressInformationFromPostcodeLookupResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressInformationFromPostcodeLookupAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromAccountCodeLookupSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCustomerInformationFromAccountCodeLookup"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromAccountCodeLookupSoapOut">
+      <wsdl:part name="parameters"
+                 element="tns:GetCustomerInformationFromAccountCodeLookupResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromAccountCodeLookupAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmptyCustomerInformationObjectSoapIn">
+      <wsdl:part name="parameters" element="tns:GetEmptyCustomerInformationObject"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmptyCustomerInformationObjectSoapOut">
+      <wsdl:part name="parameters" element="tns:GetEmptyCustomerInformationObjectResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmptyCustomerInformationObjectAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPreviousOrderSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCustomerInformationFromPreviousOrder"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPreviousOrderSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCustomerInformationFromPreviousOrderResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPreviousOrderAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="SaveUsersCustomerInformationSoapIn">
+      <wsdl:part name="parameters" element="tns:SaveUsersCustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="SaveUsersCustomerInformationSoapOut">
+      <wsdl:part name="parameters" element="tns:SaveUsersCustomerInformationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SaveUsersCustomerInformationAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetListOfCustomerTypesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetListOfCustomerTypes"/>
+  </wsdl:message>
+  <wsdl:message name="GetListOfCustomerTypesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetListOfCustomerTypesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetListOfCustomerTypesAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetListOfInvoiceSendingFormatsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetListOfInvoiceSendingFormats"/>
+  </wsdl:message>
+  <wsdl:message name="GetListOfInvoiceSendingFormatsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetListOfInvoiceSendingFormatsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetListOfInvoiceSendingFormatsAuthenticationHeader">
+      <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPostcodeLookupHttpGetIn">
+      <wsdl:part name="Postcode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPostcodeLookupHttpGetOut">
+      <wsdl:part name="Body" element="tns:CustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressInformationFromPostcodeLookupHttpGetIn">
+      <wsdl:part name="Postcode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressInformationFromPostcodeLookupHttpGetOut">
+      <wsdl:part name="Body" element="tns:AddressInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromAccountCodeLookupHttpGetIn">
+      <wsdl:part name="AccountCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromAccountCodeLookupHttpGetOut">
+      <wsdl:part name="Body" element="tns:CustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmptyCustomerInformationObjectHttpGetIn"/>
+  <wsdl:message name="GetEmptyCustomerInformationObjectHttpGetOut">
+      <wsdl:part name="Body" element="tns:CustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPreviousOrderHttpGetIn">
+      <wsdl:part name="ServiceType" type="s:string"/>
+      <wsdl:part name="OrderID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPreviousOrderHttpGetOut">
+      <wsdl:part name="Body" element="tns:CustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetListOfCustomerTypesHttpGetIn"/>
+  <wsdl:message name="GetListOfCustomerTypesHttpGetOut">
+      <wsdl:part name="Body" element="tns:CustomerTypesList"/>
+  </wsdl:message>
+  <wsdl:message name="GetListOfInvoiceSendingFormatsHttpGetIn"/>
+  <wsdl:message name="GetListOfInvoiceSendingFormatsHttpGetOut">
+      <wsdl:part name="Body" element="tns:InvoiceSendingFormatList"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPostcodeLookupHttpPostIn">
+      <wsdl:part name="Postcode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPostcodeLookupHttpPostOut">
+      <wsdl:part name="Body" element="tns:CustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressInformationFromPostcodeLookupHttpPostIn">
+      <wsdl:part name="Postcode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressInformationFromPostcodeLookupHttpPostOut">
+      <wsdl:part name="Body" element="tns:AddressInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromAccountCodeLookupHttpPostIn">
+      <wsdl:part name="AccountCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromAccountCodeLookupHttpPostOut">
+      <wsdl:part name="Body" element="tns:CustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmptyCustomerInformationObjectHttpPostIn"/>
+  <wsdl:message name="GetEmptyCustomerInformationObjectHttpPostOut">
+      <wsdl:part name="Body" element="tns:CustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPreviousOrderHttpPostIn">
+      <wsdl:part name="ServiceType" type="s:string"/>
+      <wsdl:part name="OrderID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerInformationFromPreviousOrderHttpPostOut">
+      <wsdl:part name="Body" element="tns:CustomerInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetListOfCustomerTypesHttpPostIn"/>
+  <wsdl:message name="GetListOfCustomerTypesHttpPostOut">
+      <wsdl:part name="Body" element="tns:CustomerTypesList"/>
+  </wsdl:message>
+  <wsdl:message name="GetListOfInvoiceSendingFormatsHttpPostIn"/>
+  <wsdl:message name="GetListOfInvoiceSendingFormatsHttpPostOut">
+      <wsdl:part name="Body" element="tns:InvoiceSendingFormatList"/>
+  </wsdl:message>
+  <wsdl:portType name="CustomerSoap">
+      <wsdl:operation name="GetCustomerInformationFromPostcodeLookup">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a dataset of customer information based on a postcode lookup</documentation>
+         <wsdl:input message="tns:GetCustomerInformationFromPostcodeLookupSoapIn"/>
+         <wsdl:output message="tns:GetCustomerInformationFromPostcodeLookupSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetAddressInformationFromPostcodeLookup">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a dataset of address information based on a postcode lookup</documentation>
+         <wsdl:input message="tns:GetAddressInformationFromPostcodeLookupSoapIn"/>
+         <wsdl:output message="tns:GetAddressInformationFromPostcodeLookupSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCustomerInformationFromAccountCodeLookup">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a dataset of customer information from an account code lookup</documentation>
+         <wsdl:input message="tns:GetCustomerInformationFromAccountCodeLookupSoapIn"/>
+         <wsdl:output message="tns:GetCustomerInformationFromAccountCodeLookupSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetEmptyCustomerInformationObject">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns an empty dataset of customer information.</documentation>
+         <wsdl:input message="tns:GetEmptyCustomerInformationObjectSoapIn"/>
+         <wsdl:output message="tns:GetEmptyCustomerInformationObjectSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCustomerInformationFromPreviousOrder">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a dataset of customer information from a previous order</documentation>
+         <wsdl:input message="tns:GetCustomerInformationFromPreviousOrderSoapIn"/>
+         <wsdl:output message="tns:GetCustomerInformationFromPreviousOrderSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SaveUsersCustomerInformation">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Saves details for a customer</documentation>
+         <wsdl:input message="tns:SaveUsersCustomerInformationSoapIn"/>
+         <wsdl:output message="tns:SaveUsersCustomerInformationSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetListOfCustomerTypes">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets a List of Customer Types</documentation>
+         <wsdl:input message="tns:GetListOfCustomerTypesSoapIn"/>
+         <wsdl:output message="tns:GetListOfCustomerTypesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetListOfInvoiceSendingFormats">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets a List of invoice sending formats</documentation>
+         <wsdl:input message="tns:GetListOfInvoiceSendingFormatsSoapIn"/>
+         <wsdl:output message="tns:GetListOfInvoiceSendingFormatsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="CustomerSoap" type="tns:CustomerSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetCustomerInformationFromPostcodeLookup">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/GetCustomerInformationFromPostcodeLookup"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCustomerInformationFromPostcodeLookupAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAddressInformationFromPostcodeLookup">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/GetAddressInformationFromPostcodeLookup"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetAddressInformationFromPostcodeLookupAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCustomerInformationFromAccountCodeLookup">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/GetCustomerInformationFromAccountCodeLookup"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCustomerInformationFromAccountCodeLookupAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetEmptyCustomerInformationObject">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/GetEmptyCustomerInformationObject"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetEmptyCustomerInformationObjectAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCustomerInformationFromPreviousOrder">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/GetCustomerInformationFromPreviousOrder"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCustomerInformationFromPreviousOrderAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SaveUsersCustomerInformation">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/SaveUsersCustomerInformation"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SaveUsersCustomerInformationAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetListOfCustomerTypes">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/GetListOfCustomerTypes"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetListOfCustomerTypesAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetListOfInvoiceSendingFormats">
+         <soap:operation soapAction="https://www.tricommerce.co.uk/xGate/GetListOfInvoiceSendingFormats"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetListOfInvoiceSendingFormatsAuthenticationHeader"
+                         part="AuthenticationHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="Customer">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Contains customer related functions.</documentation>
+      <wsdl:port name="CustomerSoap" binding="tns:CustomerSoap">
+         <soap:address location="http://ws.soatrader.com/tricommerce.co.uk/0.1/Customer"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

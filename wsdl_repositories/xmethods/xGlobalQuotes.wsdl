@@ -1,0 +1,1241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.xignite.com/services/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://www.xignite.com/services/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This web service provides global delayed stock quotes and for U.S. and international equities.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.xignite.com/services/">
+      <s:element name="GetGlobalDelayedQuote">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="tns:IdentifierTypes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="IdentifierTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="Symbol" />
+          <s:enumeration value="CIK" />
+          <s:enumeration value="CUSIP" />
+          <s:enumeration value="ISIN" />
+          <s:enumeration value="Valoren" />
+          <s:enumeration value="SEDOL" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetGlobalDelayedQuoteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGlobalDelayedQuoteResult" type="tns:GlobalQuote" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="GlobalQuote">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Security" type="tns:Security" />
+              <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Open" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="High" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Low" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Last" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Volume" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="PreviousClose" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Change" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="PercentChange" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Bid" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Ask" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="Currency" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Common">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Outcome" type="tns:OutcomeTypes" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Identity" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Delay" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="OutcomeTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="Success" />
+          <s:enumeration value="SystemError" />
+          <s:enumeration value="RequestError" />
+          <s:enumeration value="RegistrationError" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="Security">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CIK" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Cusip" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ISIN" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Valoren" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Market" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CategoryOrIndustry" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="Header" type="tns:Header" />
+      <s:complexType name="Header">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Tracer" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="GetGlobalDelayedQuotes">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Identifiers" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="tns:IdentifierTypes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGlobalDelayedQuotesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGlobalDelayedQuotesResult" type="tns:ArrayOfGlobalQuote" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfGlobalQuote">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="GlobalQuote" nillable="true" type="tns:GlobalQuote" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetGlobalTick">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="tns:IdentifierTypes" />
+            <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGlobalTickResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGlobalTickResult" type="tns:SingleTick" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="SingleTick">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CommonTick">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CommonTick">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CommonDAObject" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CommonDAObject">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetGlobalTicks">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="tns:IdentifierTypes" />
+            <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="MinutesPerTick" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGlobalTicksResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGlobalTicksResult" type="tns:Ticks" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Ticks">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CommonDAObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TickSet" type="tns:ArrayOfTick" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfTick">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Tick" nillable="true" type="tns:Tick" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Tick">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CommonTick">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Change" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="PercentChange" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="High" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Low" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Open" type="s:double" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetDelayedChart">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AdditionalSymbols" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Style" type="tns:StockChartStyles" />
+            <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="StockChartStyles">
+        <s:restriction base="s:string">
+          <s:enumeration value="Line" />
+          <s:enumeration value="Candle" />
+          <s:enumeration value="Stick" />
+          <s:enumeration value="Area" />
+          <s:enumeration value="Percentage" />
+          <s:enumeration value="LinePercentage" />
+          <s:enumeration value="CandlePercentage" />
+          <s:enumeration value="StickPercentage" />
+          <s:enumeration value="AreaPercentage" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetDelayedChartResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDelayedChartResult" type="tns:IntradayChart" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="IntradayChart">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:StockChart">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Security" type="tns:Security" />
+              <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Style" type="tns:StockChartStyles" />
+              <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="StockChart">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Design" type="tns:ChartDesign" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ChartDesign">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Secure" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextTitle" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextHeader" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextFooter" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextPriceLine" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextVolumeBar" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextHighest" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextLowest" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextOpen" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextClose" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextUp" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextDown" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorBackground" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorBackWall" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorVolumeBackWall" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShowVolumeBackWall" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorHighlight" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorPriceLine" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorVolumeBar" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorVolumeBarFill" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorHigh" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorStickUp" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorStickLow" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorConstant" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorLow" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorPoint" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorTitle" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorFooter" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorHeader" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorAxis" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorGrid" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorFonts" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorStripe" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorOpen" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorClose" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorVerticalGrid" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorHorizontalGrid" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorUp" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorDown" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorHighLowLine" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorCollection" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="GridHorizontalStyle" type="tns:LinePattern" />
+              <s:element minOccurs="1" maxOccurs="1" name="GridVerticalStyle" type="tns:LinePattern" />
+              <s:element minOccurs="1" maxOccurs="1" name="GridHorizontalWidth" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="GridVerticalWidth" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorFrame" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FrameBorder" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FormatPriceLine" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FormatVolume" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FormatDate" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="GradeBackground" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="GradeBackwall" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="WaterMark" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="WaterMarkTopMargin" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WaterMarkLeftMargin" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WaterMarkTransparency" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="PointSize" type="s:float" />
+              <s:element minOccurs="1" maxOccurs="1" name="StackVariationLabels" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShowAxisLabelInLegend" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="LineWidth" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SplitPercent" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShowHigh" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShowLow" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShowOpen" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShowClose" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShowVolume" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShowUpVariation" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShowDownVariation" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShowLegend" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="VariationYear" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="VolumeDivider" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="VolumeTextOffset" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="PriceTextOffset" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="FrameType" type="tns:ImageFrameType" />
+              <s:element minOccurs="1" maxOccurs="1" name="Projection" type="tns:PredefinedProjection" />
+              <s:element minOccurs="1" maxOccurs="1" name="MarginTop" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="MarginBottom" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="MarginLeft" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="MarginRight" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="FontFamily" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="FontSizeHeader" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="FontSizeFooter" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ZoomPercent" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LegendBox" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorLegendBackground" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ColorLegendBorder" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="LegendVerticalPosition" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LegendHorizontalPosition" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Reload" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShowPriceChartLabels" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="TickPrecision" type="tns:TickPeriod" />
+              <s:element minOccurs="1" maxOccurs="1" name="TickPeriods" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WaterMarkHorizontalAlign" type="tns:HorzAlign" />
+              <s:element minOccurs="1" maxOccurs="1" name="LightScheme" type="tns:PredefinedLightModel" />
+              <s:element minOccurs="1" maxOccurs="1" name="FontSizeLegend" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="FontSizeAxes" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="FontSizeTitle" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DaysForHourDisplay" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DaysForDayDisplay" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DaysForWeekDisplay" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DaysForBiWeeklyDisplay" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DaysForMonthDisplay" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DaysForQuarterDisplay" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DaysForSemiAnnualDisplay" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DaysForAnnualDisplay" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DaysForBiAnnualDisplay" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DaysForPentaAnnualDisplay" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="LinePattern">
+        <s:restriction base="s:string">
+          <s:enumeration value="Solid" />
+          <s:enumeration value="Dot" />
+          <s:enumeration value="Dash" />
+          <s:enumeration value="DashDot" />
+          <s:enumeration value="DashDotDot" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="ImageFrameType">
+        <s:restriction base="s:string">
+          <s:enumeration value="None" />
+          <s:enumeration value="Colonial" />
+          <s:enumeration value="Common" />
+          <s:enumeration value="Embed" />
+          <s:enumeration value="Emboss" />
+          <s:enumeration value="FrameOpenRight" />
+          <s:enumeration value="FrameOpenRL" />
+          <s:enumeration value="OneBarGradient" />
+          <s:enumeration value="RoundedUp" />
+          <s:enumeration value="SlimRoundedShadowed" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="PredefinedProjection">
+        <s:restriction base="s:string">
+          <s:enumeration value="Orthogonal" />
+          <s:enumeration value="OrthogonalElevated" />
+          <s:enumeration value="OrthogonalHorizontalLeft" />
+          <s:enumeration value="OrthogonalHorizontalRight" />
+          <s:enumeration value="OrthogonalHalf" />
+          <s:enumeration value="OrthogonalHalfHorizontalLeft" />
+          <s:enumeration value="OrthogonalHalfHorizontalRight" />
+          <s:enumeration value="OrthogonalHalfRotated" />
+          <s:enumeration value="OrthogonalHalfElevated" />
+          <s:enumeration value="Perspective" />
+          <s:enumeration value="PerspectiveHorizontalLeft" />
+          <s:enumeration value="PerspectiveHorizontalRight" />
+          <s:enumeration value="PerspectiveRotated" />
+          <s:enumeration value="PerspectiveElevated" />
+          <s:enumeration value="PerspectiveTilted" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="TickPeriod">
+        <s:restriction base="s:string">
+          <s:enumeration value="Tick" />
+          <s:enumeration value="Millisecond" />
+          <s:enumeration value="Second" />
+          <s:enumeration value="Minute" />
+          <s:enumeration value="Hour" />
+          <s:enumeration value="Day" />
+          <s:enumeration value="Week" />
+          <s:enumeration value="Month" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="HorzAlign">
+        <s:restriction base="s:string">
+          <s:enumeration value="Center" />
+          <s:enumeration value="Left" />
+          <s:enumeration value="Right" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="PredefinedLightModel">
+        <s:restriction base="s:string">
+          <s:enumeration value="None" />
+          <s:enumeration value="SoftTopLeft" />
+          <s:enumeration value="SoftFrontal" />
+          <s:enumeration value="SoftTopRight" />
+          <s:enumeration value="ShinyTopLeft" />
+          <s:enumeration value="ShinyFrontal" />
+          <s:enumeration value="ShinyTopRight" />
+          <s:enumeration value="MetallicLustre" />
+          <s:enumeration value="NorthernLights" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetDelayedBinaryChart">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AdditionalSymbols" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Style" type="tns:StockChartStyles" />
+            <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDelayedBinaryChartResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDelayedBinaryChartResult" type="tns:IntradayChart" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDelayedChartCustom">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AdditionalSymbols" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Style" type="tns:StockChartStyles" />
+            <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Design" type="tns:ChartDesign" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDelayedChartCustomResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDelayedChartCustomResult" type="tns:IntradayChart" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDelayedChartPreset">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AdditionalSymbols" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Style" type="tns:StockChartStyles" />
+            <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Preset" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDelayedChartPresetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDelayedChartPresetResult" type="tns:IntradayChart" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetChartDesign">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetChartDesignResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetChartDesignResult" type="tns:ChartDesign" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GlobalQuote" nillable="true" type="tns:GlobalQuote" />
+      <s:element name="ArrayOfGlobalQuote" nillable="true" type="tns:ArrayOfGlobalQuote" />
+      <s:element name="SingleTick" nillable="true" type="tns:SingleTick" />
+      <s:element name="Ticks" nillable="true" type="tns:Ticks" />
+      <s:element name="IntradayChart" nillable="true" type="tns:IntradayChart" />
+      <s:element name="ChartDesign" nillable="true" type="tns:ChartDesign" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetGlobalDelayedQuoteSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGlobalDelayedQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuoteSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGlobalDelayedQuoteResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuoteHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuotesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGlobalDelayedQuotes" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuotesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGlobalDelayedQuotesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuotesHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTickSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGlobalTick" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTickSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGlobalTickResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTickHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTicksSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGlobalTicks" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTicksSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGlobalTicksResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTicksHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDelayedChart" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDelayedChartResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedBinaryChartSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDelayedBinaryChart" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedBinaryChartSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDelayedBinaryChartResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedBinaryChartHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartCustomSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDelayedChartCustom" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartCustomSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDelayedChartCustomResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartCustomHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartPresetSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDelayedChartPreset" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartPresetSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDelayedChartPresetResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartPresetHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetChartDesignSoapIn">
+    <wsdl:part name="parameters" element="tns:GetChartDesign" />
+  </wsdl:message>
+  <wsdl:message name="GetChartDesignSoapOut">
+    <wsdl:part name="parameters" element="tns:GetChartDesignResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetChartDesignHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuoteHttpGetIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuoteHttpGetOut">
+    <wsdl:part name="Body" element="tns:GlobalQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuotesHttpGetIn">
+    <wsdl:part name="Identifiers" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuotesHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfGlobalQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTickHttpGetIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+    <wsdl:part name="Time" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTickHttpGetOut">
+    <wsdl:part name="Body" element="tns:SingleTick" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTicksHttpGetIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+    <wsdl:part name="StartTime" type="s:string" />
+    <wsdl:part name="EndTime" type="s:string" />
+    <wsdl:part name="MinutesPerTick" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTicksHttpGetOut">
+    <wsdl:part name="Body" element="tns:Ticks" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartHttpGetIn">
+    <wsdl:part name="Symbol" type="s:string" />
+    <wsdl:part name="AdditionalSymbols" type="s:string" />
+    <wsdl:part name="StartTime" type="s:string" />
+    <wsdl:part name="EndTime" type="s:string" />
+    <wsdl:part name="Style" type="s:string" />
+    <wsdl:part name="Width" type="s:string" />
+    <wsdl:part name="Height" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartHttpGetOut">
+    <wsdl:part name="Body" element="tns:IntradayChart" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedBinaryChartHttpGetIn">
+    <wsdl:part name="Symbol" type="s:string" />
+    <wsdl:part name="AdditionalSymbols" type="s:string" />
+    <wsdl:part name="StartTime" type="s:string" />
+    <wsdl:part name="EndTime" type="s:string" />
+    <wsdl:part name="Style" type="s:string" />
+    <wsdl:part name="Width" type="s:string" />
+    <wsdl:part name="Height" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedBinaryChartHttpGetOut">
+    <wsdl:part name="Body" element="tns:IntradayChart" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartPresetHttpGetIn">
+    <wsdl:part name="Symbol" type="s:string" />
+    <wsdl:part name="AdditionalSymbols" type="s:string" />
+    <wsdl:part name="StartTime" type="s:string" />
+    <wsdl:part name="EndTime" type="s:string" />
+    <wsdl:part name="Style" type="s:string" />
+    <wsdl:part name="Width" type="s:string" />
+    <wsdl:part name="Height" type="s:string" />
+    <wsdl:part name="Preset" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartPresetHttpGetOut">
+    <wsdl:part name="Body" element="tns:IntradayChart" />
+  </wsdl:message>
+  <wsdl:message name="GetChartDesignHttpGetIn" />
+  <wsdl:message name="GetChartDesignHttpGetOut">
+    <wsdl:part name="Body" element="tns:ChartDesign" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuoteHttpPostIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuoteHttpPostOut">
+    <wsdl:part name="Body" element="tns:GlobalQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuotesHttpPostIn">
+    <wsdl:part name="Identifiers" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalDelayedQuotesHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfGlobalQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTickHttpPostIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+    <wsdl:part name="Time" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTickHttpPostOut">
+    <wsdl:part name="Body" element="tns:SingleTick" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTicksHttpPostIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+    <wsdl:part name="StartTime" type="s:string" />
+    <wsdl:part name="EndTime" type="s:string" />
+    <wsdl:part name="MinutesPerTick" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetGlobalTicksHttpPostOut">
+    <wsdl:part name="Body" element="tns:Ticks" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartHttpPostIn">
+    <wsdl:part name="Symbol" type="s:string" />
+    <wsdl:part name="AdditionalSymbols" type="s:string" />
+    <wsdl:part name="StartTime" type="s:string" />
+    <wsdl:part name="EndTime" type="s:string" />
+    <wsdl:part name="Style" type="s:string" />
+    <wsdl:part name="Width" type="s:string" />
+    <wsdl:part name="Height" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartHttpPostOut">
+    <wsdl:part name="Body" element="tns:IntradayChart" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedBinaryChartHttpPostIn">
+    <wsdl:part name="Symbol" type="s:string" />
+    <wsdl:part name="AdditionalSymbols" type="s:string" />
+    <wsdl:part name="StartTime" type="s:string" />
+    <wsdl:part name="EndTime" type="s:string" />
+    <wsdl:part name="Style" type="s:string" />
+    <wsdl:part name="Width" type="s:string" />
+    <wsdl:part name="Height" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedBinaryChartHttpPostOut">
+    <wsdl:part name="Body" element="tns:IntradayChart" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartPresetHttpPostIn">
+    <wsdl:part name="Symbol" type="s:string" />
+    <wsdl:part name="AdditionalSymbols" type="s:string" />
+    <wsdl:part name="StartTime" type="s:string" />
+    <wsdl:part name="EndTime" type="s:string" />
+    <wsdl:part name="Style" type="s:string" />
+    <wsdl:part name="Width" type="s:string" />
+    <wsdl:part name="Height" type="s:string" />
+    <wsdl:part name="Preset" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDelayedChartPresetHttpPostOut">
+    <wsdl:part name="Body" element="tns:IntradayChart" />
+  </wsdl:message>
+  <wsdl:message name="GetChartDesignHttpPostIn" />
+  <wsdl:message name="GetChartDesignHttpPostOut">
+    <wsdl:part name="Body" element="tns:ChartDesign" />
+  </wsdl:message>
+  <wsdl:portType name="XigniteGlobalQuotesSoap">
+    <wsdl:operation name="GetGlobalDelayedQuote">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a delayed quote for a global security.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalDelayedQuoteSoapIn" />
+      <wsdl:output message="tns:GetGlobalDelayedQuoteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDelayedQuotes">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns delayed quotes for a collection of global securities.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalDelayedQuotesSoapIn" />
+      <wsdl:output message="tns:GetGlobalDelayedQuotesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTick">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a single tick for a global security.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalTickSoapIn" />
+      <wsdl:output message="tns:GetGlobalTickSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTicks">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a set of ticks for a global security.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalTicksSoapIn" />
+      <wsdl:output message="tns:GetGlobalTicksSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChart">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a standard IntraDay price chart for a security.</wsdl:documentation>
+      <wsdl:input message="tns:GetDelayedChartSoapIn" />
+      <wsdl:output message="tns:GetDelayedChartSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedBinaryChart">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a standard IntraDay price chart for a security.</wsdl:documentation>
+      <wsdl:input message="tns:GetDelayedBinaryChartSoapIn" />
+      <wsdl:output message="tns:GetDelayedBinaryChartSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChartCustom">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a custom IntraDay price chart for a security.</wsdl:documentation>
+      <wsdl:input message="tns:GetDelayedChartCustomSoapIn" />
+      <wsdl:output message="tns:GetDelayedChartCustomSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChartPreset">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a standard IntraDay price chart for a security.</wsdl:documentation>
+      <wsdl:input message="tns:GetDelayedChartPresetSoapIn" />
+      <wsdl:output message="tns:GetDelayedChartPresetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChartDesign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the default settings for the Chart.</wsdl:documentation>
+      <wsdl:input message="tns:GetChartDesignSoapIn" />
+      <wsdl:output message="tns:GetChartDesignSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="XigniteGlobalQuotesHttpGet">
+    <wsdl:operation name="GetGlobalDelayedQuote">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a delayed quote for a global security.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalDelayedQuoteHttpGetIn" />
+      <wsdl:output message="tns:GetGlobalDelayedQuoteHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDelayedQuotes">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns delayed quotes for a collection of global securities.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalDelayedQuotesHttpGetIn" />
+      <wsdl:output message="tns:GetGlobalDelayedQuotesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTick">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a single tick for a global security.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalTickHttpGetIn" />
+      <wsdl:output message="tns:GetGlobalTickHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTicks">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a set of ticks for a global security.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalTicksHttpGetIn" />
+      <wsdl:output message="tns:GetGlobalTicksHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChart">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a standard IntraDay price chart for a security.</wsdl:documentation>
+      <wsdl:input message="tns:GetDelayedChartHttpGetIn" />
+      <wsdl:output message="tns:GetDelayedChartHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedBinaryChart">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a standard IntraDay price chart for a security.</wsdl:documentation>
+      <wsdl:input message="tns:GetDelayedBinaryChartHttpGetIn" />
+      <wsdl:output message="tns:GetDelayedBinaryChartHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChartPreset">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a standard IntraDay price chart for a security.</wsdl:documentation>
+      <wsdl:input message="tns:GetDelayedChartPresetHttpGetIn" />
+      <wsdl:output message="tns:GetDelayedChartPresetHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChartDesign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the default settings for the Chart.</wsdl:documentation>
+      <wsdl:input message="tns:GetChartDesignHttpGetIn" />
+      <wsdl:output message="tns:GetChartDesignHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="XigniteGlobalQuotesHttpPost">
+    <wsdl:operation name="GetGlobalDelayedQuote">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a delayed quote for a global security.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalDelayedQuoteHttpPostIn" />
+      <wsdl:output message="tns:GetGlobalDelayedQuoteHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDelayedQuotes">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns delayed quotes for a collection of global securities.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalDelayedQuotesHttpPostIn" />
+      <wsdl:output message="tns:GetGlobalDelayedQuotesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTick">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a single tick for a global security.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalTickHttpPostIn" />
+      <wsdl:output message="tns:GetGlobalTickHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTicks">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a set of ticks for a global security.</wsdl:documentation>
+      <wsdl:input message="tns:GetGlobalTicksHttpPostIn" />
+      <wsdl:output message="tns:GetGlobalTicksHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChart">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a standard IntraDay price chart for a security.</wsdl:documentation>
+      <wsdl:input message="tns:GetDelayedChartHttpPostIn" />
+      <wsdl:output message="tns:GetDelayedChartHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedBinaryChart">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a standard IntraDay price chart for a security.</wsdl:documentation>
+      <wsdl:input message="tns:GetDelayedBinaryChartHttpPostIn" />
+      <wsdl:output message="tns:GetDelayedBinaryChartHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChartPreset">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a standard IntraDay price chart for a security.</wsdl:documentation>
+      <wsdl:input message="tns:GetDelayedChartPresetHttpPostIn" />
+      <wsdl:output message="tns:GetDelayedChartPresetHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChartDesign">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the default settings for the Chart.</wsdl:documentation>
+      <wsdl:input message="tns:GetChartDesignHttpPostIn" />
+      <wsdl:output message="tns:GetChartDesignHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="XigniteGlobalQuotesSoap" type="tns:XigniteGlobalQuotesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetGlobalDelayedQuote">
+      <soap:operation soapAction="http://www.xignite.com/services/GetGlobalDelayedQuote" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetGlobalDelayedQuoteHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDelayedQuotes">
+      <soap:operation soapAction="http://www.xignite.com/services/GetGlobalDelayedQuotes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetGlobalDelayedQuotesHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTick">
+      <soap:operation soapAction="http://www.xignite.com/services/GetGlobalTick" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetGlobalTickHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTicks">
+      <soap:operation soapAction="http://www.xignite.com/services/GetGlobalTicks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetGlobalTicksHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChart">
+      <soap:operation soapAction="http://www.xignite.com/services/GetDelayedChart" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetDelayedChartHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedBinaryChart">
+      <soap:operation soapAction="http://www.xignite.com/services/GetDelayedBinaryChart" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetDelayedBinaryChartHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChartCustom">
+      <soap:operation soapAction="http://www.xignite.com/services/GetDelayedChartCustom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetDelayedChartCustomHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChartPreset">
+      <soap:operation soapAction="http://www.xignite.com/services/GetDelayedChartPreset" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetDelayedChartPresetHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChartDesign">
+      <soap:operation soapAction="http://www.xignite.com/services/GetChartDesign" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetChartDesignHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteGlobalQuotesSoap12" type="tns:XigniteGlobalQuotesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetGlobalDelayedQuote">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetGlobalDelayedQuote" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetGlobalDelayedQuoteHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDelayedQuotes">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetGlobalDelayedQuotes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetGlobalDelayedQuotesHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTick">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetGlobalTick" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetGlobalTickHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTicks">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetGlobalTicks" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetGlobalTicksHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChart">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetDelayedChart" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetDelayedChartHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedBinaryChart">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetDelayedBinaryChart" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetDelayedBinaryChartHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChartCustom">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetDelayedChartCustom" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetDelayedChartCustomHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChartPreset">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetDelayedChartPreset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetDelayedChartPresetHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChartDesign">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetChartDesign" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetChartDesignHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteGlobalQuotesHttpGet" type="tns:XigniteGlobalQuotesHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetGlobalDelayedQuote">
+      <http:operation location="/GetGlobalDelayedQuote" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDelayedQuotes">
+      <http:operation location="/GetGlobalDelayedQuotes" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTick">
+      <http:operation location="/GetGlobalTick" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTicks">
+      <http:operation location="/GetGlobalTicks" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChart">
+      <http:operation location="/GetDelayedChart" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedBinaryChart">
+      <http:operation location="/GetDelayedBinaryChart" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChartPreset">
+      <http:operation location="/GetDelayedChartPreset" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChartDesign">
+      <http:operation location="/GetChartDesign" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteGlobalQuotesHttpPost" type="tns:XigniteGlobalQuotesHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetGlobalDelayedQuote">
+      <http:operation location="/GetGlobalDelayedQuote" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalDelayedQuotes">
+      <http:operation location="/GetGlobalDelayedQuotes" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTick">
+      <http:operation location="/GetGlobalTick" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGlobalTicks">
+      <http:operation location="/GetGlobalTicks" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChart">
+      <http:operation location="/GetDelayedChart" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedBinaryChart">
+      <http:operation location="/GetDelayedBinaryChart" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDelayedChartPreset">
+      <http:operation location="/GetDelayedChartPreset" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChartDesign">
+      <http:operation location="/GetChartDesign" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="XigniteGlobalQuotes">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This web service provides global delayed stock quotes and for U.S. and international equities.</wsdl:documentation>
+    <wsdl:port name="XigniteGlobalQuotesSoap" binding="tns:XigniteGlobalQuotesSoap">
+      <soap:address location="http://www.xignite.com/xGlobalQuotes.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteGlobalQuotesSoap12" binding="tns:XigniteGlobalQuotesSoap12">
+      <soap12:address location="http://www.xignite.com/xGlobalQuotes.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteGlobalQuotesHttpGet" binding="tns:XigniteGlobalQuotesHttpGet">
+      <http:address location="http://www.xignite.com/xGlobalQuotes.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteGlobalQuotesHttpPost" binding="tns:XigniteGlobalQuotesHttpPost">
+      <http:address location="http://www.xignite.com/xGlobalQuotes.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

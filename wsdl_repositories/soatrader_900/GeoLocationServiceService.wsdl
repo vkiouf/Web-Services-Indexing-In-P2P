@@ -1,0 +1,245 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://ws.businessservicearchitecture.com/geolocation/services/GeoRipperService"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://ws.businessservicearchitecture.com/geolocation/services/GeoRipperService"
+                  xmlns:intf="http://ws.businessservicearchitecture.com/geolocation/services/GeoRipperService"
+                  xmlns:tns1="http://service.ws.geolocation.businessservicearchitecture.com"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://ws.businessservicearchitecture.com/geolocation/services/GeoRipperService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://service.ws.geolocation.businessservicearchitecture.com">
+         <import namespace="http://ws.businessservicearchitecture.com/geolocation/services/GeoRipperService"/>
+         <element name="findByICAO">
+            <complexType>
+               <sequence>
+                  <element name="icao" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="findByICAOResponse">
+            <complexType>
+               <sequence>
+                  <element name="findByICAOReturn" type="impl:GeographicalLocation"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="findByName">
+            <complexType>
+               <sequence>
+                  <element name="geoName" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="findByNameResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="findByNameReturn" type="impl:GeographicalLocation"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="findByIATA">
+            <complexType>
+               <sequence>
+                  <element name="iata" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="findByIATAResponse">
+            <complexType>
+               <sequence>
+                  <element name="findByIATAReturn" type="impl:GeographicalLocation"/>
+               </sequence>
+            </complexType>
+         </element>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://ws.businessservicearchitecture.com/geolocation/services/GeoRipperService">
+         <complexType name="GeographicalLocation">
+            <sequence>
+               <element name="latitude" type="xsd:double"/>
+               <element name="longitude" type="xsd:double"/>
+               <element name="name" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="findByICAORequest">
+
+      <wsdl:part element="tns1:findByICAO" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByNameRequest">
+
+      <wsdl:part element="tns1:findByName" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByNameResponse">
+
+      <wsdl:part element="tns1:findByNameResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByICAOResponse">
+
+      <wsdl:part element="tns1:findByICAOResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByIATAResponse">
+
+      <wsdl:part element="tns1:findByIATAResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByIATARequest">
+
+      <wsdl:part element="tns1:findByIATA" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="GeoLocationService">
+
+      <wsdl:operation name="findByICAO">
+
+         <wsdl:input message="impl:findByICAORequest" name="findByICAORequest"/>
+
+         <wsdl:output message="impl:findByICAOResponse" name="findByICAOResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findByName">
+
+         <wsdl:input message="impl:findByNameRequest" name="findByNameRequest"/>
+
+         <wsdl:output message="impl:findByNameResponse" name="findByNameResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findByIATA">
+
+         <wsdl:input message="impl:findByIATARequest" name="findByIATARequest"/>
+
+         <wsdl:output message="impl:findByIATAResponse" name="findByIATAResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="GeoRipperServiceSoapBinding" type="impl:GeoLocationService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="findByICAO">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findByICAORequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findByICAOResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findByName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findByNameRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findByNameResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findByIATA">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findByIATARequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findByIATAResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="GeoLocationServiceService">
+
+      <wsdl:port binding="impl:GeoRipperServiceSoapBinding" name="GeoRipperService">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/businessservicearchitecture.com/0.1/GeoLocationServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

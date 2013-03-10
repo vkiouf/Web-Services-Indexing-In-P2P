@@ -1,0 +1,73 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:xtee="http://x-tee.riik.ee/xsd/xtee.xsd"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="http://www.reg-pm-toetused-ja-massiivid.ee/services"
+             name="getMassiiv"
+             targetNamespace="http://www.reg-pm-toetused-ja-massiivid.ee/services">
+   <wsdl:types xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+			 xmlns:reg-pm-toetused-ja-massiivid="http://producers.reg-pm-toetused-ja-massiivid.xtee.riik.ee/producer/reg-pm-toetused-ja-massiivid"
+<message name="getMassiivRequest">
+ 		   <part name="loodud_alates" type="xsd:string"/>
+		    <part name="loodud_kuni" type="xsd:string"/>
+		    <part name="muudetud_alates" type="xsd:string"/>
+		    <part name="muudetud_kuni" type="xsd:string"/>
+		    <part name="kustutatud" type="xsd:string"/>
+		    <part name="max_row" type="xsd:string"/>
+		    <part name="skip-rows" type="xsd:string"/>
+   </message>
+   <message name="getMassiivResponse">
+      <part name="return" type="xsd:string"/>
+   </message>
+   <portType name="massiividPortType">
+      <operation name="getMassiiv">
+        <input message="tns:getMassiivRequest" name="getMassiivRequest"/>
+         <output message="tns:getMassiivResponse" name="getMassiivResponse"/>
++      </operation>
+   </portType>
+   <binding name="massiividBinding" type="tns:massiividPortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="getMassiiv">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.pria.ee/services"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.pria.ee/services"/>
+         </output>
+      </operation>
+   </binding>
+   <service name="getMassiiv">
+      <documentation>Pria massiivide geomeetria</documentation>
+      <port name="PriaMassividPort" binding="tns:massiividBinding">
+         <soap:address location="http://ws.soatrader.com/riik.ee/0.1/reg-pm-toetused-ja-massiivid"/>
+	        <xtee:title>reg-pm-toetused-ja-massiivid</xtee:title>
+	        <xtee:address producer="reg-pm-toetused-ja-massiivid"/>
+      </port>
+   </service>
+</definitions>

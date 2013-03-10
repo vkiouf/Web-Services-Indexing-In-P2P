@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="https://192.168.1.230/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="https://192.168.1.230/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="https://192.168.1.230/">
+         <s:element name="GetHotelGallery">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="HotelName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetHotelGalleryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetHotelGalleryResult">
+                     <s:complexType mixed="true">
+                        <s:sequence>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetHotelGallerySoapIn">
+      <wsdl:part name="parameters" element="tns:GetHotelGallery"/>
+  </wsdl:message>
+  <wsdl:message name="GetHotelGallerySoapOut">
+      <wsdl:part name="parameters" element="tns:GetHotelGalleryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetHotelGalleryHttpGetIn">
+      <wsdl:part name="HotelName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetHotelGalleryHttpGetOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="GetHotelGalleryHttpPostIn">
+      <wsdl:part name="HotelName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetHotelGalleryHttpPostOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="TCServicesSoap" type="tns:TCServicesSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetHotelGallery">
+         <soap:operation soapAction="https://192.168.1.230/GetHotelGallery" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="TCServices">
+      <wsdl:port name="TCServicesSoap" binding="tns:TCServicesSoap">
+         <soap:address location="http://ws.soatrader.com/travel-center.com/0.1/TCServices"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

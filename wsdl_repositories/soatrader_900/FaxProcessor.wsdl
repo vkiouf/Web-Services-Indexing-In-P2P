@@ -1,0 +1,731 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:i0="http://webserivces.xpedite.com.au/XpediteMessaging/JobList.xsd"
+                  xmlns:tns="http://webservices.xpedite.com.au/XpediteMessaging/faxREACH/1-0-0/faxREACH.asmx?wsdl"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://webservices.xpedite.com.au/XpediteMessaging/faxREACH/1-0-0/faxREACH.asmx?wsdl">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:import namespace="http://webserivces.xpedite.com.au/XpediteMessaging/JobList.xsd"
+                location="http://webservices.xpedite.com.au/xpeditemessaging/faxreach/1-0-0/faxreach.asmx?schema=JobList"/>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+                targetNamespace="http://webservices.xpedite.com.au/XpediteMessaging/faxREACH/1-0-0/faxREACH.asmx?wsdl">
+         <xs:import namespace="http://webserivces.xpedite.com.au/XpediteMessaging/JobList.xsd"/>
+         <xs:element name="SendMessage">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="1" maxOccurs="1" name="message" type="tns:FaxMessage"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="userID" type="xs:string"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="password" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:complexType name="FaxMessage">
+            <xs:sequence>
+               <xs:element minOccurs="0" maxOccurs="1" name="ProcessingMethod"
+                           type="tns:ProcessingMethods"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="BillingCode">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="CustomerReference">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="SendOffPeak" type="xs:boolean"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="FutureDelivery" type="xs:dateTime"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="CancelTime" type="xs:dateTime"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="CoversheetToUse" type="tns:CoversheetOptions"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="CoversheetName">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="15"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="1" maxOccurs="1" name="Destinations" type="tns:ArrayOfChoice1"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="SupplementaryData"
+                           type="tns:SupplementaryDataContainer"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="BannerFXName">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="15"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="BannerStyle" type="tns:BannerStyles"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="BannerText">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="20"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="1" maxOccurs="1" name="ContentItems" type="tns:ArrayOfFaxBody"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="CharacterSet" type="tns:CharacterSets"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="OutputMode" type="tns:OutputModes"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="MessageID" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:simpleType name="ProcessingMethods">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="Default"/>
+               <xs:enumeration value="Broadcast"/>
+               <xs:enumeration value="PointToPoint"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:simpleType name="CoversheetOptions">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="Default"/>
+               <xs:enumeration value="None"/>
+               <xs:enumeration value="Specify"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:complexType name="ArrayOfChoice1">
+            <xs:choice minOccurs="1" maxOccurs="unbounded">
+               <xs:element minOccurs="1" maxOccurs="1" name="Recipient" nillable="true"
+                           type="tns:Recipient"/>
+               <xs:element minOccurs="1" maxOccurs="1" name="StoredList" nillable="true"
+                           type="tns:StoredList"/>
+            </xs:choice>
+         </xs:complexType>
+         <xs:complexType name="Recipient">
+            <xs:sequence>
+               <xs:element minOccurs="1" maxOccurs="1" name="Address">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="AlternateAddresses" type="tns:ArrayOfString2"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="BillingCode">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="CustomerReference">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="Reference">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="FutureDelivery" type="xs:dateTime"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="CancelTime" type="xs:dateTime"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="SendOffPeak" type="xs:boolean"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="CoversheetToUse" type="tns:CoversheetOptions"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="CoversheetName">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="15"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="SupplementaryData"
+                           type="tns:SupplementaryDataContainer"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="BannerStyle" type="tns:BannerStyles"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="BannerText">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="20"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="Inserts" type="tns:ArrayOfInsertContainer"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="ArrayOfString2">
+            <xs:sequence>
+               <xs:element minOccurs="0" maxOccurs="7" name="AlternateAddress" nillable="true">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="SupplementaryDataContainer">
+            <xs:sequence>
+               <xs:element minOccurs="0" maxOccurs="1" name="FromLines" type="tns:ArrayOfString"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="AttentionLines" type="tns:ArrayOfString1"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="Subject">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="65"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="ArrayOfString">
+            <xs:sequence>
+               <xs:element minOccurs="0" maxOccurs="4" name="From" nillable="true" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="ArrayOfString1">
+            <xs:sequence>
+               <xs:element minOccurs="0" maxOccurs="4" name="To" nillable="true" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:simpleType name="BannerStyles">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="Default"/>
+               <xs:enumeration value="Type1"/>
+               <xs:enumeration value="Type2"/>
+               <xs:enumeration value="Type3"/>
+               <xs:enumeration value="Type4"/>
+               <xs:enumeration value="Type5"/>
+               <xs:enumeration value="Type6"/>
+               <xs:enumeration value="Type7"/>
+               <xs:enumeration value="None"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:complexType name="ArrayOfInsertContainer">
+            <xs:sequence>
+               <xs:element minOccurs="0" maxOccurs="999" name="InsertContainer" nillable="true"
+                           type="tns:InsertContainer"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="InsertContainer">
+            <xs:sequence>
+               <xs:element minOccurs="1" maxOccurs="1" name="Index">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:short">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="999"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="1" maxOccurs="1" name="Content" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="StoredList">
+            <xs:sequence>
+               <xs:element minOccurs="0" maxOccurs="1" name="ListName">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="30"/>
+                        <xs:minLength value="1"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="BillingCode">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="CustomerReference">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="Reference">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="FutureDelivery" type="xs:dateTime"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="CancelTime" type="xs:dateTime"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="SendOffPeak" type="xs:boolean"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="CoversheetToUse" type="tns:CoversheetOptions"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="CoversheetName">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="15"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="SupplementaryData"
+                           type="tns:SupplementaryDataContainer"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="BannerStyle" type="tns:BannerStyles"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="BannerText">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:maxLength value="20"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="Inserts" type="tns:ArrayOfInsertContainer"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="ArrayOfFaxBody">
+            <xs:sequence>
+               <xs:element minOccurs="0" maxOccurs="unbounded" name="FaxBody" nillable="true"
+                           type="tns:FaxBody"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="FaxBody">
+            <xs:sequence>
+               <xs:element minOccurs="1" maxOccurs="1" name="FileName">
+                  <xs:simpleType>
+                     <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="255"/>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:element>
+               <xs:element minOccurs="0" maxOccurs="1" name="ContentLocation" type="tns:ContentLocations"/>
+               <xs:element minOccurs="1" maxOccurs="1" name="ContentType" type="tns:ContentTypes"/>
+               <xs:element minOccurs="0" maxOccurs="1" name="Content" type="xs:base64Binary"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:simpleType name="ContentLocations">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="Embedded"/>
+               <xs:enumeration value="Stored"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:simpleType name="ContentTypes">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="XMF"/>
+               <xs:enumeration value="TIFF"/>
+               <xs:enumeration value="XAR"/>
+               <xs:enumeration value="PostScript"/>
+               <xs:enumeration value="PCL"/>
+               <xs:enumeration value="PDF"/>
+               <xs:enumeration value="Microsoft_Word"/>
+               <xs:enumeration value="HTML"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:simpleType name="CharacterSets">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="Default"/>
+               <xs:enumeration value="ISO8859_1"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:simpleType name="OutputModes">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="Default"/>
+               <xs:enumeration value="Standard"/>
+               <xs:enumeration value="Fine"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:element name="SendMessageResponse">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="1" name="SendMessageResult" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="QuickStart">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="1" maxOccurs="1" name="message" type="tns:FaxMessage"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="QuickStartResponse">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="1" name="QuickStartResult" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="SendRaw">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="1" maxOccurs="1" name="fileData" type="xs:base64Binary"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="fileName" type="xs:string"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="userID" type="xs:string"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="password" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="SendRawResponse">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="1" name="SendRawResult" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="CheckStatus">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="1" maxOccurs="1" name="wsJobNumber" type="xs:string"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="userID" type="xs:string"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="password" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="CheckStatusResponse">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="1" maxOccurs="1" name="CheckStatusResult"
+                              type="tns:ProcessingStatus"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:simpleType name="ProcessingStatus">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="Initializing"/>
+               <xs:enumeration value="Translating"/>
+               <xs:enumeration value="Queued"/>
+               <xs:enumeration value="Processing"/>
+               <xs:enumeration value="Complete"/>
+               <xs:enumeration value="Error"/>
+               <xs:enumeration value="Cancelled"/>
+            </xs:restriction>
+         </xs:simpleType>
+         <xs:element name="GetJobList">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="1" maxOccurs="1" name="userID" type="xs:string"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="password" type="xs:string"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="startDateTime" type="xs:dateTime"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="endDateTime" type="xs:dateTime"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="GetJobListResponse">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="1" name="GetJobListResult">
+                     <xs:complexType>
+                        <xs:sequence>
+                           <xs:any namespace="http://webserivces.xpedite.com.au/XpediteMessaging/JobList.xsd"/>
+                        </xs:sequence>
+                     </xs:complexType>
+                  </xs:element>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="GetXpediteJobNumber">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="1" maxOccurs="1" name="wsJobNumber" type="xs:string"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="userID" type="xs:string"/>
+                  <xs:element minOccurs="1" maxOccurs="1" name="password" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+         <xs:element name="GetXpediteJobNumberResponse">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="1" name="GetXpediteJobNumberResult" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendMessageSoapIn">
+      <wsdl:part name="parameters" element="tns:SendMessage"/>
+  </wsdl:message>
+  <wsdl:message name="SendMessageSoapOut">
+      <wsdl:part name="parameters" element="tns:SendMessageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="QuickStartSoapIn">
+      <wsdl:part name="parameters" element="tns:QuickStart"/>
+  </wsdl:message>
+  <wsdl:message name="QuickStartSoapOut">
+      <wsdl:part name="parameters" element="tns:QuickStartResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendRawSoapIn">
+      <wsdl:part name="parameters" element="tns:SendRaw"/>
+  </wsdl:message>
+  <wsdl:message name="SendRawSoapOut">
+      <wsdl:part name="parameters" element="tns:SendRawResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CheckStatusSoapIn">
+      <wsdl:part name="parameters" element="tns:CheckStatus"/>
+  </wsdl:message>
+  <wsdl:message name="CheckStatusSoapOut">
+      <wsdl:part name="parameters" element="tns:CheckStatusResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetJobListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetJobList"/>
+  </wsdl:message>
+  <wsdl:message name="GetJobListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetJobListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetXpediteJobNumberSoapIn">
+      <wsdl:part name="parameters" element="tns:GetXpediteJobNumber"/>
+  </wsdl:message>
+  <wsdl:message name="GetXpediteJobNumberSoapOut">
+      <wsdl:part name="parameters" element="tns:GetXpediteJobNumberResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="FaxProcessorSoap">
+      <wsdl:operation name="SendMessage">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method is used to submit a FaxMessage object for delivery.</documentation>
+         <wsdl:input message="tns:SendMessageSoapIn"/>
+         <wsdl:output message="tns:SendMessageSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="QuickStart">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method allows you pre-test a message for validity.</documentation>
+         <wsdl:input message="tns:QuickStartSoapIn"/>
+         <wsdl:output message="tns:QuickStartSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SendRaw">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method is used to submit an XIP or TSMF message for processing.</documentation>
+         <wsdl:input message="tns:SendRawSoapIn"/>
+         <wsdl:output message="tns:SendRawSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="CheckStatus">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Once a message has been successfully submitted using the SendMessage or SendRAW methods use the CheckStatus method to evaluate the processing status of the message.</documentation>
+         <wsdl:input message="tns:CheckStatusSoapIn"/>
+         <wsdl:output message="tns:CheckStatusSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetJobList">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Use this method to retrieve a list of jobs that have been submitted under a specific userID.</documentation>
+         <wsdl:input message="tns:GetJobListSoapIn"/>
+         <wsdl:output message="tns:GetJobListSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetXpediteJobNumber">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Provides an interface to obtain the Xpedite Job Number based on the Web Services Job Number.</documentation>
+         <wsdl:input message="tns:GetXpediteJobNumberSoapIn"/>
+         <wsdl:output message="tns:GetXpediteJobNumberSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FaxProcessorSoap" type="tns:FaxProcessorSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <validationNS xmlns="http://www.develop.com/web/services/">
+         <namespaces>
+            <namespace>
+               <prefix>t</prefix>
+               <namespace>http://webservices.xpedite.com.au/XpediteMessaging/faxREACH/1-0-0/faxREACH.asmx?wsdl</namespace>
+            </namespace>
+            <namespace>
+               <prefix>s</prefix>
+               <namespace>http://schemas.xmlsoap.org/soap/envelope/</namespace>
+            </namespace>
+         </namespaces>
+      </validationNS>
+      <wsdl:operation name="SendMessage">
+         <soap:operation soapAction="http://webservices.xpedite.com.au/XpediteMessaging/faxREACH/1-0-0/faxREACH.asmx?wsdl/SendMessage"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <validation xmlns="http://www.develop.com/web/services/" SchemaValidation="true">
+               <assertions>
+                  <assert>
+                     <expression>count(//t:FaxBody[(not(t:Content) and not(t:ContentLocation='Stored')) or (t:ContentLocation='Stored' and t:Content)]) = 0</expression>
+                     <description>When ContentLocation is set to 'Stored' in a FaxBody then Content must not be present, otherwise the Content is mandatory.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:CustomerReference) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then no CustomerReference should be provided for any Destination.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:*[t:CoversheetToUse='Specify' and not(t:CoversheetName)]) = 0</expression>
+                     <description>When the value of CoversheetToUse is 'Specify' in a FaxMessage, Recipient or StoredList then the corresponding CoversheetName must also be specified.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:SendOffPeak[not(self::t:SendOffPeak='0')]) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then all SendOffPeak nodes must be set to false.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:BannerStyle[not(self::t:BannerStyle='Default')]) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then the BannerStyle should be set to 'Default' on all Destiantions.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:BillingCode) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then no BillingCode should be provided for any Destination.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:FaxBody) = 1</expression>
+                     <description>A FaxMessage must contain one FaxBody.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:InsertContainer[./t:Index = preceding-sibling::t:InsertContainer/t:Index]) = 0</expression>
+                     <description>The Index value of all InsertContainers in any given destination must be unique.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:CancelTime) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then no CancelTime should be provided for any Destination.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:FutureDelivery) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then no FutureDelivery should be provided for any Destination.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:BannerText) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then no BannerText should be provided for any Destination.</description>
+                  </assert>
+               </assertions>
+            </validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="QuickStart">
+         <soap:operation soapAction="http://webservices.xpedite.com.au/XpediteMessaging/faxREACH/1-0-0/faxREACH.asmx?wsdl/QuickStart"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <validation xmlns="http://www.develop.com/web/services/" SchemaValidation="true">
+               <assertions>
+                  <assert>
+                     <expression>count(//t:FaxBody[(not(t:Content) and not(t:ContentLocation='Stored')) or (t:ContentLocation='Stored' and t:Content)]) = 0</expression>
+                     <description>When ContentLocation is set to 'Stored' in a FaxBody then Content must not be present, otherwise the Content is mandatory.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:CustomerReference) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then no CustomerReference should be provided for any Destination.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:*[t:CoversheetToUse='Specify' and not(t:CoversheetName)]) = 0</expression>
+                     <description>When the value of CoversheetToUse is 'Specify' in a FaxMessage, Recipient or StoredList then the corresponding CoversheetName must also be specified.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:SendOffPeak[not(self::t:SendOffPeak='0')]) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then all SendOffPeak nodes must be set to false.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:BannerStyle[not(self::t:BannerStyle='Default')]) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then the BannerStyle should be set to 'Default' on all Destiantions.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:BillingCode) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then no BillingCode should be provided for any Destination.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:FaxBody) = 1</expression>
+                     <description>A FaxMessage must contain one FaxBody.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:InsertContainer[./t:Index = preceding-sibling::t:InsertContainer/t:Index]) = 0</expression>
+                     <description>The Index value of all InsertContainers in any given destination must be unique.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:CancelTime) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then no CancelTime should be provided for any Destination.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:FutureDelivery) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then no FutureDelivery should be provided for any Destination.</description>
+                  </assert>
+                  <assert>
+                     <expression>count(//t:message[t:ProcessingMethod='Broadcast']/Destinations//t:BannerText) = 0</expression>
+                     <description>When ProcessingMethod is set to 'Broadcast' then no BannerText should be provided for any Destination.</description>
+                  </assert>
+               </assertions>
+            </validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendRaw">
+         <soap:operation soapAction="http://webservices.xpedite.com.au/XpediteMessaging/faxREACH/1-0-0/faxREACH.asmx?wsdl/SendRaw"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <validation xmlns="http://www.develop.com/web/services/" SchemaValidation="true">
+               <assertions/>
+            </validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CheckStatus">
+         <soap:operation soapAction="http://webservices.xpedite.com.au/XpediteMessaging/faxREACH/1-0-0/faxREACH.asmx?wsdl/CheckStatus"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <validation xmlns="http://www.develop.com/web/services/" SchemaValidation="true">
+               <assertions/>
+            </validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetJobList">
+         <soap:operation soapAction="http://webservices.xpedite.com.au/XpediteMessaging/faxREACH/1-0-0/faxREACH.asmx?wsdl/GetJobList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <validation xmlns="http://www.develop.com/web/services/" SchemaValidation="true">
+               <assertions/>
+            </validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetXpediteJobNumber">
+         <soap:operation soapAction="http://webservices.xpedite.com.au/XpediteMessaging/faxREACH/1-0-0/faxREACH.asmx?wsdl/GetXpediteJobNumber"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <validation xmlns="http://www.develop.com/web/services/" SchemaValidation="true">
+               <assertions/>
+            </validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="FaxProcessor">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The faxREACH FaxProcessor service provides the facility to send broadcast fax messages through Xpedite.  This is a subscription only service - to apply to use this service please &lt;a href='/XpediteMessaging/default.htm'&gt;click here&lt;/a&gt; to return to the main entry point where there is a link to apply for service.&lt;br&gt;&lt;br&gt;Also available is &lt;a href='Help/index.htm'&gt;API documentation&lt;/a&gt; geared toward Visual Studio.NET developers.</documentation>
+      <wsdl:port name="FaxProcessorSoap" binding="tns:FaxProcessorSoap">
+         <soap:address location="http://ws.soatrader.com/xpedite.com.au/0.1/FaxProcessor"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,91 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://Hiring.Services.KnowledgeBase/2007/08"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://Hiring.Services.KnowledgeBase/2007/08">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://Hiring.Services.KnowledgeBase/2007/08">
+         <s:element name="GetAnswer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="answerID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="categoryName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="contentID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAnswerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAnswerResult" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAnswerSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAnswer"/>
+  </wsdl:message>
+  <wsdl:message name="GetAnswerSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAnswerResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="RightNowSoap" type="tns:RightNowSoap">
+      <wsdl:documentation>
+         <wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/"
+                    conformsTo="http://ws-i.org/profiles/basic/1.1"/>
+      </wsdl:documentation>
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetAnswer">
+         <soap:operation soapAction="http://Hiring.Services.KnowledgeBase/2007/08/GetAnswer"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="RightNow">
+      <wsdl:port name="RightNowSoap" binding="tns:RightNowSoap">
+         <soap:address location="http://ws.soatrader.com/monster.fr/0.1/RightNow"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

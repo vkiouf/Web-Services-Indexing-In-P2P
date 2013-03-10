@@ -1,0 +1,88 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://musil.uni-muenster.de/onto/ACE/wsdl/GetNearestAirportCode.wsdl"
+                  xmlns:tns1="http://musil.uni-muenster.de/onto/ACE/wsdl/GetNearestAirportCode.wsdl"
+                  xmlns:intf="urn:GetNearestAirportCode"
+                  xmlns:impl="urn:GetNearestAirportCode"
+                  xmlns:SeDA="http://musil.uni-muenster.de/onto/ACE/xsd/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  targetNamespace="http://musil.uni-muenster.de/onto/ACE/wsdl/GetNearestAirportCode.wsdl">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <types xmlns="http://schemas.xmlsoap.org/wsdl/">
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://acegis.ionicsoft.com">
+			      <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			      <complexType name="Point"
+                      SeDA:semRef="http://musil.uni-muenster.de/onto/ACE/A_GetNearAirC.owl#Point">
+				        <sequence>
+					          <element name="SRS" nillable="true" type="xsd:string"
+                        SeDA:semRef="http://musil.uni-muenster.de/onto/ACE/A_GetNearAirC.owl#SRS"/>
+					          <element name="x" nillable="true" type="xsd:double"
+                        SeDA:semRef="http://musil.uni-muenster.de/onto/ACE/A_GetNearAirC.owl#X"/>
+					          <element name="y" nillable="true" type="xsd:double"
+                        SeDA:semRef="http://musil.uni-muenster.de/onto/ACE/A_GetNearAirC.owl#Y"/>
+				        </sequence>
+			      </complexType>
+		    </schema>
+	  </types>
+	  <wsdl:message name="getNearestAirportCodeResponse">
+		    <wsdl:part name="getNearestAirportCodeReturn" type="xsd:string"
+                 SeDA:semRef="http://musil.uni-muenster.de/onto/ACE/A_GetNearAirC.owl#IATA_AirportCode"/>
+	  </wsdl:message>
+	  <wsdl:message name="getNearestAirportCodeRequest">
+		    <wsdl:part name="point" type="tns1:Point"/>
+	  </wsdl:message>
+	  <wsdl:portType name="GetNearestAirportCode">
+		    <wsdl:operation name="getNearestAirportCode" parameterOrder="point">
+			      <wsdl:input name="getNearestAirportCodeRequest" message="impl:getNearestAirportCodeRequest"/>
+			      <wsdl:output name="getNearestAirportCodeResponse"
+                      message="impl:getNearestAirportCodeResponse"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+	  <wsdl:binding name="GetNearestAirportCodeSoapBinding" type="impl:GetNearestAirportCode">
+		    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <wsdl:operation name="getNearestAirportCode">
+			      <wsdlsoap:operation soapAction=""/>
+			      <wsdl:input name="getNearestAirportCodeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+				        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:GetNearestAirportCode"/>
+			      </wsdl:input>
+			      <wsdl:output name="getNearestAirportCodeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:GetNearestAirportCode"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+	  </wsdl:binding>
+	  <wsdl:service name="GetNearestAirportCodeService">
+		    <wsdl:port name="GetNearestAirportCode" binding="impl:GetNearestAirportCodeSoapBinding">
+			      <wsdlsoap:address location="http://ws.soatrader.com/uni-muenster.de/0.3/GetNearestAirportCodeService"/>
+		    </wsdl:port>
+	  </wsdl:service>
+</wsdl:definitions>

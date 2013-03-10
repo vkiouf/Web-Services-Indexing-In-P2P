@@ -1,0 +1,428 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://www.SaiaSecure.com/WebService/Shipment"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.SaiaSecure.com/WebService/Shipment">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.SaiaSecure.com/WebService/Shipment">
+         <s:element name="ProcessXML">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="xmlRequest" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ProcessXMLResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ProcessXMLResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetByProNumber">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetByProNumber"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GetByProNumber">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TestMode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ProNumber" type="s:decimal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetByProNumberResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetByProNumberResult" type="tns:Response"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Response">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Shipper" type="tns:AccountItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Consignee" type="tns:AccountItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ThirdParty" type="tns:AccountItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MailTo" type="tns:MailToItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FromPartner" type="tns:PartnerItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ToPartner" type="tns:PartnerItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Details" type="tns:ArrayOfDetailItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="History" type="tns:ArrayOfHistoryItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Element" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Fault" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TestMode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ProNumber" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CurrentStatus" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BLNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PONumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ShipperNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReferenceNumber" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MasterProNumber" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DriverNumber" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TrailerNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OnTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LatePickup" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Accessorials" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Hazardous" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Appointment" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeliveryAppointmentDateTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeliveryDateTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeliveryDateTimeArrive" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeliveryDateTimeDepart" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ActualDeliveryDays" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StandardServiceDays" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ExpectedDeliveryDate" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Pieces" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ShippingWeight" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BillingTerms" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PickupDateTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OriginTerminal" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DestinationTerminal" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Signature" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CargoControlNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rates" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Tariff" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NetCharges" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CODAmount" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DiscountAmount" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="FreightCharges" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="WeightedAverageFreightClass" type="s:decimal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AccountItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Zipcode" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MailToItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Zipcode" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PartnerItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="SCAC" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Number" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ExchangeTerminal" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfDetailItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="DetailItem" nillable="true"
+                          type="tns:DetailItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="DetailItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Pieces" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Hazardous" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Package" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Weight" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Rate" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHistoryItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HistoryItem" nillable="true"
+                          type="tns:HistoryItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HistoryItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ActivityDateTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Activity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetByBLNumber">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetByBLNumber"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GetByBLNumber">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TestMode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BLNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OriginZipcode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DestinationZipcode" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetByBLNumberResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetByBLNumberResult" type="tns:Response"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetByPONumber">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetByPONumber"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GetByPONumber">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TestMode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PONumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OriginZipcode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DestinationZipcode" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetByPONumberResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetByPONumberResult" type="tns:Response"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetByShipperNumber">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetByShipperNumber"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GetByShipperNumber">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TestMode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ShipperNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OriginZipcode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DestinationZipcode" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetByShipperNumberResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetByShipperNumberResult" type="tns:Response"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetByPartnerNumber">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:GetByPartnerNumber"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GetByPartnerNumber">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TestMode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PartnerSCAC" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PartnerNumber" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetByPartnerNumberResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetByPartnerNumberResult" type="tns:Response"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ProcessXMLSoapIn">
+      <wsdl:part name="parameters" element="tns:ProcessXML"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessXMLSoapOut">
+      <wsdl:part name="parameters" element="tns:ProcessXMLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetByProNumberSoapIn">
+      <wsdl:part name="parameters" element="tns:GetByProNumber"/>
+  </wsdl:message>
+  <wsdl:message name="GetByProNumberSoapOut">
+      <wsdl:part name="parameters" element="tns:GetByProNumberResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetByBLNumberSoapIn">
+      <wsdl:part name="parameters" element="tns:GetByBLNumber"/>
+  </wsdl:message>
+  <wsdl:message name="GetByBLNumberSoapOut">
+      <wsdl:part name="parameters" element="tns:GetByBLNumberResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetByPONumberSoapIn">
+      <wsdl:part name="parameters" element="tns:GetByPONumber"/>
+  </wsdl:message>
+  <wsdl:message name="GetByPONumberSoapOut">
+      <wsdl:part name="parameters" element="tns:GetByPONumberResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetByShipperNumberSoapIn">
+      <wsdl:part name="parameters" element="tns:GetByShipperNumber"/>
+  </wsdl:message>
+  <wsdl:message name="GetByShipperNumberSoapOut">
+      <wsdl:part name="parameters" element="tns:GetByShipperNumberResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetByPartnerNumberSoapIn">
+      <wsdl:part name="parameters" element="tns:GetByPartnerNumber"/>
+  </wsdl:message>
+  <wsdl:message name="GetByPartnerNumberSoapOut">
+      <wsdl:part name="parameters" element="tns:GetByPartnerNumberResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ShipmentSoap">
+      <wsdl:operation name="ProcessXML">
+         <wsdl:input message="tns:ProcessXMLSoapIn"/>
+         <wsdl:output message="tns:ProcessXMLSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetByProNumber">
+         <wsdl:input message="tns:GetByProNumberSoapIn"/>
+         <wsdl:output message="tns:GetByProNumberSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetByBLNumber">
+         <wsdl:input message="tns:GetByBLNumberSoapIn"/>
+         <wsdl:output message="tns:GetByBLNumberSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetByPONumber">
+         <wsdl:input message="tns:GetByPONumberSoapIn"/>
+         <wsdl:output message="tns:GetByPONumberSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetByShipperNumber">
+         <wsdl:input message="tns:GetByShipperNumberSoapIn"/>
+         <wsdl:output message="tns:GetByShipperNumberSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetByPartnerNumber">
+         <wsdl:input message="tns:GetByPartnerNumberSoapIn"/>
+         <wsdl:output message="tns:GetByPartnerNumberSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ShipmentSoap" type="tns:ShipmentSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="ProcessXML">
+         <soap:operation soapAction="http://www.SaiaSecure.com/WebService/Shipment/ProcessXML"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetByProNumber">
+         <soap:operation soapAction="http://www.SaiaSecure.com/WebService/Shipment/GetByProNumber"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetByBLNumber">
+         <soap:operation soapAction="http://www.SaiaSecure.com/WebService/Shipment/GetByBLNumber"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetByPONumber">
+         <soap:operation soapAction="http://www.SaiaSecure.com/WebService/Shipment/GetByPONumber"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetByShipperNumber">
+         <soap:operation soapAction="http://www.SaiaSecure.com/WebService/Shipment/GetByShipperNumber"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetByPartnerNumber">
+         <soap:operation soapAction="http://www.SaiaSecure.com/WebService/Shipment/GetByPartnerNumber"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Shipment">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Saia Shipment Tracking &amp; Tracing</documentation>
+      <wsdl:port name="ShipmentSoap" binding="tns:ShipmentSoap">
+         <soap:address location="http://ws.soatrader.com/saiasecure.com/0.1/Shipment"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

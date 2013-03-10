@@ -1,0 +1,127 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="https://www6.AustinTetra.com/Prologis/ATWebServices/DoATSearch"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="https://www6.AustinTetra.com/Prologis/ATWebServices/DoATSearch">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="https://www6.AustinTetra.com/Prologis/ATWebServices/DoATSearch">
+         <s:element name="AT_Debarred_Detail">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SourceListID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ATDebarredDetailResult">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AT_Debarred_DetailResult"
+                             type="tns:ArrayOfDebarredDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDebarredDetail">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="DebarredDetail"
+                          type="tns:DebarredDetail"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="DebarredDetail">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AT_Debarred_Id"/>
+               <s:element minOccurs="1" maxOccurs="1" name="List_ID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="List_Desc" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="List_URL" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="List_Date" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NAME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country_Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Postal_Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Debar_Start_Dt_Status" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Debar_End_Dt_Status" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Important_Comments" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Status_Code_Desc" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Status_Code_treatment" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AuthHeader" type="tns:AuthHeader"/>
+         <s:complexType name="AuthHeader">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AT_Debarred_DetailSoapIn">
+      <wsdl:part name="parameters" element="tns:AT_Debarred_Detail"/>
+  </wsdl:message>
+  <wsdl:message name="AT_Debarred_DetailSoapOut">
+      <wsdl:part name="parameters" element="tns:ATDebarredDetailResult"/>
+  </wsdl:message>
+  <wsdl:message name="AT_Debarred_DetailAuthHeader">
+      <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:portType name="DoATSearchSoap">
+      <wsdl:operation name="AT_Debarred_Detail">
+         <wsdl:input message="tns:AT_Debarred_DetailSoapIn"/>
+         <wsdl:output message="tns:AT_Debarred_DetailSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DoATSearchSoap" type="tns:DoATSearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="AT_Debarred_Detail">
+         <soap:operation soapAction="https://www6.AustinTetra.com/Prologis/ATWebServices/DoATSearch/AT_Debarred_Detail"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AT_Debarred_DetailAuthHeader" part="AuthHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DoATSearch">
+      <wsdl:port name="DoATSearchSoap" binding="tns:DoATSearchSoap">
+         <soap:address location="http://ws.soatrader.com/austintetra.com/0.1/DoATSearch"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

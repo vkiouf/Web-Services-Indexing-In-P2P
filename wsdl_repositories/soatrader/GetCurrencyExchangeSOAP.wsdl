@@ -1,0 +1,69 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://www.atlaz.net/webservices"
+             xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:si="http://soapinterop.org/xsd"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="http://www.atlaz.net/webservices">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+    <message name="getRateRequestSoapOut">
+        <part name="value" type="xsd:float"/>
+    </message>
+    <message name="getRateRequestSoapIn">
+        <part name="number" type="xsd:float"/>
+        <part name="currency1" type="xsd:string"/>
+        <part name="currency2" type="xsd:string"/>
+    </message>
+
+    <portType name="GetCurrencyExchangeSOAP">
+        <operation name="getRateRequest">
+            <input message="getRateRequestSoapIn"/>
+            <output message="getRateRequestSoapOut"/>
+        </operation>
+    </portType>
+
+
+    <binding name="GetCurrencyExchange" type="GetCurrencyExchange">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getRateRequest">
+            <soap:operation soapAction="http://www.atlaz.net/webservices/GetCurrencyExchange.php"
+                         style="document"/>
+            <input name="getRateRequestInput">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="literal"/>
+            </input>
+            <output name="getRateRequestOutput">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="GetCurrencyExchangeSOAP">
+        <port binding="GetCurrencyExchangeSOAPSOAP" name="GetCurrencyExchangeSOAPSOAPPort">
+            <soap:address location="http://ws.soatrader.com/atlaz.net/0.1/GetCurrencyExchangeSOAP"/>
+        </port>
+    </service>
+</definitions>

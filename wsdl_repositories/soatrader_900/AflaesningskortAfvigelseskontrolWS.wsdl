@@ -1,0 +1,249 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s0="http://rep.oio.dk/kmd.dk/energi/basis/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://rep.oio.dk/kmd.dk/energi/aflaesning/wsdl/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://rep.oio.dk/kmd.dk/energi/aflaesning/wsdl/"
+                  name="AflaesningskortAfvigelseskontrolWS">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Afvigelseskontrol af aflæsning fra aflæsningskort.</documentation>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema xmlns:kmd="http://rep.oio.dk/kmd.dk/energi/basis/"
+                targetNamespace="http://rep.oio.dk/kmd.dk/energi/basis/">
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/basis/KMD_FASbrugernummer.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="FASbrugernummer" type="kmd:FASbrugernummerType"/>
+         <s:simpleType name="FASbrugernummerType">
+            <s:restriction base="s:short">
+               <s:minExclusive value="0"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/basis/KMD_Kundenummer.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="Kundenummer" type="kmd:KundenummerType"/>
+         <s:simpleType name="KundenummerType">
+            <s:restriction base="s:decimal">
+               <s:fractionDigits value="0"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/aflaesning/KMD_AflaesningskortAflaesning.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="AflaesningskortAflaesning" type="kmd:AflaesningskortAflaesningType"/>
+         <s:complexType name="AflaesningskortAflaesningType">
+            <s:sequence>
+               <s:element ref="kmd:Aflaesningslinienummer"/>
+               <s:element ref="kmd:Aflaesningsdato"/>
+               <s:element ref="kmd:Aflaesning"/>
+               <s:element ref="kmd:AflaesningDecimal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/aflaesning/KMD_AflaesningskortAfvigelseskontrolInput.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="AflaesningskortAfvigelseskontrolInput"
+                    type="kmd:AflaesningskortAfvigelseskontrolInputType"/>
+         <s:complexType name="AflaesningskortAfvigelseskontrolInputType">
+            <s:sequence>
+               <s:element ref="kmd:FASbrugernummer"/>
+               <s:element ref="kmd:Kundenummer"/>
+               <s:element ref="kmd:AflaesningskortAflaesning"/>
+            </s:sequence>
+         </s:complexType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/basis/KMD_Aflaesningslinienummer.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="Aflaesningslinienummer" type="kmd:AflaesningslinienummerType"/>
+         <s:simpleType name="AflaesningslinienummerType">
+            <s:restriction base="s:short">
+               <s:minExclusive value="0"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/basis/KMD_Aflaesningsdato.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="Aflaesningsdato" type="kmd:AflaesningsdatoType"/>
+         <s:simpleType name="AflaesningsdatoType">
+            <s:restriction base="s:date"/>
+         </s:simpleType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/basis/KMD_Aflaesning.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="Aflaesning" type="kmd:AflaesningType"/>
+         <s:simpleType name="AflaesningType">
+            <s:restriction base="s:long"/>
+         </s:simpleType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/basis/KMD_AflaesningDecimal.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="AflaesningDecimal" type="kmd:AflaesningDecimalType"/>
+         <s:simpleType name="AflaesningDecimalType">
+            <s:restriction base="s:double"/>
+         </s:simpleType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/basis/KMD_AfvigelseskontrolSvar.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="AfvigelseskontrolSvar" type="kmd:AfvigelseskontrolSvarType"/>
+         <s:simpleType name="AfvigelseskontrolSvarType">
+            <s:restriction base="s:long">
+               <s:enumeration value="0">
+                  <s:annotation>
+                     <s:documentation>OK
+					</s:documentation>
+                  </s:annotation>
+               </s:enumeration>
+               <s:enumeration value="1">
+                  <s:annotation>
+                     <s:documentation>Aflæsning afviger for meget.
+					</s:documentation>
+                  </s:annotation>
+               </s:enumeration>
+            </s:restriction>
+         </s:simpleType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/aflaesning/KMD_AfvigelseskontrolStatus.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="AfvigelseskontrolStatus" type="kmd:AfvigelseskontrolStatusType"/>
+         <s:complexType name="AfvigelseskontrolStatusType">
+            <s:sequence>
+               <s:element ref="kmd:AfvigelseskontrolStatuskode"/>
+               <s:element ref="kmd:AfvigelseskontrolStatustekst"/>
+            </s:sequence>
+         </s:complexType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/aflaesning/KMD_AflaesningskortAfvigelseskontrolOutput.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="AflaesningskortAfvigelseskontrolOutput"
+                    type="kmd:AflaesningskortAfvigelseskontrolOutputType"/>
+         <s:complexType name="AflaesningskortAfvigelseskontrolOutputType">
+            <s:sequence>
+               <s:element ref="kmd:AfvigelseskontrolSvar"/>
+               <s:element ref="kmd:AfvigelseskontrolStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/basis/KMD_AfvigelseskontrolStatuskode.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="AfvigelseskontrolStatuskode" type="kmd:AfvigelseskontrolStatuskodeType"/>
+         <s:simpleType name="AfvigelseskontrolStatuskodeType">
+            <s:restriction base="s:long">
+               <s:enumeration value="-1">
+                  <s:annotation>
+                     <s:documentation>System error
+					</s:documentation>
+                  </s:annotation>
+               </s:enumeration>
+               <s:enumeration value="0">
+                  <s:annotation>
+                     <s:documentation>OK
+					</s:documentation>
+                  </s:annotation>
+               </s:enumeration>
+               <s:enumeration value="1">
+                  <s:annotation>
+                     <s:documentation>Data warning
+					</s:documentation>
+                  </s:annotation>
+               </s:enumeration>
+               <s:enumeration value="2">
+                  <s:annotation>
+                     <s:documentation>Data error
+					</s:documentation>
+                  </s:annotation>
+               </s:enumeration>
+               <s:enumeration value="100">
+                  <s:annotation>
+                     <s:documentation>Kunden findes ikke hos forsyningsselskabet.
+					</s:documentation>
+                  </s:annotation>
+               </s:enumeration>
+               <s:enumeration value="101">
+                  <s:annotation>
+                     <s:documentation>Aflæsningen kan ikke genkendes hos forsyningsselskabet.
+					</s:documentation>
+                  </s:annotation>
+               </s:enumeration>
+               <s:enumeration value="104">
+                  <s:annotation>
+                     <s:documentation>Afvigelseskontrol kan ikke gennemføres pga. manglende oplysninger.
+					</s:documentation>
+                  </s:annotation>
+               </s:enumeration>
+               <s:enumeration value="105">
+                  <s:annotation>
+                     <s:documentation>Aflæsningen kan ikke indberettes/opdateres, fordi den er manuelt godkendt hos forsyningsselskabet.
+					</s:documentation>
+                  </s:annotation>
+               </s:enumeration>
+            </s:restriction>
+         </s:simpleType>
+         <s:annotation>
+            <s:documentation source="http://rep.oio.dk/kmd.dk/energi/basis/KMD_AfvigelseskontrolStatustekst.xsd.meta.xml"/>
+         </s:annotation>
+         <s:element name="AfvigelseskontrolStatustekst" type="kmd:AfvigelseskontrolStatustekstType"/>
+         <s:simpleType name="AfvigelseskontrolStatustekstType">
+            <s:restriction base="s:string">
+               <s:maxLength value="256"/>
+            </s:restriction>
+         </s:simpleType>
+      </s:schema>
+   </wsdl:types>
+   <wsdl:message name="AflaesningskortAfvigelseskontrolSoapIn">
+      <wsdl:part name="In" element="s0:AflaesningskortAfvigelseskontrolInput"/>
+   </wsdl:message>
+   <wsdl:message name="AflaesningskortAfvigelseskontrolSoapOut">
+      <wsdl:part name="Out" element="s0:AflaesningskortAfvigelseskontrolOutput"/>
+   </wsdl:message>
+   <wsdl:portType name="AflaesningskortAfvigelseskontrolWSSoap">
+      <wsdl:operation name="AflaesningskortAfvigelseskontrol">
+         <wsdl:input message="tns:AflaesningskortAfvigelseskontrolSoapIn"/>
+         <wsdl:output message="tns:AflaesningskortAfvigelseskontrolSoapOut"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="AflaesningskortAfvigelseskontrolWSBinding"
+                 type="tns:AflaesningskortAfvigelseskontrolWSSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="AflaesningskortAfvigelseskontrol">
+         <soap:operation soapAction="https://intewswlbs-wm.kmd.dk/KMD.FO.AflaesningskortAfvigelseskontrol/AflaesningskortAfvigelseskontrol"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" parts="In"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" parts="Out"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="AflaesningskortAfvigelseskontrolWS">
+      <wsdl:port name="AflaesningskortAfvigelseskontrolWSPort"
+                 binding="tns:AflaesningskortAfvigelseskontrolWSBinding">
+         <soap:address location="http://ws.soatrader.com/oio.dk/0.1/AflaesningskortAfvigelseskontrolWS"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

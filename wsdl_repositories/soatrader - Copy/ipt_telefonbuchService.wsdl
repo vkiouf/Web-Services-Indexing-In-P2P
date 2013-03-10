@@ -1,0 +1,114 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdns1="http://localhost/ipt_telefonbuch/searchDirectory"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:tns="http://www.unique.ch/stargate/ipt/telefonbuch"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  name="ipt_telefonbuch"
+                  targetNamespace="http://www.unique.ch/stargate/ipt/telefonbuch">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+        <xsd:schema xmlns:tns="http://localhost/ipt_telefonbuch/searchDirectory"
+                  xmlns:SOAP_ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                  targetNamespace="http://localhost/ipt_telefonbuch/searchDirectory">
+          <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+          <xsd:complexType name="__searchDirectoryInput">
+            <xsd:sequence>
+              <xsd:element name="request" nillable="true" type="tns:__SearchDirectoryRequest"/>
+            </xsd:sequence>
+          </xsd:complexType>
+          <xsd:complexType name="__SearchDirectoryRequest">
+            <xsd:sequence>
+              <xsd:element name="firstName" nillable="true" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="lastName" nillable="true" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="company" nillable="true" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:complexType>
+          <xsd:complexType name="__searchDirectoryOutput">
+            <xsd:sequence>
+              <xsd:element name="response" nillable="true" type="tns:__SearchDirectoryResponse"
+                            minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:complexType>
+          <xsd:complexType name="__SearchDirectoryResponse">
+            <xsd:sequence>
+              <xsd:element name="employees" nillable="true" type="tns:ArrayOf__employee" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:complexType>
+          <xsd:complexType name="__employee">
+            <xsd:sequence>
+              <xsd:element name="firstName" nillable="true" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="lastName" nillable="true" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="company" nillable="true" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="phone" nillable="true" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="mobile" nillable="true" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="location" nillable="true" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:complexType>
+          <xsd:complexType name="ArrayOf__employee">
+            <xsd:complexContent>
+              <xsd:restriction base="SOAP_ENC:Array">
+                  <xsd:attribute ref="SOAP_ENC:arrayType" wsdl:arrayType="tns:__employee[]"/>
+              </xsd:restriction>
+            </xsd:complexContent>
+          </xsd:complexType>
+        </xsd:schema>
+
+	  </wsdl:types>
+	
+	  <wsdl:message name="_searchDirectoryInput">
+		    <wsdl:part name="request" type="wsdns1:__SearchDirectoryRequest"/>
+	  </wsdl:message>
+	
+	  <wsdl:message name="_searchDirectoryOutput">
+		    <wsdl:part name="response" type="wsdns1:__SearchDirectoryResponse"/>
+	  </wsdl:message>
+	  <wsdl:portType name="ipt_telefonbuchPortType">
+		    <wsdl:operation name="searchDirectory">
+			      <wsdl:input message="tns:_searchDirectoryInput"/>
+			      <wsdl:output message="tns:_searchDirectoryOutput"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+	  <wsdl:binding name="ipt_telefonbuchBinding" type="tns:ipt_telefonbuchPortType">
+		    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <wsdl:operation name="searchDirectory">
+			      <soap:operation soapAction=""/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.unique.ch/stargate/ipt/telefonbuch/ipt_telefonbuch"
+                       use="encoded"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.unique.ch/stargate/ipt/telefonbuch/ipt_telefonbuch"
+                       use="encoded"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+	  </wsdl:binding>
+	  <wsdl:service name="ipt_telefonbuchService">
+		    <wsdl:port name="ipt_telefonbuchPort0" binding="tns:ipt_telefonbuchBinding">
+			      <soap:address location="http://ws.soatrader.com/mail-archive.com/0.1/ipt_telefonbuchService"/>
+		    </wsdl:port>
+	  </wsdl:service>
+	</wsdl:definitions>

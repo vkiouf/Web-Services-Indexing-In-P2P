@@ -1,0 +1,351 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="https://www.protus.com/WebServices/Reports/2005/2"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="https://www.protus.com/WebServices/Reports/2005/2">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Transactions Reports is one of Protus IP Solutions Web Services. Please, contact support at support@protus.com for a full documentation of this Web Service.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="https://www.protus.com/WebServices/Reports/2005/2">
+         <s:element name="GetTransactionsByTime">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartTimeStamp" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndTimeStamp" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ResultSetFormat" type="tns:ReportFormat"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="ReportFormat">
+            <s:restriction base="s:string">
+               <s:enumeration value="CSV"/>
+               <s:enumeration value="XML"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetTransactionsByTimeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetTransactionsByTimeResult"
+                             type="tns:ReportResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ReportResponse">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Header" type="tns:WSHeader"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReportBody" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WSHeader">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorFlag" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnMessage" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetTransactionsByID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TransactionID" type="s:long"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ResultSetFormat" type="tns:ReportFormat"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetTransactionsByIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetTransactionsByIDResult"
+                             type="tns:ReportResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDetailedTransactionsByTime">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartTimeStamp" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndTimeStamp" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ResultSetFormat" type="tns:ReportFormat"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDetailedTransactionsByTimeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetDetailedTransactionsByTimeResult"
+                             type="tns:ReportResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDetailedTransactionsByID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TransactionID" type="s:long"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ResultSetFormat" type="tns:ReportFormat"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDetailedTransactionsByIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetDetailedTransactionsByIDResult"
+                             type="tns:ReportResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAccountProfiles">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccountID" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartTimestamp" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndTimestamp" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ResultSetFormat" type="tns:ReportFormat"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAccountProfilesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAccountProfilesResult"
+                             type="tns:ReportResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetVoiceFileList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ResultSetFormat" type="tns:ReportFormat"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetVoiceFileListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetVoiceFileListResult"
+                             type="tns:ReportResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ReportResponse" nillable="true" type="tns:ReportResponse"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetTransactionsByTimeSoapIn">
+      <wsdl:part name="parameters" element="tns:GetTransactionsByTime"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsByTimeSoapOut">
+      <wsdl:part name="parameters" element="tns:GetTransactionsByTimeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsByIDSoapIn">
+      <wsdl:part name="parameters" element="tns:GetTransactionsByID"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsByIDSoapOut">
+      <wsdl:part name="parameters" element="tns:GetTransactionsByIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDetailedTransactionsByTimeSoapIn">
+      <wsdl:part name="parameters" element="tns:GetDetailedTransactionsByTime"/>
+  </wsdl:message>
+  <wsdl:message name="GetDetailedTransactionsByTimeSoapOut">
+      <wsdl:part name="parameters" element="tns:GetDetailedTransactionsByTimeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDetailedTransactionsByIDSoapIn">
+      <wsdl:part name="parameters" element="tns:GetDetailedTransactionsByID"/>
+  </wsdl:message>
+  <wsdl:message name="GetDetailedTransactionsByIDSoapOut">
+      <wsdl:part name="parameters" element="tns:GetDetailedTransactionsByIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAccountProfilesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAccountProfiles"/>
+  </wsdl:message>
+  <wsdl:message name="GetAccountProfilesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAccountProfilesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVoiceFileListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetVoiceFileList"/>
+  </wsdl:message>
+  <wsdl:message name="GetVoiceFileListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetVoiceFileListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsByTimeHttpPostIn">
+      <wsdl:part name="UserID" type="s:string"/>
+      <wsdl:part name="UserPassword" type="s:string"/>
+      <wsdl:part name="StartTimeStamp" type="s:string"/>
+      <wsdl:part name="EndTimeStamp" type="s:string"/>
+      <wsdl:part name="ResultSetFormat" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsByTimeHttpPostOut">
+      <wsdl:part name="Body" element="tns:ReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsByIDHttpPostIn">
+      <wsdl:part name="UserID" type="s:string"/>
+      <wsdl:part name="UserPassword" type="s:string"/>
+      <wsdl:part name="TransactionID" type="s:string"/>
+      <wsdl:part name="ResultSetFormat" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransactionsByIDHttpPostOut">
+      <wsdl:part name="Body" element="tns:ReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDetailedTransactionsByTimeHttpPostIn">
+      <wsdl:part name="UserID" type="s:string"/>
+      <wsdl:part name="UserPassword" type="s:string"/>
+      <wsdl:part name="StartTimeStamp" type="s:string"/>
+      <wsdl:part name="EndTimeStamp" type="s:string"/>
+      <wsdl:part name="ResultSetFormat" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetDetailedTransactionsByTimeHttpPostOut">
+      <wsdl:part name="Body" element="tns:ReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDetailedTransactionsByIDHttpPostIn">
+      <wsdl:part name="UserID" type="s:string"/>
+      <wsdl:part name="UserPassword" type="s:string"/>
+      <wsdl:part name="TransactionID" type="s:string"/>
+      <wsdl:part name="ResultSetFormat" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetDetailedTransactionsByIDHttpPostOut">
+      <wsdl:part name="Body" element="tns:ReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAccountProfilesHttpPostIn">
+      <wsdl:part name="AccountID" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="StartTimestamp" type="s:string"/>
+      <wsdl:part name="EndTimestamp" type="s:string"/>
+      <wsdl:part name="ResultSetFormat" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetAccountProfilesHttpPostOut">
+      <wsdl:part name="Body" element="tns:ReportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVoiceFileListHttpPostIn">
+      <wsdl:part name="UserID" type="s:string"/>
+      <wsdl:part name="UserPassword" type="s:string"/>
+      <wsdl:part name="ResultSetFormat" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVoiceFileListHttpPostOut">
+      <wsdl:part name="Body" element="tns:ReportResponse"/>
+  </wsdl:message>
+  
+  
+  <wsdl:binding name="Transactions_x0020_ReportsSoap" type="tns:Transactions_x0020_ReportsSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetTransactionsByTime">
+         <soap:operation soapAction="https://www.protus.com/WebServices/Reports/2005/2/GetTransactionsByTime"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetTransactionsByID">
+         <soap:operation soapAction="https://www.protus.com/WebServices/Reports/2005/2/GetTransactionsByID"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetDetailedTransactionsByTime">
+         <soap:operation soapAction="https://www.protus.com/WebServices/Reports/2005/2/GetDetailedTransactionsByTime"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetDetailedTransactionsByID">
+         <soap:operation soapAction="https://www.protus.com/WebServices/Reports/2005/2/GetDetailedTransactionsByID"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAccountProfiles">
+         <soap:operation soapAction="https://www.protus.com/WebServices/Reports/2005/2/GetAccountProfiles"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetVoiceFileList">
+         <soap:operation soapAction="https://www.protus.com/WebServices/Reports/2005/2/GetVoiceFileList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="Transactions_x0020_Reports">
+      <wsdl:documentation>Transactions Reports is one of Protus IP Solutions Web Services. Please, contact support at support@protus.com for a full documentation of this Web Service.</wsdl:documentation>
+      <wsdl:port name="Transactions_x0020_ReportsSoap"
+                 binding="tns:Transactions_x0020_ReportsSoap">
+         <soap:address location="http://ws.soatrader.com/protusfax.com/0.1/Transactions_x0020_Reports"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

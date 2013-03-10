@@ -1,0 +1,189 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://ws.acrosscommunications.com/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://ws.acrosscommunications.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://ws.acrosscommunications.com/">
+         <s:element name="GetItemStatus">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strQueueId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strQueueEntryId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetItemStatusResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetItemStatusResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetComments">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strQueueId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strQueueEntryId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCommentsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCommentsResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RemoveItem">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strQueueId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strQueueEntryId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RemoveItemResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="RemoveItemResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RequestToRemoveItem">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strQueueId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strQueueEntryId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RequestToRemoveItemResponse">
+            <s:complexType/>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetItemStatusSoapIn">
+      <wsdl:part name="parameters" element="tns:GetItemStatus"/>
+  </wsdl:message>
+  <wsdl:message name="GetItemStatusSoapOut">
+      <wsdl:part name="parameters" element="tns:GetItemStatusResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCommentsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetComments"/>
+  </wsdl:message>
+  <wsdl:message name="GetCommentsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCommentsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveItemSoapIn">
+      <wsdl:part name="parameters" element="tns:RemoveItem"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveItemSoapOut">
+      <wsdl:part name="parameters" element="tns:RemoveItemResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RequestToRemoveItemSoapIn">
+      <wsdl:part name="parameters" element="tns:RequestToRemoveItem"/>
+  </wsdl:message>
+  <wsdl:message name="RequestToRemoveItemSoapOut">
+      <wsdl:part name="parameters" element="tns:RequestToRemoveItemResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="QueueSoap">
+      <wsdl:operation name="GetItemStatus">
+         <wsdl:input message="tns:GetItemStatusSoapIn"/>
+         <wsdl:output message="tns:GetItemStatusSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetComments">
+         <wsdl:input message="tns:GetCommentsSoapIn"/>
+         <wsdl:output message="tns:GetCommentsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="RemoveItem">
+         <wsdl:input message="tns:RemoveItemSoapIn"/>
+         <wsdl:output message="tns:RemoveItemSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="RequestToRemoveItem">
+         <wsdl:input message="tns:RequestToRemoveItemSoapIn"/>
+         <wsdl:output message="tns:RequestToRemoveItemSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="QueueSoap" type="tns:QueueSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetItemStatus">
+         <soap:operation soapAction="http://ws.acrosscommunications.com/GetItemStatus" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetComments">
+         <soap:operation soapAction="http://ws.acrosscommunications.com/GetComments" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RemoveItem">
+         <soap:operation soapAction="http://ws.acrosscommunications.com/RemoveItem" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RequestToRemoveItem">
+         <soap:operation soapAction="http://ws.acrosscommunications.com/RequestToRemoveItem"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Queue">
+      <wsdl:port name="QueueSoap" binding="tns:QueueSoap">
+         <soap:address location="http://ws.soatrader.com/acrosscommunications.com/0.1/Queue"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

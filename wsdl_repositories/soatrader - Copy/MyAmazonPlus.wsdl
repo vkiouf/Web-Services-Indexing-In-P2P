@@ -1,0 +1,360 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="urn:myamazonplus"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="urn:myamazonplus">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+                targetNamespace="urn:myamazonplus">
+         <s:complexType name="ItemSearchRequestType">
+            <s:sequence>
+               <s:element name="SubscriptionID" nillable="true" type="s:string"/>
+               <s:element name="Keywords" nillable="true" type="s:string"/>
+               <s:element name="MinPrice" nillable="true" type="s:string"/>
+               <s:element name="MaxPrice" nillable="true" type="s:string"/>
+               <s:element name="Category" nillable="true" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="itemSearchRequest" type="tns:ItemSearchRequestType"/>
+         <s:complexType name="ItemType">
+            <s:sequence>
+               <s:element name="ASIN" nillable="true" type="s:string"/>
+               <s:element name="ExchangeID" nillable="true" type="s:string"/>
+               <s:element name="ListPrice" nillable="true" type="s:string"/>
+               <s:element name="Price" nillable="true" type="s:string"/>
+               <s:element name="Tax" nillable="true" type="s:string"/>
+               <s:element name="Shipping" nillable="true" type="s:string"/>
+               <s:element name="Name" nillable="true" type="s:string"/>
+               <s:element name="Author" nillable="true" type="s:string"/>
+               <s:element name="Manufacturer" nillable="true" type="s:string"/>
+               <s:element name="ReleaseDate" nillable="true" type="s:string"/>
+               <s:element name="Description" nillable="true" type="s:string"/>
+               <s:element name="Reviews" nillable="true" type="s:string"/>
+               <s:element name="ImageURL" nillable="true" type="s:string"/>
+               <s:element name="SupplierLocation" nillable="true" type="s:string"/>
+               <s:element name="Seller" nillable="true" type="s:string"/>
+               <s:element name="DetailsURL" nillable="true" type="s:string"/>
+               <s:element name="Quantity" nillable="true" type="s:positiveInteger"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ItemsType">
+            <s:sequence>
+               <s:element name="TotalCount" nillable="true" type="s:nonNegativeInteger"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true"
+                          type="tns:ItemType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ItemSearchResponseType">
+            <s:sequence>
+               <s:element name="Items" nillable="true" type="tns:ItemsType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="itemSearchResponse" type="tns:ItemSearchResponseType"/>
+         <s:complexType name="GetItemPriceRequestType">
+            <s:sequence>
+               <s:element name="SubscriptionID" nillable="true" type="s:string"/>
+               <s:element name="ID" nillable="true" type="s:string"/>
+               <s:element name="IDType" nillable="true" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="getItemPriceRequest" type="tns:GetItemPriceRequestType"/>
+         <s:complexType name="GetItemPriceResponseType">
+            <s:sequence>
+               <s:element name="ListPrice" nillable="true" type="s:string"/>
+               <s:element name="Price" nillable="true" type="s:string"/>
+               <s:element name="Tax" nillable="true" type="s:string"/>
+               <s:element name="Shipping" nillable="true" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="getItemPriceResponse" type="tns:GetItemPriceResponseType"/>
+         <s:complexType name="AddItemToCartRequestType">
+            <s:sequence>
+               <s:element name="SubscriptionID" nillable="true" type="s:string"/>
+               <s:element name="AssociateTag" nillable="true" type="s:string"/>
+               <s:element name="CartID" nillable="true" type="s:string"/>
+               <s:element name="HMAC" nillable="true" type="s:string"/>
+               <s:element name="ASIN" nillable="true" type="s:string"/>
+               <s:element name="Quantity" nillable="true" type="s:positiveInteger"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="addItemToCartRequest" type="tns:AddItemToCartRequestType"/>
+         <s:complexType name="CartItemType">
+            <s:sequence>
+               <s:element name="CartItemID" nillable="true" type="s:string"/>
+               <s:element name="Item" nillable="true" type="tns:ItemType"/>
+               <s:element name="Quantity" nillable="true" type="s:nonNegativeInteger"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CartType">
+            <s:sequence>
+               <s:element name="CartID" nillable="true" type="s:string"/>
+               <s:element name="HMAC" nillable="true" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CartItem" nillable="true"
+                          type="tns:CartItemType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddItemToCartResponseType">
+            <s:sequence>
+               <s:element name="Success" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Reason" nillable="true" type="s:string"/>
+               <s:element name="Cart" nillable="true" type="tns:CartType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="addItemToCartResponse" type="tns:AddItemToCartResponseType"/>
+         <s:complexType name="AddItemsToCartRequestType">
+            <s:sequence>
+               <s:element name="SubscriptionID" nillable="true" type="s:string"/>
+               <s:element name="AssociateTag" nillable="true" type="s:string"/>
+               <s:element name="CartID" nillable="true" type="s:string"/>
+               <s:element name="HMAC" nillable="true" type="s:string"/>
+               <s:element maxOccurs="unbounded" name="Items" nillable="true" type="tns:ItemType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="addItemsToCartRequest" type="tns:AddItemsToCartRequestType"/>
+         <s:complexType name="AddItemsToCartResponseType">
+            <s:sequence>
+               <s:element name="Success" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Reason" nillable="true" type="s:string"/>
+               <s:element name="Cart" nillable="true" type="tns:CartType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="addItemsToCartResponse" type="tns:AddItemsToCartResponseType"/>
+         <s:complexType name="DeleteItemFromCartRequestType">
+            <s:sequence>
+               <s:element name="SubscriptionID" nillable="true" type="s:string"/>
+               <s:element name="CartID" nillable="true" type="s:string"/>
+               <s:element name="HMAC" nillable="true" type="s:string"/>
+               <s:element name="CartItemID" nillable="true" type="s:string"/>
+               <s:element name="Quantity" nillable="true" type="s:positiveInteger"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="deleteItemFromCartRequest" type="tns:DeleteItemFromCartRequestType"/>
+         <s:complexType name="DeleteItemFromCartResponseType">
+            <s:sequence>
+               <s:element name="Success" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Reason" nillable="true" type="s:string"/>
+               <s:element name="Cart" nillable="true" type="tns:CartType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="deleteItemFromCartResponse" type="tns:DeleteItemFromCartResponseType"/>
+         <s:complexType name="DeleteItemsFromCartRequestType">
+            <s:sequence>
+               <s:element name="SubscriptionID" nillable="true" type="s:string"/>
+               <s:element name="CartID" nillable="true" type="s:string"/>
+               <s:element name="HMAC" nillable="true" type="s:string"/>
+               <s:element maxOccurs="unbounded" name="Items" nillable="true" type="tns:CartItemType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="deleteItemsFromCartRequest" type="tns:DeleteItemsFromCartRequestType"/>
+         <s:complexType name="DeleteItemsFromCartResponseType">
+            <s:sequence>
+               <s:element name="Success" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Reason" nillable="true" type="s:string"/>
+               <s:element name="Cart" nillable="true" type="tns:CartType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="deleteItemsFromCartResponse" type="tns:DeleteItemsFromCartResponseType"/>
+         <s:complexType name="ListItemsInCartRequestType">
+            <s:sequence>
+               <s:element name="SubscriptionID" nillable="true" type="s:string"/>
+               <s:element name="CartID" nillable="true" type="s:string"/>
+               <s:element name="HMAC" nillable="true" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="listItemsInCartRequest" type="tns:ListItemsInCartRequestType"/>
+         <s:complexType name="ListItemsInCartResponseType">
+            <s:sequence>
+               <s:element name="Cart" nillable="true" type="tns:CartType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="listItemsInCartResponse" type="tns:ListItemsInCartResponseType"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AddItemsToCartRequest">
+      <wsdl:part name="addItemsToCartRequest" element="tns:addItemsToCartRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ListItemsInCartResponse">
+      <wsdl:part name="listItemsInCartResponse" element="tns:listItemsInCartResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetItemPriceResponse">
+      <wsdl:part name="getItemPriceResponse" element="tns:getItemPriceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddItemToCartResponse">
+      <wsdl:part name="addItemToCartResponse" element="tns:addItemToCartResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddItemsToCartResponse">
+      <wsdl:part name="addItemsToCartResponse" element="tns:addItemsToCartResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ItemSearchResponse">
+      <wsdl:part name="itemSearchResponse" element="tns:itemSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddItemToCartRequest">
+      <wsdl:part name="addItemToCartRequest" element="tns:addItemToCartRequest"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteItemFromCartResponse">
+      <wsdl:part name="deleteItemFromCartResponse" element="tns:deleteItemFromCartResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListItemsInCartRequest">
+      <wsdl:part name="listItemsInCartRequest" element="tns:listItemsInCartRequest"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteItemFromCartRequest">
+      <wsdl:part name="deleteItemFromCartRequest" element="tns:deleteItemFromCartRequest"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteItemsFromCartRequest">
+      <wsdl:part name="deleteItemsFromCartRequest" element="tns:deleteItemsFromCartRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetItemPriceRequest">
+      <wsdl:part name="getItemPriceRequest" element="tns:getItemPriceRequest"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteItemsFromCartResponse">
+      <wsdl:part name="deleteItemsFromCartResponse" element="tns:deleteItemsFromCartResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ItemSearchRequest">
+      <wsdl:part name="itemSearchRequest" element="tns:itemSearchRequest"/>
+  </wsdl:message>
+  <wsdl:portType name="MyAmazonPlusSoapPort">
+      <wsdl:operation name="ItemSearch" parameterOrder="itemSearchRequest">
+         <wsdl:input name="ItemSearchRequest" message="tns:ItemSearchRequest"/>
+         <wsdl:output name="ItemSearchResponse" message="tns:ItemSearchResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetItemPrice" parameterOrder="getItemPriceRequest">
+         <wsdl:input name="GetItemPriceRequest" message="tns:GetItemPriceRequest"/>
+         <wsdl:output name="GetItemPriceResponse" message="tns:GetItemPriceResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="AddItemToCart" parameterOrder="addItemToCartRequest">
+         <wsdl:input name="AddItemToCartRequest" message="tns:AddItemToCartRequest"/>
+         <wsdl:output name="AddItemToCartResponse" message="tns:AddItemToCartResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="AddItemsToCart" parameterOrder="addItemsToCartRequest">
+         <wsdl:input name="AddItemsToCartRequest" message="tns:AddItemsToCartRequest"/>
+         <wsdl:output name="AddItemsToCartResponse" message="tns:AddItemsToCartResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteItemFromCart" parameterOrder="deleteItemFromCartRequest">
+         <wsdl:input name="DeleteItemFromCartRequest" message="tns:DeleteItemFromCartRequest"/>
+         <wsdl:output name="DeleteItemFromCartResponse" message="tns:DeleteItemFromCartResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteItemsFromCart" parameterOrder="deleteItemsFromCartRequest">
+         <wsdl:input name="DeleteItemsFromCartRequest" message="tns:DeleteItemsFromCartRequest"/>
+         <wsdl:output name="DeleteItemsFromCartResponse" message="tns:DeleteItemsFromCartResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="ListItemsInCart" parameterOrder="listItemsInCartRequest">
+         <wsdl:input name="ListItemsInCartRequest" message="tns:ListItemsInCartRequest"/>
+         <wsdl:output name="ListItemsInCartResponse" message="tns:ListItemsInCartResponse"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MyAmazonPlusSoapBinding" type="tns:MyAmazonPlusSoapPort">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="ItemSearch">
+         <soap:operation soapAction=""/>
+         <wsdl:input name="ItemSearchRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="ItemSearchResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetItemPrice">
+         <soap:operation soapAction=""/>
+         <wsdl:input name="GetItemPriceRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="GetItemPriceResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddItemToCart">
+         <soap:operation soapAction=""/>
+         <wsdl:input name="AddItemToCartRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="AddItemToCartResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddItemsToCart">
+         <soap:operation soapAction=""/>
+         <wsdl:input name="AddItemsToCartRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="AddItemsToCartResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteItemFromCart">
+         <soap:operation soapAction=""/>
+         <wsdl:input name="DeleteItemFromCartRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="DeleteItemFromCartResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteItemsFromCart">
+         <soap:operation soapAction=""/>
+         <wsdl:input name="DeleteItemsFromCartRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="DeleteItemsFromCartResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListItemsInCart">
+         <soap:operation soapAction=""/>
+         <wsdl:input name="ListItemsInCartRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="ListItemsInCartResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MyAmazonPlus">
+      <wsdl:port name="MyAmazonPlus" binding="tns:MyAmazonPlusSoapBinding">
+         <soap:address location="http://ws.soatrader.com/cs.berkeley.edu/0.1/MyAmazonPlus"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

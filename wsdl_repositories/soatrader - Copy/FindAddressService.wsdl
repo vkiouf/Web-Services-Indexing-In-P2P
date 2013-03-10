@@ -1,0 +1,583 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://rep.oio.dk/knowledgecube.net/oas/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:s1="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:s="http://www.w3.org/2001/XMLSchema"
+             xmlns:s0="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/"
+             xmlns:s3="http://rep.oio.dk/knowledgecube.net/oas/cpr.dk/xml/schemas/core/2005/10/18/"
+             xmlns:s2="http://rep.oio.dk/knowledgecube.net/oas/"
+             xmlns:s5="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"
+             xmlns:s4="http://rep.oio.dk/xkom.dk/xml/schemas/2005/03/15/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             targetNamespace="http://rep.oio.dk/knowledgecube.net/oas/"
+             name="FindAddressService">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <documentation>OAS web service for searching address data </documentation>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/"
+                elementFormDefault="qualified"
+                targetNamespace="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/">
+         <s:element name="StreetBuildingIdentifier" type="dkcc:StreetBuildingIdentifierType">
+            <s:annotation>
+               <s:documentation>
+			Numeric identification (da: house number ~ 'husnummer') including an optional letter, which identifies a certain access to a building, a plot/piece of land or a plant etc. based on the named road or street which gives access hereto. The identifier is determined in increasing numerical and letter order along the road, normally with even numbers on the right side and odd numbers on the left side of the road.
+ 			</s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="StreetBuildingIdentifierType">
+            <s:restriction base="s:string">
+               <s:pattern value="([1-9]|[1-9][0-9]|[1-9][0-9]{2})|([1-9][A-Z]|[1-9][0-9][A-Z]|[1-9][0-9]{2}[A-Z])"/>
+            </s:restriction>
+         </s:simpleType>
+      </s:schema>
+      <s:schema xmlns:dkcc3="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+                targetNamespace="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/">
+         <s:element name="DistrictSubdivisionIdentifier"
+                    type="dkcc3:DistrictSubdivisionIdentifierType">
+            <s:annotation>
+               <s:documentation>
+Name of a village, city or subdivision of a city or district, which is determined as a part of the official address specification for a certain street or specific parts of a street, defined by intervals of street building identifiers (da: house numbers). 
+      </s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="DistrictSubdivisionIdentifierType">
+            <s:restriction base="s:string">
+               <s:minLength value="1"/>
+               <s:maxLength value="34"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="DistrictName" type="dkcc3:DistrictNameType">
+            <s:annotation>
+               <s:documentation>
+			Declares the name of a postal district in plain text.
+The field contains 20 positions, which enables it to fit a window envelope
+together with the postal code and one free position in addition. The postal
+district is defined by municipalitycode, roadcode, postalcode, housenumber
+from/to together with a code, which declares whether the roadsection in
+question contains even or uneven housenumbers.
+			</s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="DistrictNameType">
+            <s:restriction base="s:string">
+               <s:minLength value="1"/>
+               <s:maxLength value="20"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="StreetName" type="dkcc3:StreetNameType">
+            <s:annotation>
+               <s:documentation>The approved name of a road, a street, a square, a path and the like. Further more street names can be connected to other particularly limited areas like garden associations or summer residence areas without road network, large commercial or institutional areas with a large number of buildings, smaller islands without road network, larger sporting facilities and the like. 
+			</s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="StreetNameType">
+            <s:restriction base="s:string">
+               <s:minLength value="1"/>
+               <s:maxLength value="40"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="PostCodeIdentifier" type="dkcc3:PostCodeIdentifierType">
+            <s:annotation>
+               <s:documentation>The postal departments nationwide postal code.</s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="PostCodeIdentifierType">
+            <s:restriction base="s:string">
+               <s:pattern value="[0-9]{4}"/>
+            </s:restriction>
+         </s:simpleType>
+      </s:schema>
+      <s:schema xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/"
+                xmlns:xkom="http://rep.oio.dk/xkom.dk/xml/schemas/2005/03/15/"
+                xmlns:dkcc3="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+                xmlns:oas="http://rep.oio.dk/knowledgecube.net/oas/"
+                xmlns:cpr2="http://rep.oio.dk/knowledgecube.net/oas/cpr.dk/xml/schemas/core/2005/10/18/"
+                xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"
+                targetNamespace="http://rep.oio.dk/knowledgecube.net/oas/">
+         <s:import namespace="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"/>
+         <s:import namespace="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"/>
+         <s:import namespace="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/"/>
+         <s:import namespace="http://rep.oio.dk/xkom.dk/xml/schemas/2005/03/15/"/>
+         <s:import namespace="http://rep.oio.dk/knowledgecube.net/oas/cpr.dk/xml/schemas/core/2005/10/18/"/>
+         <s:element name="DistrictSubdivisionSearch" type="oas:DistrictSubdivisionSearchType"/>
+         <s:complexType name="DistrictSubdivisionSearchType">
+            <s:sequence>
+               <s:element ref="dkcc3:DistrictSubdivisionIdentifier"/>
+            </s:sequence>
+         </s:complexType>
+         <!-- Manually added -->
+      <s:element name="PostCodeSearch" type="oas:PostCodeSearchType"/>
+         <s:complexType name="PostCodeSearchType">
+            <s:sequence>
+               <s:element ref="dkcc3:PostCodeIdentifier"/>
+               <s:element name="IncludeNeighbour" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="DistrictSearch" type="oas:DistrictSearchType"/>
+         <s:complexType name="DistrictSearchType">
+            <s:sequence>
+               <s:element ref="dkcc3:DistrictName"/>
+               <s:element name="IncludeNeighbour" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="MunicipalitySearch" type="oas:MunicipalitySearchType"/>
+         <s:complexType name="MunicipalitySearchType">
+            <s:sequence>
+               <s:element ref="cpr:MunicipalityCode"/>
+               <s:element name="IncludeNeighbour" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="NamedStreetTextInput" type="oas:NamedStreetTextInputType"/>
+         <s:simpleType name="NamedStreetTextInputType">
+            <s:restriction base="s:string">
+               <s:minLength value="1"/>
+               <s:maxLength value="35"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="FindNamedStreetRequest" type="oas:FindNamedStreetRequestType"/>
+         <s:complexType name="FindNamedStreetRequestType">
+            <s:sequence>
+               <s:element ref="oas:NamedStreetTextInput"/>
+               <s:element minOccurs="0" maxOccurs="1" ref="oas:MunicipalitySearch"/>
+               <s:element minOccurs="0" maxOccurs="1" ref="oas:DistrictSearch"/>
+               <s:element minOccurs="0" maxOccurs="1" ref="oas:DistrictSubdivisionSearch"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ResultRanking" type="oas:ResultRankingType">
+            <s:annotation>
+               <s:documentation>The ResultRanking value indicates how exact the result is compared to the search input. A ResultRanking value of 0 indicates an exact match.
+A higher value indicates a less exact match.</s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="ResultRankingType">
+            <s:restriction base="s:int">
+               <s:minInclusive value="0"/>
+               <s:maxInclusive value="60"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="NamedStreetIdentifier" type="oas:NamedStreetIdentifierType">
+            <s:annotation>
+               <s:documentation>Unique identification of a specific named street - the NamedStreetIdentifier is defined as a GUID or UUID. A GUID is a 128-bit integer (16 bytes) that can be used across all computers and 
+networks wherever a unique identifier is required. Such an identifier has a very low probability of being duplicated. </s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="NamedStreetIdentifierType">
+            <s:restriction base="s:string">
+               <s:pattern value="\{?[a-fA-F\d]{8}-([a-fA-F\d]{4}-){3}[a-fA-F\d]{12}\}?"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="FindNamedStreetResponse" type="oas:FindNamedStreetResponseType"/>
+         <s:complexType name="FindNamedStreetResponseType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="NamedStreetSearchResult"
+                          type="oas:NamedStreetSearchResultType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="NamedStreetSearchResultType">
+            <s:sequence>
+               <s:element ref="oas:NamedStreetIdentifier"/>
+               <s:element name="NamedStreetName" type="s:string"/>
+               <s:element ref="cpr:StreetCode"/>
+               <s:element ref="dkcc3:StreetName"/>
+               <s:element ref="cpr:MunicipalityName"/>
+               <s:element ref="cpr:MunicipalityCode"/>
+               <s:element ref="oas:ResultRanking"/>
+               <s:element ref="dkcc3:PostCodeIdentifier"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="FindAddressAccessRequest" type="oas:FindAddressAccessRequestType"/>
+         <s:complexType name="FindAddressAccessRequestType">
+            <s:sequence>
+               <s:element ref="oas:NamedStreetTextInput"/>
+               <s:element ref="dkcc:StreetBuildingIdentifier"/>
+               <s:element minOccurs="0" maxOccurs="1" ref="oas:MunicipalitySearch"/>
+               <s:element minOccurs="0" maxOccurs="1" ref="oas:DistrictSearch"/>
+               <s:element minOccurs="0" maxOccurs="1" ref="oas:DistrictSubdivisionSearch"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddressAccessIdentifier" type="oas:AddressAccessIdentifierType">
+            <s:annotation>
+               <s:documentation>Unique identification of a specific access address - the AddressAccessIdentifier is defined as a GUID or UUID. A GUID is a 128-bit integer (16 bytes) that can be used across all computers and 
+networks wherever a unique identifier is required. Such an identifier has a very low probability of being duplicated. </s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="AddressAccessIdentifierType">
+            <s:restriction base="s:string">
+               <s:pattern value="\{?[a-fA-F\d]{8}-([a-fA-F\d]{4}-){3}[a-fA-F\d]{12}\}?"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="AddressPoint" type="oas:AddressPointType"/>
+         <s:complexType name="AddressPointType">
+            <s:sequence>
+               <s:element ref="oas:AddressPointIdentifier"/>
+               <s:element name="AddressLocation" type="oas:AddressLocationType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AddressLocationMetaDate"
+                          type="oas:AddressLocationMetaDataType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AddressPointPortrayal"
+                          type="oas:AddressPointPortrayalType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressLocationType">
+            <s:sequence>
+               <s:element name="Point" type="oas:PointType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PointType">
+            <s:sequence>
+               <s:element name="CoordinateTuple" type="oas:CoordinateTupleType"/>
+            </s:sequence>
+            <s:attribute name="crsName" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="CoordinateTupleType">
+            <s:sequence>
+               <s:element name="Easting" type="oas:EastingType"/>
+               <s:element name="Northing" type="oas:NorthingType"/>
+               <s:element minOccurs="0" name="Height" type="oas:HeightType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="EastingType">
+            <s:restriction base="s:double"/>
+         </s:simpleType>
+         <s:simpleType name="NorthingType">
+            <s:restriction base="s:double"/>
+         </s:simpleType>
+         <s:simpleType name="HeightType">
+            <s:restriction base="s:double"/>
+         </s:simpleType>
+         <s:complexType name="AddressLocationMetaDataType">
+            <s:sequence>
+               <s:element name="AddressCoordinateQualityClassCode"
+                          type="oas:AddressCoordinateQualityClassCodeType"/>
+               <s:element name="AddressCoordinateTechnicalStandard"
+                          type="oas:AddressCoordinateTechnicalStandardType"/>
+               <s:element name="AddressCoordinateSourceCode" type="oas:AddressCoordinateSourceCodeType"/>
+               <s:element name="AddressCoordinateRevisionDate"
+                          type="oas:AddressCoordinateRevisionDateType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="AddressCoordinateQualityClassCodeType">
+            <s:restriction base="s:string">
+               <s:maxLength value="1"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="AddressCoordinateTechnicalStandardType">
+            <s:restriction base="s:string">
+               <s:maxLength value="2"/>
+            </s:restriction>
+         </s:simpleType>
+	        <s:simpleType name="AddressCoordinateSourceCodeType">
+      	     <s:restriction base="s:string">
+			            <s:maxLength value="1"/>
+		          </s:restriction>
+         </s:simpleType>
+	        <s:simpleType name="AddressCoordinateRevisionDateType">
+            <s:restriction base="s:date"/>
+         </s:simpleType>
+         <s:complexType name="AddressPointPortrayalType">
+            <s:sequence>
+               <s:element name="AddressTextAngle" type="oas:AddressTextAngleType"/>
+               <s:element name="AddressTextJustificationCode" type="oas:AddressTextJustificationCodeType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="AddressTextAngleType">
+            <s:restriction base="s:double"/>
+         </s:simpleType>
+         <s:simpleType name="AddressTextJustificationCodeType">
+            <s:restriction base="s:string">
+               <s:maxLength value="1"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="FindAddressAccessResponse" type="oas:FindAddressAccessResponseType"/>
+         <s:complexType name="FindAddressAccessResponseType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchResult"
+                          type="oas:SearchResultType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchResultType">
+            <s:sequence>
+               <s:element ref="oas:AddressAccessIdentifier"/>
+               <s:element ref="xkom:AddressAccess"/>
+               <s:element ref="oas:AddressPoint"/>
+               <s:element ref="oas:ResultRanking"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddressPointIdentifier" type="oas:AddressPointIdentifierType">
+            <s:annotation>
+               <s:documentation>Unique identification of a specific address point - the AddressAccessIdentifier is defined as a GUID or UUID. A GUID is a 128-bit integer (16 bytes) that can be used across all computers and 
+networks wherever a unique identifier is required. Such an identifier has a very low probability of being duplicated. </s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="AddressPointIdentifierType">
+            <s:restriction base="s:string">
+               <s:pattern value="\{?[a-fA-F\d]{8}-([a-fA-F\d]{4}-){3}[a-fA-F\d]{12}\}?"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="PostDistrictTextInput" type="oas:PostDistrictTextInputType"/>
+         <s:simpleType name="PostDistrictTextInputType">
+            <s:restriction base="s:string">
+               <s:minLength value="1"/>
+               <s:maxLength value="40"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="FindPostalDistrictRequest" type="oas:FindPostalDistrictRequestType"/>
+         <s:complexType name="FindPostalDistrictRequestType">
+            <s:sequence>
+               <s:element ref="oas:PostDistrictTextInput"/>
+               <s:element minOccurs="0" maxOccurs="1" ref="oas:MunicipalitySearch"/>
+               <s:element minOccurs="0" maxOccurs="1" ref="cpr2:RegionIdentifier"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="FindPostalDistrictResponse" type="oas:FindPostalDistrictResponseType"/>
+         <s:complexType name="FindPostalDistrictResponseType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PostalDistrictSearchResult"
+                          type="oas:PostalDistrictSearchResultType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PostalDistrictSearchResultType">
+            <s:sequence>
+               <s:element ref="dkcc3:PostCodeIdentifier"/>
+               <s:element ref="dkcc3:DistrictName"/>
+               <s:element ref="oas:ResultRanking"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="MunicipalityNameTextInput" type="oas:MunicipalityNameTextInputType"/>
+         <s:simpleType name="MunicipalityNameTextInputType">
+            <s:restriction base="s:string">
+               <s:minLength value="1"/>
+               <s:maxLength value="60"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="FindMunicipalityNameRequest" type="oas:FindMunicipalityNameRequestType"/>
+         <s:complexType name="FindMunicipalityNameRequestType">
+            <s:sequence>
+               <s:element ref="oas:MunicipalityNameTextInput"/>
+               <s:element minOccurs="0" maxOccurs="1" ref="oas:PostCodeSearch"/>
+               <s:element minOccurs="0" maxOccurs="1" ref="cpr2:RegionIdentifier"/>
+               <s:element minOccurs="0" maxOccurs="1" ref="oas:DistrictSubdivisionSearch"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="FindMunicipalityNameResponse" type="oas:FindMunicipalityNameResponseType"/>
+         <s:complexType name="FindMunicipalityNameResponseType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="MunicipalitySearchResult"
+                          type="oas:MunicipalitySearchResultType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MunicipalitySearchResultType">
+            <s:sequence>
+               <s:element ref="cpr:MunicipalityName"/>
+               <s:element ref="cpr:MunicipalityCode"/>
+               <s:element ref="cpr2:Region"/>
+               <s:element ref="oas:ResultRanking"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"
+                xmlns:cpr2="http://rep.oio.dk/knowledgecube.net/oas/cpr.dk/xml/schemas/core/2005/10/18/"
+                targetNamespace="http://rep.oio.dk/knowledgecube.net/oas/cpr.dk/xml/schemas/core/2005/10/18/">
+         <s:import namespace="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"/>
+         <s:element name="RegionIdentifier" type="cpr:AuthorityCodeType">
+            <s:annotation>
+               <s:documentation>The identifier of a region. The the identifier will always be unique."</s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:element name="Region" type="cpr2:RegionType"/>
+         <s:complexType name="RegionType">
+            <s:sequence>
+               <s:element ref="cpr2:RegionIdentifier"/>
+               <s:element ref="cpr2:RegionName"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="RegionName" type="cpr:AuthorityNameType"/>
+      </s:schema>
+      <s:schema xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/"
+                xmlns:xkom="http://rep.oio.dk/xkom.dk/xml/schemas/2005/03/15/"
+                xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"
+                elementFormDefault="qualified"
+                targetNamespace="http://rep.oio.dk/xkom.dk/xml/schemas/2005/03/15/">
+         <s:import namespace="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"/>
+         <s:import namespace="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/"/>
+         <s:element name="AddressAccess" type="xkom:AddressAccessType">
+            <s:annotation>
+               <s:documentation>
+	Unique identification of a specific access to a building (entrance door
+etc.) plot of land, plant etc., by use of  municipialitycode, streetcode and
+street building identifier (da. house number ~ husnummer). 	</s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:complexType name="AddressAccessType">
+            <s:sequence>
+               <s:element ref="cpr:MunicipalityCode"/>
+               <s:element ref="cpr:StreetCode"/>
+               <s:element ref="dkcc:StreetBuildingIdentifier"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"
+                targetNamespace="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/">
+         <s:element name="MunicipalityCode" type="cpr:AuthorityCodeType">
+            <s:annotation>
+               <s:documentation>
+			The code of a municipality. The plain text of a municipality is to be found by reference to the authority-data in the civilregistrationsystem. The code will always be unique." 
+			</s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:element name="AuthorityCode" type="cpr:AuthorityCodeType">
+            <s:annotation>
+               <s:documentation>Code, which identifies an authority. Every AuthorityCode belongs to a specific authority (reference to data of authorities in CPR). The AuthorityCode is unique. 
+</s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="AuthorityCodeType">
+            <s:restriction base="s:string">
+               <s:pattern value="[0-9]{4}"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="StreetCode" type="cpr:StreetCodeType">
+            <s:annotation>
+               <s:documentation>Declares a named street, road, square, path or the like in code. Streetcode in combination with municipalitycode constitutes an unique code for a road in Denmark. 
+			</s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="StreetCodeType">
+            <s:restriction base="s:string">
+               <s:pattern value="[0-9]{4}"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="MunicipalityName" type="cpr:AuthorityNameType"/>
+         <s:element name="AuthorityName" type="cpr:AuthorityNameType">
+            <s:annotation>
+               <s:documentation>Plain text field, which declares the name of a authority like municipality, county and parish. Every authority belongs to a specific authoritycode. 
+ </s:documentation>
+            </s:annotation>
+         </s:element>
+         <s:simpleType name="AuthorityNameType">
+            <s:restriction base="s:string">
+               <s:minLength value="1"/>
+               <s:maxLength value="20"/>
+            </s:restriction>
+         </s:simpleType>
+      </s:schema>
+  </types>
+  <message name="FindNamedStreetSoapIn">
+      <part name="SoapIn" element="s2:FindNamedStreetRequest"/>
+  </message>
+  <message name="FindNamedStreetSoapOut">
+      <part name="SoapOut" element="s2:FindNamedStreetResponse"/>
+  </message>
+  <message name="FindAddressAccessSoapIn">
+      <part name="SoapIn" element="s2:FindAddressAccessRequest"/>
+  </message>
+  <message name="FindAddressAccessSoapOut">
+      <part name="SoapOut" element="s2:FindAddressAccessResponse"/>
+  </message>
+  <message name="FindPostalDistrictSoapIn">
+      <part name="SoapIn" element="s2:FindPostalDistrictRequest"/>
+  </message>
+  <message name="FindPostalDistrictSoapOut">
+      <part name="SoapOut" element="s2:FindPostalDistrictResponse"/>
+  </message>
+  <message name="FindMunicipalityNameSoapIn">
+      <part name="SoapIn" element="s2:FindMunicipalityNameRequest"/>
+  </message>
+  <message name="FindMunicipalityNameSoapOut">
+      <part name="SoapOut" element="s2:FindMunicipalityNameResponse"/>
+  </message>
+  <portType name="FindAddressServiceSoap">
+      <operation name="FindNamedStreet">
+         <input message="s2:FindNamedStreetSoapIn"/>
+         <output message="s2:FindNamedStreetSoapOut"/>
+      </operation>
+      <operation name="FindAddressAccess">
+         <input message="s2:FindAddressAccessSoapIn"/>
+         <output message="s2:FindAddressAccessSoapOut"/>
+      </operation>
+      <operation name="FindPostalDistrict">
+         <input message="s2:FindPostalDistrictSoapIn"/>
+         <output message="s2:FindPostalDistrictSoapOut"/>
+      </operation>
+      <operation name="FindMunicipalityName">
+         <input message="s2:FindMunicipalityNameSoapIn"/>
+         <output message="s2:FindMunicipalityNameSoapOut"/>
+      </operation>
+  </portType>
+  <binding name="FindAddressServiceBinding" type="s2:FindAddressServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <operation name="FindNamedStreet">
+         <soap:operation soapAction="http://xmltools.oio.dk/oas/webservice/2/FindNamedStreet"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" parts="SoapIn"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" parts="SoapOut"/>
+         </output>
+      </operation>
+      <operation name="FindAddressAccess">
+         <soap:operation soapAction="http://xmltools.oio.dk/oas/webservice/2/FindAddressAccess"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" parts="SoapIn"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" parts="SoapOut"/>
+         </output>
+      </operation>
+      <operation name="FindPostalDistrict">
+         <soap:operation soapAction="http://xmltools.oio.dk/oas/webservice/2/FindPostalDistrict"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" parts="SoapIn"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" parts="SoapOut"/>
+         </output>
+      </operation>
+      <operation name="FindMunicipalityName">
+         <soap:operation soapAction="http://xmltools.oio.dk/oas/webservice/2/FindMunicipalityName"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" parts="SoapIn"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" parts="SoapOut"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="FindAddressService">
+      <port name="FindAddressServicePort" binding="s2:FindAddressServiceBinding">
+		       <soap:address location="http://ws.soatrader.com/oio.dk/0.4/FindAddressService"/>
+      </port>
+  </service>
+</definitions>

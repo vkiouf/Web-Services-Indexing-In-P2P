@@ -1,0 +1,125 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://webservices.cj.com"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://webservices.cj.com"
+                  xmlns:intf="http://webservices.cj.com"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://bean.service.cj.com"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://webservices.cj.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://bean.service.cj.com">
+         <import namespace="http://webservices.cj.com"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ProductData">
+            <sequence>
+               <element name="advertiserId" type="xsd:int"/>
+               <element name="advertiserName" nillable="true" type="soapenc:string"/>
+               <element name="clickUrl" nillable="true" type="soapenc:string"/>
+               <element name="currency" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="imageUrl" nillable="true" type="soapenc:string"/>
+               <element name="name" nillable="true" type="soapenc:string"/>
+               <element name="price" type="xsd:double"/>
+               <element name="sku" nillable="true" type="soapenc:string"/>
+               <element name="upc" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="ProductSearchResponse">
+            <sequence>
+               <element name="count" type="xsd:int"/>
+               <element name="offset" type="xsd:int"/>
+               <element name="products" nillable="true" type="impl:ArrayOf_tns1_ProductData"/>
+               <element name="totalPossible" type="xsd:int"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://webservices.cj.com">
+         <import namespace="http://bean.service.cj.com"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOf_tns1_ProductData">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:ProductData[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+  </wsdl:types>
+  <wsdl:message name="searchRequest">
+      <wsdl:part name="developerKey" type="xsd:string"/>
+      <wsdl:part name="websiteId" type="xsd:int"/>
+      <wsdl:part name="advertiserIds" type="xsd:string"/>
+      <wsdl:part name="keywords" type="xsd:string"/>
+      <wsdl:part name="serviceableArea" type="xsd:string"/>
+      <wsdl:part name="upcOrIsbnOrEan" type="xsd:string"/>
+      <wsdl:part name="manufacturerName" type="xsd:string"/>
+      <wsdl:part name="advertiserSku" type="xsd:string"/>
+      <wsdl:part name="lowPrice" type="xsd:string"/>
+      <wsdl:part name="highPrice" type="xsd:string"/>
+      <wsdl:part name="currency" type="xsd:string"/>
+      <wsdl:part name="sortBy" type="xsd:string"/>
+      <wsdl:part name="orderIn" type="xsd:string"/>
+      <wsdl:part name="startAt" type="xsd:int"/>
+      <wsdl:part name="maxResults" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="searchResponse">
+      <wsdl:part name="searchReturn" type="tns1:ProductSearchResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ProductSearch">
+      <wsdl:operation name="search"
+                      parameterOrder="developerKey websiteId advertiserIds keywords serviceableArea upcOrIsbnOrEan manufacturerName advertiserSku lowPrice highPrice currency sortBy orderIn startAt maxResults">
+         <wsdl:input message="impl:searchRequest" name="searchRequest"/>
+         <wsdl:output message="impl:searchResponse" name="searchResponse"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="productSearchServiceSoapBinding" type="impl:ProductSearch">
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="search">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="searchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://service.cj.com"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="searchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://webservices.cj.com"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProductSearchService">
+      <wsdl:port binding="impl:productSearchServiceSoapBinding" name="productSearchService">
+         <wsdlsoap:address location="http://ws.soatrader.com/compara-precios.com/0.1/ProductSearchService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

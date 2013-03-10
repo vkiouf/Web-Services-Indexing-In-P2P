@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.xignite.com/services/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://www.xignite.com/services/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This web service provides index component information.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.xignite.com/services/">
+      <s:element name="GetIndexComponents">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="tns:IdentifierTypes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="IdentifierTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="Symbol" />
+          <s:enumeration value="CIK" />
+          <s:enumeration value="CUSIP" />
+          <s:enumeration value="ISIN" />
+          <s:enumeration value="Valoren" />
+          <s:enumeration value="SEDOL" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetIndexComponentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetIndexComponentsResult" type="tns:Components" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Components">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Security" type="tns:Security" />
+              <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Components" type="tns:ArrayOfComponent" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Common">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Outcome" type="tns:OutcomeTypes" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Identity" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Delay" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="OutcomeTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="Success" />
+          <s:enumeration value="SystemError" />
+          <s:enumeration value="RequestError" />
+          <s:enumeration value="RegistrationError" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="Security">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CIK" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Cusip" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ISIN" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Valoren" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Market" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CategoryOrIndustry" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfComponent">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Component" nillable="true" type="tns:Component" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Component">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Security" type="tns:Security" />
+          <s:element minOccurs="1" maxOccurs="1" name="Weight" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="AdjustmentFactor" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="IndexComponentWeightType" type="tns:IndexComponentWeightTypes" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="IndexComponentWeightTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="Unknown" />
+          <s:enumeration value="MarketCapitalizationWeighted" />
+          <s:enumeration value="EqualWeighted" />
+          <s:enumeration value="PriceWeighted" />
+          <s:enumeration value="MarketCapitalizationWeightedWithLimits" />
+          <s:enumeration value="OtherWeighting" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="Header" type="tns:Header" />
+      <s:complexType name="Header">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Tracer" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="GetPricedIndexComponents">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="tns:IdentifierTypes" />
+            <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPricedIndexComponentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPricedIndexComponentsResult" type="tns:PricedComponents" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PricedComponents">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Security" type="tns:Security" />
+              <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Divisor" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="DivisorDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PricedComponents" type="tns:ArrayOfPricedComponent" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfPricedComponent">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PricedComponent" nillable="true" type="tns:PricedComponent" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PricedComponent">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Exchange" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CIK" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Cusip" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ISIN" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SEDOL" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Valoren" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Sector" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Class" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="IndustryGroup" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Industry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Currency" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Style" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Weight" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="MarketCapitalization" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="AdjustmentFactor" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="IndexComponentWeightType" type="tns:IndexComponentWeightTypes" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetPricedIndexComponentsSubset">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="tns:IdentifierTypes" />
+            <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="StartIndex" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="EndIndex" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPricedIndexComponentsSubsetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPricedIndexComponentsSubsetResult" type="tns:PricedComponents" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Components" nillable="true" type="tns:Components" />
+      <s:element name="PricedComponents" nillable="true" type="tns:PricedComponents" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetIndexComponentsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetIndexComponents" />
+  </wsdl:message>
+  <wsdl:message name="GetIndexComponentsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetIndexComponentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetIndexComponentsHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPricedIndexComponents" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPricedIndexComponentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsSubsetSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPricedIndexComponentsSubset" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsSubsetSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPricedIndexComponentsSubsetResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsSubsetHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetIndexComponentsHttpGetIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIndexComponentsHttpGetOut">
+    <wsdl:part name="Body" element="tns:Components" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsHttpGetIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+    <wsdl:part name="AsOfDate" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsHttpGetOut">
+    <wsdl:part name="Body" element="tns:PricedComponents" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsSubsetHttpGetIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+    <wsdl:part name="AsOfDate" type="s:string" />
+    <wsdl:part name="StartIndex" type="s:string" />
+    <wsdl:part name="EndIndex" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsSubsetHttpGetOut">
+    <wsdl:part name="Body" element="tns:PricedComponents" />
+  </wsdl:message>
+  <wsdl:message name="GetIndexComponentsHttpPostIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIndexComponentsHttpPostOut">
+    <wsdl:part name="Body" element="tns:Components" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsHttpPostIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+    <wsdl:part name="AsOfDate" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsHttpPostOut">
+    <wsdl:part name="Body" element="tns:PricedComponents" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsSubsetHttpPostIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+    <wsdl:part name="AsOfDate" type="s:string" />
+    <wsdl:part name="StartIndex" type="s:string" />
+    <wsdl:part name="EndIndex" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPricedIndexComponentsSubsetHttpPostOut">
+    <wsdl:part name="Body" element="tns:PricedComponents" />
+  </wsdl:message>
+  <wsdl:portType name="XigniteIndexComponentsSoap">
+    <wsdl:operation name="GetIndexComponents">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the components, or the constituants of an index.</wsdl:documentation>
+      <wsdl:input message="tns:GetIndexComponentsSoapIn" />
+      <wsdl:output message="tns:GetIndexComponentsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponents">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the priced components, or the constituants of an index.</wsdl:documentation>
+      <wsdl:input message="tns:GetPricedIndexComponentsSoapIn" />
+      <wsdl:output message="tns:GetPricedIndexComponentsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponentsSubset">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a subset of the priced components, or the constituants of an index.</wsdl:documentation>
+      <wsdl:input message="tns:GetPricedIndexComponentsSubsetSoapIn" />
+      <wsdl:output message="tns:GetPricedIndexComponentsSubsetSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="XigniteIndexComponentsHttpGet">
+    <wsdl:operation name="GetIndexComponents">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the components, or the constituants of an index.</wsdl:documentation>
+      <wsdl:input message="tns:GetIndexComponentsHttpGetIn" />
+      <wsdl:output message="tns:GetIndexComponentsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponents">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the priced components, or the constituants of an index.</wsdl:documentation>
+      <wsdl:input message="tns:GetPricedIndexComponentsHttpGetIn" />
+      <wsdl:output message="tns:GetPricedIndexComponentsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponentsSubset">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a subset of the priced components, or the constituants of an index.</wsdl:documentation>
+      <wsdl:input message="tns:GetPricedIndexComponentsSubsetHttpGetIn" />
+      <wsdl:output message="tns:GetPricedIndexComponentsSubsetHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="XigniteIndexComponentsHttpPost">
+    <wsdl:operation name="GetIndexComponents">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the components, or the constituants of an index.</wsdl:documentation>
+      <wsdl:input message="tns:GetIndexComponentsHttpPostIn" />
+      <wsdl:output message="tns:GetIndexComponentsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponents">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the priced components, or the constituants of an index.</wsdl:documentation>
+      <wsdl:input message="tns:GetPricedIndexComponentsHttpPostIn" />
+      <wsdl:output message="tns:GetPricedIndexComponentsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponentsSubset">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a subset of the priced components, or the constituants of an index.</wsdl:documentation>
+      <wsdl:input message="tns:GetPricedIndexComponentsSubsetHttpPostIn" />
+      <wsdl:output message="tns:GetPricedIndexComponentsSubsetHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="XigniteIndexComponentsSoap" type="tns:XigniteIndexComponentsSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetIndexComponents">
+      <soap:operation soapAction="http://www.xignite.com/services/GetIndexComponents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetIndexComponentsHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponents">
+      <soap:operation soapAction="http://www.xignite.com/services/GetPricedIndexComponents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetPricedIndexComponentsHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponentsSubset">
+      <soap:operation soapAction="http://www.xignite.com/services/GetPricedIndexComponentsSubset" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetPricedIndexComponentsSubsetHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteIndexComponentsSoap12" type="tns:XigniteIndexComponentsSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetIndexComponents">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetIndexComponents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetIndexComponentsHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponents">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetPricedIndexComponents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetPricedIndexComponentsHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponentsSubset">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetPricedIndexComponentsSubset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetPricedIndexComponentsSubsetHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteIndexComponentsHttpGet" type="tns:XigniteIndexComponentsHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetIndexComponents">
+      <http:operation location="/GetIndexComponents" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponents">
+      <http:operation location="/GetPricedIndexComponents" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponentsSubset">
+      <http:operation location="/GetPricedIndexComponentsSubset" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteIndexComponentsHttpPost" type="tns:XigniteIndexComponentsHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetIndexComponents">
+      <http:operation location="/GetIndexComponents" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponents">
+      <http:operation location="/GetPricedIndexComponents" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPricedIndexComponentsSubset">
+      <http:operation location="/GetPricedIndexComponentsSubset" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="XigniteIndexComponents">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This web service provides index component information.</wsdl:documentation>
+    <wsdl:port name="XigniteIndexComponentsSoap" binding="tns:XigniteIndexComponentsSoap">
+      <soap:address location="http://www.xignite.com/xIndexComponents.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteIndexComponentsSoap12" binding="tns:XigniteIndexComponentsSoap12">
+      <soap12:address location="http://www.xignite.com/xIndexComponents.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteIndexComponentsHttpGet" binding="tns:XigniteIndexComponentsHttpGet">
+      <http:address location="http://www.xignite.com/xIndexComponents.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteIndexComponentsHttpPost" binding="tns:XigniteIndexComponentsHttpPost">
+      <http:address location="http://www.xignite.com/xIndexComponents.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

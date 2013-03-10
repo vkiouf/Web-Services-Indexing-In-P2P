@@ -1,0 +1,102 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://netservices.sapo.pt/definitions"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://netservices.sapo.pt/definitions">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://netservices.sapo.pt/definitions">
+         <s:element name="HasCoverage">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="telephoneNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="HasCoverageResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="HasCoverageResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="boolean" type="s:boolean"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HasCoverageSoapIn">
+      <wsdl:part name="parameters" element="tns:HasCoverage"/>
+  </wsdl:message>
+  <wsdl:message name="HasCoverageSoapOut">
+      <wsdl:part name="parameters" element="tns:HasCoverageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="HasCoverageHttpGetIn">
+      <wsdl:part name="telephoneNumber" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="HasCoverageHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="HasCoverageHttpPostIn">
+      <wsdl:part name="telephoneNumber" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="HasCoverageHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:portType name="AdslSoap">
+      <wsdl:operation name="HasCoverage">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Accepts a telephoneNumber to check for ADSL coverage. Returns true if telephone number has ADSL coverage.</documentation>
+         <wsdl:input message="tns:HasCoverageSoapIn"/>
+         <wsdl:output message="tns:HasCoverageSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="AdslSoap" type="tns:AdslSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="HasCoverage">
+         <soap:operation soapAction="http://netservices.sapo.pt/definitions/HasCoverage"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="Adsl">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Exposes common functions related to ADSL coverage and support.</documentation>
+      <wsdl:port name="AdslSoap" binding="tns:AdslSoap">
+         <soap:address location="http://ws.soatrader.com/sapo.pt/0.1/Adsl"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

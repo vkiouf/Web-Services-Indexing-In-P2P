@@ -1,0 +1,182 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://tempuri.org/ADSLUsage/adslxmlusage"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/ADSLUsage/adslxmlusage">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://tempuri.org/ADSLUsage/adslxmlusage">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="getUsage">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getUsageResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getUsageResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getDayUsage">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="givenDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getDayUsageResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getDayUsageResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DataSet" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:element ref="s:schema"/>
+                  <s:any/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getUsageSoapIn">
+      <wsdl:part name="parameters" element="tns:getUsage"/>
+  </wsdl:message>
+  <wsdl:message name="getUsageSoapOut">
+      <wsdl:part name="parameters" element="tns:getUsageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getDayUsageSoapIn">
+      <wsdl:part name="parameters" element="tns:getDayUsage"/>
+  </wsdl:message>
+  <wsdl:message name="getDayUsageSoapOut">
+      <wsdl:part name="parameters" element="tns:getDayUsageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getUsageHttpGetIn">
+      <wsdl:part name="username" type="s:string"/>
+      <wsdl:part name="password" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getUsageHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="getDayUsageHttpGetIn">
+      <wsdl:part name="username" type="s:string"/>
+      <wsdl:part name="password" type="s:string"/>
+      <wsdl:part name="givenDate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getDayUsageHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="getUsageHttpPostIn">
+      <wsdl:part name="username" type="s:string"/>
+      <wsdl:part name="password" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getUsageHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="getDayUsageHttpPostIn">
+      <wsdl:part name="username" type="s:string"/>
+      <wsdl:part name="password" type="s:string"/>
+      <wsdl:part name="givenDate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getDayUsageHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:portType name="adslxmlusageSoap">
+      <wsdl:operation name="getUsage">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Retrives usage details for current month in an XML form. Requires Westnet username and password.</documentation>
+         <wsdl:input message="tns:getUsageSoapIn"/>
+         <wsdl:output message="tns:getUsageSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getDayUsage">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Retrives usage details for a given day in an XML form. Requires Westnet username/password and chosen date in an SQL valid date format.</documentation>
+         <wsdl:input message="tns:getDayUsageSoapIn"/>
+         <wsdl:output message="tns:getDayUsageSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="adslxmlusageSoap" type="tns:adslxmlusageSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="getUsage">
+         <soap:operation soapAction="http://tempuri.org/ADSLUsage/adslxmlusage/getUsage"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getDayUsage">
+         <soap:operation soapAction="http://tempuri.org/ADSLUsage/adslxmlusage/getDayUsage"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="adslxmlusage">
+      <wsdl:port name="adslxmlusageSoap" binding="tns:adslxmlusageSoap">
+         <soap:address location="http://ws.soatrader.com/wn.com.au/0.1/adslxmlusage"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

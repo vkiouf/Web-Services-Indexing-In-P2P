@@ -1,0 +1,1007 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tns="http://pds.atira.dk/wsdl"
+             xmlns:types="http://pds.atira.dk/types"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://pds.atira.dk/wsdl">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+
+	 <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+
+
+		    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:pds="http://pds.atira.dk/types"
+              elementFormDefault="qualified"
+              targetNamespace="http://pds.atira.dk/types">
+
+
+			<!-- Types -->
+
+			   <complexType name="CriteriaList">
+
+				        <sequence>
+
+					          <element maxOccurs="unbounded" minOccurs="1" name="criteria" type="pds:Criteria"/>
+
+				        </sequence>
+
+			      </complexType>
+
+			      <complexType name="Criteria">
+
+				        <xsd:annotation>
+
+					          <xsd:documentation>
+
+						Used to define person searches. If nothing is set on the criteria all persons will be found.
+
+						The required field "type" must be set to the case sensitive string "Person"
+					     </xsd:documentation>
+
+				        </xsd:annotation>
+
+				        <sequence maxOccurs="1" minOccurs="0">
+
+					          <element maxOccurs="1" minOccurs="0" name="medarbejderNr" type="string">
+
+						            <xsd:annotation>
+
+							              <xsd:documentation>
+Match only the person with this medarbejderNr.       </xsd:documentation>
+
+						            </xsd:annotation>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="fornavn" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="efternavn" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="fornavnAsLike" type="boolean">
+
+						            <xsd:annotation>
+
+							              <xsd:documentation>
+
+								Use the value of "fornavn" as the input for the like operator
+							       </xsd:documentation>
+
+						            </xsd:annotation>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="efternavnAsLike" type="boolean">
+
+						            <xsd:annotation>
+
+							              <xsd:documentation>
+
+								Use the value of "efternavn" as the input for the like operator
+							       </xsd:documentation>
+
+						            </xsd:annotation>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="tjenestestedId" type="string">
+
+						            <xsd:annotation>
+
+							              <xsd:documentation>
+
+								Limit search to include persons that have an ansaettelse with this tjenestestedid
+							       </xsd:documentation>
+
+						            </xsd:annotation>
+
+					          </element>
+
+
+					          <element maxOccurs="1" minOccurs="0" name="modified" type="dateTime"/>
+
+
+					          <element maxOccurs="1" minOccurs="0" name="ansatHosAAU" type="boolean">
+
+						            <xsd:annotation>
+
+							              <xsd:documentation>
+
+								If set to true only persons that are currently employed are returned as opposed to
+								returning persons no longer employed
+
+								The limitation uses a 40 day grace period, in which the user will still be in the search
+								result. Ie. persons who stopped 39 days ago are still returned.
+							       </xsd:documentation>
+
+						            </xsd:annotation>
+
+					          </element>
+
+
+
+					          <element maxOccurs="1" minOccurs="0" name="ekstern" type="boolean"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="includeTjenestesteder">
+
+						            <xsd:annotation>
+
+							              <xsd:documentation>
+
+								Limits search to these tjenestesteder. NOTE: when using this set do not use
+								tjenestestedId. If the collection is empty nothing is limited on tjenestested
+							       </xsd:documentation>
+
+						            </xsd:annotation>
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" name="String" type="string"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="includeMedarbejdernr">
+
+						            <xsd:annotation>
+
+							              <xsd:documentation>
+
+								If medarbejderNr is not set, the ids in this set is used to limit the search, such that
+								only persons with a medarbejderNr in the set is returned.
+							       </xsd:documentation>
+
+						            </xsd:annotation>
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" name="String" type="string"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="excludeMedarbejdernr">
+
+						            <xsd:annotation>
+
+							              <xsd:documentation>
+
+								Used to specify which persons to exclude from the result, for example when searching for
+								persons from one or more given tjenestested.
+							       </xsd:documentation>
+
+						            </xsd:annotation>
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" name="String" type="string"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+				        </sequence>
+
+				        <attribute name="type" type="xsd:string" use="required"/>
+
+			      </complexType>
+
+
+			      <complexType name="ListResult">
+
+				        <xsd:annotation>
+
+					          <xsd:documentation>
+
+						A list result is a collection of results and metadata about how many potential matches there had
+						been in the particular search, given an undefined window in the search (ie. all results)
+					     </xsd:documentation>
+
+				        </xsd:annotation>
+
+				        <sequence>
+
+					          <element name="holder">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="1" minOccurs="1" name="count" type="int"/>
+
+								                <element maxOccurs="1" minOccurs="1" name="exact" type="boolean"/>
+
+								                <element maxOccurs="1" minOccurs="1" name="empty" type="boolean"/>
+
+								                <element maxOccurs="1" minOccurs="1" name="result">
+
+									                  <complexType>
+
+										                    <sequence>
+
+											                      <element maxOccurs="unbounded" name="person" type="pds:Person"/>
+
+										                    </sequence>
+
+									                  </complexType>
+
+								                </element>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="Person">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="0" name="lastmanualedit" type="dateTime"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="brugernavn" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="fornavn" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="efternavn" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="koen" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="fornavnalias" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="efternavnalias" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="fonetik">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="string" type="string"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="akademiskTitel">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+								                <element maxOccurs="1" minOccurs="1" name="danish" type="string"/>
+
+								                <element maxOccurs="1" minOccurs="1" name="english" type="string"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="medarbejdernr" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="ansatHosAAU" type="boolean"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="ekstern" type="boolean"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="ansaettelser">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="ansaettelser" type="pds:Ansaettelse"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="betaler" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="funktionsBetegnelse">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="oversaettelse"
+                                 type="pds:TranslatedString"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="adresser">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="adressetilknytning"
+                                 type="pds:Adressetilknytning"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="ipnumre">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="string" type="string"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="officielMail" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="officielMailProtectedState" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="andreMails">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="string" type="string"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="officielWeb" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="andreWeb">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="string" type="string"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="privatadresseVej" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="privatadresseBy" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="privatadressePostnr" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="privatadresseLand" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="privatadresseStat" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="privatadresseMobil" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="privatadresseFastnet" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="orlovTekst">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+								                <element maxOccurs="1" minOccurs="1" name="danish" type="string"/>
+
+								                <element maxOccurs="1" minOccurs="1" name="english" type="string"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="orlovFra" type="dateTime"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="orlovTil" type="dateTime"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="fotoWeb" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="fotoPrint" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="uddannelser">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="uddannelse" type="pds:Uddannelse"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="erhvervserfaring">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="erhvervserfaring"
+                                 type="pds:Erhvervserfaring"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="kurser">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="kursus" type="pds:Kursus"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="studier">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="studie" type="pds:Studie"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="vejledningskompetencer">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="oversaettelse"
+                                 type="pds:TranslatedString"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="phdvejledning">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="vejledning" type="pds:Vejledning"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="phdvejleder" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="phdbivejleder" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="phdemne__da" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="phdemne__en" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="phdtitel__da" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="phdtitel__en" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="phdfra" type="dateTime"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="phdtil" type="dateTime"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="ledelse">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="oversaettelse"
+                                 type="pds:TranslatedString"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="administrativeHverv">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="oversaettelse"
+                                 type="pds:TranslatedString"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <element maxOccurs="1" minOccurs="0" name="arbejdsfunktioner">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="oversaettelse"
+                                 type="pds:TranslatedString"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+					          <!-- 
+						<element name="evalgOrgan" minOccurs="0" maxOccurs="1">
+						<complexType>
+						<sequence>
+						<element name="id" type="int" minOccurs="1" maxOccurs="1" />
+						<element name="danish" type="string" minOccurs="1" maxOccurs="1" />
+						<element name="english" type="string" minOccurs="1" maxOccurs="1" />
+						</sequence>
+						</complexType>
+						</element>
+						<element name="evalgRepresentationsomraade" minOccurs="0" maxOccurs="1">
+						<complexType>
+						<sequence>
+						<element name="id" type="int" minOccurs="1" maxOccurs="1" />
+						<element name="danish" type="string" minOccurs="1" maxOccurs="1" />
+						<element name="english" type="string" minOccurs="1" maxOccurs="1" />
+						</sequence>
+						</complexType>
+						</element>
+					-->
+
+				    </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="Ansaettelse">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+					          <element maxOccurs="1" minOccurs="1" name="stillingsbetegnelse__da" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="1" name="stillingsbetegnelse__en" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="1" name="stillingsbetegnelseId" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="stillingstype" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="tjenestested__da" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="tjenestested__en" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="tjenestestedId" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="ansatFra" type="dateTime"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="ansatTil" type="dateTime"/>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="TranslatedString">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+					          <element maxOccurs="1" minOccurs="1" name="danish" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="1" name="english" type="string"/>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="Adressetilknytning">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+					          <element maxOccurs="1" minOccurs="1" name="adresse" type="pds:Adresse"/>
+
+					          <element maxOccurs="1" minOccurs="1" name="ansaettelse" type="pds:Ansaettelse"/>
+
+					          <element name="lokale" type="string"/>
+
+					          <element name="betaler" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="1" name="locked" type="boolean"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="telephoneNumbers">
+
+						            <complexType>
+
+							              <sequence>
+
+								                <element maxOccurs="unbounded" minOccurs="1" name="telephoneNumber"
+                                 type="pds:TelephoneNumber"/>
+
+							              </sequence>
+
+						            </complexType>
+
+					          </element>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="TelephoneNumber">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+					          <element name="value" type="string"/>
+
+					          <element name="type" type="string"/>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="Adresse">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+					          <element maxOccurs="1" minOccurs="1" name="token" type="string"/>
+
+					          <element name="vej" type="string"/>
+
+					          <element name="postnr" type="string"/>
+
+					          <element name="by" type="string"/>
+
+					          <element name="land" type="string"/>
+
+					          <element name="bygning" type="string"/>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="Uddannelse">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="retning__da" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="retning__en" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="sted__da" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="sted__en" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="aar" type="int"/>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="Erhvervserfaring">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="stilling__da" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="stilling__en" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="sted__da" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="sted__en" type="string"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="fra" type="dateTime"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="til" type="dateTime"/>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="Kursus">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+					          <element name="titel__da" type="string"/>
+
+					          <element name="titel__en" type="string"/>
+
+					          <element name="year" type="string"/>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="Studie">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+					          <element name="navn__da" type="string"/>
+
+					          <element name="navn__en" type="string"/>
+
+					          <element name="beskrivelse__da" type="string"/>
+
+					          <element name="beskrivelse__en" type="string"/>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="Vejledning">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="1" name="id" type="int"/>
+
+					          <element name="rolle" type="string"/>
+
+					          <element name="navn" type="string"/>
+
+					          <element name="emne__da" type="string"/>
+
+					          <element name="emne__en" type="string"/>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="Window">
+
+				        <sequence>
+
+					          <element name="offset" type="int"/>
+
+					          <element name="size" type="int"/>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <complexType name="OrderBy">
+
+				        <sequence>
+
+					          <element maxOccurs="1" minOccurs="0" name="fornavn" type="boolean"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="efternavn" type="boolean"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="created" type="boolean"/>
+
+					          <element maxOccurs="1" minOccurs="0" name="changed" type="boolean"/>
+
+				        </sequence>
+
+			      </complexType>
+
+
+			      <!-- Method Signatures -->
+
+			   <element name="searchPersons">
+
+				        <xsd:annotation>
+
+					          <xsd:documentation>
+
+						The request structure/signature: see PersonCriteria elsewhere in this xml schema for the
+						criterias list.
+
+						Persons returned are not "read for write", which means that StoragePlugins such as
+						PWSStoragePlugin are not visited. This is done to ensure performance.
+
+						@see dk.atira.snaps.api.CoreAPI#findPersons(Session, User, Criteria, Window, OrderBy, boolean,
+						boolean)
+
+						the light parameter may take on the following values:
+
+						LIGHT: * Strategy where no collections are initialized
+
+						BASIC: * Strategy where Person.ansaettelser, Person.adresser and
+						APerson.adresser.adressedetaljer are initialized but nothing else.
+
+						FULL: * Strategy where everything is initialized
+					     </xsd:documentation>
+
+				        </xsd:annotation>
+
+				        <complexType>
+
+					          <sequence>
+
+						            <element maxOccurs="1" minOccurs="1" name="criterias" type="pds:CriteriaList"/>
+
+						            <element maxOccurs="1" minOccurs="1" name="light" type="string"/>
+
+						            <element maxOccurs="1" minOccurs="0" name="window" type="pds:Window"/>
+
+						            <element maxOccurs="1" minOccurs="0" name="orderBy" type="pds:OrderBy"/>
+
+					          </sequence>
+
+				        </complexType>
+
+			      </element>
+
+
+			      <element name="searchPersonsResponse" type="pds:ListResult"/>
+
+
+		    </schema>
+
+
+	 </types>
+
+
+	 <message name="searchPersonsReq">
+
+		    <part element="types:searchPersons" name="searchRequest"/>
+
+	 </message>
+
+	 <message name="searchPersonsResp">
+
+		    <part element="types:searchPersonsResponse" name="searchResponse"/>
+
+	 </message>
+
+
+	 <portType name="PersonSearchPortType">
+
+		    <operation name="searchPersons">
+
+			      <input message="tns:searchPersonsReq"/>
+
+			      <output message="tns:searchPersonsResp"/>
+
+		    </operation>
+
+	 </portType>
+
+
+	 <binding name="PersonSearchPortBinding" type="tns:PersonSearchPortType">
+
+		    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		    <operation name="searchPersons">
+
+			      <soap:operation soapAction="searchPersons" style="document"/>
+
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+
+				        <soap:body use="literal"/>
+
+			      </input>
+
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+				        <soap:body use="literal"/>
+
+			      </output>
+
+		    </operation>
+
+	 </binding>
+
+
+	 <service name="PersonSearchService">
+
+		    <port binding="tns:PersonSearchPortBinding" name="PersonSearchPort">
+
+			      <soap:address location="http://ws.soatrader.com/aau.dk/0.1/PersonSearchService"/>
+
+		    </port>
+
+	 </service>
+
+
+</definitions>

@@ -1,0 +1,121 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://contentmgr.com"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://contentmgr.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://contentmgr.com">
+         <s:element name="GetZip">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetZipResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetZipResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="int" type="s:int"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://contentmgr.com">
+         <s:element name="GetZip">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetZipResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetZipResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="int" type="s:int"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetZipSoapIn">
+      <wsdl:part name="parameters" element="tns:GetZip"/>
+  </wsdl:message>
+  <wsdl:message name="GetZipSoapOut">
+      <wsdl:part name="parameters" element="tns:GetZipResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetZipHttpGetIn">
+      <wsdl:part name="city" type="s:string"/>
+      <wsdl:part name="state" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetZipHttpGetOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="GetZipHttpPostIn">
+      <wsdl:part name="city" type="s:string"/>
+      <wsdl:part name="state" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetZipHttpPostOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:portType name="FindZipCodeClassSoap">
+      <wsdl:operation name="GetZip">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get the zip code from city and state</documentation>
+         <wsdl:input message="tns:GetZipSoapIn"/>
+         <wsdl:output message="tns:GetZipSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="FindZipCodeClassSoap" type="tns:FindZipCodeClassSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetZip">
+         <soap:operation soapAction="http://contentmgr.com/GetZip" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="FindZipCodeClass">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Zip code retrieval service</documentation>
+      <wsdl:port name="FindZipCodeClassSoap" binding="tns:FindZipCodeClassSoap">
+         <soap:address location="http://ws.soatrader.com/managedcpp.net/0.1/FindZipCodeClass"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

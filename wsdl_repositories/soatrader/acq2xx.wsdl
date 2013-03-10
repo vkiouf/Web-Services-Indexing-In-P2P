@@ -1,0 +1,513 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" name="acq2xx"
+             targetNamespace="http://www.d-tacq.com">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+   <types>
+      <schema xmlns:soat="http://ws.soatrader.com/" xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="xs:string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="xs:decimal" name="HitsMade"/>
+               <element type="xs:decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+
+      <schema xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+              xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:acq2xx="http://www.d-tacq.com"
+              xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:tns="http://www.d-tacq.com"
+              xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+              xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+              xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+              xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+              targetNamespace="http://www.d-tacq.com"
+              elementFormDefault="qualified"
+              attributeFormDefault="qualified">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <simpleType name="STATE">
+            <restriction base="xsd:string">
+               <enumeration value="ST-STOP"/>
+               <enumeration value="ST-ARM"/>
+               <enumeration value="ST-RUN"/>
+               <enumeration value="ST-TRIGGER"/>
+               <enumeration value="ST-POSTPROCESS"/>
+               <enumeration value="ST-CAPDONE"/>
+            </restriction>
+         </simpleType>
+         <simpleType name="EDGE">
+            <restriction base="xsd:string">
+               <enumeration value="EDGE-FALLING"/>
+               <enumeration value="EDGE-RISING"/>
+            </restriction>
+         </simpleType>
+         <simpleType name="DIx">
+            <restriction base="xsd:string">
+               <enumeration value="DI-NONE"/>
+               <enumeration value="DI0"/>
+               <enumeration value="DI1"/>
+               <enumeration value="DI2"/>
+               <enumeration value="DI3"/>
+               <enumeration value="DI4"/>
+               <enumeration value="DI5"/>
+            </restriction>
+         </simpleType>
+         <simpleType name="DOx">
+            <restriction base="xsd:string">
+               <enumeration value="DO-NONE"/>
+               <enumeration value="DO0"/>
+               <enumeration value="DO1"/>
+               <enumeration value="DO2"/>
+               <enumeration value="DO3"/>
+               <enumeration value="DO4"/>
+               <enumeration value="DO5"/>
+            </restriction>
+         </simpleType>
+         <simpleType name="MODE">
+            <restriction base="xsd:string">
+               <enumeration value="MODE-SOFT-TRANSIENT"/>
+               <enumeration value="MODE-TRIGGERED-CONTINUOUS"/>
+               <enumeration value="MODE-GATED-TRANSIENT"/>
+               <enumeration value="MODE-SOFT-CONTINUOUS"/>
+            </restriction>
+         </simpleType>
+         <complexType name="Object">
+            <sequence>
+               <element name="name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+            </sequence>
+         </complexType>
+         <complexType name="Transaction">
+            <complexContent>
+               <extension base="acq2xx:Object">
+                  <sequence>
+                     <element name="abort-on-error" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                     <element name="status" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                     <element name="complete" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="TransactionList">
+            <complexContent>
+               <extension base="acq2xx:Transaction">
+                  <sequence>
+                     <element name="item" type="acq2xx:Transaction" minOccurs="0" maxOccurs="unbounded"
+                              nillable="true"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="ShellTransaction">
+            <complexContent>
+               <extension base="acq2xx:Transaction">
+                  <sequence>
+                     <element name="command" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+                     <element name="result" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Signal">
+            <sequence>
+               <element name="dix" type="acq2xx:DIx" minOccurs="1" maxOccurs="1"/>
+               <element name="edge" type="acq2xx:EDGE" minOccurs="1" maxOccurs="1"/>
+            </sequence>
+         </complexType>
+         <complexType name="ModeSetTransaction">
+            <complexContent>
+               <extension base="acq2xx:ShellTransaction">
+                  <sequence>
+                     <element name="mode" type="acq2xx:MODE" minOccurs="1" maxOccurs="1"/>
+                     <element name="prelen" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                     <element name="postlen" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="ClockSetTransaction">
+            <complexContent>
+               <extension base="acq2xx:ShellTransaction">
+                  <sequence>
+     </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="InternalClockSetTransaction">
+            <complexContent>
+               <extension base="acq2xx:ClockSetTransaction">
+                  <sequence>
+                     <element name="hz" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                     <element name="div" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                     <element name="dox" type="acq2xx:DOx" minOccurs="1" maxOccurs="1"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="ExternalClockSetTransaction">
+            <complexContent>
+               <extension base="acq2xx:ClockSetTransaction">
+                  <sequence>
+                     <element name="dix" type="acq2xx:DIx" minOccurs="1" maxOccurs="1"/>
+                     <element name="div" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                     <element name="dox" type="acq2xx:DOx" minOccurs="1" maxOccurs="1"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="SignalSetTransaction">
+            <complexContent>
+               <extension base="acq2xx:ShellTransaction">
+                  <sequence>
+                     <element name="signal" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+                     <element name="dix" type="acq2xx:DIx" minOccurs="1" maxOccurs="1"/>
+                     <element name="edge" type="acq2xx:EDGE" minOccurs="1" maxOccurs="1"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="AcqControlTransaction">
+            <complexContent>
+               <extension base="acq2xx:TransactionList">
+                  <sequence>
+                     <element name="AcqControlTransaction" type="" minOccurs="0" maxOccurs="unbounded"
+                              nillable="true"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="GetAvailableChannelsTransaction">
+            <complexContent>
+               <extension base="acq2xx:ShellTransaction">
+                  <sequence>
+                     <element name="AI" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                     <element name="AO" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="VRange">
+            <sequence>
+               <element name="min" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+               <element name="max" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+            </sequence>
+         </complexType>
+         <complexType name="ArrayOfVRange">
+            <complexContent>
+               <restriction base="SOAP-ENC:Array">
+                  <sequence>
+                     <element name="item" type="acq2xx:VRange" minOccurs="0" maxOccurs="unbounded"/>
+                  </sequence>
+                  <attribute ref="SOAP-ENC:arrayType" WSDL:arrayType="acq2xx:VRange[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="GetVRangeTransaction">
+            <complexContent>
+               <extension base="acq2xx:ShellTransaction">
+                  <sequence>
+                     <element name="channels" type="acq2xx:GetAvailableChannelsTransaction" minOccurs="0"
+                              maxOccurs="1"
+                              nillable="true"/>
+                     <element name="ranges" type="acq2xx:ArrayOfVRange" minOccurs="1" maxOccurs="1"
+                              nillable="false"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <!-- operation request element -->
+  <element name="acqcmd">
+            <complexType>
+               <sequence>
+                  <element name="command" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+               </sequence>
+            </complexType>
+         </element>
+         <!-- operation response element -->
+  <element name="acqcmdResponse">
+            <complexType>
+               <sequence>
+                  <element name="response" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+               </sequence>
+            </complexType>
+         </element>
+         <!-- operation request element -->
+  <element name="acq2sh">
+            <complexType>
+               <sequence>
+                  <element name="command" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+               </sequence>
+            </complexType>
+         </element>
+         <!-- operation response element -->
+  <element name="acq2shResponse">
+            <complexType>
+               <sequence>
+                  <element name="response" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+               </sequence>
+            </complexType>
+         </element>
+         <!-- operation request element -->
+  <element name="acq2script">
+            <complexType>
+               <sequence>
+                  <element name="in" type="acq2xx:Transaction" minOccurs="0" maxOccurs="1" nillable="true"/>
+               </sequence>
+            </complexType>
+         </element>
+         <!-- operation response element -->
+  <element name="acq2scriptResponse">
+            <complexType>
+               <sequence>
+                  <element name="out" type="acq2xx:Transaction" minOccurs="0" maxOccurs="1"
+                           nillable="true"/>
+               </sequence>
+            </complexType>
+         </element>
+         <!-- operation request element -->
+  <element name="getAcqStatus">
+            <complexType>
+               <sequence>
+    </sequence>
+            </complexType>
+         </element>
+         <!-- operation response element -->
+  <element name="AcqStatus">
+            <complexType>
+               <sequence>
+                  <element name="state" type="acq2xx:STATE" minOccurs="1" maxOccurs="1"/>
+                  <element name="state-string" type="xsd:string" minOccurs="0" maxOccurs="1"
+                           nillable="true"/>
+                  <element name="numsamples" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                  <element name="prelen" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                  <element name="postlen" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                  <element name="elapsed" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+                  <element name="nchan" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               </sequence>
+            </complexType>
+         </element>
+         <!-- operation request element -->
+  <element name="setArm">
+            <complexType>
+               <sequence>
+                  <element name="block" type="xsd:int" minOccurs="1" maxOccurs="1" default="0"/>
+               </sequence>
+            </complexType>
+         </element>
+         <!-- operation request element -->
+  <element name="waitStop">
+            <complexType>
+               <sequence>
+                  <element name="timeout-sec" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               </sequence>
+            </complexType>
+         </element>
+      </schema>
+
+   </types>
+
+   <message name="acqcmdRequest">
+      <part name="parameters" element="acq2xx:acqcmd"/>
+   </message>
+
+   <message name="acqcmdResponse">
+      <part name="parameters" element="acq2xx:acqcmdResponse"/>
+   </message>
+
+   <message name="acq2shRequest">
+      <part name="parameters" element="acq2xx:acq2sh"/>
+   </message>
+
+   <message name="acq2shResponse">
+      <part name="parameters" element="acq2xx:acq2shResponse"/>
+   </message>
+
+   <message name="acq2script">
+      <part name="parameters" element="acq2xx:acq2script"/>
+   </message>
+
+   <message name="acq2scriptResponse">
+      <part name="parameters" element="acq2xx:acq2scriptResponse"/>
+   </message>
+
+   <message name="getAcqStatus">
+      <part name="parameters" element="acq2xx:getAcqStatus"/>
+   </message>
+
+   <message name="AcqStatus">
+      <part name="parameters" element="acq2xx:AcqStatus"/>
+   </message>
+
+   <message name="setArm">
+      <part name="parameters" element="acq2xx:setArm"/>
+   </message>
+
+   <message name="waitStop">
+      <part name="parameters" element="acq2xx:waitStop"/>
+   </message>
+
+   <portType name="acq2xxPortType">
+      <operation name="acqcmd">
+         <documentation>Service definition of function acq2xx__acqcmd</documentation>
+         <input message="tns:acqcmdRequest"/>
+         <output message="tns:acqcmdResponse"/>
+      </operation>
+      <operation name="acq2sh">
+         <documentation>Service definition of function acq2xx__acq2sh</documentation>
+         <input message="tns:acq2shRequest"/>
+         <output message="tns:acq2shResponse"/>
+      </operation>
+      <operation name="acq2script">
+         <documentation>Service definition of function acq2xx__acq2script</documentation>
+         <input message="tns:acq2script"/>
+         <output message="tns:acq2scriptResponse"/>
+      </operation>
+      <operation name="getAcqStatus">
+         <documentation>Service definition of function acq2xx__getAcqStatus</documentation>
+         <input message="tns:getAcqStatus"/>
+         <output message="tns:AcqStatus"/>
+      </operation>
+      <operation name="setArm">
+         <documentation>Service definition of function acq2xx__setArm</documentation>
+         <input message="tns:setArm"/>
+         <output message="tns:AcqStatus"/>
+      </operation>
+      <operation name="waitStop">
+         <documentation>Service definition of function acq2xx__waitStop</documentation>
+         <input message="tns:waitStop"/>
+         <output message="tns:AcqStatus"/>
+      </operation>
+   </portType>
+
+   <binding name="acq2xx" type="tns:acq2xxPortType">
+      <SOAP:binding xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" style="document"
+                    transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="acqcmd">
+         <SOAP:operation xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" soapAction=""/>
+         <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </input>
+         <output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </output>
+      </operation>
+      <operation name="acq2sh">
+         <SOAP:operation xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" soapAction=""/>
+         <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </input>
+         <output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </output>
+      </operation>
+      <operation name="acq2script">
+         <SOAP:operation xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" soapAction=""/>
+         <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </input>
+         <output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </output>
+      </operation>
+      <operation name="getAcqStatus">
+         <SOAP:operation xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" soapAction=""/>
+         <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </input>
+         <output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </output>
+      </operation>
+      <operation name="setArm">
+         <SOAP:operation xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" soapAction=""/>
+         <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </input>
+         <output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </output>
+      </operation>
+      <operation name="waitStop">
+         <SOAP:operation xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" soapAction=""/>
+         <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </input>
+         <output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <SOAP:body xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" parts="parameters"
+                       use="literal"/>
+         </output>
+      </operation>
+   </binding>
+
+   <service name="acq2xx">
+      <documentation>gSOAP 2.7.8c generated service definition</documentation>
+      <port name="acq2xx" binding="tns:acq2xx">
+         <SOAP:address xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+                       location="http://ws.soatrader.com/d-tacq.com/0.3/acq2xx"/>
+      </port>
+   </service>
+
+</definitions>

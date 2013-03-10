@@ -1,0 +1,267 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.jangle.net/ws"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.jangle.net/ws">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Real-time aircraft data retrieval from FAA and NTSB sources.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.jangle.net/ws">
+         <s:element name="GetFAARegistryAircraftData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="varNNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFAARegistryAircraftDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetFAARegistryAircraftDataResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFAASDRData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="varNNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFAASDRDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetFAASDRDataResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFAATypeCertificateData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="varModel" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFAATypeCertificateDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetFAATypeCertificateDataResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNTSBAircraftData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="varNNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNTSBAircraftDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetNTSBAircraftDataResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DataSet" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:element ref="s:schema"/>
+                  <s:any/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetFAARegistryAircraftDataSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFAARegistryAircraftData"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAARegistryAircraftDataSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFAARegistryAircraftDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAASDRDataSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFAASDRData"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAASDRDataSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFAASDRDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAATypeCertificateDataSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFAATypeCertificateData"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAATypeCertificateDataSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFAATypeCertificateDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetNTSBAircraftDataSoapIn">
+      <wsdl:part name="parameters" element="tns:GetNTSBAircraftData"/>
+  </wsdl:message>
+  <wsdl:message name="GetNTSBAircraftDataSoapOut">
+      <wsdl:part name="parameters" element="tns:GetNTSBAircraftDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAARegistryAircraftDataHttpGetIn">
+      <wsdl:part name="varNNumber" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAARegistryAircraftDataHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAASDRDataHttpGetIn">
+      <wsdl:part name="varNNumber" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAASDRDataHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAATypeCertificateDataHttpGetIn">
+      <wsdl:part name="varModel" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAATypeCertificateDataHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetNTSBAircraftDataHttpGetIn">
+      <wsdl:part name="varNNumber" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNTSBAircraftDataHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAARegistryAircraftDataHttpPostIn">
+      <wsdl:part name="varNNumber" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAARegistryAircraftDataHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAASDRDataHttpPostIn">
+      <wsdl:part name="varNNumber" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAASDRDataHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAATypeCertificateDataHttpPostIn">
+      <wsdl:part name="varModel" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetFAATypeCertificateDataHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetNTSBAircraftDataHttpPostIn">
+      <wsdl:part name="varNNumber" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNTSBAircraftDataHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="AircraftDataSoap" type="tns:AircraftDataSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetFAARegistryAircraftData">
+         <soap:operation soapAction="http://www.jangle.net/ws/GetFAARegistryAircraftData"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetFAASDRData">
+         <soap:operation soapAction="http://www.jangle.net/ws/GetFAASDRData" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetFAATypeCertificateData">
+         <soap:operation soapAction="http://www.jangle.net/ws/GetFAATypeCertificateData"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetNTSBAircraftData">
+         <soap:operation soapAction="http://www.jangle.net/ws/GetNTSBAircraftData" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="AircraftData">
+      <wsdl:documentation>Real-time aircraft data retrieval from FAA and NTSB sources.</wsdl:documentation>
+      <wsdl:port name="AircraftDataSoap" binding="tns:AircraftDataSoap">
+         <soap:address location="http://ws.soatrader.com/jangle.net/0.1/AircraftData"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

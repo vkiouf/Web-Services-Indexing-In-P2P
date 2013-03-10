@@ -1,0 +1,429 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="urn:ISOCurrencyCodeService"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="urn:ISOCurrencyCodeService"
+                  xmlns:intf="urn:ISOCurrencyCodeService"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="urn:ISOCurrencyCodeService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="urn:ISOCurrencyCodeService">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Currency">
+            <sequence>
+               <element name="code" type="xsd:string"/>
+               <element name="name" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="CurrencyArray">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:Currency[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="CurrencyCodeList">
+            <sequence>
+               <element name="codelistAgency" type="xsd:string"/>
+               <element name="codelistQualifier" type="xsd:string"/>
+               <element name="currency" type="impl:CurrencyArray"/>
+               <element name="schemaLocation" type="xsd:string"/>
+               <element name="codelistVersion" nillable="true" type="soapenc:string"/>
+               <element name="hasData" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="searchCurrencyNamebyCodeRequest">
+
+      <wsdl:part name="currencyCode" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCurrencyNameFromCodeRequest">
+
+      <wsdl:part name="currencyCode" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchCurrencyCodebyNameResponse">
+
+      <wsdl:part name="searchCurrencyCodebyNameReturn" type="impl:CurrencyCodeList"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCurrencyCodeListProviderVersionRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getCurrencyCodeListProviderVersionResponse">
+
+      <wsdl:part name="getCurrencyCodeListProviderVersionReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCurrencyCodeXMLFileRequest">
+
+      <wsdl:part name="dummy" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchCurrencyNamebyCodeResponse">
+
+      <wsdl:part name="searchCurrencyNamebyCodeReturn" type="impl:CurrencyCodeList"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchCurrencyCodebyNameRequest">
+
+      <wsdl:part name="currencyName" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="isCurrencyCodeRequest">
+
+      <wsdl:part name="CurrencyCode" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCurrencyNameFromCodeResponse">
+
+      <wsdl:part name="getCurrencyNameFromCodeReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCurrencyCodeXMLFileResponse">
+
+      <wsdl:part name="getCurrencyCodeXMLFileReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="isCurrencyCodeResponse">
+
+      <wsdl:part name="isCurrencyCodeReturn" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCurrencyCodeListRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getCurrencyCodeListResponse">
+
+      <wsdl:part name="getCurrencyCodeListReturn" type="impl:CurrencyCodeList"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ISOCurrencyCodeService">
+
+      <wsdl:operation name="isCurrencyCode" parameterOrder="CurrencyCode">
+
+         <wsdl:input message="impl:isCurrencyCodeRequest" name="isCurrencyCodeRequest"/>
+
+         <wsdl:output message="impl:isCurrencyCodeResponse" name="isCurrencyCodeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCurrencyNameFromCode" parameterOrder="currencyCode">
+
+         <wsdl:input message="impl:getCurrencyNameFromCodeRequest"
+                     name="getCurrencyNameFromCodeRequest"/>
+
+         <wsdl:output message="impl:getCurrencyNameFromCodeResponse"
+                      name="getCurrencyNameFromCodeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCurrencyCodeListProviderVersion">
+
+         <wsdl:input message="impl:getCurrencyCodeListProviderVersionRequest"
+                     name="getCurrencyCodeListProviderVersionRequest"/>
+
+         <wsdl:output message="impl:getCurrencyCodeListProviderVersionResponse"
+                      name="getCurrencyCodeListProviderVersionResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCurrencyCodeList">
+
+         <wsdl:input message="impl:getCurrencyCodeListRequest" name="getCurrencyCodeListRequest"/>
+
+         <wsdl:output message="impl:getCurrencyCodeListResponse" name="getCurrencyCodeListResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCurrencyCodeXMLFile" parameterOrder="dummy">
+
+         <wsdl:input message="impl:getCurrencyCodeXMLFileRequest"
+                     name="getCurrencyCodeXMLFileRequest"/>
+
+         <wsdl:output message="impl:getCurrencyCodeXMLFileResponse"
+                      name="getCurrencyCodeXMLFileResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchCurrencyNamebyCode" parameterOrder="currencyCode">
+
+         <wsdl:input message="impl:searchCurrencyNamebyCodeRequest"
+                     name="searchCurrencyNamebyCodeRequest"/>
+
+         <wsdl:output message="impl:searchCurrencyNamebyCodeResponse"
+                      name="searchCurrencyNamebyCodeResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchCurrencyCodebyName" parameterOrder="currencyName">
+
+         <wsdl:input message="impl:searchCurrencyCodebyNameRequest"
+                     name="searchCurrencyCodebyNameRequest"/>
+
+         <wsdl:output message="impl:searchCurrencyCodebyNameResponse"
+                      name="searchCurrencyCodebyNameResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ISOCurrencyCodeServiceSoapBinding" type="impl:ISOCurrencyCodeService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="isCurrencyCode">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="isCurrencyCodeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://unedocs.unece.org"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="isCurrencyCodeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:ISOCurrencyCodeService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCurrencyNameFromCode">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCurrencyNameFromCodeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://unedocs.unece.org"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCurrencyNameFromCodeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:ISOCurrencyCodeService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCurrencyCodeListProviderVersion">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCurrencyCodeListProviderVersionRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://unedocs.unece.org"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCurrencyCodeListProviderVersionResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:ISOCurrencyCodeService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCurrencyCodeList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCurrencyCodeListRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://unedocs.unece.org"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCurrencyCodeListResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:ISOCurrencyCodeService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCurrencyCodeXMLFile">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCurrencyCodeXMLFileRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://unedocs.unece.org"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCurrencyCodeXMLFileResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:ISOCurrencyCodeService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchCurrencyNamebyCode">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchCurrencyNamebyCodeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://unedocs.unece.org"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchCurrencyNamebyCodeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:ISOCurrencyCodeService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchCurrencyCodebyName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchCurrencyCodebyNameRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://unedocs.unece.org"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchCurrencyCodebyNameResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:ISOCurrencyCodeService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ISOCurrencyCodeServiceService">
+
+      <wsdl:port binding="impl:ISOCurrencyCodeServiceSoapBinding" name="ISOCurrencyCodeService">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/unece.org/0.1/ISOCurrencyCodeServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

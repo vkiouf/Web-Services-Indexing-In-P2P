@@ -1,0 +1,341 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="urn:gedp"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="urn:gedp"
+                  xmlns:intf="urn:gedp"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="urn:gedp">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+   <wsdl:message name="selectMagemlResponse">
+
+      <wsdl:part name="selectMagemlReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryMicroarrayDataResponse">
+
+      <wsdl:part name="queryMicroarrayDataReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="aboutServiceResponse">
+
+      <wsdl:part name="aboutServiceReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="selectMagemlRequest">
+
+      <wsdl:part name="in0" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="acknowledgeResponse">
+
+      <wsdl:part name="acknowledgeReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="aboutOperationsResponse">
+
+      <wsdl:part name="aboutOperationsReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="downloadRequest">
+
+      <wsdl:part name="in0" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="acknowledgeRequest">
+
+      <wsdl:part name="in0" type="xsd:string"/>
+
+      <wsdl:part name="in1" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="aboutOperationsRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="aboutServiceRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="queryMicroarrayDataRequest">
+
+      <wsdl:part name="in0" type="xsd:string"/>
+
+      <wsdl:part name="in1" type="xsd:string"/>
+
+      <wsdl:part name="in2" type="xsd:string"/>
+
+      <wsdl:part name="in3" type="xsd:string"/>
+
+      <wsdl:part name="in4" type="xsd:string"/>
+
+      <wsdl:part name="in5" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="downloadResponse">
+
+      <wsdl:part name="downloadReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Gedp">
+
+      <wsdl:operation name="queryMicroarrayData" parameterOrder="in0 in1 in2 in3 in4 in5">
+
+         <wsdl:input message="impl:queryMicroarrayDataRequest" name="queryMicroarrayDataRequest"/>
+
+         <wsdl:output message="impl:queryMicroarrayDataResponse" name="queryMicroarrayDataResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="download" parameterOrder="in0">
+
+         <wsdl:input message="impl:downloadRequest" name="downloadRequest"/>
+
+         <wsdl:output message="impl:downloadResponse" name="downloadResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="selectMageml" parameterOrder="in0">
+
+         <wsdl:input message="impl:selectMagemlRequest" name="selectMagemlRequest"/>
+
+         <wsdl:output message="impl:selectMagemlResponse" name="selectMagemlResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="aboutService">
+
+         <wsdl:input message="impl:aboutServiceRequest" name="aboutServiceRequest"/>
+
+         <wsdl:output message="impl:aboutServiceResponse" name="aboutServiceResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="aboutOperations">
+
+         <wsdl:input message="impl:aboutOperationsRequest" name="aboutOperationsRequest"/>
+
+         <wsdl:output message="impl:aboutOperationsResponse" name="aboutOperationsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acknowledge" parameterOrder="in0 in1">
+
+         <wsdl:input message="impl:acknowledgeRequest" name="acknowledgeRequest"/>
+
+         <wsdl:output message="impl:acknowledgeResponse" name="acknowledgeResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="gedpSoapBinding" type="impl:Gedp">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="queryMicroarrayData">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryMicroarrayDataRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryMicroarrayDataResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="download">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="downloadRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="downloadResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="selectMageml">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="selectMagemlRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="selectMagemlResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="aboutService">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="aboutServiceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="aboutServiceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="aboutOperations">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="aboutOperationsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="aboutOperationsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acknowledge">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acknowledgeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acknowledgeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:gedp"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="GedpService">
+
+      <wsdl:port binding="impl:gedpSoapBinding" name="gedp">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/vbi.vt.edu/0.1/GedpService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

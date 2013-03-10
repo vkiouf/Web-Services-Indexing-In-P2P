@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://pluto.researchstudio.at/ibpm/MigrateService.jws"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://pluto.researchstudio.at/ibpm/MigrateService.jws"
+                  xmlns:intf="http://pluto.researchstudio.at/ibpm/MigrateService.jws"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://pluto.researchstudio.at/ibpm/MigrateService.jws">
+   <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+
+   <wsdl:message name="migrateFileRequest">
+
+      <wsdl:part name="file" type="xsd:string"/>
+
+      <wsdl:part name="to" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="migrateFileResponse">
+
+      <wsdl:part name="migrateFileReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="MigrateService">
+
+      <wsdl:operation name="migrateFile" parameterOrder="file to">
+
+         <wsdl:input message="impl:migrateFileRequest" name="migrateFileRequest"/>
+
+         <wsdl:output message="impl:migrateFileResponse" name="migrateFileResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="MigrateServiceSoapBinding" type="impl:MigrateService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="migrateFile">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="migrateFileRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://DefaultNamespace"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="migrateFileResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://pluto.researchstudio.at/ibpm/MigrateService.jws"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="MigrateServiceService">
+
+      <wsdl:port binding="impl:MigrateServiceSoapBinding" name="MigrateService">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/researchstudio.at/0.1/MigrateServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

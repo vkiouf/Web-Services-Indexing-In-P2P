@@ -1,0 +1,246 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+             xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="http://www.csoft.co.uk/sendsms2.wsdl"
+             xmlns:ns1="http://www.csoft.co.uk/sendsms2.xsd"
+             name="sendsms2"
+             targetNamespace="http://www.csoft.co.uk/sendsms2.wsdl">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://www.csoft.co.uk/sendsms2.xsd">
+
+         <simpleType name="DataFormat">
+            <restriction base="string">
+               <enumeration value="FORMAT-UNDEFINED"/>
+               <enumeration value="RTTTL"/>
+               <enumeration value="OTA"/>
+            </restriction>
+         </simpleType>
+
+         <complexType name="SmartMessage">
+            <sequence>
+               <element name="LibraryNumber" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+               <element name="Data" type="xsd:hexBinary" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <element name="Format" type="ns1:DataFormat" minOccurs="0" maxOccurs="1"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="SMS-SUBMIT-PDU">
+            <sequence>
+               <element name="DataCodingScheme" type="xsd:hexBinary" minOccurs="1" maxOccurs="1"
+                        nillable="true"/>
+               <element name="ProtocolIdentifier" type="xsd:hexBinary" minOccurs="1" maxOccurs="1"
+                        nillable="true"/>
+               <element name="UserDataHeader" type="xsd:hexBinary" minOccurs="1" maxOccurs="1"
+                        nillable="true"/>
+               <element name="UserData" type="xsd:hexBinary" minOccurs="1" maxOccurs="1"
+                        nillable="true"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="Message">
+            <sequence>
+               <element name="TextMessage" type="xsd:string" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="FlashMessage" type="xsd:string" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="Ringtone" type="ns1:SmartMessage" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="OperatorLogo" type="ns1:SmartMessage" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="PictureMessage" type="ns1:SmartMessage" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="GroupGraphic" type="ns1:SmartMessage" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="SmsSubmitPdu" type="ns1:SMS-SUBMIT-PDU" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="Recipient">
+            <sequence>
+               <element name="SendTo" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+               <element name="PhoneMake" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <element name="PhoneModel" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <element name="MCC" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+               <element name="MNC" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="SubmitMessage">
+            <sequence>
+               <element name="Username" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+               <element name="PIN" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+               <element name="Recipient" type="ns1:Recipient" minOccurs="1" maxOccurs="1"/>
+               <element name="Message" type="ns1:Message" minOccurs="1" maxOccurs="1"/>
+               <element name="ReplyTo" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <element name="MessageIdentifier" type="xsd:string" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="SubmitMessageResponse">
+            <sequence>
+               <element name="MessageIdentifier" type="xsd:string" minOccurs="1" maxOccurs="1"
+                        nillable="true"/>
+               <element name="Report" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               <element name="Text" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+            </sequence>
+         </complexType>
+
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://www.csoft.co.uk/sendsms2.xsd">
+
+         <simpleType name="DataFormat">
+            <restriction base="string">
+               <enumeration value="FORMAT-UNDEFINED"/>
+               <enumeration value="RTTTL"/>
+               <enumeration value="OTA"/>
+            </restriction>
+         </simpleType>
+
+         <complexType name="SmartMessage">
+            <sequence>
+               <element name="LibraryNumber" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+               <element name="Data" type="xsd:hexBinary" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <element name="Format" type="ns1:DataFormat" minOccurs="0" maxOccurs="1"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="SMS-SUBMIT-PDU">
+            <sequence>
+               <element name="DataCodingScheme" type="xsd:hexBinary" minOccurs="1" maxOccurs="1"
+                        nillable="true"/>
+               <element name="ProtocolIdentifier" type="xsd:hexBinary" minOccurs="1" maxOccurs="1"
+                        nillable="true"/>
+               <element name="UserDataHeader" type="xsd:hexBinary" minOccurs="1" maxOccurs="1"
+                        nillable="true"/>
+               <element name="UserData" type="xsd:hexBinary" minOccurs="1" maxOccurs="1"
+                        nillable="true"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="Message">
+            <sequence>
+               <element name="TextMessage" type="xsd:string" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="FlashMessage" type="xsd:string" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="Ringtone" type="ns1:SmartMessage" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="OperatorLogo" type="ns1:SmartMessage" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="PictureMessage" type="ns1:SmartMessage" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="GroupGraphic" type="ns1:SmartMessage" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+               <element name="SmsSubmitPdu" type="ns1:SMS-SUBMIT-PDU" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="Recipient">
+            <sequence>
+               <element name="SendTo" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+               <element name="PhoneMake" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <element name="PhoneModel" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <element name="MCC" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+               <element name="MNC" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="SubmitMessage">
+            <sequence>
+               <element name="Username" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+               <element name="PIN" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+               <element name="Recipient" type="ns1:Recipient" minOccurs="1" maxOccurs="1"/>
+               <element name="Message" type="ns1:Message" minOccurs="1" maxOccurs="1"/>
+               <element name="ReplyTo" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+               <element name="MessageIdentifier" type="xsd:string" minOccurs="0" maxOccurs="1"
+                        nillable="true"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="SubmitMessageResponse">
+            <sequence>
+               <element name="MessageIdentifier" type="xsd:string" minOccurs="1" maxOccurs="1"
+                        nillable="true"/>
+               <element name="Report" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+               <element name="Text" type="xsd:string" minOccurs="1" maxOccurs="1" nillable="true"/>
+            </sequence>
+         </complexType>
+
+      </schema>
+   </types>
+
+   <message name="ItsArrivedRequest">
+      <part name="SubmitMessage" type="ns1:SubmitMessage"/>
+   </message>
+
+   <message name="SubmitMessageResponse">
+      <part name="MessageIdentifier" type="xsd:string"/>
+      <part name="Report" type="xsd:int"/>
+      <part name="Text" type="xsd:string"/>
+   </message>
+
+   <portType name="sendsms2PortType">
+      <operation name="ItsArrived">
+         <documentation>Service definition of function ns1__ItsArrived</documentation>
+         <input message="tns:ItsArrivedRequest"/>
+         <output message="tns:SubmitMessageResponse"/>
+      </operation>
+   </portType>
+
+   <binding name="sendsms2Binding" type="tns:sendsms2PortType">
+      <SOAP:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="ItsArrived">
+         <SOAP:operation soapAction="http://www.csoft.co.uk#ItsArrived"/>
+         <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <SOAP:body use="encoded" namespace="http://www.csoft.co.uk"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <SOAP:body use="encoded" namespace="http://www.csoft.co.uk"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+
+   <service name="sendsms2">
+      <documentation>gSOAP 2.1.4a generated service definition</documentation>
+      <port name="sendsms2Port" binding="tns:sendsms2Binding">
+         <SOAP:address location="http://ws.soatrader.com/csoft.co.uk/0.1/sendsms2"/>
+      </port>
+   </service>
+
+</definitions>

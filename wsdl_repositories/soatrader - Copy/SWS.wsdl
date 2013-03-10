@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://clearforest.com/" xmlns:tns="http://clearforest.com/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soat="http://ws.soatrader.com/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://clearforest.com/">
+      <s:element name="TagIT">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="UID" type="s:long"/>
+            <s:element maxOccurs="1" minOccurs="0" name="content" type="s:string"/>
+            <s:element maxOccurs="1" minOccurs="1" name="typeID" type="s:int"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TagITResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="TagITResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string"/>
+    </s:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ws.soatrader.com/" xmlns:soat="http://ws.soatrader.com/"><xs:element name="SOATraderLicense" type="xs:string"/><xs:element name="SOATraderUsageStatistics" type="soat:SOATraderUsageStatistics"/><xs:complexType name="SOATraderUsageStatistics"><xs:sequence><xs:element name="HitsMade" type="xs:decimal"/><xs:element name="HitsLeft" type="xs:decimal"/></xs:sequence></xs:complexType></xs:schema>
+  </wsdl:types>
+  <wsdl:message name="TagITHttpGetIn">
+    <wsdl:part name="UID" type="s:string">
+    </wsdl:part>
+    <wsdl:part name="content" type="s:string">
+    </wsdl:part>
+    <wsdl:part name="typeID" type="s:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="TagITHttpPostIn">
+    <wsdl:part name="UID" type="s:string">
+    </wsdl:part>
+    <wsdl:part name="content" type="s:string">
+    </wsdl:part>
+    <wsdl:part name="typeID" type="s:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="TagITHttpPostOut">
+    <wsdl:part name="Body" element="tns:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderUsageStatistics">
+    <wsdl:part name="SOATraderUsageStatistics" element="soat:SOATraderUsageStatistics">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderLicense">
+    <wsdl:part name="SOATraderLicense" element="soat:SOATraderLicense">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="TagITSoapIn">
+    <wsdl:part name="parameters" element="tns:TagIT">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="TagITSoapOut">
+    <wsdl:part name="parameters" element="tns:TagITResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="TagITHttpGetOut">
+    <wsdl:part name="Body" element="tns:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SWSBSNSoap">
+    <wsdl:operation name="TagIT">
+      <wsdl:input message="tns:TagITSoapIn">
+    </wsdl:input>
+      <wsdl:output message="tns:TagITSoapOut">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SWSBSNSoap" type="tns:SWSBSNSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="TagIT">
+      <soap:operation soapAction="http://clearforest.com/TagIT" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </soap:header>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SWSBSN">
+    <wsdl:port name="SWSBSNSoap" binding="tns:SWSBSNSoap">
+      <soap:address location="http://ws.soatrader.com/clearforest.com/1.1/SWS"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

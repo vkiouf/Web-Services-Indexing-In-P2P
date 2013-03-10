@@ -1,0 +1,271 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.wolfram.com/XML/SOAP/WolframSearch">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns:soat="http://ws.soatrader.com/" xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="xs:string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="xs:decimal" name="HitsMade"/>
+               <element type="xs:decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:wolfram="http://www.wolfram.com/XML/SOAP/WolframSearch"
+              targetNamespace="http://www.wolfram.com/XML/SOAP/WolframSearch">
+      
+         <element name="WolframQuickSearch">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="1" name="text" type="xsd:string"/>
+                  <element maxOccurs="1" name="limit" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+
+         <element name="WolframSearch">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="1" name="words" type="wolfram:StringArray"/>
+                  <element maxOccurs="1" name="options" type="wolfram:WolframSearchOptions"/>
+               </sequence>
+            </complexType>
+         </element>
+
+         <element name="WolframSearchReturn">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="1" name="results" type="wolfram:WolframSearchResultArray"/>
+               </sequence>
+            </complexType>
+         </element>
+
+         <element name="GetCategories">
+            <complexType>
+               <sequence>
+          </sequence>
+            </complexType>
+         </element>
+
+         <element name="GetCategoriesReturn">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="1" name="results" type="wolfram:StringArray"/>
+               </sequence>
+            </complexType>
+         </element>
+
+         <complexType name="WolframSearchOptions">
+            <sequence>
+               <element minOccurs="0" maxOccurs="1" name="limit" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="set" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="category" type="xsd:string"/>
+               <element minOccurs="0" maxOccurs="1" name="returnTypes" type="wolfram:ReturnTypeArray"/>
+               <element minOccurs="0" maxOccurs="1" name="keywords" type="wolfram:StringArray"/>
+               <element minOccurs="0" maxOccurs="1" name="method" type="wolfram:Method"/>
+               <element minOccurs="0" maxOccurs="1" name="exclude" type="wolfram:StringArray"/>
+               <element minOccurs="0" maxOccurs="1" name="restrict" type="wolfram:StringArray"/>
+               <element minOccurs="0" maxOccurs="1" name="startYear" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="startMonth" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="startDay" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="endYear" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="endMonth" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="endDay" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="sortBy" type="wolfram:SortBy"/>
+            </sequence>
+         </complexType>
+ 
+         <simpleType name="ReturnType">
+            <restriction base="xsd:string">
+               <enumeration value="Title"/>
+               <enumeration value="Url"/>
+               <enumeration value="Current"/>
+               <enumeration value="Excerpt"/>
+               <enumeration value="Matches"/>
+               <enumeration value="Size"/>
+               <enumeration value="Sizek"/>
+               <enumeration value="Description"/>
+               <enumeration value="Descriptions"/>
+               <enumeration value="Score"/>
+               <enumeration value="Percent"/>
+               <enumeration value="Modified"/>
+               <enumeration value="HopCount"/>
+               <enumeration value="DocId"/>
+               <enumeration value="Anchor"/>
+               <enumeration value="BackLinks"/>
+            </restriction>
+         </simpleType>
+  
+         <complexType name="ReturnTypeArray">
+            <sequence>
+               <element minOccurs="0" maxOccurs="unbounded" name="returnType" type="wolfram:ReturnType"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="StringArray">
+            <sequence>
+               <element minOccurs="0" maxOccurs="unbounded" name="str" type="xsd:string"/>
+            </sequence>
+         </complexType>
+
+         <simpleType name="Method">
+            <restriction base="xsd:string">
+               <enumeration value="And"/>
+               <enumeration value="Or"/>
+               <enumeration value="Boolean"/>
+            </restriction>
+         </simpleType>
+
+         <simpleType name="SortBy">
+            <restriction base="xsd:string">
+               <enumeration value="Score"/>
+               <enumeration value="Time"/>
+               <enumeration value="Date"/>
+               <enumeration value="Title"/>
+               <enumeration value="ReverseScore"/>
+               <enumeration value="ReverseTime"/>
+               <enumeration value="ReverseDate"/>
+               <enumeration value="ReverseTitle"/>
+            </restriction>
+         </simpleType>
+
+         <complexType name="WolframSearchResultArray">
+            <sequence>
+               <element minOccurs="0" maxOccurs="unbounded" name="wolframSearchResult"
+                        type="wolfram:WolframSearchResult"/>
+            </sequence>
+         </complexType>
+
+         <complexType name="WolframSearchResult">
+            <sequence>
+               <element minOccurs="0" maxOccurs="1" name="title" type="xsd:string"/>
+               <element minOccurs="0" maxOccurs="1" name="url" type="xsd:string"/>
+               <element minOccurs="0" maxOccurs="1" name="current" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="score" type="xsd:float"/>
+               <element minOccurs="0" maxOccurs="1" name="percent" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="excerpt" type="xsd:string"/>
+               <element minOccurs="0" maxOccurs="1" name="matches" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="size" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="sizek" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="modified" type="xsd:string"/>
+               <element minOccurs="0" maxOccurs="1" name="description" type="xsd:string"/>
+               <element minOccurs="0" maxOccurs="1" name="descriptions" type="wolfram:StringArray"/>
+               <element minOccurs="0" maxOccurs="1" name="hopCount" type="xsd:int"/>
+               <element minOccurs="0" maxOccurs="1" name="docId" type="xsd:string"/>
+               <element minOccurs="0" maxOccurs="1" name="anchor" type="xsd:string"/>
+               <element minOccurs="0" maxOccurs="1" name="backLinks" type="xsd:int"/>
+            </sequence>
+         </complexType>   
+
+      </schema>
+  </wsdl:types>
+  <wsdl:message name="WolframSearchRequest">
+      <wsdl:part element="wolfram:WolframSearch" name="part"/>
+  </wsdl:message>
+  <wsdl:message name="WolframSearchResponse">
+      <wsdl:part element="wolfram:WolframSearchReturn" name="WolframSearchReturn"/>
+  </wsdl:message>
+  <wsdl:message name="WolframQuickSearchRequest">
+      <wsdl:part element="wolfram:WolframQuickSearch" name="part"/>
+  </wsdl:message>
+  <wsdl:message name="WolframQuickSearchResponse">
+      <wsdl:part element="wolfram:WolframSearchReturn" name="WolframSearchReturn"/>
+  </wsdl:message>
+  <wsdl:message name="GetCategoriesRequest">
+      <wsdl:part element="wolfram:GetCategories" name="part"/>
+  </wsdl:message>
+  <wsdl:message name="GetCategoriesResponse">
+      <wsdl:part element="wolfram:GetCategoriesReturn" name="GetCategoriesReturn"/>
+  </wsdl:message>
+  <wsdl:portType name="WolframSearchPort">
+      <wsdl:operation name="WolframSearch">
+         <wsdl:documentation>Searches the Wolfram websites.
+      </wsdl:documentation>
+         <wsdl:input message="wolfram:WolframSearchRequest" name="WolframSearchRequest"/>
+         <wsdl:output message="wolfram:WolframSearchResponse" name="WolframSearchResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="WolframQuickSearch">
+         <wsdl:documentation>Searches the Wolfram websites using options to customize the search.
+      </wsdl:documentation>
+         <wsdl:input message="wolfram:WolframQuickSearchRequest" name="WolframQuickSearchRequest"/>
+         <wsdl:output message="wolfram:WolframQuickSearchResponse" name="WolframQuickSearchResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCategories">
+         <wsdl:documentation>Returns the search categories available on the Wolfram websites.
+      </wsdl:documentation>
+         <wsdl:input message="wolfram:GetCategoriesRequest" name="GetCategoriesRequest"/>
+         <wsdl:output message="wolfram:GetCategoriesResponse" name="GetCategoriesResponse"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WolframSearchSoapBinding" type="wolfram:WolframSearchPort">
+      <wsdlsoap:binding xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" style="document"
+                        transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="WolframSearch">
+         <wsdlsoap:operation xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction=""/>
+         <wsdl:input name="WolframSearchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="WolframSearchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="WolframQuickSearch">
+         <wsdlsoap:operation xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction=""/>
+         <wsdl:input name="WolframQuickSearchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="WolframQuickSearchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCategories">
+         <wsdlsoap:operation xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction=""/>
+         <wsdl:input name="GetCategoriesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="GetCategoriesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WolframSearchService">
+      <wsdl:documentation>Searches the www.wolfram.com website.
+    </wsdl:documentation>
+      <wsdl:port binding="wolfram:WolframSearchSoapBinding" name="WolframSearchPort">
+         <wsdlsoap:address xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                           location="http://ws.soatrader.com/wolfram.com/0.4/WolframSearchService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

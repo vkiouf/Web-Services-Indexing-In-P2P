@@ -1,0 +1,337 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://sdk.bt.com/2006/07/Location/Permission"
+                  xmlns:sdk="http://sdk.bt.com/2006/07/Location/Permission"
+                  targetNamespace="http://sdk.bt.com/2006/07/Location/Permission">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+    <!--
+
+           (C) British Telecommunications plc, 2006, All Rights Reserved
+
+	   generated: Wed Oct 18 14:39:20 2006 
+
+    -->
+
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xs:schema elementFormDefault="qualified"
+                 targetNamespace="http://sdk.bt.com/2006/07/Location/Permission">
+
+         <xs:complexType name="DevicePolicy">
+            <xs:sequence>
+                <xs:element name="deviceId" type="xs:string"/>
+                <xs:element name="partyPolicies" type="sdk:PartyPolicies"/>
+            </xs:sequence>
+         </xs:complexType>
+
+         <xs:complexType name="PartyPolicies">
+            <xs:sequence>
+               <xs:element name="partyPolicy" type="sdk:PartyPolicy" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+         </xs:complexType>
+
+         <xs:complexType name="PartyPolicy">
+            <xs:sequence>
+                <xs:element name="partyId" type="xs:string"/>
+                <xs:element name="partyPolicyRule" type="sdk:PartyPolicyRule"/>
+            </xs:sequence>
+         </xs:complexType>
+
+         <xs:simpleType name="PartyPolicyRule">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="Allow"/>
+               <xs:enumeration value="Disallow"/>
+               <xs:enumeration value="Unset"/>
+            </xs:restriction>
+         </xs:simpleType>
+
+        <xs:element name="getDevicePolicy">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="deviceId" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+        <xs:element name="getDevicePolicyResponse">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="partyPolicies" type="sdk:PartyPolicies"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+
+        <xs:element name="getPartyPolicyRule">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="deviceId" type="xs:string"/>
+                  <xs:element name="partyId" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+        <xs:element name="getPartyPolicyRuleResponse">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="partyPolicyRule" type="sdk:PartyPolicyRule"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+
+        <xs:element name="putDevicePolicy">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="devicePolicy" type="sdk:DevicePolicy"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+        <xs:element name="putDevicePolicyResponse">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="status" type="xs:string" minOccurs="0"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+
+        <xs:element name="removeDevicePolicy">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="deviceId" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+        <xs:element name="removeDevicePolicyResponse">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="devicePolicy" type="sdk:DevicePolicy"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+
+        <xs:element name="removePartyRule">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="deviceId" type="xs:string"/>
+                  <xs:element name="partyId" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+        <xs:element name="removePartyRuleResponse">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="partyPolicy" type="sdk:PartyPolicy"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+
+        <xs:element name="requestPermission">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="deviceId" type="xs:string"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+        <xs:element name="requestPermissionResponse">
+	           <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="status" type="xs:string" minOccurs="0"/>
+               </xs:sequence>
+            </xs:complexType>
+	        </xs:element>
+
+      </xs:schema>
+   </wsdl:types>
+
+   <wsdl:message name="getDevicePolicyRequest">
+      <wsdl:part name="parameters" element="sdk:getDevicePolicy"/>
+   </wsdl:message>
+   <wsdl:message name="getDevicePolicyResponse">
+      <wsdl:part name="parameters" element="sdk:getDevicePolicyResponse"/>
+   </wsdl:message>
+
+   <wsdl:message name="getPartyPolicyRuleRequest">
+      <wsdl:part name="parameters" element="sdk:getPartyPolicyRule"/>
+   </wsdl:message>
+   <wsdl:message name="getPartyPolicyRuleResponse">
+      <wsdl:part name="parameters" element="sdk:getPartyPolicyRuleResponse"/>
+   </wsdl:message>
+
+   <wsdl:message name="putDevicePolicyRequest">
+      <wsdl:part name="parameters" element="sdk:putDevicePolicy"/>
+   </wsdl:message>
+   <wsdl:message name="putDevicePolicyResponse">
+      <wsdl:part name="parameters" element="sdk:putDevicePolicyResponse"/>
+   </wsdl:message>
+
+   <wsdl:message name="removeDevicePolicyRequest">
+      <wsdl:part name="parameters" element="sdk:removeDevicePolicy"/>
+   </wsdl:message>
+   <wsdl:message name="removeDevicePolicyResponse">
+      <wsdl:part name="parameters" element="sdk:removeDevicePolicyResponse"/>
+   </wsdl:message>
+
+   <wsdl:message name="removePartyRuleRequest">
+      <wsdl:part name="parameters" element="sdk:removePartyRule"/>
+   </wsdl:message>
+   <wsdl:message name="removePartyRuleResponse">
+      <wsdl:part name="parameters" element="sdk:removePartyRuleResponse"/>
+   </wsdl:message>
+
+   <wsdl:message name="requestPermissionRequest">
+      <wsdl:part name="parameters" element="sdk:requestPermission"/>
+   </wsdl:message>
+   <wsdl:message name="requestPermissionResponse">
+      <wsdl:part name="parameters" element="sdk:requestPermissionResponse"/>
+   </wsdl:message>
+
+   <wsdl:portType name="LocationPermissionInterface">
+      <wsdl:operation name="getDevicePolicy">
+         <wsdl:input name="getDevicePolicyRequest" message="tns:getDevicePolicyRequest"/>
+         <wsdl:output name="getDevicePolicyResponse" message="tns:getDevicePolicyResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPartyPolicyRule">
+         <wsdl:input name="getPartyPolicyRuleRequest" message="tns:getPartyPolicyRuleRequest"/>
+         <wsdl:output name="getPartyPolicyRuleResponse" message="tns:getPartyPolicyRuleResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="putDevicePolicy">
+         <wsdl:input name="putDevicePolicyRequest" message="tns:putDevicePolicyRequest"/>
+         <wsdl:output name="putDevicePolicyResponse" message="tns:putDevicePolicyResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="removeDevicePolicy">
+         <wsdl:input name="removeDevicePolicyRequest" message="tns:removeDevicePolicyRequest"/>
+         <wsdl:output name="removeDevicePolicyResponse" message="tns:removeDevicePolicyResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="removePartyRule">
+         <wsdl:input name="removePartyRuleRequest" message="tns:removePartyRuleRequest"/>
+         <wsdl:output name="removePartyRuleResponse" message="tns:removePartyRuleResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="requestPermission">
+         <wsdl:input name="requestPermissionRequest" message="tns:requestPermissionRequest"/>
+         <wsdl:output name="requestPermissionResponse" message="tns:requestPermissionResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+
+   <wsdl:binding name="LocationPermissionSoapBinding" type="tns:LocationPermissionInterface">
+      <wsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="getDevicePolicy">
+         <wsoap:operation soapAction="http://sdk.bt.com/2006/07/Location/Permission#getDevicePolicy"/>
+         <wsdl:input name="getDevicePolicyRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getDevicePolicyResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPartyPolicyRule">
+         <wsoap:operation soapAction="http://sdk.bt.com/2006/07/Location/Permission#getPartyPolicyRule"/>
+         <wsdl:input name="getPartyPolicyRuleRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getPartyPolicyRuleResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="putDevicePolicy">
+         <wsoap:operation soapAction="http://sdk.bt.com/2006/07/Location/Permission#putDevicePolicy"/>
+         <wsdl:input name="putDevicePolicyRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="putDevicePolicyResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="removeDevicePolicy">
+         <wsoap:operation soapAction="http://sdk.bt.com/2006/07/Location/Permission#removeDevicePolicy"/>
+         <wsdl:input name="removeDevicePolicyRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="removeDevicePolicyResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="removePartyRule">
+         <wsoap:operation soapAction="http://sdk.bt.com/2006/07/Location/Permission#removePartyRule"/>
+         <wsdl:input name="removePartyRuleRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="removePartyRuleResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="requestPermission">
+         <wsoap:operation soapAction="http://sdk.bt.com/2006/07/Location/Permission#requestPermission"/>
+         <wsdl:input name="requestPermissionRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="requestPermissionResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsoap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+
+   <wsdl:service name="LocationPermissionService">
+      <wsdl:port name="LocationPermissionEndpoint" binding="tns:LocationPermissionSoapBinding">
+         <wsoap:address location="http://ws.soatrader.com/bt.com/0.1/LocationPermissionService"/>
+      </wsdl:port>
+   </wsdl:service>
+
+</wsdl:definitions>

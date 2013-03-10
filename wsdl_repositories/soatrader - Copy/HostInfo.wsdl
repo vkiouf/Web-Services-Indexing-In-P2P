@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://tempuri.org/" xmlns:tns="http://tempuri.org/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="WhoAmI">
+        <s:complexType/>
+      </s:element>
+      <s:element name="WhoAmIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="WhoAmIResult" type="tns:HostInfo"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="HostInfo">
+        <s:sequence>
+          <s:element maxOccurs="1" minOccurs="0" name="Name" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="0" name="IPList" type="tns:ArrayOfString"/>
+          <s:element maxOccurs="1" minOccurs="0" name="Aliases" type="tns:ArrayOfString1"/>
+          <s:element maxOccurs="1" minOccurs="0" name="Error" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" minOccurs="0" name="IPAddress" nillable="true" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString1">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" minOccurs="0" name="Alias" nillable="true" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetHostInfoByIP">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="IPAddress" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHostInfoByIPResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetHostInfoByIPResult" type="tns:HostInfo"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHostInfoByName">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="Name" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHostInfoByNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetHostInfoByNameResult" type="tns:HostInfo"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ws.soatrader.com/" xmlns:soat="http://ws.soatrader.com/"><xs:element name="SOATraderLicense" type="xs:string"/><xs:element name="SOATraderUsageStatistics" type="soat:SOATraderUsageStatistics"/><xs:complexType name="SOATraderUsageStatistics"><xs:sequence><xs:element name="HitsMade" type="xs:decimal"/><xs:element name="HitsLeft" type="xs:decimal"/></xs:sequence></xs:complexType></xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetHostInfoByIPSoapOut">
+    <wsdl:part name="parameters" element="tns:GetHostInfoByIPResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetHostInfoByNameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetHostInfoByNameResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderUsageStatistics">
+    <wsdl:part name="SOATraderUsageStatistics" element="soat:SOATraderUsageStatistics">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetHostInfoByIPSoapIn">
+    <wsdl:part name="parameters" element="tns:GetHostInfoByIP">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderLicense">
+    <wsdl:part name="SOATraderLicense" element="soat:SOATraderLicense">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetHostInfoByNameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetHostInfoByName">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="WhoAmISoapIn">
+    <wsdl:part name="parameters" element="tns:WhoAmI">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="WhoAmISoapOut">
+    <wsdl:part name="parameters" element="tns:WhoAmIResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="YourHostSoap">
+    <wsdl:operation name="WhoAmI">
+      <wsdl:input message="tns:WhoAmISoapIn">
+    </wsdl:input>
+      <wsdl:output message="tns:WhoAmISoapOut">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHostInfoByIP">
+      <wsdl:input message="tns:GetHostInfoByIPSoapIn">
+    </wsdl:input>
+      <wsdl:output message="tns:GetHostInfoByIPSoapOut">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHostInfoByName">
+      <wsdl:input message="tns:GetHostInfoByNameSoapIn">
+    </wsdl:input>
+      <wsdl:output message="tns:GetHostInfoByNameSoapOut">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="YourHostSoap" type="tns:YourHostSoap">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetHostInfoByIP">
+      <soap:operation soapAction="http://tempuri.org/GetHostInfoByIP" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </soap:header>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHostInfoByName">
+      <soap:operation soapAction="http://tempuri.org/GetHostInfoByName" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </soap:header>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WhoAmI">
+      <soap:operation soapAction="http://tempuri.org/WhoAmI" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </soap:header>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="YourHost">
+    <wsdl:port name="YourHostSoap" binding="tns:YourHostSoap">
+      <soap:address location="http://ws.soatrader.com/esynaps.com/1.0/HostInfo"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

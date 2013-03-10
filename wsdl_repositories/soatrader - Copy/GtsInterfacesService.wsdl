@@ -1,0 +1,140 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://myTargetNameSpace">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types xmlns="http://schemas.xmlsoap.org/wsdl/">
+      <schema xmlns:soat="http://ws.soatrader.com/" xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="xs:string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="xs:decimal" name="HitsMade"/>
+               <element type="xs:decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+              xmlns:impl="http://myImplNameSpace"
+              xmlns:intf="http://myTargetNameSpace"
+              xmlns:tns1="http://myPkgNameSpace"
+              xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://myPkgNameSpace">
+         <complexType name="GtsInterface">
+            <sequence>
+               <element name="SHIPMENT" nillable="true" type="tns1:SHIPMENT"/>
+            </sequence>
+         </complexType>
+         <complexType name="SHIPMENT">
+            <sequence>
+               <element name="RETURNCODE" nillable="true" type="xsd:string"/>
+               <element name="SHIPMENTTYPE" nillable="true" type="xsd:string"/>
+               <element name="PRONUMBER" nillable="true" type="xsd:string"/>
+               <element name="BOLNUMBER" nillable="true" type="xsd:string"/>
+               <element name="CPONUMBER" nillable="true" type="xsd:string"/>
+               <element name="CURRENTSTATUS" nillable="true" type="xsd:string"/>
+               <element name="STATUSDATE" nillable="true" type="xsd:string"/>
+               <element name="STATUSTIME" nillable="true" type="xsd:string"/>
+               <element name="SHIPMENTDATE" nillable="true" type="xsd:string"/>
+               <element name="SCHEDULEDDELIVERYDATE" nillable="true" type="xsd:string"/>
+               <element name="SCHEDULEDDELIVERYTIME" nillable="true" type="xsd:string"/>
+               <element name="ACTUALDELIVERYDATE" nillable="true" type="xsd:string"/>
+               <element name="ACTUALDELIVERYTIME" nillable="true" type="xsd:string"/>
+               <element name="CURRENTTERMINAL" nillable="true" type="xsd:string"/>
+               <element name="DESTINATIONTERMINAL" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <element name="GtsInterface" nillable="true" type="tns1:GtsInterface"/>
+      </schema>
+   </types>
+
+   <wsdl:message name="Exception">
+
+   </wsdl:message>
+
+   <wsdl:message name="getGenTrackingStatusResponse">
+
+      <wsdl:part name="SHIPMENTS" type="tns1:GtsInterface"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getGenTrackingStatusRequest">
+
+      <wsdl:part name="BOLNumber" type="xsd:string"/>
+
+      <wsdl:part name="ShipDate" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="GtsInterfaces">
+
+      <wsdl:operation name="getGenTrackingStatus" parameterOrder="BOLNumber ShipDate">
+
+         <wsdl:input message="intf:getGenTrackingStatusRequest"/>
+
+         <wsdl:output message="intf:getGenTrackingStatusResponse"/>
+
+         <wsdl:fault message="intf:Exception" name="Exception"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="servicesSoapBinding" type="intf:GtsInterfaces">
+
+      <wsdlsoap:binding xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" style="rpc"
+                        transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getGenTrackingStatus">
+
+         <wsdlsoap:operation xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                             soapAction="com.yell.ec.inter.yfsgentracking.http.controller.GenTrackingSOAPApiController"/>
+
+         <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://myTargetNameSpace"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://myTargetNameSpace"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="GtsInterfacesService">
+
+      <wsdl:port binding="intf:servicesSoapBinding" name="services">
+
+         <wsdlsoap:address xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                           location="http://ws.soatrader.com/myyellow.com/0.12/GtsInterfacesService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,1482 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://www.google.com/api/adsense/v2"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://www.google.com/api/adsense/v2"
+                  xmlns:intf="http://www.google.com/api/adsense/v2"
+                  xmlns:tns1="http://www.w3.org/1999/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://www.google.com/api/adsense/v2">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.2RC1
+Built on Mar 18, 2005 (05:36:43 PST)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://www.google.com/api/adsense/v2">
+         <simpleType name="EntityType">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <complexType name="AdSenseApiException">
+            <sequence>
+               <element name="code" type="xsd:int"/>
+               <element name="internal" type="xsd:boolean"/>
+               <element name="message" nillable="true" type="xsd:string"/>
+               <element name="trigger" nillable="true" type="xsd:string"/>
+               <element name="triggerDetails" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <simpleType name="ApprovalStatus">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <simpleType name="MpmStatus">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <complexType name="PublisherAssociationStatus">
+            <sequence>
+               <element name="associationStatus" nillable="true" type="impl:MpmStatus"/>
+               <element name="clientId" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <simpleType name="SyndicationService_Type">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <complexType name="SyndicationService_Data">
+            <sequence>
+               <element name="id" nillable="true" type="xsd:string"/>
+               <element name="type" nillable="true" type="impl:SyndicationService_Type"/>
+            </sequence>
+         </complexType>
+         <complexType name="DeveloperSiteData">
+            <sequence>
+               <element name="displayName" nillable="true" type="xsd:string"/>
+               <element name="landingPage" nillable="true" type="xsd:string"/>
+               <element name="siteUrl" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="PublisherApprovalStatus">
+            <sequence>
+               <element name="approvalStatus" nillable="true" type="impl:ApprovalStatus"/>
+               <element name="clientId" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <element name="associateExistingAccount">
+            <complexType>
+               <sequence>
+                  <element name="loginEmail" type="xsd:string"/>
+                  <element name="postalCode" type="xsd:string"/>
+                  <element name="phone" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="associateExistingAccountResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="associateExistingAccountReturn"
+                           type="impl:SyndicationService_Data"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="fault" type="impl:AdSenseApiException"/>
+         <element name="createAdSenseAccount">
+            <complexType>
+               <sequence>
+                  <element name="loginEmail" type="xsd:string"/>
+                  <element name="entityType" type="impl:EntityType"/>
+                  <element name="websiteUrl" type="xsd:string"/>
+                  <element name="websiteLocale" type="xsd:string"/>
+                  <element name="usersPreferredLocale" type="xsd:string"/>
+                  <element name="emailPromotionsPreferences" type="xsd:boolean"/>
+                  <element maxOccurs="unbounded" name="synServiceTypes"
+                           type="impl:SyndicationService_Type"/>
+                  <element name="hasAcceptedTCs" type="xsd:boolean"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="createAdSenseAccountResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="createAdSenseAccountReturn"
+                           type="impl:SyndicationService_Data"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSupportedWebsiteLocales">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSupportedWebsiteLocalesResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getSupportedWebsiteLocalesReturn" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSupportedWebsiteLocalesForSyndicationService">
+            <complexType>
+               <sequence>
+                  <element name="synServiceType" type="impl:SyndicationService_Type"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSupportedWebsiteLocalesForSyndicationServiceResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded"
+                           name="getSupportedWebsiteLocalesForSyndicationServiceReturn"
+                           type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAllSyndicationServices">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAllSyndicationServicesResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getAllSyndicationServicesReturn"
+                           type="impl:SyndicationService_Data"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAssociationStatus">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAssociationStatusResponse">
+            <complexType>
+               <sequence>
+                  <element name="getAssociationStatusReturn" type="impl:MpmStatus"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSyndicationService">
+            <complexType>
+               <sequence>
+                  <element name="synServiceType" type="impl:SyndicationService_Type"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSyndicationServiceResponse">
+            <complexType>
+               <sequence>
+                  <element name="getSyndicationServiceReturn" type="impl:SyndicationService_Data"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getUsersPreferredLocale">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getUsersPreferredLocaleResponse">
+            <complexType>
+               <sequence>
+                  <element name="getUsersPreferredLocaleReturn" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getWebsiteLocale">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getWebsiteLocaleResponse">
+            <complexType>
+               <sequence>
+                  <element name="getWebsiteLocaleReturn" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getApprovalStatus">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getApprovalStatusResponse">
+            <complexType>
+               <sequence>
+                  <element name="getApprovalStatusReturn" type="impl:ApprovalStatus"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getEntityType">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getEntityTypeResponse">
+            <complexType>
+               <sequence>
+                  <element name="getEntityTypeReturn" type="impl:EntityType"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getWebsiteUrl">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getWebsiteUrlResponse">
+            <complexType>
+               <sequence>
+                  <element name="getWebsiteUrlReturn" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="setUsersPreferredLocale">
+            <complexType>
+               <sequence>
+                  <element name="usersPreferredLocale" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="setUsersPreferredLocaleResponse">
+            <complexType/>
+         </element>
+         <element name="getEmailPromotionsPreference">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getEmailPromotionsPreferenceResponse">
+            <complexType>
+               <sequence>
+                  <element name="getEmailPromotionsPreferenceReturn" type="xsd:boolean"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="setEmailPromotionsPreference">
+            <complexType>
+               <sequence>
+                  <element name="enableEmailPromotions" type="xsd:boolean"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="setEmailPromotionsPreferenceResponse">
+            <complexType/>
+         </element>
+         <element name="addSyndicationService">
+            <complexType>
+               <sequence>
+                  <element name="synServiceType" type="impl:SyndicationService_Type"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="addSyndicationServiceResponse">
+            <complexType/>
+         </element>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://www.google.com/api/adsense/v2">
+         <simpleType name="EntityType">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <complexType name="AdSenseApiException">
+            <sequence>
+               <element name="code" type="xsd:int"/>
+               <element name="internal" type="xsd:boolean"/>
+               <element name="message" nillable="true" type="xsd:string"/>
+               <element name="trigger" nillable="true" type="xsd:string"/>
+               <element name="triggerDetails" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <simpleType name="ApprovalStatus">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <simpleType name="MpmStatus">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <complexType name="PublisherAssociationStatus">
+            <sequence>
+               <element name="associationStatus" nillable="true" type="impl:MpmStatus"/>
+               <element name="clientId" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <simpleType name="SyndicationService_Type">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <complexType name="SyndicationService_Data">
+            <sequence>
+               <element name="id" nillable="true" type="xsd:string"/>
+               <element name="type" nillable="true" type="impl:SyndicationService_Type"/>
+            </sequence>
+         </complexType>
+         <complexType name="DeveloperSiteData">
+            <sequence>
+               <element name="displayName" nillable="true" type="xsd:string"/>
+               <element name="landingPage" nillable="true" type="xsd:string"/>
+               <element name="siteUrl" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="PublisherApprovalStatus">
+            <sequence>
+               <element name="approvalStatus" nillable="true" type="impl:ApprovalStatus"/>
+               <element name="clientId" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <element name="associateExistingAccount">
+            <complexType>
+               <sequence>
+                  <element name="loginEmail" type="xsd:string"/>
+                  <element name="postalCode" type="xsd:string"/>
+                  <element name="phone" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="associateExistingAccountResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="associateExistingAccountReturn"
+                           type="impl:SyndicationService_Data"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="fault" type="impl:AdSenseApiException"/>
+         <element name="createAdSenseAccount">
+            <complexType>
+               <sequence>
+                  <element name="loginEmail" type="xsd:string"/>
+                  <element name="entityType" type="impl:EntityType"/>
+                  <element name="websiteUrl" type="xsd:string"/>
+                  <element name="websiteLocale" type="xsd:string"/>
+                  <element name="usersPreferredLocale" type="xsd:string"/>
+                  <element name="emailPromotionsPreferences" type="xsd:boolean"/>
+                  <element maxOccurs="unbounded" name="synServiceTypes"
+                           type="impl:SyndicationService_Type"/>
+                  <element name="hasAcceptedTCs" type="xsd:boolean"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="createAdSenseAccountResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="createAdSenseAccountReturn"
+                           type="impl:SyndicationService_Data"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSupportedWebsiteLocales">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSupportedWebsiteLocalesResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getSupportedWebsiteLocalesReturn" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSupportedWebsiteLocalesForSyndicationService">
+            <complexType>
+               <sequence>
+                  <element name="synServiceType" type="impl:SyndicationService_Type"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSupportedWebsiteLocalesForSyndicationServiceResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded"
+                           name="getSupportedWebsiteLocalesForSyndicationServiceReturn"
+                           type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAllSyndicationServices">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAllSyndicationServicesResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getAllSyndicationServicesReturn"
+                           type="impl:SyndicationService_Data"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAssociationStatus">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAssociationStatusResponse">
+            <complexType>
+               <sequence>
+                  <element name="getAssociationStatusReturn" type="impl:MpmStatus"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSyndicationService">
+            <complexType>
+               <sequence>
+                  <element name="synServiceType" type="impl:SyndicationService_Type"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getSyndicationServiceResponse">
+            <complexType>
+               <sequence>
+                  <element name="getSyndicationServiceReturn" type="impl:SyndicationService_Data"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getUsersPreferredLocale">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getUsersPreferredLocaleResponse">
+            <complexType>
+               <sequence>
+                  <element name="getUsersPreferredLocaleReturn" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getWebsiteLocale">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getWebsiteLocaleResponse">
+            <complexType>
+               <sequence>
+                  <element name="getWebsiteLocaleReturn" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getApprovalStatus">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getApprovalStatusResponse">
+            <complexType>
+               <sequence>
+                  <element name="getApprovalStatusReturn" type="impl:ApprovalStatus"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getEntityType">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getEntityTypeResponse">
+            <complexType>
+               <sequence>
+                  <element name="getEntityTypeReturn" type="impl:EntityType"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getWebsiteUrl">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getWebsiteUrlResponse">
+            <complexType>
+               <sequence>
+                  <element name="getWebsiteUrlReturn" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="setUsersPreferredLocale">
+            <complexType>
+               <sequence>
+                  <element name="usersPreferredLocale" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="setUsersPreferredLocaleResponse">
+            <complexType/>
+         </element>
+         <element name="getEmailPromotionsPreference">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getEmailPromotionsPreferenceResponse">
+            <complexType>
+               <sequence>
+                  <element name="getEmailPromotionsPreferenceReturn" type="xsd:boolean"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="setEmailPromotionsPreference">
+            <complexType>
+               <sequence>
+                  <element name="enableEmailPromotions" type="xsd:boolean"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="setEmailPromotionsPreferenceResponse">
+            <complexType/>
+         </element>
+         <element name="addSyndicationService">
+            <complexType>
+               <sequence>
+                  <element name="synServiceType" type="impl:SyndicationService_Type"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="addSyndicationServiceResponse">
+            <complexType/>
+         </element>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="getSupportedWebsiteLocalesForSyndicationServiceRequest">
+
+      <wsdl:part element="impl:getSupportedWebsiteLocalesForSyndicationService"
+                 name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="associateExistingAccountRequest">
+
+      <wsdl:part element="impl:associateExistingAccount" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="AdSenseApiException">
+
+      <wsdl:part element="impl:fault" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUsersPreferredLocaleResponse">
+
+      <wsdl:part element="impl:getUsersPreferredLocaleResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addSyndicationServiceResponse">
+
+      <wsdl:part element="impl:addSyndicationServiceResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getWebsiteLocaleRequest">
+
+      <wsdl:part element="impl:getWebsiteLocale" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllSyndicationServicesRequest">
+
+      <wsdl:part element="impl:getAllSyndicationServices" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addSyndicationServiceRequest">
+
+      <wsdl:part element="impl:addSyndicationService" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllSyndicationServicesResponse">
+
+      <wsdl:part element="impl:getAllSyndicationServicesResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSyndicationServiceResponse">
+
+      <wsdl:part element="impl:getSyndicationServiceResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEntityTypeRequest">
+
+      <wsdl:part element="impl:getEntityType" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setUsersPreferredLocaleResponse">
+
+      <wsdl:part element="impl:setUsersPreferredLocaleResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="associateExistingAccountResponse">
+
+      <wsdl:part element="impl:associateExistingAccountResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSupportedWebsiteLocalesRequest">
+
+      <wsdl:part element="impl:getSupportedWebsiteLocales" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEntityTypeResponse">
+
+      <wsdl:part element="impl:getEntityTypeResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setEmailPromotionsPreferenceRequest">
+
+      <wsdl:part element="impl:setEmailPromotionsPreference" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setUsersPreferredLocaleRequest">
+
+      <wsdl:part element="impl:setUsersPreferredLocale" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getApprovalStatusRequest">
+
+      <wsdl:part element="impl:getApprovalStatus" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAssociationStatusResponse">
+
+      <wsdl:part element="impl:getAssociationStatusResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getWebsiteUrlRequest">
+
+      <wsdl:part element="impl:getWebsiteUrl" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getWebsiteUrlResponse">
+
+      <wsdl:part element="impl:getWebsiteUrlResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAssociationStatusRequest">
+
+      <wsdl:part element="impl:getAssociationStatus" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEmailPromotionsPreferenceRequest">
+
+      <wsdl:part element="impl:getEmailPromotionsPreference" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createAdSenseAccountResponse">
+
+      <wsdl:part element="impl:createAdSenseAccountResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getWebsiteLocaleResponse">
+
+      <wsdl:part element="impl:getWebsiteLocaleResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSyndicationServiceRequest">
+
+      <wsdl:part element="impl:getSyndicationService" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUsersPreferredLocaleRequest">
+
+      <wsdl:part element="impl:getUsersPreferredLocale" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSupportedWebsiteLocalesResponse">
+
+      <wsdl:part element="impl:getSupportedWebsiteLocalesResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEmailPromotionsPreferenceResponse">
+
+      <wsdl:part element="impl:getEmailPromotionsPreferenceResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSupportedWebsiteLocalesForSyndicationServiceResponse">
+
+      <wsdl:part element="impl:getSupportedWebsiteLocalesForSyndicationServiceResponse"
+                 name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createAdSenseAccountRequest">
+
+      <wsdl:part element="impl:createAdSenseAccount" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setEmailPromotionsPreferenceResponse">
+
+      <wsdl:part element="impl:setEmailPromotionsPreferenceResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getApprovalStatusResponse">
+
+      <wsdl:part element="impl:getApprovalStatusResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="AccountService">
+
+      <wsdl:operation name="associateExistingAccount">
+
+         <wsdl:input message="impl:associateExistingAccountRequest"
+                     name="associateExistingAccountRequest"/>
+
+         <wsdl:output message="impl:associateExistingAccountResponse"
+                      name="associateExistingAccountResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createAdSenseAccount">
+
+         <wsdl:input message="impl:createAdSenseAccountRequest" name="createAdSenseAccountRequest"/>
+
+         <wsdl:output message="impl:createAdSenseAccountResponse" name="createAdSenseAccountResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSupportedWebsiteLocales">
+
+         <wsdl:input message="impl:getSupportedWebsiteLocalesRequest"
+                     name="getSupportedWebsiteLocalesRequest"/>
+
+         <wsdl:output message="impl:getSupportedWebsiteLocalesResponse"
+                      name="getSupportedWebsiteLocalesResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSupportedWebsiteLocalesForSyndicationService">
+
+         <wsdl:input message="impl:getSupportedWebsiteLocalesForSyndicationServiceRequest"
+                     name="getSupportedWebsiteLocalesForSyndicationServiceRequest"/>
+
+         <wsdl:output message="impl:getSupportedWebsiteLocalesForSyndicationServiceResponse"
+                      name="getSupportedWebsiteLocalesForSyndicationServiceResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllSyndicationServices">
+
+         <wsdl:input message="impl:getAllSyndicationServicesRequest"
+                     name="getAllSyndicationServicesRequest"/>
+
+         <wsdl:output message="impl:getAllSyndicationServicesResponse"
+                      name="getAllSyndicationServicesResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAssociationStatus">
+
+         <wsdl:input message="impl:getAssociationStatusRequest" name="getAssociationStatusRequest"/>
+
+         <wsdl:output message="impl:getAssociationStatusResponse" name="getAssociationStatusResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSyndicationService">
+
+         <wsdl:input message="impl:getSyndicationServiceRequest" name="getSyndicationServiceRequest"/>
+
+         <wsdl:output message="impl:getSyndicationServiceResponse"
+                      name="getSyndicationServiceResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUsersPreferredLocale">
+
+         <wsdl:input message="impl:getUsersPreferredLocaleRequest"
+                     name="getUsersPreferredLocaleRequest"/>
+
+         <wsdl:output message="impl:getUsersPreferredLocaleResponse"
+                      name="getUsersPreferredLocaleResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWebsiteLocale">
+
+         <wsdl:input message="impl:getWebsiteLocaleRequest" name="getWebsiteLocaleRequest"/>
+
+         <wsdl:output message="impl:getWebsiteLocaleResponse" name="getWebsiteLocaleResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getApprovalStatus">
+
+         <wsdl:input message="impl:getApprovalStatusRequest" name="getApprovalStatusRequest"/>
+
+         <wsdl:output message="impl:getApprovalStatusResponse" name="getApprovalStatusResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getEntityType">
+
+         <wsdl:input message="impl:getEntityTypeRequest" name="getEntityTypeRequest"/>
+
+         <wsdl:output message="impl:getEntityTypeResponse" name="getEntityTypeResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWebsiteUrl">
+
+         <wsdl:input message="impl:getWebsiteUrlRequest" name="getWebsiteUrlRequest"/>
+
+         <wsdl:output message="impl:getWebsiteUrlResponse" name="getWebsiteUrlResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setUsersPreferredLocale">
+
+         <wsdl:input message="impl:setUsersPreferredLocaleRequest"
+                     name="setUsersPreferredLocaleRequest"/>
+
+         <wsdl:output message="impl:setUsersPreferredLocaleResponse"
+                      name="setUsersPreferredLocaleResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getEmailPromotionsPreference">
+
+         <wsdl:input message="impl:getEmailPromotionsPreferenceRequest"
+                     name="getEmailPromotionsPreferenceRequest"/>
+
+         <wsdl:output message="impl:getEmailPromotionsPreferenceResponse"
+                      name="getEmailPromotionsPreferenceResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setEmailPromotionsPreference">
+
+         <wsdl:input message="impl:setEmailPromotionsPreferenceRequest"
+                     name="setEmailPromotionsPreferenceRequest"/>
+
+         <wsdl:output message="impl:setEmailPromotionsPreferenceResponse"
+                      name="setEmailPromotionsPreferenceResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addSyndicationService">
+
+         <wsdl:input message="impl:addSyndicationServiceRequest" name="addSyndicationServiceRequest"/>
+
+         <wsdl:output message="impl:addSyndicationServiceResponse"
+                      name="addSyndicationServiceResponse"/>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="AccountServiceSoapBinding" type="impl:AccountService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="associateExistingAccount">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="associateExistingAccountRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="associateExistingAccountResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createAdSenseAccount">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createAdSenseAccountRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createAdSenseAccountResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSupportedWebsiteLocales">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getSupportedWebsiteLocalesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getSupportedWebsiteLocalesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSupportedWebsiteLocalesForSyndicationService">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getSupportedWebsiteLocalesForSyndicationServiceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getSupportedWebsiteLocalesForSyndicationServiceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllSyndicationServices">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllSyndicationServicesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllSyndicationServicesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAssociationStatus">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAssociationStatusRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAssociationStatusResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSyndicationService">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getSyndicationServiceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getSyndicationServiceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUsersPreferredLocale">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getUsersPreferredLocaleRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getUsersPreferredLocaleResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWebsiteLocale">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getWebsiteLocaleRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getWebsiteLocaleResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getApprovalStatus">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getApprovalStatusRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getApprovalStatusResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getEntityType">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getEntityTypeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getEntityTypeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getWebsiteUrl">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getWebsiteUrlRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getWebsiteUrlResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setUsersPreferredLocale">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setUsersPreferredLocaleRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setUsersPreferredLocaleResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getEmailPromotionsPreference">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getEmailPromotionsPreferenceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getEmailPromotionsPreferenceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setEmailPromotionsPreference">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setEmailPromotionsPreferenceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setEmailPromotionsPreferenceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addSyndicationService">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addSyndicationServiceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addSyndicationServiceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="AccountServiceService">
+
+      <wsdl:port binding="impl:AccountServiceSoapBinding" name="AccountService">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/google.com/0.1/AccountServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

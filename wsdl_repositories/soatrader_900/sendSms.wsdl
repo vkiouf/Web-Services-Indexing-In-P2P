@@ -1,0 +1,77 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://FreebieSMS.co.uk"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://FreebieSMS.co.uk">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://FreebieSMS.co.uk">
+         <s:element name="SendSms">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FromName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FromNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ToNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="locale" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendSmsResponse">
+            <s:complexType/>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendSmsSoapIn">
+      <wsdl:part name="parameters" element="tns:SendSms"/>
+  </wsdl:message>
+  <wsdl:message name="SendSmsSoapOut">
+      <wsdl:part name="parameters" element="tns:SendSmsResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="sendSmsSoap" type="tns:sendSmsSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="SendSms">
+         <soap:operation soapAction="http://FreebieSMS.co.uk/SendSms" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="sendSms">
+      <wsdl:port name="sendSmsSoap" binding="tns:sendSmsSoap">
+         <soap:address location="http://ws.soatrader.com/smszpravy.com/0.1/sendSms"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

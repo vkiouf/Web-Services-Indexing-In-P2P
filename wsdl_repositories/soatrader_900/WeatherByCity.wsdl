@@ -1,0 +1,178 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://innergears.com/WebServices3/WeatherByCity"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://innergears.com/WebServices3/WeatherByCity">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://innergears.com/WebServices3/WeatherByCity">
+         <s:element name="GetWeatherByCity">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CityName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StateAbbreviationORCountryName"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetWeatherByCityResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetWeatherByCityResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ArrayOfString" nillable="true" type="tns:ArrayOfString"/>
+      </s:schema>
+      <xs:schema xmlns:tns1="http://ws.strikeiron.com" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 attributeFormDefault="unqualified"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetWeatherByCitySoapIn">
+      <wsdl:part name="parameters" element="tns:GetWeatherByCity"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherByCitySoapOut">
+      <wsdl:part name="parameters" element="tns:GetWeatherByCityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherByCityHttpGetIn">
+      <wsdl:part name="CityName" type="s:string"/>
+      <wsdl:part name="StateAbbreviationORCountryName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherByCityHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherByCityHttpPostIn">
+      <wsdl:part name="CityName" type="s:string"/>
+      <wsdl:part name="StateAbbreviationORCountryName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherByCityHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="q1:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="q2:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseInfoMessage">
+      <wsdl:part name="LicenseInfo" element="q3:LicenseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SubscriptionInfoMessage">
+      <wsdl:part name="SubscriptionInfo" element="q4:SubscriptionInfo"/>
+  </wsdl:message>
+  <wsdl:portType name="WeatherByCitySoap">
+      <wsdl:operation name="GetWeatherByCity">
+         <wsdl:input message="tns:GetWeatherByCitySoapIn"/>
+         <wsdl:output message="tns:GetWeatherByCitySoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <wsdl:input message="tns:GetRemainingHitsSoapIn"/>
+         <wsdl:output message="tns:GetRemainingHitsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WeatherByCitySoap" type="tns:WeatherByCitySoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetWeatherByCity">
+         <soap:operation soapAction="http://innergears.com/WebServices3/WeatherByCity/GetWeatherByCity"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation soapAction="http://ws.strikeiron.com/InnerGears/WeatherByCity2/WeatherByCity/GetRemainingHits"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WeatherByCity">
+      <wsdl:port name="WeatherByCitySoap" binding="tns:WeatherByCitySoap">
+         <soap:address location="http://ws.soatrader.com/strikeiron.com/0.1/WeatherByCity"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

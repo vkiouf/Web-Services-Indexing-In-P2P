@@ -1,0 +1,201 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://DefaultNamespace"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://DefaultNamespace"
+                  xmlns:intf="http://DefaultNamespace"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://rpc.xml.coldfusion"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://DefaultNamespace">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Macromedia ColdFusion MX version 7,0,2,142559-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://rpc.xml.coldfusion">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="CFCInvocationException">
+            <sequence/>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="getLocationDetailsRequest">
+
+      <wsdl:part name="locationID" type="xsd:string"/>
+
+      <wsdl:part name="PostalCode" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPostalArroundResponse">
+
+      <wsdl:part name="getPostalArroundReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLocationDetailsResponse">
+
+      <wsdl:part name="getLocationDetailsReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPostalArroundRequest">
+
+      <wsdl:part name="PostalCode" type="xsd:double"/>
+
+      <wsdl:part name="Distance" type="xsd:string"/>
+
+      <wsdl:part name="MaxResults" type="xsd:double"/>
+
+      <wsdl:part name="ContactEmail" type="xsd:string"/>
+
+      <wsdl:part name="REFID" type="xsd:string"/>
+
+      <wsdl:part name="Username" type="xsd:string"/>
+
+      <wsdl:part name="Password" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="CFCInvocationException">
+
+      <wsdl:part name="fault" type="tns1:CFCInvocationException"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="openGeoDB2">
+
+      <wsdl:operation name="getPostalArround"
+                      parameterOrder="PostalCode Distance MaxResults ContactEmail REFID Username Password">
+
+         <wsdl:input message="impl:getPostalArroundRequest" name="getPostalArroundRequest"/>
+
+         <wsdl:output message="impl:getPostalArroundResponse" name="getPostalArroundResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLocationDetails" parameterOrder="locationID PostalCode">
+
+         <wsdl:input message="impl:getLocationDetailsRequest" name="getLocationDetailsRequest"/>
+
+         <wsdl:output message="impl:getLocationDetailsResponse" name="getLocationDetailsResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="openGeoDB2.cfcSoapBinding" type="impl:openGeoDB2">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getPostalArround">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPostalArroundRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://DefaultNamespace"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPostalArroundResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://DefaultNamespace"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://DefaultNamespace"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLocationDetails">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getLocationDetailsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://DefaultNamespace"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getLocationDetailsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://DefaultNamespace"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://DefaultNamespace"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="openGeoDB2Service">
+
+      <wsdl:port binding="impl:openGeoDB2.cfcSoapBinding" name="openGeoDB2.cfc">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/myemotions.ch/0.1/openGeoDB2Service"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

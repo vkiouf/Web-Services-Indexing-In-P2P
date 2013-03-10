@@ -1,0 +1,239 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://rbs.foxtel.com.au"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://rbsw.foxtel.com.au/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://rbsw.foxtel.com.au/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://rbsw.foxtel.com.au/">
+         <s:import namespace="http://rbs.foxtel.com.au"/>
+         <s:element name="GetUserDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccountNumber" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetUserDetailsResult"
+                             type="s1:GetUserDetailsResp"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="HeaderVar" type="tns:HeaderVar"/>
+         <s:complexType name="HeaderVar">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Var" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Record">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccountNumber" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="BouquetId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="SubBouquetId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BookingRequests"
+                             type="s1:ArrayOfBookingRequest"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BookingRequest" nillable="true" type="s1:BookingRequest"/>
+         <s:element name="RecordResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RecordResult" type="s1:RecordResp"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://rbs.foxtel.com.au">
+         <s:import namespace="http://rbsw.foxtel.com.au/"/>
+         <s:complexType name="GetUserDetailsResp">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorStatus"
+                          type="s1:GetUserDetailsErrorEnum"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StateCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BouquetDetails" type="s1:BouquetDetails"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ServiceDetails" type="s1:ServiceDetails"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="GetUserDetailsErrorEnum">
+            <s:restriction base="s:string">
+               <s:enumeration value="OK"/>
+               <s:enumeration value="MISSING_BOUQUET"/>
+               <s:enumeration value="MISSING_SERVICEDETAIL"/>
+               <s:enumeration value="API"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="BouquetDetails">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="BouquetId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SubBouquetId" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ServiceDetails">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ServiceInstances"
+                          type="s1:ArrayOfServiceInstance"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfServiceInstance">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceInstance" nillable="true"
+                          type="s1:ServiceInstance"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ServiceInstance">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="DeviceNickname" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeviceId" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DeviceType" type="s1:DeviceTypeEnum"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DefaultFlag" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="DeviceTypeEnum">
+            <s:restriction base="s:string">
+               <s:enumeration value="STU"/>
+               <s:enumeration value="PRR"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfBookingRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" ref="tns:BookingRequest"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BookingRequest">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProgramId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeviceId" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RecordResp">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorStatus" type="s1:BookingErrorEnum"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BookingDetails" type="s1:ArrayOfBooking"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="BookingErrorEnum">
+            <s:restriction base="s:string">
+               <s:enumeration value="OK"/>
+               <s:enumeration value="API"/>
+               <s:enumeration value="CAS"/>
+               <s:enumeration value="DEVICE_NOT_RECORDABLE"/>
+               <s:enumeration value="MISSING_BROADCAST_DETAIL"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfBooking">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Booking" nillable="true"
+                          type="s1:Booking"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Booking">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProgramId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeviceId" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BookingStatus" type="s1:BookingErrorEnum"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetUserDetailsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetUserDetails"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserDetailsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetUserDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserDetailsHeaderVar">
+      <wsdl:part name="HeaderVar" element="tns:HeaderVar"/>
+  </wsdl:message>
+  <wsdl:message name="RecordSoapIn">
+      <wsdl:part name="parameters" element="tns:Record"/>
+  </wsdl:message>
+  <wsdl:message name="RecordSoapOut">
+      <wsdl:part name="parameters" element="tns:RecordResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RecordHeaderVar">
+      <wsdl:part name="HeaderVar" element="tns:HeaderVar"/>
+  </wsdl:message>
+  <wsdl:portType name="RemoteBookingServiceWrapperSoap">
+      <wsdl:operation name="GetUserDetails">
+         <wsdl:input message="tns:GetUserDetailsSoapIn"/>
+         <wsdl:output message="tns:GetUserDetailsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="Record">
+         <wsdl:input message="tns:RecordSoapIn"/>
+         <wsdl:output message="tns:RecordSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RemoteBookingServiceWrapperSoap"
+                 type="tns:RemoteBookingServiceWrapperSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetUserDetails">
+         <soap:operation soapAction="http://rbsw.foxtel.com.au/GetUserDetails" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetUserDetailsHeaderVar" part="HeaderVar" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Record">
+         <soap:operation soapAction="http://rbsw.foxtel.com.au/Record" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:RecordHeaderVar" part="HeaderVar" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RemoteBookingServiceWrapper">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/"/>
+      <wsdl:port name="RemoteBookingServiceWrapperSoap"
+                 binding="tns:RemoteBookingServiceWrapperSoap">
+         <soap:address location="http://ws.soatrader.com/foxtel.com.au/0.1/RemoteBookingServiceWrapper"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

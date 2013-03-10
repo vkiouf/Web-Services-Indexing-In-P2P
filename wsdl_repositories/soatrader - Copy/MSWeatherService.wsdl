@@ -1,0 +1,85 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://www.modulesuite.com/webservice/weather/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="ModuleSuite_KisyochoWeather"
+             targetNamespace="http://www.modulesuite.com/webservice/weather/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message> 
+
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+              xmlns:tns=" http://www.modulesuite.com/webservice/weather/ "
+              targetNamespace="http://www.modulesuite.com/type"
+              elementFormDefault="qualified">
+         <complexType name="ArrayOfstring">
+            <complexContent>
+               <restriction base="SOAP-ENC:Array">
+                  <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="string[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+  </types>
+
+   <message name="GetWeatherByAreaRequest"> 
+      <part name="symbol" type="xsd:string"/> 
+   </message> 
+   <message name="GetWeatherByAreaResponse"> 
+      <part name="Result" type="xsd:ArrayOfstring"/> 
+   </message> 
+
+
+   <portType name="MSGetWeatherPortType"> 
+      <operation name="GetWeatherByArea"> 
+         <input message="tns:GetWeatherByAreaRequest"/> 
+         <output message="tns:GetWeatherByAreaResponse"/> 
+      </operation> 
+   </portType> 
+
+
+   <binding name="MSGetWeatherBinding" type="tns:MSGetWeatherPortType"> 
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/> 
+      <operation name="GetWeatherByArea"> 
+         <soap:operation soapAction="urn:modulesuite-weather-#GetWeatherByArea"/> 
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/> 
+            <soap:body use="encoded" namespace="urn:http://www.modulesuite.com/webservice/weather/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/> 
+         </input> 
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/> 
+            <soap:body use="encoded" namespace="urn:http://www.modulesuite.com/webservice/weather/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/> 
+         </output> 
+      </operation> 
+
+   </binding> 
+
+
+   <service name="MSWeatherService"> 
+      <port name="MSGetWeatherPort" binding="MSGetWeatherBinding"> 
+         <soap:address location="http://ws.soatrader.com/modulesuite.com/0.1/MSWeatherService"/> 
+      </port> 
+   </service>
+</definitions>

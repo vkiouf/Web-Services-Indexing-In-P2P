@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://www.strikeiron.com"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://ws.strikeiron.com"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:si="http://www.strikeiron.com"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.strikeiron.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.strikeiron.com">
+         <s:element name="LookupHousehold">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LookupHouseholdResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LookupHouseholdResult"
+                             type="si:ResidentialLookupOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ResidentialLookupOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult"
+                                type="si:ResidentialLookupResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIWsOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ServiceStatus" type="si:SIWsStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="StatusNbr" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ResidentialLookupResult">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Listings" type="si:ArrayOfResidentialResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIWsResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfResidentialResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ResidentialResult" nillable="true"
+                          type="si:ResidentialResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ResidentialResult">
+            <s:complexContent mixed="false">
+               <s:extension base="si:LookupResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="NamePrefix" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="NameSuffix" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="FullName" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="StreetAddress" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="StateOrProvince" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="ZipOrPostalCode" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="HeadOfHouseholdBirthYear" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="HeadOfHouseholdGender" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="EstimatedHouseholdIncome" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="DwellingType" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="LengthOfResidency" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="HomeOwnerProbability" type="s:string"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="LookupResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="TimeZone" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="LookupHouseholdBulk">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumbers" type="si:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="LookupHouseholdBulkResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LookupHouseholdBulkResult"
+                             type="si:ResidentialLookupOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAllStatuses">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAllStatusesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAllStatusesResult"
+                             type="si:StatusCodeOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="StatusCodeOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="si:StatusCodeResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="StatusCodeResult">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Statuses" type="si:ArrayOfSIWsStatus"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfSIWsStatus">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIWsStatus" nillable="true"
+                          type="si:SIWsStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetServiceInfo">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetServiceInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetServiceInfoResult"
+                             type="si:ServiceInfoOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ServiceInfoOutput">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsOutput">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceResult" type="si:SIServiceInfoResult"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SIServiceInfoResult">
+            <s:complexContent mixed="false">
+               <s:extension base="si:SIWsResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ServiceInfo"
+                                type="si:ArrayOfServiceInfoRecord"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceInfoRecord" nillable="true"
+                          type="si:ServiceInfoRecord"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ServiceInfoRecord">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoKey" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="InfoValue" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns1="http://ws.strikeiron.com"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified"
+                targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LookupHouseholdSoapIn">
+      <wsdl:part name="parameters" element="si:LookupHousehold"/>
+  </wsdl:message>
+  <wsdl:message name="LookupHouseholdSoapOut">
+      <wsdl:part name="parameters" element="si:LookupHouseholdResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LookupHouseholdBulkSoapIn">
+      <wsdl:part name="parameters" element="si:LookupHouseholdBulk"/>
+  </wsdl:message>
+  <wsdl:message name="LookupHouseholdBulkSoapOut">
+      <wsdl:part name="parameters" element="si:LookupHouseholdBulkResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesSoapIn">
+      <wsdl:part name="parameters" element="si:GetAllStatuses"/>
+  </wsdl:message>
+  <wsdl:message name="GetAllStatusesSoapOut">
+      <wsdl:part name="parameters" element="si:GetAllStatusesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoSoapIn">
+      <wsdl:part name="parameters" element="si:GetServiceInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetServiceInfoSoapOut">
+      <wsdl:part name="parameters" element="si:GetServiceInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="s1:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="s1:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseInfoMessage">
+      <wsdl:part name="LicenseInfo" element="s1:LicenseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SubscriptionInfoMessage">
+      <wsdl:part name="SubscriptionInfo" element="s1:SubscriptionInfo"/>
+  </wsdl:message>
+  <wsdl:portType name="ResidentialLookupSoap">
+      <wsdl:operation name="LookupHousehold">
+         <wsdl:input message="si:LookupHouseholdSoapIn"/>
+         <wsdl:output message="si:LookupHouseholdSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="LookupHouseholdBulk">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This web method returns multiple results</documentation>
+         <wsdl:input message="si:LookupHouseholdBulkSoapIn"/>
+         <wsdl:output message="si:LookupHouseholdBulkSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllStatuses">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get all statuses this service might return</documentation>
+         <wsdl:input message="si:GetAllStatusesSoapIn"/>
+         <wsdl:output message="si:GetAllStatusesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetServiceInfo">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get information about the web service</documentation>
+         <wsdl:input message="si:GetServiceInfoSoapIn"/>
+         <wsdl:output message="si:GetServiceInfoSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <wsdl:input message="si:GetRemainingHitsSoapIn"/>
+         <wsdl:output message="si:GetRemainingHitsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ResidentialLookupSoap" type="si:ResidentialLookupSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="LookupHousehold">
+         <soap:operation soapAction="http://www.strikeiron.com/LookupHousehold" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <si:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:PhoneNumber) &gt; 0</tns:expression>
+                     <tns:description>Phone Number is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>Regex(//tns:PhoneNumber[^(?:\([2-9]\d{2}\)\ ?|[2-9]\d{2}(?:\-?|\ ?))[2-9]\d{2}[- ]?\d{4}$]</tns:expression>
+                     <tns:description>Phone Number must be a 10-digit NANP number</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </si:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LookupHouseholdBulk">
+         <soap:operation soapAction="http://www.strikeiron.com/LookupHouseholdBulk" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <si:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>count(//tns:PhoneNumbers) &gt; 0</tns:expression>
+                     <tns:description>At laest one Phone Number is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>Regex(//tns:PhoneNumbers//tns:string[^(?:\([2-9]\d{2}\)\ ?|[2-9]\d{2}(?:\-?|\ ?))[2-9]\d{2}[- ]?\d{4}$]</tns:expression>
+                     <tns:description>All Phone Numbers must be 10-digit NANP numbers</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </si:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllStatuses">
+         <soap:operation soapAction="http://www.strikeiron.com/GetAllStatuses" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <si:validation>
+               <si:assertions/>
+            </si:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetServiceInfo">
+         <soap:operation soapAction="http://www.strikeiron.com/GetServiceInfo" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <si:validation>
+               <si:assertions/>
+            </si:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation soapAction="http://ws.strikeiron.com/StrikeIron/ReversePhoneResIntel/ResidentialLookup/GetRemainingHits"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ResidentialLookup">
+      <wsdl:port name="ResidentialLookupSoap" binding="si:ResidentialLookupSoap">
+         <soap:address location="http://ws.soatrader.com/strikeiron.com/0.3/ResidentialLookup"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

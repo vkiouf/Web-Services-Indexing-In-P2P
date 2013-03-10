@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://delimiterbob.com/" xmlns:tns="http://delimiterbob.com/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://delimiterbob.com/">
+      <s:element name="LookUp">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="BusinessName" type="s:string"/>
+            <s:element maxOccurs="1" minOccurs="0" name="CityStateOrZipCode" type="s:string"/>
+            <s:element maxOccurs="1" minOccurs="1" name="MaximumListings" type="s:int"/>
+            <s:element maxOccurs="1" minOccurs="0" name="AccessCode" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LookUpResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="LookUpResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ws.soatrader.com/" xmlns:soat="http://ws.soatrader.com/"><xs:element name="SOATraderLicense" type="xs:string"/><xs:element name="SOATraderUsageStatistics" type="soat:SOATraderUsageStatistics"/><xs:complexType name="SOATraderUsageStatistics"><xs:sequence><xs:element name="HitsMade" type="xs:decimal"/><xs:element name="HitsLeft" type="xs:decimal"/></xs:sequence></xs:complexType></xs:schema>
+  </wsdl:types>
+  <wsdl:message name="SOATraderUsageStatistics">
+    <wsdl:part name="SOATraderUsageStatistics" element="soat:SOATraderUsageStatistics">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="LookUpSoapIn">
+    <wsdl:part name="parameters" element="tns:LookUp">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="LookUpSoapOut">
+    <wsdl:part name="parameters" element="tns:LookUpResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderLicense">
+    <wsdl:part name="SOATraderLicense" element="soat:SOATraderLicense">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="LookUp">
+      <wsdl:input message="tns:LookUpSoapIn">
+    </wsdl:input>
+      <wsdl:output message="tns:LookUpSoapOut">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="LookUp">
+      <soap:operation soapAction="http://delimiterbob.com/LookUp" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+        <soap:header message="tns:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </soap:header>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://ws.soatrader.com/delimiterbob.com/0.1/YellowPages"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

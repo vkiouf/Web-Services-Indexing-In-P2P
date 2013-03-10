@@ -1,0 +1,1164 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://www.ivoa.net/xml/ADQL/v0.7.4"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s3="urn:nvo-coords"
+                  xmlns:s2="urn:nvo-region"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://ws.parser.adql.ivoa.net/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://ws.parser.adql.ivoa.net/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://ws.parser.adql.ivoa.net/">
+         <s:import namespace="http://www.ivoa.net/xml/ADQL/v0.7.4"/>
+         <s:element name="SQLtoADQL">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="sql" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SQLtoADQLResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" ref="s1:Select"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SQLtoADQLString">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="sql" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SQLtoADQLStringResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SQLtoADQLStringResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ADQLtoSQL">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" ref="s1:Select"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ADQLtoSQLResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ADQLtoSQLResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ADQLStringtoSQL">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="adql" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ADQLStringtoSQLResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ADQLStringtoSQLResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="string" nillable="true" type="s:string"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.ivoa.net/xml/ADQL/v0.7.4">
+         <s:import namespace="urn:nvo-region"/>
+         <s:element name="Select" type="s1:selectType"/>
+         <s:complexType name="selectType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Allow" type="s1:selectionOptionType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Restrict" type="s1:selectionLimitType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SelectionList" type="s1:selectionListType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="InTo" type="s1:intoType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="From" type="s1:fromType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Where" type="s1:whereType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GroupBy" type="s1:groupByType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Having" type="s1:havingType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OrderBy" type="s1:orderExpressionType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartComment" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndComment" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="selectionOptionType">
+            <s:attribute name="Option" type="s1:allOrDistinctType" use="required"/>
+         </s:complexType>
+         <s:simpleType name="allOrDistinctType">
+            <s:restriction base="s:string">
+               <s:enumeration value="All"/>
+               <s:enumeration value="DISTINCT"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="selectionLimitType">
+            <s:attribute name="Top" type="s:unsignedInt" use="required"/>
+         </s:complexType>
+         <s:complexType name="selectionListType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Item" type="s1:selectionItemType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="selectionItemType" abstract="true"/>
+         <s:complexType name="aliasSelectionItemType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:selectionItemType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Expression" type="s1:scalarExpressionType"/>
+                  </s:sequence>
+                  <s:attribute name="As" type="s:string"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="scalarExpressionType" abstract="true">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:selectionItemType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="unaryExprType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:scalarExpressionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Arg" type="s1:scalarExpressionType"/>
+                  </s:sequence>
+                  <s:attribute name="Oper" type="s1:unaryOperatorType" use="required"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="unaryOperatorType">
+            <s:restriction base="s:string">
+               <s:enumeration value="+"/>
+               <s:enumeration value="-"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="columnReferenceType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:scalarExpressionType">
+                  <s:attribute name="Table" type="s:string"/>
+                  <s:attribute name="Name" type="s:string"/>
+                  <s:attribute name="xpathName" type="s:string"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="atomType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:scalarExpressionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Literal" type="s1:literalType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Unit" type="s:string"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="literalType" abstract="true"/>
+         <s:complexType name="stringType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:literalType">
+                  <s:attribute name="Value" type="s:string"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="numberType" abstract="true">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:literalType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="realType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:numberType">
+                  <s:attribute name="Value" type="s:double" use="required"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="integerType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:numberType">
+                  <s:attribute name="Value" type="s:long" use="required"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="functionType" abstract="true">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:scalarExpressionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Allow" type="s1:selectionOptionType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Arg" type="s1:selectionItemType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="mathFunctionType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:functionType">
+                  <s:attribute name="Name" type="s1:mathFunctionNameType" use="required"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="mathFunctionNameType">
+            <s:restriction base="s:string">
+               <s:enumeration value="ABS"/>
+               <s:enumeration value="CEILING"/>
+               <s:enumeration value="DEGREES"/>
+               <s:enumeration value="EXP"/>
+               <s:enumeration value="FLOOR"/>
+               <s:enumeration value="LOG"/>
+               <s:enumeration value="PI"/>
+               <s:enumeration value="POWER"/>
+               <s:enumeration value="RADIANS"/>
+               <s:enumeration value="SQRT"/>
+               <s:enumeration value="SQUARE"/>
+               <s:enumeration value="LOG10"/>
+               <s:enumeration value="RAND"/>
+               <s:enumeration value="ROUND"/>
+               <s:enumeration value="TRUNCATE"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="aggregateFunctionType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:functionType">
+                  <s:attribute name="Name" type="s1:aggregateFunctionNameType" use="required"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="aggregateFunctionNameType">
+            <s:restriction base="s:string">
+               <s:enumeration value="AVG"/>
+               <s:enumeration value="MIN"/>
+               <s:enumeration value="MAX"/>
+               <s:enumeration value="SUM"/>
+               <s:enumeration value="COUNT"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="trigonometricFunctionType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:functionType">
+                  <s:attribute name="Name" type="s1:trigonometricFunctionNameType" use="required"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="trigonometricFunctionNameType">
+            <s:restriction base="s:string">
+               <s:enumeration value="SIN"/>
+               <s:enumeration value="COS"/>
+               <s:enumeration value="TAN"/>
+               <s:enumeration value="COT"/>
+               <s:enumeration value="ASIN"/>
+               <s:enumeration value="ACOS"/>
+               <s:enumeration value="ATAN"/>
+               <s:enumeration value="ATAN2"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="closedExprType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:scalarExpressionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Arg" type="s1:scalarExpressionType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="binaryExprType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:scalarExpressionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Arg" type="s1:scalarExpressionType"/>
+                  </s:sequence>
+                  <s:attribute name="Oper" type="s1:binaryOperatorType" use="required"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="binaryOperatorType">
+            <s:restriction base="s:string">
+               <s:enumeration value="+"/>
+               <s:enumeration value="-"/>
+               <s:enumeration value="*"/>
+               <s:enumeration value="/"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="allSelectionItemType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:selectionItemType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="intoType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="TableName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="fromType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Table" type="s1:fromTableType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="fromTableType" abstract="true"/>
+         <s:complexType name="archiveTableType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:fromTableType">
+                  <s:attribute name="Archive" type="s:string"/>
+                  <s:attribute name="Name" type="s:string"/>
+                  <s:attribute name="Alias" type="s:string"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="tableType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:fromTableType">
+                  <s:attribute name="Name" type="s:string"/>
+                  <s:attribute name="Alias" type="s:string"/>
+                  <s:attribute name="xpathName" type="s:string"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="joinTableType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:fromTableType">
+                  <s:sequence>
+                     <s:element minOccurs="1" maxOccurs="1" name="Qualifier" type="s1:jointTableQualifierType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Tables" type="s1:ArrayOfFromTableType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Condition" type="s1:comparisonPredType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="jointTableQualifierType">
+            <s:restriction base="s:string">
+               <s:enumeration value="LEFT_OUTER"/>
+               <s:enumeration value="RIGHT_OUTER"/>
+               <s:enumeration value="FULL_OUTER"/>
+               <s:enumeration value="INNER"/>
+               <s:enumeration value="CROSS"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfFromTableType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="fromTableType" nillable="true"
+                          type="s1:fromTableType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="comparisonPredType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:searchType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Arg" type="s1:scalarExpressionType"/>
+                  </s:sequence>
+                  <s:attribute name="Comparison" type="s1:comparisonType" use="required"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="searchType" abstract="true"/>
+         <s:complexType name="inverseSearchType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:searchType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Condition" type="s1:searchType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="intersectionSearchType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:searchType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Condition" type="s1:searchType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="unionSearchType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:searchType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Condition" type="s1:searchType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="exclusiveSearchType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:searchType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Expression" type="s1:scalarExpressionType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Set" type="s1:inclusionSetType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="inclusionSetType" abstract="true"/>
+         <s:complexType name="ConstantListSet">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:inclusionSetType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Item" type="s1:literalType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="subQuerySet">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:inclusionSetType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="selection" type="s1:selectType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="regionSearchType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:searchType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Region" type="s2:regionType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="closedSearchType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:searchType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Condition" type="s1:searchType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="betweenPredType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:searchType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Arg" type="s1:scalarExpressionType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="notBetweenPredType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:betweenPredType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="xMatchType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:searchType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Table" type="s1:xMatchTableAliasType"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="Nature" type="s1:comparisonType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Sigma" type="s1:numberType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="xMatchTableAliasType" abstract="true"/>
+         <s:complexType name="dropTableType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:xMatchTableAliasType">
+                  <s:attribute name="Name" type="s:string"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="includeTableType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:xMatchTableAliasType">
+                  <s:attribute name="Name" type="s:string"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="comparisonType">
+            <s:restriction base="s:string">
+               <s:enumeration value="="/>
+               <s:enumeration value="&lt;&gt;"/>
+               <s:enumeration value="&gt;"/>
+               <s:enumeration value="&gt;="/>
+               <s:enumeration value="&lt;"/>
+               <s:enumeration value="&lt;="/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="inclusiveSearchType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:searchType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Expression" type="s1:scalarExpressionType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Set" type="s1:inclusionSetType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="likePredType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:searchType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Arg" type="s1:scalarExpressionType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Pattern" type="s1:atomType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="notLikePredType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:likePredType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="whereType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Condition" type="s1:searchType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="groupByType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Column" type="s1:columnReferenceType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="havingType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Condition" type="s1:searchType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="orderExpressionType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Item" type="s1:orderType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="orderType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Expression" type="s1:scalarExpressionType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Order" type="s1:orderOptionType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="orderOptionType">
+            <s:attribute name="Direction" type="s1:orderDirectionType" use="required"/>
+         </s:complexType>
+         <s:simpleType name="orderDirectionType">
+            <s:restriction base="s:string">
+               <s:enumeration value="ASC"/>
+               <s:enumeration value="DESC"/>
+            </s:restriction>
+         </s:simpleType>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="urn:nvo-region">
+         <s:import namespace="urn:nvo-coords"/>
+         <s:complexType name="regionType" abstract="true">
+            <s:attribute default="1" name="fill_factor" type="s:double"/>
+            <s:attribute name="note" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="negationType">
+            <s:complexContent mixed="false">
+               <s:extension base="s2:regionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Region" type="s2:regionType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="intersectionType">
+            <s:complexContent mixed="false">
+               <s:extension base="s2:regionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Region" type="s2:regionType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="shapeType" abstract="true">
+            <s:complexContent mixed="false">
+               <s:extension base="s2:regionType">
+                  <s:attribute name="coord_system_id" type="s:IDREF"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="polygonType">
+            <s:complexContent mixed="false">
+               <s:extension base="s2:shapeType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Vertex" type="s2:vertexType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="vertexType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Position" type="s3:coordsType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SmallCircle" nillable="true"
+                          type="s2:smallCircleType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="smallCircleType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Pole" type="s3:coordsType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="sectorType">
+            <s:complexContent mixed="false">
+               <s:extension base="s2:shapeType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Position" type="s3:coordsType"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="PosAngle1" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="PosAngle2" type="s:double"/>
+                  </s:sequence>
+                  <s:attribute default="deg" name="pos_angle_unit" type="s3:posUnitType"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="convexType">
+            <s:complexContent mixed="false">
+               <s:extension base="s2:shapeType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Constraint" type="s2:constraintType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="constraintType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Vector" type="s3:coordsType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Offset" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="convexHullType">
+            <s:complexContent mixed="false">
+               <s:extension base="s2:shapeType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Point" type="s3:coordsType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="circleType">
+            <s:complexContent mixed="false">
+               <s:extension base="s2:shapeType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Center" type="s3:coordsType"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="Radius" type="s:double"/>
+                  </s:sequence>
+                  <s:attribute default="deg" name="radius_unit" type="s3:posUnitType"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ellipseType">
+            <s:complexContent mixed="false">
+               <s:extension base="s2:circleType">
+                  <s:sequence>
+                     <s:element minOccurs="1" maxOccurs="1" name="MinorRadius" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="PosAngle" type="s:double"/>
+                  </s:sequence>
+                  <s:attribute default="deg" name="pos_angle_unit" type="s3:angleUnitType"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="unionType">
+            <s:complexContent mixed="false">
+               <s:extension base="s2:regionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Region" type="s2:regionType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="urn:nvo-coords">
+         <s:complexType name="coordsType">
+            <s:sequence>
+               <s:choice minOccurs="1" maxOccurs="1">
+                  <s:element minOccurs="0" maxOccurs="1" name="VelScalar" type="s3:velScalarType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Vel3Vector" type="s3:vel3VectorType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Pos2Vector" type="s3:pos2VectorType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CoordFile" type="s:anyURI"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Time" type="s3:coordTimeType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Vel2Vector" type="s3:vel2VectorType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PosScalar" type="s3:posScalarType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Pos3Vector" type="s3:pos3VectorType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Spectrum" type="s3:coordSpectralType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Redshift" type="s3:velScalarType"/>
+               </s:choice>
+            </s:sequence>
+            <s:attribute name="ID" type="s:ID"/>
+            <s:attribute name="coord_system_id" type="s:IDREF"/>
+         </s:complexType>
+         <s:complexType name="velScalarType">
+            <s:complexContent mixed="false">
+               <s:extension base="s3:velCoordType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordValue" type="s3:coordValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordError" type="s3:coordValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordResolution" type="s3:coordValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordSize" type="s3:coordValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordPixsize" type="s3:coordValueType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="velCoordType" abstract="true">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+            </s:sequence>
+            <s:attribute default="s" name="vel_time_unit" type="s3:velTimeUnitType"/>
+         </s:complexType>
+         <s:simpleType name="velTimeUnitType">
+            <s:restriction base="s:string">
+               <s:enumeration value="s"/>
+               <s:enumeration value="h"/>
+               <s:enumeration value="d"/>
+               <s:enumeration value="a"/>
+               <s:enumeration value="yr"/>
+               <s:enumeration value="century"/>
+               <s:enumeration value=""/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="vel2VectorType">
+            <s:complexContent mixed="false">
+               <s:extension base="s3:velCoordType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordValue" type="s3:coord2ValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordError" type="s3:coord2SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordResolution" type="s3:coord2SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordSize" type="s3:coord2SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordPixsize" type="s3:coord2SizeType"/>
+                  </s:sequence>
+                  <s:attribute default="deg" name="pos_ang_unit" type="s3:angleUnitType"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="coord2ValueType">
+            <s:sequence>
+               <s:choice minOccurs="1" maxOccurs="1">
+                  <s:element minOccurs="0" maxOccurs="1" name="Value" type="s3:ArrayOfDouble"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Value60" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:IDREFS"/>
+               </s:choice>
+            </s:sequence>
+            <s:attribute default="deg" name="pos1_unit" type="s3:posUnitType"/>
+            <s:attribute default="deg" name="pos2_unit" type="s3:posUnitType"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfDouble">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="double" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="posUnitType">
+            <s:restriction base="s:string">
+               <s:enumeration value="deg"/>
+               <s:enumeration value="rad"/>
+               <s:enumeration value="h"/>
+               <s:enumeration value="arcmin"/>
+               <s:enumeration value="arcsec"/>
+               <s:enumeration value="m"/>
+               <s:enumeration value="km"/>
+               <s:enumeration value="mm"/>
+               <s:enumeration value="au"/>
+               <s:enumeration value="pc"/>
+               <s:enumeration value="kpc"/>
+               <s:enumeration value="Mpc"/>
+               <s:enumeration value="lyr"/>
+               <s:enumeration value=""/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="coord2SizeType">
+            <s:sequence>
+               <s:choice minOccurs="1" maxOccurs="1">
+                  <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PosAngleRef" type="s:IDREF"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:IDREFS"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PosAngle" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Matrix" type="s:double"/>
+               </s:choice>
+            </s:sequence>
+            <s:attribute default="deg" name="pos1_unit" type="s3:posUnitType"/>
+            <s:attribute default="deg" name="pos2_unit" type="s3:posUnitType"/>
+         </s:complexType>
+         <s:simpleType name="angleUnitType">
+            <s:restriction base="s:string">
+               <s:enumeration value="deg"/>
+               <s:enumeration value="rad"/>
+               <s:enumeration value="h"/>
+               <s:enumeration value="arcmin"/>
+               <s:enumeration value="arcsec"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="vel3VectorType">
+            <s:complexContent mixed="false">
+               <s:extension base="s3:velCoordType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordValue" type="s3:coord3ValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordError" type="s3:coord3SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordResolution" type="s3:coord3SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordSize" type="s3:coord3SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordPixsize" type="s3:coord3SizeType"/>
+                  </s:sequence>
+                  <s:attribute default="deg" name="pos_ang_unit" type="s3:angleUnitType"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="coord3ValueType">
+            <s:sequence>
+               <s:choice minOccurs="1" maxOccurs="1">
+                  <s:element minOccurs="0" maxOccurs="1" name="Value" type="s3:ArrayOfDouble"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:IDREFS"/>
+               </s:choice>
+            </s:sequence>
+            <s:attribute name="pos1_unit" type="s3:posUnitType"/>
+            <s:attribute name="pos2_unit" type="s3:posUnitType"/>
+            <s:attribute name="pos3_unit" type="s3:posUnitType"/>
+         </s:complexType>
+         <s:complexType name="coord3SizeType">
+            <s:sequence>
+               <s:choice minOccurs="1" maxOccurs="1">
+                  <s:element minOccurs="0" maxOccurs="1" name="PosAngleRef" type="s:IDREFS"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Matrix" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:IDREFS"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PosAngle" type="s:double"/>
+               </s:choice>
+            </s:sequence>
+            <s:attribute name="pos1_unit" type="s3:posUnitType"/>
+            <s:attribute name="pos2_unit" type="s3:posUnitType"/>
+            <s:attribute name="pos3_unit" type="s3:posUnitType"/>
+         </s:complexType>
+         <s:complexType name="coordValueType">
+            <s:sequence>
+               <s:choice minOccurs="1" maxOccurs="1">
+                  <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Value60" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:IDREF"/>
+               </s:choice>
+            </s:sequence>
+            <s:attribute default="deg" name="pos_unit" type="s3:posUnitType"/>
+         </s:complexType>
+         <s:complexType name="pos2VectorType">
+            <s:complexContent mixed="false">
+               <s:extension base="s3:posCoordType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordValue" type="s3:coord2ValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordError" type="s3:coord2SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordResolution" type="s3:coord2SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordSize" type="s3:coord2SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordPixsize" type="s3:coord2SizeType"/>
+                  </s:sequence>
+                  <s:attribute default="deg" name="pos_ang_unit" type="s3:angleUnitType"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="posCoordType" abstract="true">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="posScalarType">
+            <s:complexContent mixed="false">
+               <s:extension base="s3:posCoordType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordValue" type="s3:coordValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordError" type="s3:coordValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordResolution" type="s3:coordValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordSize" type="s3:coordValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordPixsize" type="s3:coordValueType"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="pos3VectorType">
+            <s:complexContent mixed="false">
+               <s:extension base="s3:posCoordType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordValue" type="s3:coord3ValueType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordError" type="s3:coord3SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordResolution" type="s3:coord3SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordSize" type="s3:coord3SizeType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CoordPixsize" type="s3:coord3SizeType"/>
+                  </s:sequence>
+                  <s:attribute default="deg" name="pos_ang_unit" type="s3:angleUnitType"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="coordTimeType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CoordValue" type="s3:astronTimeType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CoordError" type="s3:coordTimeValueType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CoordResolution" type="s3:coordTimeValueType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CoordSize" type="s3:coordTimeValueType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CoordPixsize" type="s3:coordTimeValueType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="astronTimeType">
+            <s:sequence>
+               <s:choice minOccurs="1" maxOccurs="1">
+                  <s:element minOccurs="1" maxOccurs="1" name="MJDRefTime" type="s:decimal"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s3:astronTimeTypeReference"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ISORefTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ISOTime" type="s:dateTime"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RelativeTime"
+                             type="s3:astronTimeTypeRelativeTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="JDTime" type="s:decimal"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MJDTime" type="s:decimal"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="JDRefTime" type="s:decimal"/>
+               </s:choice>
+               <s:element minOccurs="1" maxOccurs="1" name="TimeScale" type="s3:timeScaleType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="astronTimeTypeReference">
+            <s:simpleContent>
+               <s:extension base="s:IDREF">
+                  <s:attribute default="ISO8601" name="time_base" type="s3:astronTimeTypeReferenceTime_base"/>
+                  <s:attribute default="s" name="unit" type="s3:astronTimeTypeReferenceUnit"/>
+               </s:extension>
+            </s:simpleContent>
+         </s:complexType>
+         <s:simpleType name="astronTimeTypeReferenceTime_base">
+            <s:restriction base="s:string">
+               <s:enumeration value="ISO8601"/>
+               <s:enumeration value="JD"/>
+               <s:enumeration value="MJD"/>
+               <s:enumeration value="relative"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="astronTimeTypeReferenceUnit">
+            <s:restriction base="s:string">
+               <s:enumeration value="s"/>
+               <s:enumeration value="d"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="astronTimeTypeRelativeTime">
+            <s:simpleContent>
+               <s:extension base="s:double">
+                  <s:attribute default="s" name="unit" type="s3:astronTimeTypeRelativeTimeUnit"/>
+               </s:extension>
+            </s:simpleContent>
+         </s:complexType>
+         <s:simpleType name="astronTimeTypeRelativeTimeUnit">
+            <s:restriction base="s:string">
+               <s:enumeration value="s"/>
+               <s:enumeration value="d"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="timeScaleType">
+            <s:restriction base="s:string">
+               <s:enumeration value="TT"/>
+               <s:enumeration value="TDT"/>
+               <s:enumeration value="ET"/>
+               <s:enumeration value="TDB"/>
+               <s:enumeration value="TCG"/>
+               <s:enumeration value="TCB"/>
+               <s:enumeration value="TAI"/>
+               <s:enumeration value="IAT"/>
+               <s:enumeration value="UTC"/>
+               <s:enumeration value="LST"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="coordTimeValueType">
+            <s:sequence>
+               <s:choice minOccurs="1" maxOccurs="1">
+                  <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:IDREF"/>
+               </s:choice>
+            </s:sequence>
+            <s:attribute default="s" name="time_unit" type="s3:velTimeUnitType"/>
+         </s:complexType>
+         <s:complexType name="coordSpectralType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CoordValue" type="s3:coordSpectralValueType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CoordError" type="s3:coordSpectralValueType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CoordResolution"
+                          type="s3:coordSpectralValueType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CoordSize" type="s3:coordSpectralValueType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CoordPixsize"
+                          type="s3:coordSpectralValueType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="coordSpectralValueType">
+            <s:sequence>
+               <s:choice minOccurs="1" maxOccurs="1">
+                  <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:IDREF"/>
+               </s:choice>
+            </s:sequence>
+            <s:attribute default="Hz" name="spectral_unit" type="s3:spectralUnitType"/>
+         </s:complexType>
+         <s:simpleType name="spectralUnitType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Hz"/>
+               <s:enumeration value="kHz"/>
+               <s:enumeration value="MHz"/>
+               <s:enumeration value="GHz"/>
+               <s:enumeration value="m"/>
+               <s:enumeration value="mm"/>
+               <s:enumeration value="micron"/>
+               <s:enumeration value="nm"/>
+               <s:enumeration value="A"/>
+               <s:enumeration value="eV"/>
+               <s:enumeration value="keV"/>
+               <s:enumeration value="MeV"/>
+               <s:enumeration value="GeV"/>
+            </s:restriction>
+         </s:simpleType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SQLtoADQLSoapIn">
+      <wsdl:part name="parameters" element="tns:SQLtoADQL"/>
+  </wsdl:message>
+  <wsdl:message name="SQLtoADQLSoapOut">
+      <wsdl:part name="parameters" element="tns:SQLtoADQLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SQLtoADQLStringSoapIn">
+      <wsdl:part name="parameters" element="tns:SQLtoADQLString"/>
+  </wsdl:message>
+  <wsdl:message name="SQLtoADQLStringSoapOut">
+      <wsdl:part name="parameters" element="tns:SQLtoADQLStringResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ADQLtoSQLSoapIn">
+      <wsdl:part name="parameters" element="tns:ADQLtoSQL"/>
+  </wsdl:message>
+  <wsdl:message name="ADQLtoSQLSoapOut">
+      <wsdl:part name="parameters" element="tns:ADQLtoSQLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ADQLStringtoSQLSoapIn">
+      <wsdl:part name="parameters" element="tns:ADQLStringtoSQL"/>
+  </wsdl:message>
+  <wsdl:message name="ADQLStringtoSQLSoapOut">
+      <wsdl:part name="parameters" element="tns:ADQLStringtoSQLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SQLtoADQLHttpGetIn">
+      <wsdl:part name="sql" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SQLtoADQLHttpGetOut">
+      <wsdl:part name="Body" element="s1:Select"/>
+  </wsdl:message>
+  <wsdl:message name="SQLtoADQLStringHttpGetIn">
+      <wsdl:part name="sql" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SQLtoADQLStringHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ADQLStringtoSQLHttpGetIn">
+      <wsdl:part name="adql" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ADQLStringtoSQLHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="SQLtoADQLHttpPostIn">
+      <wsdl:part name="sql" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SQLtoADQLHttpPostOut">
+      <wsdl:part name="Body" element="s1:Select"/>
+  </wsdl:message>
+  <wsdl:message name="SQLtoADQLStringHttpPostIn">
+      <wsdl:part name="sql" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SQLtoADQLStringHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ADQLStringtoSQLHttpPostIn">
+      <wsdl:part name="adql" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ADQLStringtoSQLHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:portType name="ADQLTranslatorSoap">
+      <wsdl:operation name="SQLtoADQL">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Take an SQL string and convert it to the XML parsetree in ADQL</documentation>
+         <wsdl:input message="tns:SQLtoADQLSoapIn"/>
+         <wsdl:output message="tns:SQLtoADQLSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SQLtoADQLString">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Take an SQL string and convert it to a string having the XML parsetree in ADQL</documentation>
+         <wsdl:input message="tns:SQLtoADQLStringSoapIn"/>
+         <wsdl:output message="tns:SQLtoADQLStringSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="ADQLtoSQL">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Take an ADQL Select structure and convert to SQL string</documentation>
+         <wsdl:input message="tns:ADQLtoSQLSoapIn"/>
+         <wsdl:output message="tns:ADQLtoSQLSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="ADQLStringtoSQL">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Take an ADQL Select (as an XML string) and convert to SQL string</documentation>
+         <wsdl:input message="tns:ADQLStringtoSQLSoapIn"/>
+         <wsdl:output message="tns:ADQLStringtoSQLSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="ADQLTranslatorSoap" type="tns:ADQLTranslatorSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="SQLtoADQL">
+         <soap:operation soapAction="http://ws.parser.adql.ivoa.net/SQLtoADQL" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SQLtoADQLString">
+         <soap:operation soapAction="http://ws.parser.adql.ivoa.net/SQLtoADQLString" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ADQLtoSQL">
+         <soap:operation soapAction="http://ws.parser.adql.ivoa.net/ADQLtoSQL" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ADQLStringtoSQL">
+         <soap:operation soapAction="http://ws.parser.adql.ivoa.net/ADQLStringtoSQL" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="ADQLTranslator">
+      <wsdl:port name="ADQLTranslatorSoap" binding="tns:ADQLTranslatorSoap">
+         <soap:address location="http://ws.soatrader.com/openskyquery.net/0.1/ADQLTranslator"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

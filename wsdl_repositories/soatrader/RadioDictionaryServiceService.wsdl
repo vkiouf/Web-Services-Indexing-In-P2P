@@ -1,0 +1,442 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                  xmlns:intf="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://langrid.nict.go.jp/ws_1_0/morphologicalanalysis/"
+                  xmlns:tns2="http://langrid.nict.go.jp/ws_1_0/bilingualdictionary/"
+                  xmlns:tns3="http://langrid.nict.go.jp/ws_1_0/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService">
+         <import namespace="http://langrid.nict.go.jp/ws_1_0/bilingualdictionary/"/>
+         <import namespace="http://langrid.nict.go.jp/ws_1_0/"/>
+         <import namespace="http://langrid.nict.go.jp/ws_1_0/morphologicalanalysis/"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOf_xsd_string">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOf_tns1_Morpheme">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:Morpheme[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOf_tns2_Translation">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:Translation[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://langrid.nict.go.jp/ws_1_0/morphologicalanalysis/">
+         <import namespace="http://langrid.nict.go.jp/ws_1_0/bilingualdictionary/"/>
+         <import namespace="http://langrid.nict.go.jp/ws_1_0/"/>
+         <import namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Morpheme">
+            <sequence>
+               <element name="lemma" nillable="true" type="xsd:string"/>
+               <element name="partOfSpeech" nillable="true" type="xsd:string"/>
+               <element name="word" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://langrid.nict.go.jp/ws_1_0/bilingualdictionary/">
+         <import namespace="http://langrid.nict.go.jp/ws_1_0/"/>
+         <import namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"/>
+         <import namespace="http://langrid.nict.go.jp/ws_1_0/morphologicalanalysis/"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Translation">
+            <sequence>
+               <element name="headWord" nillable="true" type="xsd:string"/>
+               <element name="targetWords" nillable="true" type="impl:ArrayOf_xsd_string"/>
+            </sequence>
+         </complexType>
+         <complexType name="SearchFailedException">
+            <complexContent>
+               <extension base="tns3:LangridException">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://langrid.nict.go.jp/ws_1_0/">
+         <import namespace="http://langrid.nict.go.jp/ws_1_0/bilingualdictionary/"/>
+         <import namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"/>
+         <import namespace="http://langrid.nict.go.jp/ws_1_0/morphologicalanalysis/"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="LangridException">
+            <sequence>
+               <element name="description" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="InvalidParameterException">
+            <complexContent>
+               <extension base="tns3:LangridException">
+                  <sequence>
+                     <element name="parameterName" nillable="true" type="xsd:string"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="LanguagePairNotUniquelyDecidedException">
+            <complexContent>
+               <extension base="tns3:InvalidParameterException">
+                  <sequence>
+                     <element name="candidates" nillable="true" type="impl:ArrayOf_xsd_string"/>
+                     <element name="message" nillable="true" type="xsd:string"/>
+                     <element name="parameterName1" nillable="true" type="xsd:string"/>
+                     <element name="parameterName2" nillable="true" type="xsd:string"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="UnsupportedLanguagePairException">
+            <complexContent>
+               <extension base="tns3:InvalidParameterException">
+                  <sequence>
+                     <element name="language1" nillable="true" type="xsd:string"/>
+                     <element name="language2" nillable="true" type="xsd:string"/>
+                     <element name="parameterName1" nillable="true" type="xsd:string"/>
+                     <element name="parameterName2" nillable="true" type="xsd:string"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="ServiceConfigurationException">
+            <complexContent>
+               <extension base="tns3:LangridException">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="UnknownException">
+            <complexContent>
+               <extension base="tns3:LangridException">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="termSearchResponse">
+
+      <wsdl:part name="termSearchReturn" type="impl:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="UnsupportedLanguagePairException">
+
+      <wsdl:part name="fault" type="tns3:UnsupportedLanguagePairException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="UnknownException">
+
+      <wsdl:part name="fault" type="tns3:UnknownException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="LanguagePairNotUniquelyDecidedException">
+
+      <wsdl:part name="fault" type="tns3:LanguagePairNotUniquelyDecidedException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="InvalidParameterException">
+
+      <wsdl:part name="fault" type="tns3:InvalidParameterException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchRequest">
+
+      <wsdl:part name="headLang" type="xsd:string"/>
+
+      <wsdl:part name="targetLang" type="xsd:string"/>
+
+      <wsdl:part name="headWord" type="xsd:string"/>
+
+      <wsdl:part name="searchMethod" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchResponse">
+
+      <wsdl:part name="searchReturn" type="impl:ArrayOf_tns2_Translation"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="extractResponse">
+
+      <wsdl:part name="extractReturn" type="impl:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="SearchFailedException">
+
+      <wsdl:part name="fault" type="tns2:SearchFailedException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="termSearchRequest">
+
+      <wsdl:part name="language" type="xsd:string"/>
+
+      <wsdl:part name="morpheme" type="impl:ArrayOf_tns1_Morpheme"/>
+
+      <wsdl:part name="term" type="impl:ArrayOf_xsd_string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="ServiceConfigurationException">
+
+      <wsdl:part name="fault" type="tns3:ServiceConfigurationException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="extractRequest">
+
+      <wsdl:part name="language" type="xsd:string"/>
+
+      <wsdl:part name="text" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="RadioDictionaryService">
+
+      <wsdl:operation name="extract" parameterOrder="language text">
+
+         <wsdl:input message="impl:extractRequest" name="extractRequest"/>
+
+         <wsdl:output message="impl:extractResponse" name="extractResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="termSearch" parameterOrder="language morpheme term">
+
+         <wsdl:input message="impl:termSearchRequest" name="termSearchRequest"/>
+
+         <wsdl:output message="impl:termSearchResponse" name="termSearchResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="search" parameterOrder="headLang targetLang headWord searchMethod">
+
+         <wsdl:input message="impl:searchRequest" name="searchRequest"/>
+
+         <wsdl:output message="impl:searchResponse" name="searchResponse"/>
+
+         <wsdl:fault message="impl:UnsupportedLanguagePairException"
+                     name="UnsupportedLanguagePairException"/>
+
+         <wsdl:fault message="impl:UnknownException" name="UnknownException"/>
+
+         <wsdl:fault message="impl:LanguagePairNotUniquelyDecidedException"
+                     name="LanguagePairNotUniquelyDecidedException"/>
+
+         <wsdl:fault message="impl:InvalidParameterException" name="InvalidParameterException"/>
+
+         <wsdl:fault message="impl:SearchFailedException" name="SearchFailedException"/>
+
+         <wsdl:fault message="impl:ServiceConfigurationException"
+                     name="ServiceConfigurationException"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="RadioDictionaryServiceSoapBinding" type="impl:RadioDictionaryService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="extract">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="extractRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dictionary.community.langrid.nict.go.jp"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="extractResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="termSearch">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="termSearchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dictionary.community.langrid.nict.go.jp"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="termSearchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="search">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://bilingualdictionary.wrapper.langrid.nict.go.jp"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnsupportedLanguagePairException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="UnsupportedLanguagePairException"
+                            namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="UnknownException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="UnknownException"
+                            namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="LanguagePairNotUniquelyDecidedException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="LanguagePairNotUniquelyDecidedException"
+                            namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="InvalidParameterException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="InvalidParameterException"
+                            namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="SearchFailedException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="SearchFailedException"
+                            namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="ServiceConfigurationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="ServiceConfigurationException"
+                            namespace="http://trans.nict.go.jp/collabo/services/RadioDictionaryService"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="RadioDictionaryServiceService">
+
+      <wsdl:port binding="impl:RadioDictionaryServiceSoapBinding" name="RadioDictionaryService">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/nict.go.jp/0.1/RadioDictionaryServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

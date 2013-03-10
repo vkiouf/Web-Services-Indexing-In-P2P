@@ -1,0 +1,795 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Provides searching access to the FCSSearch system</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx">
+         <s:element name="NADSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PIN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GivenName1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GivenName2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GivenName3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Surname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UnitNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetNumberLow" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetNumberHigh" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Suburb" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Postcode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BuildingName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="POBox" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NADSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="NADSearchResult" type="tns:NADResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="NADResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="NAD" type="tns:ArrayOfNADItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Credit" type="tns:CreditItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfNADItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="NADItem" nillable="true"
+                          type="tns:NADItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="NADItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="PIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SURNAME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AD1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FUN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TN1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="THN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="THT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LOC" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PCD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BG1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PDN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ALN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCEDATE" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CreditItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Total" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AuthHeader" type="tns:AuthHeader"/>
+         <s:complexType name="AuthHeader">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+            </s:sequence>
+            <s:anyAttribute/>
+         </s:complexType>
+         <s:element name="PhoneSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PIN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GivenName1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GivenName2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GivenName3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Surname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UnitNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetNumberLow" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetNumberHigh" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Suburb" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Postcode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BuildingName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="POBox" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientRef" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="PhoneSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneSearchResult" type="tns:PhoneResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="PhoneResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Phone" type="tns:ArrayOfPhoneItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Credit" type="tns:CreditItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfPhoneItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PhoneItem" nillable="true"
+                          type="tns:PhoneItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PhoneItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="PIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SURNAME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AD1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FUN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TN1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="THN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="THT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LOC" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PCD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BG1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PDN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ALN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCEDATE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PUBLIC_NUMBER" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FCS_USAGE_CODE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FCS_TYPE_OF_SERVICE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="COMPANY_NAME" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="HistorySearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PIN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GivenName1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GivenName2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GivenName3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Surname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UnitNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetNumberLow" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetNumberHigh" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Suburb" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Postcode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BuildingName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="POBox" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="HistorySearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="HistorySearchResult" type="tns:HistoryResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="HistoryResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="History" type="tns:ArrayOfHistoryItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Credit" type="tns:CreditItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHistoryItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HistoryItem" nillable="true"
+                          type="tns:HistoryItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HistoryItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="PIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SURNAME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AD1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FUN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TN1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="THN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="THT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LOC" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PCD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BG1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PDN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ALN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCEDATE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FIRST_SPOT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LAST_SPOT" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="BusinessPhoneSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ABN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BusinessClassification" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BusinessType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UnitNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetNumberLow" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetNumberHigh" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Suburb" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Postcode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BuildingName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="POBox" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BusinessPhoneSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="BusinessPhoneSearchResult"
+                             type="tns:BusinessPhoneResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="BusinessPhoneResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="BusinessPhone"
+                          type="tns:ArrayOfBusinessPhoneItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Credit" type="tns:CreditItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfBusinessPhoneItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BusinessPhoneItem" nillable="true"
+                          type="tns:BusinessPhoneItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BusinessPhoneItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="COMPANY_NAME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ABN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ANZSIC_CODE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ANZSIC_CATEGORY" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SURNAME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AD1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FUN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TN1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="THN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="THT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LOC" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PCD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BG1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PDN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ALN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCEDATE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PUBLIC_NUMBER" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PRIME_PHONE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PRIME_FAX" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FCS_USAGE_CODE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FCS_TYPE_OF_SERVICE" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="BusinessAssociatedNumbersSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="HIN" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ABN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BusinessAssociatedNumbersSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="BusinessAssociatedNumbersSearchResult"
+                             type="tns:BusinessPhoneResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="PhoneDetailSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="PIN" type="s:long"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="HIN" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Surname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="PhoneDetailSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneDetailSearchResult"
+                             type="tns:PhoneResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="PropertyDetailSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="HIN" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="PropertyDetailSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PropertyDetailSearchResult"
+                             type="tns:PropertyResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="PropertyResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Property" type="tns:ArrayOfPropertyItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PropertyOwner"
+                          type="tns:ArrayOfPropertyOwnerItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BuildingPermit"
+                          type="tns:ArrayOfBuildingPermitItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Credit" type="tns:CreditItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfPropertyItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PropertyItem" nillable="true"
+                          type="tns:PropertyItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PropertyItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="HIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SURNAME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="COMPANY_NAME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AD1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LOC" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PCD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CONTRACT_DATE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SALE_PRICE" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfPropertyOwnerItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PropertyOwnerItem" nillable="true"
+                          type="tns:PropertyOwnerItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PropertyOwnerItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="HIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SURNAME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AD1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LOC" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PCD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCEDATE" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfBuildingPermitItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BuildingPermitItem" nillable="true"
+                          type="tns:BuildingPermitItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BuildingPermitItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="HIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ApplicantName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PermitValue" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AreaSquareMetres" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BriefDescription" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PermitNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PermitDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AD1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LOC" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PCD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SOURCEDATE" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="HistoryDetailSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="PIN" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="HistoryDetailSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="HistoryDetailSearchResult"
+                             type="tns:HistoryResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SocialProfileDetailSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="HIN" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SocialProfileDetailSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SocialProfileDetailSearchResult"
+                             type="tns:SocialProfileResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SocialProfileResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="SocialProfile"
+                          type="tns:ArrayOfSocialProfileItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Credit" type="tns:CreditItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSocialProfileItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SocialProfileItem" nillable="true"
+                          type="tns:SocialProfileItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SocialProfileItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="GCLUSTER" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CLUSTER_INFO" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GGROUP" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GROUP_INFO" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DISC_INCOME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EXPEND_NON_MORG" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UNEMPLOYED" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FIVEYEARS_HOME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RENTAL_LEVEL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CLUSTER_PERCENT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CLUSTER_DETAIL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CLUSTER_COMMENT" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SYDNEYSD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MELBOURNESD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BRISBANESD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ADELAIDESD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PERTHSD" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GT100POP" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HUNDREDPOP" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TENPOP" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RURALPOP" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="OccupantDetailSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="HIN" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="OccupantDetailSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="OccupantDetailSearchResult"
+                             type="tns:OccupantResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="OccupantResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Occupant" type="tns:ArrayOfOccupantItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Credit" type="tns:CreditItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfOccupantItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="OccupantItem" nillable="true"
+                          type="tns:OccupantItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="OccupantItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="PIN" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GIVEN_NAME_3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SURNAME" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="NADSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:NADSearch"/>
+  </wsdl:message>
+  <wsdl:message name="NADSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:NADSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NADSearchAuthHeader">
+      <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:message name="PhoneSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:PhoneSearch"/>
+  </wsdl:message>
+  <wsdl:message name="PhoneSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:PhoneSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PhoneSearchAuthHeader">
+      <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:message name="HistorySearchSoapIn">
+      <wsdl:part name="parameters" element="tns:HistorySearch"/>
+  </wsdl:message>
+  <wsdl:message name="HistorySearchSoapOut">
+      <wsdl:part name="parameters" element="tns:HistorySearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="HistorySearchAuthHeader">
+      <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:message name="BusinessPhoneSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:BusinessPhoneSearch"/>
+  </wsdl:message>
+  <wsdl:message name="BusinessPhoneSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:BusinessPhoneSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BusinessPhoneSearchAuthHeader">
+      <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:message name="BusinessAssociatedNumbersSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:BusinessAssociatedNumbersSearch"/>
+  </wsdl:message>
+  <wsdl:message name="BusinessAssociatedNumbersSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:BusinessAssociatedNumbersSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BusinessAssociatedNumbersSearchAuthHeader">
+      <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:message name="PhoneDetailSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:PhoneDetailSearch"/>
+  </wsdl:message>
+  <wsdl:message name="PhoneDetailSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:PhoneDetailSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PhoneDetailSearchAuthHeader">
+      <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:message name="PropertyDetailSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:PropertyDetailSearch"/>
+  </wsdl:message>
+  <wsdl:message name="PropertyDetailSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:PropertyDetailSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PropertyDetailSearchAuthHeader">
+      <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:message name="HistoryDetailSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:HistoryDetailSearch"/>
+  </wsdl:message>
+  <wsdl:message name="HistoryDetailSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:HistoryDetailSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="HistoryDetailSearchAuthHeader">
+      <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:message name="SocialProfileDetailSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:SocialProfileDetailSearch"/>
+  </wsdl:message>
+  <wsdl:message name="SocialProfileDetailSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:SocialProfileDetailSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SocialProfileDetailSearchAuthHeader">
+      <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  <wsdl:message name="OccupantDetailSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:OccupantDetailSearch"/>
+  </wsdl:message>
+  <wsdl:message name="OccupantDetailSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:OccupantDetailSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="OccupantDetailSearchAuthHeader">
+      <wsdl:part name="AuthHeader" element="tns:AuthHeader"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="FCS_x0020_OnLine_x0020_Search_x0020_Web_x0020_ServiceSoap"
+                 type="tns:FCS_x0020_OnLine_x0020_Search_x0020_Web_x0020_ServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="NADSearch">
+         <soap:operation soapAction="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx/NADSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:NADSearchAuthHeader" part="AuthHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="PhoneSearch">
+         <soap:operation soapAction="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx/PhoneSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:PhoneSearchAuthHeader" part="AuthHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="HistorySearch">
+         <soap:operation soapAction="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx/HistorySearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:HistorySearchAuthHeader" part="AuthHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="BusinessPhoneSearch">
+         <soap:operation soapAction="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx/BusinessPhoneSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:BusinessPhoneSearchAuthHeader" part="AuthHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="BusinessAssociatedNumbersSearch">
+         <soap:operation soapAction="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx/BusinessAssociatedNumbersSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:BusinessAssociatedNumbersSearchAuthHeader" part="AuthHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="PhoneDetailSearch">
+         <soap:operation soapAction="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx/PhoneDetailSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:PhoneDetailSearchAuthHeader" part="AuthHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="PropertyDetailSearch">
+         <soap:operation soapAction="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx/PropertyDetailSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:PropertyDetailSearchAuthHeader" part="AuthHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="HistoryDetailSearch">
+         <soap:operation soapAction="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx/HistoryDetailSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:HistoryDetailSearchAuthHeader" part="AuthHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SocialProfileDetailSearch">
+         <soap:operation soapAction="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx/SocialProfileDetailSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SocialProfileDetailSearchAuthHeader" part="AuthHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="OccupantDetailSearch">
+         <soap:operation soapAction="http://search.fcsonline.com.au/FCSSearchWS/FCSSearch.asmx/OccupantDetailSearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:OccupantDetailSearchAuthHeader" part="AuthHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="FCS_x0020_OnLine_x0020_Search_x0020_Web_x0020_Service">
+      <wsdl:documentation>Provides searching access to the FCSSearch system</wsdl:documentation>
+      <wsdl:port name="FCS_x0020_OnLine_x0020_Search_x0020_Web_x0020_ServiceSoap"
+                 binding="tns:FCS_x0020_OnLine_x0020_Search_x0020_Web_x0020_ServiceSoap">
+         <soap:address location="http://ws.soatrader.com/fcsonline.com.au/0.1/FCS_x0020_OnLine_x0020_Search_x0020_Web_x0020_Service"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,336 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://server.fedoragsearch.defxws.dk"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://server.fedoragsearch.defxws.dk"
+                  xmlns:intf="http://server.fedoragsearch.defxws.dk"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://server.fedoragsearch.defxws.dk">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+
+   <wsdl:message name="getRepositoryInfoRequest">
+
+      <wsdl:part name="repositoryName" type="xsd:string"/>
+
+      <wsdl:part name="resultPageXslt" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getIndexInfoResponse">
+
+      <wsdl:part name="getIndexInfoReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateIndexRequest">
+
+      <wsdl:part name="action" type="soapenc:string"/>
+
+      <wsdl:part name="value" type="soapenc:string"/>
+
+      <wsdl:part name="repositoryName" type="soapenc:string"/>
+
+      <wsdl:part name="indexName" type="soapenc:string"/>
+
+      <wsdl:part name="indexDocXslt" type="soapenc:string"/>
+
+      <wsdl:part name="resultPageXslt" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getRepositoryInfoResponse">
+
+      <wsdl:part name="getRepositoryInfoReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getIndexInfoRequest">
+
+      <wsdl:part name="indexName" type="xsd:string"/>
+
+      <wsdl:part name="resultPageXslt" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="browseIndexResponse">
+
+      <wsdl:part name="browseIndexReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="gfindObjectsResponse">
+
+      <wsdl:part name="gfindObjectsReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="gfindObjectsRequest">
+
+      <wsdl:part name="query" type="xsd:string"/>
+
+      <wsdl:part name="hitPageStart" type="xsd:int"/>
+
+      <wsdl:part name="hitPageSize" type="xsd:int"/>
+
+      <wsdl:part name="snippetsMax" type="xsd:int"/>
+
+      <wsdl:part name="fieldMaxLength" type="xsd:int"/>
+
+      <wsdl:part name="indexName" type="xsd:string"/>
+
+      <wsdl:part name="resultPageXslt" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateIndexResponse">
+
+      <wsdl:part name="updateIndexReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="browseIndexRequest">
+
+      <wsdl:part name="startTerm" type="xsd:string"/>
+
+      <wsdl:part name="termPageSize" type="xsd:int"/>
+
+      <wsdl:part name="fieldName" type="xsd:string"/>
+
+      <wsdl:part name="indexName" type="xsd:string"/>
+
+      <wsdl:part name="resultPageXslt" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Operations">
+
+      <wsdl:operation name="updateIndex"
+                      parameterOrder="action value repositoryName indexName indexDocXslt resultPageXslt">
+
+         <wsdl:input message="impl:updateIndexRequest" name="updateIndexRequest"/>
+
+         <wsdl:output message="impl:updateIndexResponse" name="updateIndexResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="gfindObjects"
+                      parameterOrder="query hitPageStart hitPageSize snippetsMax fieldMaxLength indexName resultPageXslt">
+
+         <wsdl:input message="impl:gfindObjectsRequest" name="gfindObjectsRequest"/>
+
+         <wsdl:output message="impl:gfindObjectsResponse" name="gfindObjectsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="browseIndex"
+                      parameterOrder="startTerm termPageSize fieldName indexName resultPageXslt">
+
+         <wsdl:input message="impl:browseIndexRequest" name="browseIndexRequest"/>
+
+         <wsdl:output message="impl:browseIndexResponse" name="browseIndexResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getRepositoryInfo" parameterOrder="repositoryName resultPageXslt">
+
+         <wsdl:input message="impl:getRepositoryInfoRequest" name="getRepositoryInfoRequest"/>
+
+         <wsdl:output message="impl:getRepositoryInfoResponse" name="getRepositoryInfoResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getIndexInfo" parameterOrder="indexName resultPageXslt">
+
+         <wsdl:input message="impl:getIndexInfoRequest" name="getIndexInfoRequest"/>
+
+         <wsdl:output message="impl:getIndexInfoResponse" name="getIndexInfoResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="FgsOperationsSoapBinding" type="impl:Operations">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="updateIndex">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateIndexRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.fedoragsearch.defxws.dk"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateIndexResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.fedoragsearch.defxws.dk"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="gfindObjects">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="gfindObjectsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.fedoragsearch.defxws.dk"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="gfindObjectsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.fedoragsearch.defxws.dk"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="browseIndex">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="browseIndexRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.fedoragsearch.defxws.dk"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="browseIndexResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.fedoragsearch.defxws.dk"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getRepositoryInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getRepositoryInfoRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.fedoragsearch.defxws.dk"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getRepositoryInfoResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.fedoragsearch.defxws.dk"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getIndexInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getIndexInfoRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.fedoragsearch.defxws.dk"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getIndexInfoResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.fedoragsearch.defxws.dk"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="OperationsService">
+
+      <wsdl:port binding="impl:FgsOperationsSoapBinding" name="FgsOperations">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/cvt.dk/0.2/OperationsService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

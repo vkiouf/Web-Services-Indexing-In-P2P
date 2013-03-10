@@ -1,0 +1,251 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://k4t.int.viatecla.pt/k4t/HotelAvail"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://k4t.int.viatecla.pt/k4t/HotelAvail">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://k4t.int.viatecla.pt/k4t/HotelAvail">
+         <s:element name="GetAvailabilitySoap">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="XmlRequest" type="tns:K4TRequest"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="K4TRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HotelAvail" type="tns:HotelAvailRequest"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Application" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="HotelAvailRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Request" type="tns:Request"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Version" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="Request">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Place" type="tns:RequestPlace"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="EndDate" nillable="true" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NumNights" nillable="true" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StartsRating" nillable="true" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Name" nillable="true" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rooms"
+                          type="tns:K4TRequestHotelAvailHotelRooms"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Distance" nillable="true"
+                          type="tns:RequestDistance"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RequestPlace">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Query" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TRequestHotelAvailHotelRooms">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Room"
+                          type="tns:K4TRequestHotelAvailHotelRoom"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TRequestHotelAvailHotelRoom">
+            <s:attribute form="unqualified" name="Capacity" type="s:int" use="required"/>
+            <s:attribute form="unqualified" name="Num" type="s:int" use="required"/>
+         </s:complexType>
+         <s:complexType name="RequestDistance">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Max" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetAvailabilitySoapResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAvailabilitySoapResult"
+                             type="tns:K4TResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="K4TResponse">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="HotelAvail"
+                          type="tns:K4TResponseHotelAvail"/>
+            </s:sequence>
+            <s:attribute name="Author" type="s:string"/>
+            <s:attribute name="Date" type="s:string"/>
+            <s:attribute name="Time" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TResponseHotelAvail">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Request"
+                          type="tns:K4TResponseHotelAvailRequest"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Result"
+                          type="tns:ArrayOfK4TResponseHotelAvailHotel"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:Error"/>
+            </s:sequence>
+            <s:attribute name="Version" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TResponseHotelAvailRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Place"
+                          type="tns:RequestResponsePlace"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="EndDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="NumNights" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="StartsRating"
+                          type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Rooms"
+                          type="tns:K4TRequestHotelAvailHotelRooms"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Distance"
+                          type="tns:RequestDistance"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="NumPersons"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RequestResponsePlace">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Query" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Country" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfK4TResponseHotelAvailHotel">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Hotel"
+                          type="tns:K4TResponseHotelAvailHotel"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseHotelAvailHotel">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Guarantee" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Chain"
+                          type="tns:K4TResponseHotelAvailHotelChain"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Place"
+                          type="tns:K4TResponseHotelAvailHotelPlace"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Rooms"
+                          type="tns:ArrayOfK4TResponseHotelAvailHotelRoom"/>
+            </s:sequence>
+            <s:attribute name="CRS" type="s:string"/>
+            <s:attribute name="RoomMasterID" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TResponseHotelAvailHotelChain">
+            <s:attribute name="Code" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TResponseHotelAvailHotelPlace">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="PrimaryCity"
+                          type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="ShortAddress"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfK4TResponseHotelAvailHotelRoom">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Room"
+                          type="tns:K4TResponseHotelAvailHotelRoom"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseHotelAvailHotelRoom">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" form="unqualified" name="Rates"
+                          type="tns:ArrayOfK4TResponseHotelAvailHotelRoomRate"/>
+            </s:sequence>
+            <s:attribute name="Type" type="s:string"/>
+            <s:attribute name="NumBeds" type="s:string"/>
+            <s:attribute name="BedSize" type="s:string"/>
+            <s:attribute name="Capacity" type="s:string"/>
+            <s:attribute name="Num" type="s:string"/>
+            <s:attribute name="BIC" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfK4TResponseHotelAvailHotelRoomRate">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" form="unqualified" name="Rate"
+                          type="tns:K4TResponseHotelAvailHotelRoomRate"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseHotelAvailHotelRoomRate">
+            <s:attribute name="Type" type="s:string"/>
+            <s:attribute name="Currency" type="s:string"/>
+            <s:attribute name="Value" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="Error">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorExtraData" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAvailabilitySoapSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAvailabilitySoap"/>
+  </wsdl:message>
+  <wsdl:message name="GetAvailabilitySoapSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAvailabilitySoapResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="K4THotelAvailWSSoap">
+      <wsdl:operation name="GetAvailabilitySoap">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This operation allows advanced search.</documentation>
+         <wsdl:input message="tns:GetAvailabilitySoapSoapIn"/>
+         <wsdl:output message="tns:GetAvailabilitySoapSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="K4THotelAvailWSSoap" type="tns:K4THotelAvailWSSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetAvailabilitySoap">
+         <soap:operation soapAction="http://k4t.int.viatecla.pt/k4t/HotelAvail/GetAvailabilitySoap"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="K4THotelAvailWS">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Air Availability WebService.This WebService search for hotel availability on the GDS database. Demo Site - http://www.keyfortravel.com/</documentation>
+      <wsdl:port name="K4THotelAvailWSSoap" binding="tns:K4THotelAvailWSSoap">
+         <soap:address location="http://ws.soatrader.com/keyfortravel.com/0.1/K4THotelAvailWS"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

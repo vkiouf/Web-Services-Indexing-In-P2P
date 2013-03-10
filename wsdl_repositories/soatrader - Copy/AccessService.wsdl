@@ -1,0 +1,106 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:enc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tns="urn:Foo"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             name="AccessService"
+             targetNamespace="urn:Foo">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </types>
+  <message name="AuthenticationIf_acquireLicense">
+      <part name="String_1" type="xsd:string"/>
+      <part name="String_2" type="xsd:string"/>
+      <part name="String_3" type="xsd:string"/>
+      <part name="String_4" type="xsd:string"/>
+      <part name="String_5" type="xsd:string"/>
+      <part name="String_6" type="xsd:string"/>
+      <part name="String_7" type="xsd:string"/>
+      <part name="String_8" type="xsd:string"/>
+      <part name="String_9" type="xsd:string"/>
+      <part name="String_10" type="xsd:string"/>
+      <part name="String_11" type="xsd:string"/>
+      <part name="String_12" type="xsd:string"/>
+      <part name="String_13" type="xsd:string"/>
+      <part name="String_14" type="xsd:string"/>
+      <part name="String_15" type="xsd:string"/>
+      <part name="String_16" type="xsd:string"/>
+      <part name="String_17" type="xsd:string"/>
+      <part name="String_18" type="xsd:string"/>
+      <part name="String_19" type="xsd:string"/>
+   </message>
+  <message name="AuthenticationIf_acquireLicenseResponse">
+      <part name="result" type="xsd:string"/>
+   </message>
+  <message name="AuthenticationIf_releaseLicense">
+      <part name="String_1" type="xsd:string"/>
+      <part name="String_2" type="xsd:string"/>
+   </message>
+  <message name="AuthenticationIf_releaseLicenseResponse">
+      <part name="result" type="xsd:string"/>
+   </message>
+  <portType name="AuthenticationIf">
+      <operation name="acquireLicense"
+                 parameterOrder="String_1 String_2 String_3 String_4 String_5 String_6 String_7 String_8 String_9 String_10 String_11 String_12 String_13 String_14 String_15 String_16 String_17 String_18 String_19">
+         <input message="tns:AuthenticationIf_acquireLicense"/>
+         <output message="tns:AuthenticationIf_acquireLicenseResponse"/>
+      </operation>
+      <operation name="releaseLicense" parameterOrder="String_1 String_2">
+         <input message="tns:AuthenticationIf_releaseLicense"/>
+         <output message="tns:AuthenticationIf_releaseLicenseResponse"/>
+      </operation>
+   </portType>
+  <binding name="AuthenticationIfBinding" type="tns:AuthenticationIf">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+      <operation name="acquireLicense">
+         <soap:operation soapAction=""/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded"
+                       namespace="urn:Foo"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded"
+                       namespace="urn:Foo"/>
+         </output>
+      </operation>
+      <operation name="releaseLicense">
+         <soap:operation soapAction=""/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded"
+                       namespace="urn:Foo"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded"
+                       namespace="urn:Foo"/>
+         </output>
+      </operation>
+   </binding>
+  <service name="AccessService">
+      <port name="AuthenticationIfPort" binding="tns:AuthenticationIfBinding">
+         <soap:address location="http://ws.soatrader.com/stylusstudio.com/0.1/AccessService"/>
+      </port>
+   </service>
+</definitions>

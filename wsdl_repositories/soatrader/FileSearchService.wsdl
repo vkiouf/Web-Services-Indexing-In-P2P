@@ -1,0 +1,94 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://score.itsc.uah.edu/inventory/services/FileSearchService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <wsdl:types>
+      <schema xmlns:soat="http://ws.soatrader.com/" xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="xs:string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="xs:decimal" name="HitsMade"/>
+               <element type="xs:decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+	     <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:ScoopFileSearch"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://score.itsc.uah.edu/inventory/services/FileSearchService"
+                  xmlns:intf="http://score.itsc.uah.edu/inventory/services/FileSearchService"
+                  xmlns:tns="urn:ScoopFileSearch"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  targetNamespace="urn:ScoopFileSearch"
+                  elementFormDefault="qualified">
+		
+         <xsd:element name="ResponseList">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Files" minOccurs="1" maxOccurs="unbounded">
+                     <xsd:complexType>
+	                       <xsd:sequence>
+						                     <xsd:element name="Filename" type="xsd:string"/>
+						                     <xsd:element name="Found" type="xsd:boolean"/>
+	                       </xsd:sequence>		
+                     </xsd:complexType>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+  
+         <xsd:element name="FilenameList">
+            <xsd:complexType>
+	              <xsd:sequence>
+						            <xsd:element name="Filename" type="xsd:string" minOccurs="1" maxOccurs="unbounded"/>
+	              </xsd:sequence>		
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+
+	  </wsdl:types>
+	  <wsdl:message name="isFileInInventoryResponse">
+		    <wsdl:part name="ResponseList" element="tns:ResponseList"/>
+	  </wsdl:message>
+	  <wsdl:message name="isFileInInventoryRequest">
+		    <wsdl:part name="FilenameList" element="tns:FilenameList"/>
+	  </wsdl:message>
+	  <wsdl:portType name="FileSearchService">
+		    <wsdl:operation name="isFileInInventory" parameterOrder="FilenameList">
+			      <wsdl:input name="isFileInInventoryRequest" message="impl:isFileInInventoryRequest"/>
+			      <wsdl:output name="isFileInInventoryResponse" message="impl:isFileInInventoryResponse"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+	  <wsdl:binding name="IsFileInInventorySoapBinding" type="impl:FileSearchService">
+		    <wsdlsoap:binding xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" style="document"
+                        transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <wsdl:operation name="isFileInInventory">
+			      <wsdlsoap:operation xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+			      <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+				        <wsdlsoap:body xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <wsdlsoap:body xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+	  </wsdl:binding>
+	  <wsdl:service name="FileSearchService">
+		    <wsdl:port name="IsFileInInventory" binding="impl:IsFileInInventorySoapBinding">
+			      <wsdlsoap:address xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                           location="http://ws.soatrader.com/itsc.uah.edu/0.3/FileSearchService"/>
+		    </wsdl:port>
+	  </wsdl:service>
+</wsdl:definitions>

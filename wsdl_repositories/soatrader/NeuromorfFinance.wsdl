@@ -1,0 +1,128 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:si="http://soapinterop.org/xsd"
+             xmlns:tns="urn:NeuromorfFinance"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="urn:NeuromorfFinance">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema targetNamespace="urn:NeuromorfFinance">
+         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+         <xsd:complexType name="Stock">
+            <xsd:all>
+               <xsd:element name="value" type="xsd:float"/>
+               <xsd:element name="change" type="xsd:float"/>
+               <xsd:element name="percent" type="xsd:float"/>
+            </xsd:all>
+         </xsd:complexType>
+      </xsd:schema>
+   </types>
+   <message name="getRateRequest">
+      <part name="code" type="xsd:string"/>
+      <part name="date" type="xsd:string"/>
+   </message>
+   <message name="getRateResponse">
+      <part name="rate" type="xsd:float"/>
+   </message>
+   <message name="getCodesRequest">
+      <part name="delimiter" type="xsd:string"/>
+   </message>
+   <message name="getCodesResponse">
+      <part name="codes" type="xsd:string"/>
+   </message>
+   <message name="getSOFIXRequest">
+      <part name="date" type="xsd:string"/>
+   </message>
+   <message name="getSOFIXResponse">
+      <part name="value" type="tns:Stock"/>
+   </message>
+   <portType name="NeuromorfFinancePortType">
+      <operation name="getRate">
+         <documentation>Returns the exchange rate against BGN \n as provided by the Bulgarian National Bank</documentation>
+         <input message="tns:getRateRequest"/>
+         <output message="tns:getRateResponse"/>
+      </operation>
+      <operation name="getCodes">
+         <documentation>Returns the valid currency codes for the service</documentation>
+         <input message="tns:getCodesRequest"/>
+         <output message="tns:getCodesResponse"/>
+      </operation>
+      <operation name="getSOFIX">
+         <documentation>Returns the SOFIX index  \n as provided by the Bulgarian Stock Exchange</documentation>
+         <input message="tns:getSOFIXRequest"/>
+         <output message="tns:getSOFIXResponse"/>
+      </operation>
+   </portType>
+   <binding name="NeuromorfFinanceBinding" type="tns:NeuromorfFinancePortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="getRate">
+         <soap:operation soapAction="urn:NeuromorfFinance/ExchangeRate#getRate" style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:NeuromorfFinance"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:NeuromorfFinance"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+      <operation name="getCodes">
+         <soap:operation soapAction="urn:NeuromorfFinance/CurrencyCodes#getCodes" style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:NeuromorfFinance"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:NeuromorfFinance"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+      <operation name="getSOFIX">
+         <soap:operation soapAction="urn:NeuromorfFinance/StockQuotes#getSOFIX" style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:NeuromorfFinance"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:NeuromorfFinance"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+   <service name="NeuromorfFinance">
+      <port name="NeuromorfFinancePort" binding="tns:NeuromorfFinanceBinding">
+         <soap:address location="http://ws.soatrader.com/diagnosticarea.com/0.1/NeuromorfFinance"/>
+      </port>
+   </service>
+</definitions>

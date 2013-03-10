@@ -1,0 +1,173 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://cfc.includes"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://cfc.includes"
+                  xmlns:intf="http://cfc.includes"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://rpc.xml.coldfusion"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://cfc.includes">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by ColdFusion version 8,0,0,176276-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://xml.apache.org/xml-soap">
+         <import namespace="http://cfc.includes"/>
+         <import namespace="http://rpc.xml.coldfusion"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="mapItem">
+            <sequence>
+               <element name="key" nillable="true" type="xsd:anyType"/>
+               <element name="value" nillable="true" type="xsd:anyType"/>
+            </sequence>
+         </complexType>
+         <complexType name="Map">
+            <sequence>
+               <element maxOccurs="unbounded" minOccurs="0" name="item" type="apachesoap:mapItem"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://rpc.xml.coldfusion">
+         <import namespace="http://cfc.includes"/>
+         <import namespace="http://xml.apache.org/xml-soap"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="CFCInvocationException">
+            <sequence/>
+         </complexType>
+         <complexType name="QueryBean">
+            <sequence>
+               <element name="columnList" nillable="true" type="impl:ArrayOf_xsd_string"/>
+               <element name="data" nillable="true" type="impl:ArrayOfArrayOf_xsd_anyType"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cfc.includes">
+         <import namespace="http://xml.apache.org/xml-soap"/>
+         <import namespace="http://rpc.xml.coldfusion"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOf_xsd_string">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOfArrayOf_xsd_anyType">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:anyType[][]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="CFCInvocationException">
+
+      <wsdl:part name="fault" type="tns1:CFCInvocationException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="checkCodeRequest">
+
+      <wsdl:part name="qCode" type="xsd:string"/>
+
+      <wsdl:part name="secCheck" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="checkCodeResponse">
+
+      <wsdl:part name="checkCodeReturn" type="apachesoap:Map"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ajaxBridge_promoBatch">
+
+      <wsdl:operation name="checkCode" parameterOrder="qCode secCheck">
+
+         <wsdl:input message="impl:checkCodeRequest" name="checkCodeRequest"/>
+
+         <wsdl:output message="impl:checkCodeResponse" name="checkCodeResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ajaxBridge_promoBatch.cfcSoapBinding" type="impl:ajaxBridge_promoBatch">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="checkCode">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="checkCodeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://cfc.includes"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="checkCodeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://cfc.includes"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://cfc.includes"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ajaxBridge_promoBatchService">
+
+      <wsdl:port binding="impl:ajaxBridge_promoBatch.cfcSoapBinding"
+                 name="ajaxBridge_promoBatch.cfc">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/animatemydrawing.com/0.1/ajaxBridge_promoBatchService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

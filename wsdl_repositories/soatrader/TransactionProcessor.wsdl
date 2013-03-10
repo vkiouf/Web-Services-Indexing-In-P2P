@@ -1,0 +1,65 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="urn:schemas-cybersource-com:transaction-data:TransactionProcessor"
+                  xmlns:data="urn:schemas-cybersource-com:transaction-data-1.5"
+                  name="CyberSourceTransactionWS"
+                  targetNamespace="urn:schemas-cybersource-com:transaction-data:TransactionProcessor">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:import namespace="urn:schemas-cybersource-com:transaction-data-1.5"
+                location="CyberSourceTransaction_1.5.xsd"/>
+   <wsdl:message name="messageIn">
+      <wsdl:part name="input" element="data:requestMessage"/>
+   </wsdl:message>
+   <wsdl:message name="messageOut">
+      <wsdl:part name="result" element="data:replyMessage"/>
+   </wsdl:message>
+   <wsdl:portType name="ITransactionProcessor">
+      <wsdl:operation name="runTransaction">
+         <wsdl:input name="inputMessageIn" message="tns:messageIn"/>
+         <wsdl:output name="outputMessageOut" message="tns:messageOut"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="ITransactionProcessor" type="tns:ITransactionProcessor">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="runTransaction">
+         <soap:operation soapAction="runTransaction" style="document"/>
+         <wsdl:input name="inputMessageIn">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" namespace="urn:schemas-cybersource-com:transaction-data-1.5"/>
+         </wsdl:input>
+         <wsdl:output name="outputMessageOut">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" namespace="urn:schemas-cybersource-com:transaction-data-1.5"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="TransactionProcessor">
+      <wsdl:documentation>CyberSource Web Service</wsdl:documentation>
+      <wsdl:port name="portXML" binding="tns:ITransactionProcessor">
+         <soap:address location="http://ws.soatrader.com/ic3.com/0.10/TransactionProcessor"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

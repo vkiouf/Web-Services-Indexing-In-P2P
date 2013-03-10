@@ -1,0 +1,95 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://ws.apache.org/axis2"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:axis2="http://ws.apache.org/axis2"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:ns0="http://ws.apache.org/axis2/xsd"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:ns1="http://org.apache.axis2/xsd"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://ws.apache.org/axis2">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:documentation>AddService</wsdl:documentation> 
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+	     <xs:schema xmlns:ns="http://ws.apache.org/axis2/xsd" attributeFormDefault="qualified"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://ws.apache.org/axis2/xsd">
+	        <xs:element name="add">
+		          <xs:complexType>
+			            <xs:sequence>
+				              <xs:element name="param0" nillable="true" type="xs:anyType"/> 
+			            </xs:sequence>
+		          </xs:complexType>
+	        </xs:element>
+	        <xs:element name="addResponse">
+		          <xs:complexType>
+			            <xs:sequence>
+				              <xs:element name="return" nillable="true" type="xs:anyType"/> 
+			            </xs:sequence>
+		          </xs:complexType>
+	        </xs:element>
+	     </xs:schema>
+   </wsdl:types>
+
+   <wsdl:message name="addMessage">
+	     <wsdl:part name="part1" element="ns0:add"/> 
+   </wsdl:message>
+   <wsdl:message name="addResponse">
+	     <wsdl:part name="part1" element="ns0:addResponse"/> 
+   </wsdl:message>
+
+
+   <wsdl:binding name="AddServiceSOAP11Binding" type="axis2:AddServicePortType">
+	     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/> 
+	     <wsdl:operation name="add">
+		       <soap:operation soapAction="urn:add" style="document"/> 
+		       <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+			         <soap:body use="literal"/> 
+		       </wsdl:input>
+		       <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+			         <soap:body use="literal"/> 
+		       </wsdl:output>
+	     </wsdl:operation>
+   </wsdl:binding>
+
+
+
+
+
+   <wsdl:service name="AddService">
+	     <wsdl:port name="AddServiceSOAP11port_http" binding="axis2:AddServiceSOAP11Binding">
+			      <soap:address location="http://ws.soatrader.com/mail-archive.com/0.1/AddService"/> 
+	     </wsdl:port>
+	     <wsdl:port name="AddServiceSOAP12port_http" binding="axis2:AddServiceSOAP12Binding">
+         <soap:address location="http://ws.soatrader.com/mail-archive.com/0.1/AddService"/>
+			      <soap12:address location="http://localhost:8080/axis2/services/AddService"/> 
+	     </wsdl:port>
+	     <wsdl:port name="AddServiceHttpport1" binding="axis2:AddServiceHttpBinding">
+         <soap:address location="http://ws.soatrader.com/mail-archive.com/0.1/AddService"/>
+			      <http:address location="http://localhost:8080/axis2/rest/AddService"/> 
+	     </wsdl:port>
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://source.trax.aero"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://source.trax.aero"
+                  xmlns:intf="http://source.trax.aero"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://location.settings.castor.trax.aero"
+                  xmlns:tns2="http://relation_master_address.settings.castor.trax.aero"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://source.trax.aero">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://relation_master_address.settings.castor.trax.aero">
+         <import namespace="http://location.settings.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="Relation_Master_Address_Outgoing_Type">
+            <sequence>
+               <element name="SITA" nillable="true" type="soapenc:string"/>
+               <element name="address_01" nillable="true" type="soapenc:string"/>
+               <element name="address_02" nillable="true" type="soapenc:string"/>
+               <element name="cell" nillable="true" type="soapenc:string"/>
+               <element name="city" nillable="true" type="soapenc:string"/>
+               <element name="contact" nillable="true" type="soapenc:string"/>
+               <element name="country" nillable="true" type="soapenc:string"/>
+               <element name="email" nillable="true" type="soapenc:string"/>
+               <element name="fax" nillable="true" type="soapenc:string"/>
+               <element name="phone" nillable="true" type="soapenc:string"/>
+               <element name="postal_Code" nillable="true" type="soapenc:string"/>
+               <element name="state" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://location.settings.castor.trax.aero">
+         <import namespace="http://relation_master_address.settings.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Address_Mail_Outgoing_Type">
+            <complexContent>
+               <extension base="tns2:Relation_Master_Address_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Address_Shipping_Outgoing_Type">
+            <complexContent>
+               <extension base="tns2:Relation_Master_Address_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Location_Outgoing_Type">
+            <sequence>
+               <element name="address_Mail_Outgoing_Type" nillable="true"
+                        type="tns1:Address_Mail_Outgoing_Type"/>
+               <element name="address_Shipping_Outgoing_Type" nillable="true"
+                        type="tns1:Address_Shipping_Outgoing_Type"/>
+               <element name="bill_To_Location" nillable="true" type="soapenc:string"/>
+               <element name="financial_System_Location" nillable="true" type="soapenc:string"/>
+               <element name="location_Code" nillable="true" type="soapenc:string"/>
+               <element name="location_Description" nillable="true" type="soapenc:string"/>
+               <element name="modified_By" nillable="true" type="soapenc:string"/>
+               <element name="modified_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="transaction_Method" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Location_Outgoing_Element">
+            <complexContent>
+               <extension base="tns1:Location_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOfLocation_Outgoing_Element">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:Location_Outgoing_Element[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="get_all_unsent_location_recordsResponse">
+
+      <wsdl:part name="get_all_unsent_location_recordsReturn"
+                 type="tns1:ArrayOfLocation_Outgoing_Element"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="get_all_unsent_location_recordsRequest">
+
+   </wsdl:message>
+
+   <wsdl:portType name="Settings_Location_Master">
+
+      <wsdl:operation name="get_all_unsent_location_records">
+
+         <wsdl:input message="impl:get_all_unsent_location_recordsRequest"
+                     name="get_all_unsent_location_recordsRequest"/>
+
+         <wsdl:output message="impl:get_all_unsent_location_recordsResponse"
+                      name="get_all_unsent_location_recordsResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="Settings_Location_MasterSoapBinding" type="impl:Settings_Location_Master">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="get_all_unsent_location_records">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="get_all_unsent_location_recordsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="get_all_unsent_location_recordsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="Settings_Location_MasterService">
+
+      <wsdl:port binding="impl:Settings_Location_MasterSoapBinding"
+                 name="Settings_Location_Master">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/trax.aero/0.1/Settings_Location_MasterService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

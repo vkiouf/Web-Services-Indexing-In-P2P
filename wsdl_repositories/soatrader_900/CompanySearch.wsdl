@@ -1,0 +1,1207 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://webservice.krak.dk/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://webservice.krak.dk/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://webservice.krak.dk/">
+         <s:element name="GetCompanyByTn">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="telephoneNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByTnResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByTnResult"
+                             type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCompany">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Company" nillable="true"
+                          type="tns:Company"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Company">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="GUID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CVRNumber" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductionUnitNumber" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="KrakNumber" type="s:long"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address" type="tns:Address"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ContactInfo" type="tns:ContactInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Address">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Road">
+                  <s:sequence>
+                     <s:element minOccurs="1" maxOccurs="1" name="HouseNumberNumericFrom" type="s:int"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="HouseNumberCharacterFrom" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Floor" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Door" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MunicipalityCode" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="CountyCode" type="s:int"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Road">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="RoadName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RoadNumber" type="s:long"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PlaceName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalDistrict" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ContactInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="TelephoneNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MobileTelephoneNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FaxNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="URL" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="KrakSoapHeader" type="tns:KrakSoapHeader"/>
+         <s:complexType name="KrakSoapHeader">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ticket" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="product" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="XML_GetCompanyByTn">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="telephoneNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="XML_GetCompanyByTnResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="XML_GetCompanyByTnResult">
+                     <s:complexType mixed="true">
+                        <s:sequence>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByRnHnnPc">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="roadName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="houseNumberNumeric" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="postalCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByRnHnnPcResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByRnHnnPcResult"
+                             type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCn">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="companyName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCnResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByCnResult"
+                             type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCnPc">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="companyName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="postalCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCnPcResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByCnPcResult"
+                             type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCnPd">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="companyName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="postalDistrict" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCnPdResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByCnPdResult"
+                             type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCnPd2">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="companyName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="postalDistrict" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="rowNumFrom" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="rowNumTo" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCnPd2Response">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByCnPd2Result"
+                             type="tns:CompanyPagedResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CompanyPagedResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:PagedResult">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Companies" type="tns:ArrayOfCompany"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="PagedResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ListResult">
+                  <s:sequence>
+                     <s:element minOccurs="1" maxOccurs="1" name="RowNumFrom" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="RowNumTo" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="CountOnPage" type="s:int"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ListResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Result">
+                  <s:sequence>
+                     <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Result">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ReturnCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetCompanyByKn">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="krakNumber" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByKnResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByKnResult"
+                             type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCVR">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CVRNumber" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCVRResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByCVRResult"
+                             type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCVRP">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="productionUnitNumber" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCVRPResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByCVRPResult"
+                             type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCompanyArray">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="companyArray" type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCompanyArrayResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByCompanyArrayResult"
+                             type="tns:ArrayOfAnyType"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAnyType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetCompanyByCompany">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="company" type="tns:Company"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCompanyResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByCompanyResult"
+                             type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyTypeByKrakNumber">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="krakNumber" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CompanyType">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="CompanyTypeCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CompanyTypeDescription" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetCompanyTypeByKrakNumberResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyTypeByKrakNumberResult"
+                             type="tns:CompanyType"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCVRPNumberByCVRNumber">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CVRNumber" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfLong">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="long" type="s:long"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetCVRPNumberByCVRNumberResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCVRPNumberByCVRNumberResult"
+                             type="tns:ArrayOfLong"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByAddr">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="address" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByAddrResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByAddrResult"
+                             type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCnAddr">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="companyName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="address" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyByCnAddrResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyByCnAddrResult"
+                             type="tns:ArrayOfCompany"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetOpeningHoursByKn">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="krakNumber" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="OpeningHours">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="WeekDayFrom" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="WeekDayTo" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ValidFrom" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ValidTo" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="From" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="To" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Type" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfOpeningHours">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="OpeningHours" nillable="true"
+                          type="tns:OpeningHours"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetOpeningHoursByKnResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetOpeningHoursByKnResult"
+                             type="tns:ArrayOfOpeningHours"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompanyWithOpeningHoursByKn">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="krakNumber" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CompanyWithOpeningHours">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Company" type="tns:Company"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OpeningHours" type="tns:ArrayOfOpeningHours"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfCompanyWithOpeningHours">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CompanyWithOpeningHours"
+                          nillable="true"
+                          type="tns:CompanyWithOpeningHours"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetCompanyWithOpeningHoursByKnResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompanyWithOpeningHoursByKnResult"
+                             type="tns:ArrayOfCompanyWithOpeningHours"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMunicipalityInfoByMc">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="municipalityCode" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMunicipalityInfoByMcResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMunicipalityInfoByMcResult"
+                             type="tns:ArrayOfCompanyWithOpeningHours"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSocialCenterByMc">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="municipalityCode" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSocialCenterByMcResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSocialCenterByMcResult"
+                             type="tns:CompanyWithOpeningHours"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetTaxCenterByMc">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="municipalityCode" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetTaxCenterByMcResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetTaxCenterByMcResult"
+                             type="tns:CompanyWithOpeningHours"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSuccessionCourtByMc">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="municipalityCode" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSuccessionCourtByMcResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSuccessionCourtByMcResult"
+                             type="tns:CompanyWithOpeningHours"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetVersion">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetVersionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetVersionResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserHostAddress">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetUserHostAddressResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetUserHostAddressResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCompanyByTnSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByTn"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByTnSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByTnResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByTnKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="XML_GetCompanyByTnSoapIn">
+      <wsdl:part name="parameters" element="tns:XML_GetCompanyByTn"/>
+  </wsdl:message>
+  <wsdl:message name="XML_GetCompanyByTnSoapOut">
+      <wsdl:part name="parameters" element="tns:XML_GetCompanyByTnResponse"/>
+  </wsdl:message>
+  <wsdl:message name="XML_GetCompanyByTnKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByRnHnnPcSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByRnHnnPc"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByRnHnnPcSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByRnHnnPcResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByRnHnnPcKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCn"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCnResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnPcSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCnPc"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnPcSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCnPcResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnPcKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnPdSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCnPd"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnPdSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCnPdResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnPdKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnPd2SoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCnPd2"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnPd2SoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCnPd2Response"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnPd2KrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByKnSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByKn"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByKnSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByKnResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByKnKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCVRSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCVR"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCVRSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCVRResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCVRKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCVRPSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCVRP"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCVRPSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCVRPResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCVRPKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCompanyArraySoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCompanyArray"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCompanyArraySoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCompanyArrayResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCompanyArrayKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCompanySoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCompany"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCompanySoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCompanyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCompanyKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyTypeByKrakNumberSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyTypeByKrakNumber"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyTypeByKrakNumberSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyTypeByKrakNumberResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyTypeByKrakNumberKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCVRPNumberByCVRNumberSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCVRPNumberByCVRNumber"/>
+  </wsdl:message>
+  <wsdl:message name="GetCVRPNumberByCVRNumberSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCVRPNumberByCVRNumberResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCVRPNumberByCVRNumberKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByAddrSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByAddr"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByAddrSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByAddrResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByAddrKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnAddrSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCnAddr"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnAddrSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyByCnAddrResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyByCnAddrKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetOpeningHoursByKnSoapIn">
+      <wsdl:part name="parameters" element="tns:GetOpeningHoursByKn"/>
+  </wsdl:message>
+  <wsdl:message name="GetOpeningHoursByKnSoapOut">
+      <wsdl:part name="parameters" element="tns:GetOpeningHoursByKnResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetOpeningHoursByKnKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyWithOpeningHoursByKnSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompanyWithOpeningHoursByKn"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyWithOpeningHoursByKnSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompanyWithOpeningHoursByKnResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompanyWithOpeningHoursByKnKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetMunicipalityInfoByMcSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMunicipalityInfoByMc"/>
+  </wsdl:message>
+  <wsdl:message name="GetMunicipalityInfoByMcSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMunicipalityInfoByMcResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMunicipalityInfoByMcKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetSocialCenterByMcSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSocialCenterByMc"/>
+  </wsdl:message>
+  <wsdl:message name="GetSocialCenterByMcSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSocialCenterByMcResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSocialCenterByMcKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetTaxCenterByMcSoapIn">
+      <wsdl:part name="parameters" element="tns:GetTaxCenterByMc"/>
+  </wsdl:message>
+  <wsdl:message name="GetTaxCenterByMcSoapOut">
+      <wsdl:part name="parameters" element="tns:GetTaxCenterByMcResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTaxCenterByMcKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetSuccessionCourtByMcSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSuccessionCourtByMc"/>
+  </wsdl:message>
+  <wsdl:message name="GetSuccessionCourtByMcSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSuccessionCourtByMcResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSuccessionCourtByMcKrakSoapHeader">
+      <wsdl:part name="KrakSoapHeader" element="tns:KrakSoapHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetVersionSoapIn">
+      <wsdl:part name="parameters" element="tns:GetVersion"/>
+  </wsdl:message>
+  <wsdl:message name="GetVersionSoapOut">
+      <wsdl:part name="parameters" element="tns:GetVersionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserHostAddressSoapIn">
+      <wsdl:part name="parameters" element="tns:GetUserHostAddress"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserHostAddressSoapOut">
+      <wsdl:part name="parameters" element="tns:GetUserHostAddressResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="CompanySearchSoap">
+      <wsdl:operation name="GetCompanyByTn">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search for companies by the &lt;b&gt;telephonenumber&lt;/b&gt;.</documentation>
+         <wsdl:input message="tns:GetCompanyByTnSoapIn"/>
+         <wsdl:output message="tns:GetCompanyByTnSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="XML_GetCompanyByTn">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search for companies by the &lt;b&gt;telephonenumber&lt;/b&gt;.</documentation>
+         <wsdl:input message="tns:XML_GetCompanyByTnSoapIn"/>
+         <wsdl:output message="tns:XML_GetCompanyByTnSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByRnHnnPc">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search for companies by &lt;b&gt;roadname, housenumbernumeric&lt;/b&gt; and &lt;b&gt;postalcode&lt;/b&gt;.</documentation>
+         <wsdl:input message="tns:GetCompanyByRnHnnPcSoapIn"/>
+         <wsdl:output message="tns:GetCompanyByRnHnnPcSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCn">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search for companies by their &lt;b&gt;companyname&lt;/b&gt;.</documentation>
+         <wsdl:input message="tns:GetCompanyByCnSoapIn"/>
+         <wsdl:output message="tns:GetCompanyByCnSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCnPc">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search for companies by &lt;b&gt;companyname&lt;/b&gt; and &lt;b&gt;postalcode&lt;/b&gt;.</documentation>
+         <wsdl:input message="tns:GetCompanyByCnPcSoapIn"/>
+         <wsdl:output message="tns:GetCompanyByCnPcSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCnPd">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search for companies by &lt;b&gt;companyname&lt;/b&gt; and &lt;b&gt;postaldistrict&lt;/b&gt;.</documentation>
+         <wsdl:input message="tns:GetCompanyByCnPdSoapIn"/>
+         <wsdl:output message="tns:GetCompanyByCnPdSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCnPd2">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search for companies by &lt;b&gt;companyname&lt;/b&gt; and &lt;b&gt;postaldistrict&lt;/b&gt;. This method provides paging functionality</documentation>
+         <wsdl:input message="tns:GetCompanyByCnPd2SoapIn"/>
+         <wsdl:output message="tns:GetCompanyByCnPd2SoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByKn">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search for companies by the &lt;b&gt;kraknumber&lt;/b&gt;.&lt;br&gt;(Kraknumber is Krak's own internal key for a company).</documentation>
+         <wsdl:input message="tns:GetCompanyByKnSoapIn"/>
+         <wsdl:output message="tns:GetCompanyByKnSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCVR">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search for companies by &lt;b&gt;CVR-number&lt;/b&gt;.&lt;br/&gt;Since the CVR-number is uniqe, this method should only return 1 company.</documentation>
+         <wsdl:input message="tns:GetCompanyByCVRSoapIn"/>
+         <wsdl:output message="tns:GetCompanyByCVRSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCVRP">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search for companies by &lt;b&gt;CVRP-number&lt;/b&gt;.&lt;br&gt;Since the CVRP-number is uniqe, this method should only return 1 company.</documentation>
+         <wsdl:input message="tns:GetCompanyByCVRPSoapIn"/>
+         <wsdl:output message="tns:GetCompanyByCVRPSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCompanyArray">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">&lt;b&gt;OBSOLETE !&lt;/b&gt; Do not use this method !</documentation>
+         <wsdl:input message="tns:GetCompanyByCompanyArraySoapIn"/>
+         <wsdl:output message="tns:GetCompanyByCompanyArraySoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCompany">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">&lt;b&gt;OBSOLETE !&lt;/b&gt; Do not use this method !</documentation>
+         <wsdl:input message="tns:GetCompanyByCompanySoapIn"/>
+         <wsdl:output message="tns:GetCompanyByCompanySoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyTypeByKrakNumber">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets the companytype by the &lt;b&gt;kraknumber&lt;/b&gt;.&lt;br&gt;(Kraknumber is Krak's own internal key for a company).</documentation>
+         <wsdl:input message="tns:GetCompanyTypeByKrakNumberSoapIn"/>
+         <wsdl:output message="tns:GetCompanyTypeByKrakNumberSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCVRPNumberByCVRNumber">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets an array of CVRP-Number by the &lt;b&gt;CVRNumber&lt;/b&gt;.</documentation>
+         <wsdl:input message="tns:GetCVRPNumberByCVRNumberSoapIn"/>
+         <wsdl:output message="tns:GetCVRPNumberByCVRNumberSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByAddr">
+         <wsdl:input message="tns:GetCompanyByAddrSoapIn"/>
+         <wsdl:output message="tns:GetCompanyByAddrSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCnAddr">
+         <wsdl:input message="tns:GetCompanyByCnAddrSoapIn"/>
+         <wsdl:output message="tns:GetCompanyByCnAddrSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetOpeningHoursByKn">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets the weekly opening hours of the company specified by the given &lt;b&gt;kraknumber&lt;/b&gt;.&lt;br&gt;(Kraknumber is Krak's own internal key for a company).</documentation>
+         <wsdl:input message="tns:GetOpeningHoursByKnSoapIn"/>
+         <wsdl:output message="tns:GetOpeningHoursByKnSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyWithOpeningHoursByKn">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search for companies by the &lt;b&gt;kraknumber&lt;/b&gt;. The opening hours of the companies are included in the result.</documentation>
+         <wsdl:input message="tns:GetCompanyWithOpeningHoursByKnSoapIn"/>
+         <wsdl:output message="tns:GetCompanyWithOpeningHoursByKnSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetMunicipalityInfoByMc">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets municipality information (social center, tax center and succession court) by the &lt;b&gt;municipality code&lt;/b&gt;. The opening hours of the entities are included in the result.</documentation>
+         <wsdl:input message="tns:GetMunicipalityInfoByMcSoapIn"/>
+         <wsdl:output message="tns:GetMunicipalityInfoByMcSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetSocialCenterByMc">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets the social center associated with the &lt;b&gt;municipality code&lt;/b&gt;. The opening hours of the social center are included in the result.</documentation>
+         <wsdl:input message="tns:GetSocialCenterByMcSoapIn"/>
+         <wsdl:output message="tns:GetSocialCenterByMcSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetTaxCenterByMc">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets the tax center associated with the &lt;b&gt;municipality code&lt;/b&gt;. If exists the opening hours of the tax center are included in the result.</documentation>
+         <wsdl:input message="tns:GetTaxCenterByMcSoapIn"/>
+         <wsdl:output message="tns:GetTaxCenterByMcSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetSuccessionCourtByMc">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Gets the succession court associated with the &lt;b&gt;municipality code&lt;/b&gt;. The opening hours of the succession court are included in the result.</documentation>
+         <wsdl:input message="tns:GetSuccessionCourtByMcSoapIn"/>
+         <wsdl:output message="tns:GetSuccessionCourtByMcSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetVersion">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns the current Assembly Version Number installed on the server.</documentation>
+         <wsdl:input message="tns:GetVersionSoapIn"/>
+         <wsdl:output message="tns:GetVersionSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserHostAddress">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns the clients IP-Address</documentation>
+         <wsdl:input message="tns:GetUserHostAddressSoapIn"/>
+         <wsdl:output message="tns:GetUserHostAddressSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CompanySearchSoap" type="tns:CompanySearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetCompanyByTn">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByTn" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByTnKrakSoapHeader" part="KrakSoapHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="XML_GetCompanyByTn">
+         <soap:operation soapAction="http://webservice.krak.dk/XML_GetCompanyByTn" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:XML_GetCompanyByTnKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByRnHnnPc">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByRnHnnPc" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByRnHnnPcKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCn">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByCn" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByCnKrakSoapHeader" part="KrakSoapHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCnPc">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByCnPc" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByCnPcKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCnPd">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByCnPd" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByCnPdKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCnPd2">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByCnPd2" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByCnPd2KrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByKn">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByKn" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByKnKrakSoapHeader" part="KrakSoapHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCVR">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByCVR" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByCVRKrakSoapHeader" part="KrakSoapHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCVRP">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByCVRP" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByCVRPKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCompanyArray">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByCompanyArray"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByCompanyArrayKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCompany">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByCompany" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByCompanyKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyTypeByKrakNumber">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyTypeByKrakNumber"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyTypeByKrakNumberKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCVRPNumberByCVRNumber">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCVRPNumberByCVRNumber"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCVRPNumberByCVRNumberKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByAddr">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByAddr" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByAddrKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyByCnAddr">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyByCnAddr" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyByCnAddrKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetOpeningHoursByKn">
+         <soap:operation soapAction="http://webservice.krak.dk/GetOpeningHoursByKn" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetOpeningHoursByKnKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompanyWithOpeningHoursByKn">
+         <soap:operation soapAction="http://webservice.krak.dk/GetCompanyWithOpeningHoursByKn"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCompanyWithOpeningHoursByKnKrakSoapHeader"
+                         part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMunicipalityInfoByMc">
+         <soap:operation soapAction="http://webservice.krak.dk/GetMunicipalityInfoByMc" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetMunicipalityInfoByMcKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSocialCenterByMc">
+         <soap:operation soapAction="http://webservice.krak.dk/GetSocialCenterByMc" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetSocialCenterByMcKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetTaxCenterByMc">
+         <soap:operation soapAction="http://webservice.krak.dk/GetTaxCenterByMc" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetTaxCenterByMcKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSuccessionCourtByMc">
+         <soap:operation soapAction="http://webservice.krak.dk/GetSuccessionCourtByMc" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetSuccessionCourtByMcKrakSoapHeader" part="KrakSoapHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetVersion">
+         <soap:operation soapAction="http://webservice.krak.dk/GetVersion" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserHostAddress">
+         <soap:operation soapAction="http://webservice.krak.dk/GetUserHostAddress" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CompanySearch">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">&lt;img src='http://www.krak.dk/grafik/krak_top/top_krak.gif' alt='kraklogo' width='250' height='77' border='0' align='right'&gt;This Web Service contains methods to search for companies in Denmark.&lt;br&gt;&lt;/br&gt;All methods returns an array of companies but with different search-parameters.</documentation>
+      <wsdl:port name="CompanySearchSoap" binding="tns:CompanySearchSoap">
+         <soap:address location="http://ws.soatrader.com/webservice.krak.dk/0.1/CompanySearch"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

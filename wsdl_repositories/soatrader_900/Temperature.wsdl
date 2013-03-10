@@ -1,0 +1,68 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://new.webservice.namespace"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:y="http://new.webservice.namespace"
+             targetNamespace="http://new.webservice.namespace">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <xs:schema/>
+	  </types>
+	  <message name="messageName"/>
+	  <message name="TemperatureIn">
+		    <part name="ch" element="" type="xs:string"/>
+		    <part name="dg" element="" type="xs:string"/>
+	  </message>
+	  <message name="TemperatureOut">
+		    <part name="tempReturn" element=""/>
+	  </message>
+	  <portType name="Temperature">
+		    <operation name="changeDegree">
+			      <input message="y:TemperatureIn"/>
+			      <output message="y:TemperatureOut"/>
+		    </operation>
+	  </portType>
+	  <binding name="Temperature" type="y:Temperature">
+		    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <operation name="changeDegree">
+			      <soap:operation/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"
+                       namespace="urn:Temperature"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding"
+                       namespace="urn:Temperature"/>
+			      </output>
+		    </operation>
+	  </binding>
+	  <service name="Temperature">
+		    <port name="Temperature" binding="y:Temperature">
+			      <soap:address location="http://ws.soatrader.com/140.135.112.9/0.1/Temperature"/>
+		    </port>
+	  </service>
+</definitions>

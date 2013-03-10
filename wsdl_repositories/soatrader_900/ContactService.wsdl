@@ -1,0 +1,668 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="com.esendex.ems.soapinterface"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="com.esendex.ems.soapinterface">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Methods to retrieve information about contacts and groups. Click here for a &lt;a href="https://www.esendex.com/uk/evaluation/evaluation.aspx" title="SMS Service Trial"&gt;free trial&lt;/a&gt;.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="com.esendex.ems.soapinterface">
+         <s:element name="GetContact">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetContactResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetContactResult" type="tns:Contact"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Contact">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="QuickName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TelephoneNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MobileNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Town" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="County" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Postcode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ContactType" type="tns:ContactType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="ContactType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Contact"/>
+               <s:enumeration value="Subscriber"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="MessengerHeader" type="tns:MessengerHeader"/>
+         <s:complexType name="MessengerHeader">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Account" type="s:string"/>
+            </s:sequence>
+            <s:anyAttribute/>
+         </s:complexType>
+         <s:element name="GetContactByQuickName">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetContactByQuickNameResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetContactByQuickNameResult"
+                             type="tns:Contact"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetContacts">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetContactsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetContactsResult" type="tns:ArrayOfContact"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfContact">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Contact" nillable="true"
+                          type="tns:Contact"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetGroup">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetGroupResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetGroupResult" type="tns:ContactGroup"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ContactGroup">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="GroupType" type="tns:ContactGroupType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="ContactGroupType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Group"/>
+               <s:enumeration value="AllSubscribed"/>
+               <s:enumeration value="AllUnsubscribed"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetGroupByName">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetGroupByNameResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetGroupByNameResult" type="tns:ContactGroup"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetGroups">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetGroupsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetGroupsResult"
+                             type="tns:ArrayOfContactGroup"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfContactGroup">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ContactGroup" nillable="true"
+                          type="tns:ContactGroup"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetGroupMembers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetGroupMembersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetGroupMembersResult"
+                             type="tns:ArrayOfContact"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddContact">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="contact" type="tns:Contact"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddContactResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddContactResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddContacts">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="contacts" type="tns:ArrayOfContact"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddContactsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddContactsResult" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddGroup">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="group" type="tns:ContactGroup"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="memberIDs" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddGroupResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddGroupResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateContact">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="contact" type="tns:Contact"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateContactResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="UpdateGroup">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="group" type="tns:ContactGroup"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="memberIDs" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateGroupResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="DeleteContact">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteContactResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="DeleteContacts">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ids" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteContactsResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="DeleteGroup">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="includeMembers" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteGroupResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="DeleteGroups">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ids" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteGroupsResponse">
+            <s:complexType/>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetContactSoapIn">
+      <wsdl:part name="parameters" element="tns:GetContact"/>
+  </wsdl:message>
+  <wsdl:message name="GetContactSoapOut">
+      <wsdl:part name="parameters" element="tns:GetContactResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetContactMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetContactByQuickNameSoapIn">
+      <wsdl:part name="parameters" element="tns:GetContactByQuickName"/>
+  </wsdl:message>
+  <wsdl:message name="GetContactByQuickNameSoapOut">
+      <wsdl:part name="parameters" element="tns:GetContactByQuickNameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetContactByQuickNameMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetContactsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetContacts"/>
+  </wsdl:message>
+  <wsdl:message name="GetContactsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetContactsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetContactsMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupSoapIn">
+      <wsdl:part name="parameters" element="tns:GetGroup"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupSoapOut">
+      <wsdl:part name="parameters" element="tns:GetGroupResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupByNameSoapIn">
+      <wsdl:part name="parameters" element="tns:GetGroupByName"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupByNameSoapOut">
+      <wsdl:part name="parameters" element="tns:GetGroupByNameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupByNameMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetGroups"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetGroupsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupsMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupMembersSoapIn">
+      <wsdl:part name="parameters" element="tns:GetGroupMembers"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupMembersSoapOut">
+      <wsdl:part name="parameters" element="tns:GetGroupMembersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetGroupMembersMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="AddContactSoapIn">
+      <wsdl:part name="parameters" element="tns:AddContact"/>
+  </wsdl:message>
+  <wsdl:message name="AddContactSoapOut">
+      <wsdl:part name="parameters" element="tns:AddContactResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddContactMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="AddContactsSoapIn">
+      <wsdl:part name="parameters" element="tns:AddContacts"/>
+  </wsdl:message>
+  <wsdl:message name="AddContactsSoapOut">
+      <wsdl:part name="parameters" element="tns:AddContactsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddContactsMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="AddGroupSoapIn">
+      <wsdl:part name="parameters" element="tns:AddGroup"/>
+  </wsdl:message>
+  <wsdl:message name="AddGroupSoapOut">
+      <wsdl:part name="parameters" element="tns:AddGroupResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddGroupMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateContactSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateContact"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateContactSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateContactResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateContactMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateGroupSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateGroup"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateGroupSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateGroupResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateGroupMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteContactSoapIn">
+      <wsdl:part name="parameters" element="tns:DeleteContact"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteContactSoapOut">
+      <wsdl:part name="parameters" element="tns:DeleteContactResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteContactMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteContactsSoapIn">
+      <wsdl:part name="parameters" element="tns:DeleteContacts"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteContactsSoapOut">
+      <wsdl:part name="parameters" element="tns:DeleteContactsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteContactsMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteGroupSoapIn">
+      <wsdl:part name="parameters" element="tns:DeleteGroup"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteGroupSoapOut">
+      <wsdl:part name="parameters" element="tns:DeleteGroupResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteGroupMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteGroupsSoapIn">
+      <wsdl:part name="parameters" element="tns:DeleteGroups"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteGroupsSoapOut">
+      <wsdl:part name="parameters" element="tns:DeleteGroupsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteGroupsMessengerHeader">
+      <wsdl:part name="MessengerHeader" element="tns:MessengerHeader"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="ContactServiceSoap" type="tns:ContactServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetContact">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetContact" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetContactMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetContactByQuickName">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetContactByQuickName"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetContactByQuickNameMessengerHeader" part="MessengerHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetContacts">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetContacts" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetContactsMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetGroup">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetGroup" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetGroupMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetGroupByName">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetGroupByName" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetGroupByNameMessengerHeader" part="MessengerHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetGroups">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetGroups" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetGroupsMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetGroupMembers">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetGroupMembers" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetGroupMembersMessengerHeader" part="MessengerHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddContact">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/AddContact" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AddContactMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddContacts">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/AddContacts" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AddContactsMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddGroup">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/AddGroup" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AddGroupMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateContact">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/UpdateContact" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:UpdateContactMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateGroup">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/UpdateGroup" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:UpdateGroupMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteContact">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/DeleteContact" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:DeleteContactMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteContacts">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/DeleteContacts" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:DeleteContactsMessengerHeader" part="MessengerHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteGroup">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/DeleteGroup" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:DeleteGroupMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteGroups">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/DeleteGroups" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:DeleteGroupsMessengerHeader" part="MessengerHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="ContactService">
+      <wsdl:documentation>Methods to retrieve information about contacts and groups. Click here for a &lt;a href="https://www.esendex.com/uk/evaluation/evaluation.aspx" title="SMS Service Trial"&gt;free trial&lt;/a&gt;.</wsdl:documentation>
+      <wsdl:port name="ContactServiceSoap" binding="tns:ContactServiceSoap">
+         <soap:address location="http://ws.soatrader.com/esendex.com/0.4/ContactService"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

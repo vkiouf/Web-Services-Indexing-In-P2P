@@ -1,0 +1,420 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://system.IntelliQueue"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://system.IntelliQueue"
+                  xmlns:intf="http://system.IntelliQueue"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://rpc.xml.coldfusion"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://system.IntelliQueue">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Macromedia ColdFusion MX version 7,0,2,142559-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://xml.apache.org/xml-soap">
+         <import namespace="http://rpc.xml.coldfusion"/>
+         <import namespace="http://system.IntelliQueue"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="mapItem">
+            <sequence>
+               <element name="key" nillable="true" type="xsd:anyType"/>
+               <element name="value" nillable="true" type="xsd:anyType"/>
+            </sequence>
+         </complexType>
+         <complexType name="Map">
+            <sequence>
+               <element maxOccurs="unbounded" minOccurs="0" name="item" type="apachesoap:mapItem"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://rpc.xml.coldfusion">
+         <import namespace="http://xml.apache.org/xml-soap"/>
+         <import namespace="http://system.IntelliQueue"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="CFCInvocationException">
+            <sequence/>
+         </complexType>
+         <complexType name="QueryBean">
+            <sequence>
+               <element name="columnList" nillable="true" type="impl:ArrayOf_xsd_string"/>
+               <element name="data" nillable="true" type="impl:ArrayOfArrayOf_xsd_anyType"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://system.IntelliQueue">
+         <import namespace="http://rpc.xml.coldfusion"/>
+         <import namespace="http://xml.apache.org/xml-soap"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOf_xsd_string">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOfArrayOf_xsd_anyType">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:anyType[][]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="getStateListRequest">
+
+      <wsdl:part name="hashmap" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAgentSkillsRequest">
+
+      <wsdl:part name="hashmap" type="xsd:string"/>
+
+      <wsdl:part name="agent_id" type="xsd:double"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="doLogoutResponse">
+
+      <wsdl:part name="doLogoutReturn" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="doLoginResponse">
+
+      <wsdl:part name="doLoginReturn" type="apachesoap:Map"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="isAuthResponse">
+
+      <wsdl:part name="isAuthReturn" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="CFCInvocationException">
+
+      <wsdl:part name="fault" type="tns1:CFCInvocationException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="doLogoutRequest">
+
+      <wsdl:part name="hashcode" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="doLoginRequest">
+
+      <wsdl:part name="username" type="xsd:string"/>
+
+      <wsdl:part name="password" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAgentSkillsResponse">
+
+      <wsdl:part name="getAgentSkillsReturn" type="tns1:QueryBean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="isAuthRequest">
+
+      <wsdl:part name="hashCode" type="xsd:string"/>
+
+      <wsdl:part name="authType" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getStateListResponse">
+
+      <wsdl:part name="getStateListReturn" type="tns1:QueryBean"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Agent">
+
+      <wsdl:operation name="doLogin" parameterOrder="username password">
+
+         <wsdl:input message="impl:doLoginRequest" name="doLoginRequest"/>
+
+         <wsdl:output message="impl:doLoginResponse" name="doLoginResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgentSkills" parameterOrder="hashmap agent_id">
+
+         <wsdl:input message="impl:getAgentSkillsRequest" name="getAgentSkillsRequest"/>
+
+         <wsdl:output message="impl:getAgentSkillsResponse" name="getAgentSkillsResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="doLogout" parameterOrder="hashcode">
+
+         <wsdl:input message="impl:doLogoutRequest" name="doLogoutRequest"/>
+
+         <wsdl:output message="impl:doLogoutResponse" name="doLogoutResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStateList" parameterOrder="hashmap">
+
+         <wsdl:input message="impl:getStateListRequest" name="getStateListRequest"/>
+
+         <wsdl:output message="impl:getStateListResponse" name="getStateListResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isAuth" parameterOrder="hashCode authType">
+
+         <wsdl:input message="impl:isAuthRequest" name="isAuthRequest"/>
+
+         <wsdl:output message="impl:isAuthResponse" name="isAuthResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="Agent.cfcSoapBinding" type="impl:Agent">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="doLogin">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="doLoginRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://system.IntelliQueue"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="doLoginResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://system.IntelliQueue"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://system.IntelliQueue"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgentSkills">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAgentSkillsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://system.IntelliQueue"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAgentSkillsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://system.IntelliQueue"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://system.IntelliQueue"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="doLogout">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="doLogoutRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://system.IntelliQueue"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="doLogoutResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://system.IntelliQueue"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://system.IntelliQueue"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStateList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getStateListRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://system.IntelliQueue"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getStateListResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://system.IntelliQueue"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://system.IntelliQueue"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isAuth">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="isAuthRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://system.IntelliQueue"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="isAuthResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://system.IntelliQueue"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://system.IntelliQueue"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="Agent">
+
+      <wsdl:documentation>
+Used for management of all agent data and state.  </wsdl:documentation>
+
+      <wsdl:port binding="impl:Agent.cfcSoapBinding" name="Agent.cfc">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/connectfirst.com/0.1/Agent"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

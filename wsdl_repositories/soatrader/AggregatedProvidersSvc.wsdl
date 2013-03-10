@@ -1,0 +1,65 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://ecolead.com/model/aggregatedProviders"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:prv2="http://ecolead.com/model/aggregatedProviders"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://ecolead.com/model/aggregatedProviders">
+   <wsdl:types xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <message name="findBestProviderReq">
+		    <part name="productId" type="xs:string"/>
+		    <part name="productQuantity" type="xs:integer"/>
+	  </message>
+	  <message name="findBestProviderResp">
+		    <part name="bestProviderId" type="xs:string"/>
+	  </message>
+	  <portType name="AggProvidersOps">
+		    <operation name="findBestProvider">
+			      <input message="prv2:findBestProviderReq"/>
+			      <output message="prv2:findBestProviderResp"/>
+		    </operation>
+	  </portType>
+	  <binding name="AggProvidersOpsSOAP" type="prv2:AggProvidersOps">
+		    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <operation name="findBestProvider">
+			      <soap:operation soapAction="http://ecolead.com/model/aggregatedProviders/findCheaperProvider"
+                         style="rpc"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body namespace="http://ecolead.com/model/aggregatedProviders" use="literal"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body namespace="http://ecolead.com/model/aggregatedProviders" use="literal"/>
+			      </output>
+		    </operation>
+	  </binding>
+	  <service name="AggregatedProvidersSvc">
+		    <port binding="prv2:AggProvidersOpsSOAP" name="AggProvidersOps">
+			      <soap:address location="http://ws.soatrader.com/softwareag.es/0.1/AggregatedProvidersSvc"/>
+		    </port>
+	  </service>
+</definitions>

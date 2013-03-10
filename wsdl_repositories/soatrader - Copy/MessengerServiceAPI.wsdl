@@ -1,0 +1,353 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="urn:yahoo:messenger:apitest"
+                  targetNamespace="urn:yahoo:messenger:apitest">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+        <xsd:schema xmlns="http://schemas.xmlsoap.org/wsdl/" elementFormDefault="qualified"
+                  targetNamespace="urn:yahoo:messenger:apitest">
+ 	       <xsd:complexType name="ArrayOfxsdString">
+           <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="xsdstring" type="xsd:string"
+                            nillable="true"/>
+           </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="Group">
+           <xsd:sequence>
+               <xsd:element maxOccurs="1" minOccurs="1" name="name" type="xsd:string"/>
+               <xsd:element maxOccurs="1" minOccurs="1" name="buddies" type="tns:ArrayOfxsdString"/>
+           </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ArrayOfGroup">
+           <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="Group" type="tns:Group"/>
+           </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="Presence">
+           <xsd:sequence>
+               <xsd:element maxOccurs="1" minOccurs="1" name="name" type="xsd:string"/>
+               <xsd:element maxOccurs="1" minOccurs="1" name="message" type="xsd:string"/>
+               <xsd:element maxOccurs="1" minOccurs="1" name="mobile" type="xsd:boolean"/>
+               <xsd:element maxOccurs="1" minOccurs="1" name="status" type="xsd:int"/>
+           </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ArrayOfPresence">
+           <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="Presence" type="tns:Presence"/>
+           </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="YMessage">
+           <xsd:sequence>
+               <xsd:element maxOccurs="1" minOccurs="1" name="sender" type="xsd:string"/>
+               <xsd:element maxOccurs="1" minOccurs="1" name="message" type="xsd:string"/>
+               <xsd:element maxOccurs="1" minOccurs="1" name="time" type="xsd:dateTime"/>
+           </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ArrayOfYMessage">
+           <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="Message" type="tns:YMessage"/>
+           </xsd:sequence>
+        </xsd:complexType>
+         <xsd:element name="loginRequest">
+             <xsd:complexType>
+                 <xsd:sequence>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="username" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="password" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="invisible" type="xsd:boolean"/>
+                 </xsd:sequence>
+             </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="loginResponse">
+             <xsd:complexType>
+                 <xsd:sequence>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="buddyList" type="tns:ArrayOfGroup"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="udbId" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="profile" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="webId" type="xsd:int"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="offlineMessage" type="xsd:boolean"/>
+                 </xsd:sequence>
+             </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="logoffRequest">
+             <xsd:complexType>
+                 <xsd:sequence>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="username" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="udbId" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="webId" type="xsd:int"/>
+                 </xsd:sequence>
+             </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="logoffResponse">
+             <xsd:complexType>
+                 <xsd:sequence/>
+             </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="getOnlineBuddiesRequest">
+             <xsd:complexType>
+                 <xsd:sequence>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="username" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="profile" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="udbId" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="webId" type="xsd:int"/>
+                 </xsd:sequence>
+             </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="getOnlineBuddiesResponse">
+             <xsd:complexType>
+                 <xsd:sequence>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="buddies" type="tns:ArrayOfPresence"/>
+                 </xsd:sequence>
+             </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="setStatusRequest">
+             <xsd:complexType>
+                 <xsd:sequence>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="username" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="profile" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="udbId" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="webId" type="xsd:int"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="message" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="status" type="xsd:int"/>
+                 </xsd:sequence>
+             </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="setStatusResponse">
+             <xsd:complexType>
+                 <xsd:sequence/>
+             </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="sendMessageRequest">
+             <xsd:complexType>
+                 <xsd:sequence>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="username" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="profile" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="udbId" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="webId" type="xsd:int"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="recepient" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="message" type="xsd:string"/>
+                 </xsd:sequence>
+             </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="sendMessageResponse">
+             <xsd:complexType>
+                 <xsd:sequence/>
+             </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="receiveMessageRequest">
+             <xsd:complexType>
+                 <xsd:sequence>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="username" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="profile" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="udbId" type="xsd:string"/>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="webId" type="xsd:int"/>
+                 </xsd:sequence>
+             </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="receiveMessageResponse">
+             <xsd:complexType>
+                 <xsd:sequence>
+                     <xsd:element maxOccurs="1" minOccurs="1" name="buddies" type="tns:ArrayOfYMessage"/>
+                 </xsd:sequence>
+             </xsd:complexType>
+         </xsd:element>
+     </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="loginRequest">
+        <wsdl:part element="tns:loginRequest" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="loginResponse">
+        <wsdl:part element="tns:loginResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="logoffRequest">
+        <wsdl:part element="tns:logoffRequest" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="logoffResponse">
+        <wsdl:part element="tns:logoffResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="getOnlineBuddiesRequest">
+        <wsdl:part element="tns:getOnlineBuddiesRequest" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getOnlineBuddiesResponse">
+        <wsdl:part element="tns:getOnlineBuddiesResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:message name="setStatusRequest">
+        <wsdl:part element="tns:setStatusRequest" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="setStatusResponse">
+        <wsdl:part element="tns:setStatusResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="sendMessageRequest">
+        <wsdl:part element="tns:sendMessageRequest" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="sendMessageResponse">
+        <wsdl:part element="tns:sendMessageResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="receiveMessageRequest">
+        <wsdl:part element="tns:receiveMessageRequest" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="receiveMessageResponse">
+        <wsdl:part element="tns:receiveMessageResponse" name="parameters"/>
+    </wsdl:message>
+
+    <wsdl:portType name="ServicePortType">
+        <wsdl:operation name="login">
+            <wsdl:documentation>logs user in as mobile messenger user and returns buddy list</wsdl:documentation>
+            <wsdl:input message="tns:loginRequest"/>
+            <wsdl:output message="tns:loginResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="logoff">
+            <wsdl:documentation>logoff user from messenger</wsdl:documentation>
+            <wsdl:input message="tns:logoffRequest"/>
+            <wsdl:output message="tns:logoffResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getOnlineBuddies">
+            <wsdl:documentation>returns array of online buddies with their status</wsdl:documentation>
+            <wsdl:input message="tns:getOnlineBuddiesRequest"/>
+            <wsdl:output message="tns:getOnlineBuddiesResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="setStatus">
+            <wsdl:documentation>set the status string and icon for the logged in user.</wsdl:documentation>
+            <wsdl:input message="tns:setStatusRequest"/>
+            <wsdl:output message="tns:setStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="sendMessage">
+            <wsdl:documentation>send the IM.</wsdl:documentation>
+            <wsdl:input message="tns:sendMessageRequest"/>
+            <wsdl:output message="tns:sendMessageResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="receiveMessage">
+            <wsdl:documentation>receive the IMs.</wsdl:documentation>
+            <wsdl:input message="tns:receiveMessageRequest"/>
+            <wsdl:output message="tns:receiveMessageResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="MessengerService" type="tns:ServicePortType">
+        <SOAP:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="login">
+            <SOAP:operation soapAction=""/>
+            <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="logoff">
+            <SOAP:operation soapAction=""/>
+            <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getOnlineBuddies">
+            <SOAP:operation soapAction=""/>
+            <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="setStatus">
+            <SOAP:operation soapAction=""/>
+            <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sendMessage">
+            <SOAP:operation soapAction=""/>
+            <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="receiveMessage">
+            <SOAP:operation soapAction=""/>
+            <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <SOAP:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="MessengerServiceAPI">
+        <wsdl:documentation>Messenger API Prototype Web Services definition</wsdl:documentation>
+        <wsdl:port binding="tns:MessengerService" name="MessengerServiceAPI">
+            <SOAP:address location="http://ws.soatrader.com/johndunning.com/0.1/MessengerServiceAPI"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

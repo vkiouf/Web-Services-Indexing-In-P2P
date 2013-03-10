@@ -1,0 +1,97 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://www.OneOutBox.com/wsdl/FaxStatus.wsdl"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             name="FaxStatus"
+             targetNamespace="http://www.OneOutBox.com/wsdl/FaxStatus.wsdl">
+   <wsdl:types xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+	  <documentation>This interface allows registered members
+		of OneOutBox to track the status of a Fax transmission.
+		Note, this is currently only available for paid accounts.
+		Learn more at www.OneOutBox.com</documentation>
+
+	  <message name="StatusRequest">
+		    <part name="Account" type="xsd:string">
+		       <documentation>Account identification, as established through
+		registration at OneOutBox.com, that uniquely identifies you
+		and the services available to you.
+		</documentation>
+      </part>
+
+		    <part name="AccessCode" type="xsd:string">
+		       <documentation>Account authentication code for security.
+		</documentation>
+      </part>
+
+		    <part name="ID" type="xsd:string">
+		       <documentation>The tracking ID of the original fax request,
+		as returned by the FaxService call.
+		</documentation>
+      </part>
+
+	  </message>
+
+	  <message name="StatusResponse">
+		    <part name="return" type="xsd:string">
+		       <documentation>The return code is the current state of the
+		Fax transmission.  Valid states are: Received (your request
+		has been received by OneOutBox and is being processed),
+		Sent (successfully sent to destination), or Undeliverable.
+		</documentation>
+      </part>
+	  </message>
+
+	  <portType name="FaxPortType">
+		    <operation name="CheckStatus">
+			      <input message="tns:StatusRequest"/>
+			      <output message="tns:StatusResponse"/>
+		    </operation>
+	  </portType>
+
+	  <binding name="FaxBinding" type="tns:FaxPortType">
+		    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <operation name="CheckStatus">
+			      <soap:operation soapAction="urn:Box#CheckStatus"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="urn:Box"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="urn:Box"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			      </output>
+		    </operation>
+	  </binding>
+
+	  <service name="FaxStatus">
+		    <documentation>Provides a Web Services interface to worldwide
+		FAX transmission services, powered by 1outbox (www.1outbox.com).
+		</documentation>
+		    <port name="FaxPort" binding="tns:FaxBinding">
+			      <soap:address location="http://ws.soatrader.com/oneoutbox.com/0.1/FaxStatus"/>
+		    </port>
+	  </service>
+</definitions>

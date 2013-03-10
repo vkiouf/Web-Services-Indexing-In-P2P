@@ -1,0 +1,113 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:element name="getQual">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="lat" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="lng" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="fname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="lname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="address1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="address2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="zip" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="phone" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getQualResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getQualResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:element name="getQual">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="lat" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="lng" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="fname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="lname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="address1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="address2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="zip" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="phone" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getQualResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getQualResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getQualSoapIn">
+      <wsdl:part name="parameters" element="tns:getQual"/>
+  </wsdl:message>
+  <wsdl:message name="getQualSoapOut">
+      <wsdl:part name="parameters" element="tns:getQualResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="AddressQualificationSoap" type="tns:AddressQualificationSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="getQual">
+         <soap:operation soapAction="http://tempuri.org/getQual" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="AddressQualification">
+      <wsdl:port name="AddressQualificationSoap" binding="tns:AddressQualificationSoap">
+         <soap:address location="http://ws.soatrader.com/dbccorp.com/0.1/AddressQualification"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

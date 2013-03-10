@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="com.esendex.ems.soapinterface"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="com.esendex.ems.soapinterface">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Implementation of the InboxService (for managing inbound messages) with authentication information passed in as parameters rather than in a header. This allows development/runtime environments without support for the SOAPHeaders to consume the service. Click here for a &lt;a href="https://www.esendex.com/uk/evaluation/evaluation.aspx" title="SMS Service Trial"&gt;free trial&lt;/a&gt;.</wsdl:documentation>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="com.esendex.ems.soapinterface">
+         <s:element name="GetMessages">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMessagesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMessagesResult" type="tns:ArrayOfMessage"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfMessage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="message" nillable="true"
+                          type="tns:message"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="message">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="originator" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="recipient" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="sentat" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="receivedat" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:MessageType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="status" type="tns:MessageStatusCode"/>
+               <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="MessageType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Text"/>
+               <s:enumeration value="Binary"/>
+               <s:enumeration value="SmartMessage"/>
+               <s:enumeration value="Unicode"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="MessageStatusCode">
+            <s:restriction base="s:string">
+               <s:enumeration value="Queued"/>
+               <s:enumeration value="Sent"/>
+               <s:enumeration value="Delivered"/>
+               <s:enumeration value="Failed"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetMessageByID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMessageByIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMessageByIDResult" type="tns:message"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMessagesByID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ids" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetMessagesByIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMessagesByIDResult"
+                             type="tns:ArrayOfMessage"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMessagesForDay">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="year" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="month" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="day" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMessagesForDayResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMessagesForDayResult"
+                             type="tns:ArrayOfMessage"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMessagesForDateRange">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMessagesForDateRangeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMessagesForDateRangeResult"
+                             type="tns:ArrayOfMessage"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteMessage">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteMessageResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="DeleteMessages">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ids" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteMessagesResponse">
+            <s:complexType/>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetMessagesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMessages"/>
+  </wsdl:message>
+  <wsdl:message name="GetMessagesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMessagesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMessageByIDSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMessageByID"/>
+  </wsdl:message>
+  <wsdl:message name="GetMessageByIDSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMessageByIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMessagesByIDSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMessagesByID"/>
+  </wsdl:message>
+  <wsdl:message name="GetMessagesByIDSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMessagesByIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMessagesForDaySoapIn">
+      <wsdl:part name="parameters" element="tns:GetMessagesForDay"/>
+  </wsdl:message>
+  <wsdl:message name="GetMessagesForDaySoapOut">
+      <wsdl:part name="parameters" element="tns:GetMessagesForDayResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMessagesForDateRangeSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMessagesForDateRange"/>
+  </wsdl:message>
+  <wsdl:message name="GetMessagesForDateRangeSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMessagesForDateRangeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteMessageSoapIn">
+      <wsdl:part name="parameters" element="tns:DeleteMessage"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteMessageSoapOut">
+      <wsdl:part name="parameters" element="tns:DeleteMessageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteMessagesSoapIn">
+      <wsdl:part name="parameters" element="tns:DeleteMessages"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteMessagesSoapOut">
+      <wsdl:part name="parameters" element="tns:DeleteMessagesResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="InboxServiceNoHeaderSoap" type="tns:InboxServiceNoHeaderSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetMessages">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetMessages" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMessageByID">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetMessageByID" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMessagesByID">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetMessagesByID" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMessagesForDay">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetMessagesForDay" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMessagesForDateRange">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/GetMessagesForDateRange"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteMessage">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/DeleteMessage" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteMessages">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/DeleteMessages" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="InboxServiceNoHeader">
+      <wsdl:documentation>Implementation of the InboxService (for managing inbound messages) with authentication information passed in as parameters rather than in a header. This allows development/runtime environments without support for the SOAPHeaders to consume the service. Click here for a &lt;a href="https://www.esendex.com/uk/evaluation/evaluation.aspx" title="SMS Service Trial"&gt;free trial&lt;/a&gt;.</wsdl:documentation>
+      <wsdl:port name="InboxServiceNoHeaderSoap" binding="tns:InboxServiceNoHeaderSoap">
+         <soap:address location="http://ws.soatrader.com/esendex.com/0.1/InboxServiceNoHeader"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

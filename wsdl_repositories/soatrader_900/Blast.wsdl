@@ -1,0 +1,121 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://www.themindelectric.com/wsdl/Blast/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tme="http://www.themindelectric.com/"
+             name="Blast"
+             targetNamespace="http://www.themindelectric.com/wsdl/Blast/">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <message name="search1In">
+      <part name="program" type="xsd:string"/>
+      <part name="database" type="xsd:string"/>
+      <part name="query" type="xsd:string"/>
+  </message>
+  <message name="search1Out">
+      <part name="Result" type="xsd:string"/>
+  </message>
+  <message name="extractPosition2In">
+      <part name="result" type="xsd:string"/>
+  </message>
+  <message name="extractPosition2Out">
+      <part name="Result" type="xsd:string"/>
+  </message>
+  <message name="searchAsync4In">
+      <part name="program" type="xsd:string"/>
+      <part name="database" type="xsd:string"/>
+      <part name="query" type="xsd:string"/>
+  </message>
+  <message name="searchAsync4Out">
+      <part name="Result" type="xsd:string"/>
+  </message>
+  <portType name="Blast">
+      <operation name="search" parameterOrder="program database query">
+         <documentation>Execute Blast</documentation>
+         <input name="search1In" message="tns:search1In"/>
+         <output name="search1Out" message="tns:search1Out"/>
+      </operation>
+      <operation name="extractPosition" parameterOrder="result">
+         <documentation>get position information from BLAST</documentation>
+         <input name="extractPosition2In" message="tns:extractPosition2In"/>
+         <output name="extractPosition2Out" message="tns:extractPosition2Out"/>
+      </operation>
+      <operation name="searchAsync" parameterOrder="program database query">
+         <documentation>Execute Blast</documentation>
+         <input name="searchAsync4In" message="tns:searchAsync4In"/>
+         <output name="searchAsync4Out" message="tns:searchAsync4Out"/>
+      </operation>
+  </portType>
+  <binding name="Blast" type="tns:Blast">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="search">
+         <soap:operation soapAction="search" style="rpc"/>
+         <input name="search1In">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://tempuri.org/Blast"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output name="search1Out">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://tempuri.org/Blast"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+      <operation name="extractPosition">
+         <soap:operation soapAction="extractPosition" style="rpc"/>
+         <input name="extractPosition2In">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://tempuri.org/Blast"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output name="extractPosition2Out">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://tempuri.org/Blast"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+      <operation name="searchAsync">
+         <soap:operation soapAction="searchAsync" style="rpc"/>
+         <input name="searchAsync4In">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://tempuri.org/Blast"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output name="searchAsync4Out">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://tempuri.org/Blast"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="Blast">
+      <port name="Blast" binding="tns:Blast">
+         <soap:address location="http://ws.soatrader.com/man.ac.uk/0.1/Blast"/>
+      </port>
+  </service>
+</definitions>

@@ -1,0 +1,341 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://k4t.int.viatecla.pt/k4t/AirFares"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://k4t.int.viatecla.pt/k4t/AirFares">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Air Fares WebService. This WebService search for availability and fare quotes on a GDS.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://k4t.int.viatecla.pt/k4t/AirFares">
+         <s:element name="GetFaresSoap">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="XmlRequest" type="tns:K4TRequest"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="K4TRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AirFares" type="tns:AirFaresRequest"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Username" type="s:string"/>
+            <s:attribute form="unqualified" name="Password" type="s:string"/>
+            <s:attribute form="unqualified" name="Application" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="AirFaresRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Request" type="tns:Request"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Version" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="Request">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Sectors" type="tns:ArrayOfSector"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Passengers" type="tns:RequestPassengers"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSector">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="RequestSector" type="tns:Sector"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Sector">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AirVendor" type="tns:AirVendor"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FlightNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartAirport" type="tns:AirportType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndAirport" type="tns:AirportType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumSeats" type="s:positiveInteger"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Class" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TimeWndInd" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartTimeWindow" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndTimeWindow" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FltTypePreference" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DayChange" type="s:short"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Connx" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumStops" type="s:short"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="JourneyTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Equipment" type="tns:Equipment"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Return" type="tns:SectorReturn"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AirVPreferences"
+                          type="tns:SectorAirVPreferences"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AirVendor">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Query" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Logo" type="tns:Logo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Logo">
+            <s:attribute name="Scr" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="AirportType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Query" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OtherAirports" type="tns:ArrayOfOtherAirport"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfOtherAirport">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Airport" type="tns:OtherAirport"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="OtherAirport">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Equipment">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SectorReturn">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TimeWndInd" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartTimeWindow" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndTimeWindow" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SectorAirVPreferences">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AirV" type="s:string"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Type" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="RequestPassengers">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Adults" type="s:positiveInteger"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Children" type="s:positiveInteger"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Infants" type="s:positiveInteger"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetFaresSoapResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetFaresSoapResult" type="tns:K4TResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="K4TResponse">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AirFares" type="tns:AirFaresResponse"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Author" type="s:string"/>
+            <s:attribute form="unqualified" name="Date" type="s:string"/>
+            <s:attribute form="unqualified" name="Time" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="AirFaresResponse">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AirVendorsList" type="tns:ArrayOfAirVendor"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Request" type="tns:Request"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Result" type="tns:ArrayOfResultFareItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:Error"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Version" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfAirVendor">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AirVendor" type="tns:AirVendor"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfResultFareItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="FareItem" type="tns:ResultFareItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ResultFareItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AirAvail"
+                          type="tns:ArrayOfAirAvailResultSector"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Quotes" type="tns:Quotes"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="CRS" type="s:string"/>
+            <s:attribute form="unqualified" name="Quote" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfAirAvailResultSector">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ResultSector"
+                          type="tns:AirAvailResultSector"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AirAvailResultSector">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Sector" type="tns:Sector"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Connection"
+                          type="tns:AirAvailResultSectorConnection"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ValidFlightSequences"
+                          type="tns:ArrayOfAirAvailResultSectorSequence"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Type" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="AirAvailResultSectorConnection">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Sector" type="tns:SectorConn"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SectorConn">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AirVendor" type="tns:AirVendor"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FlightNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartAirport" type="tns:AirportType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndAirport" type="tns:AirportType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumSeats" type="s:positiveInteger"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Class" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TimeWndInd" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartTimeWindow" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndTimeWindow" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FltTypePreference" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DayChange" type="s:short"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Connx" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumStops" type="s:short"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="JourneyTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Equipment" type="tns:Equipment"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Return" type="tns:SectorReturn"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AirVPreferences"
+                          type="tns:SectorAirVPreferences"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfAirAvailResultSectorSequence">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Sequence"
+                          type="tns:AirAvailResultSectorSequence"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AirAvailResultSectorSequence">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Flight"
+                          type="tns:AirAvailResultSectorSequenceFlight"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="JourneyTime" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="AirAvailResultSectorSequenceFlight">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Number" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AirVendor" type="tns:AirVendor"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Quotes">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Quote" type="tns:QuotesQuote"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="QuoteTotal"
+                          type="tns:QuotesQuoteTotal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="QuotesQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="LastTicketingDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="QuoteDetails" type="tns:QuoteDetails"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FareBasis" type="s:string"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Type" type="s:string"/>
+            <s:attribute form="unqualified" name="NumberOfPassengers" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="QuoteDetails">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="BaseFare" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Tax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Total" type="s:string"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Currency" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="QuotesQuoteTotal">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="BaseFare" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Tax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Total" type="s:string"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Currency" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="Error">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorExtraData" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetFaresSoapSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFaresSoap"/>
+  </wsdl:message>
+  <wsdl:message name="GetFaresSoapSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFaresSoapResponse"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="K4TAirFaresWSSoap" type="tns:K4TAirFaresWSSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetFaresSoap">
+         <soap:operation soapAction="http://k4t.int.viatecla.pt/k4t/AirFares/GetFaresSoap"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="K4TAirFaresWS">
+      <wsdl:documentation>Air Fares WebService. This WebService search for availability and fare quotes on a GDS.</wsdl:documentation>
+      <wsdl:port name="K4TAirFaresWSSoap" binding="tns:K4TAirFaresWSSoap">
+         <soap:address location="http://ws.soatrader.com/keyfortravel.com/0.1/K4TAirFaresWS"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

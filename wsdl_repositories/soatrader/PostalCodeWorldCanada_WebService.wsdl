@@ -1,0 +1,132 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://ws.fraudlabs.com/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://ws.fraudlabs.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://ws.fraudlabs.com/">
+         <s:element name="PostalCodeWorld_Canada">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LICENSE" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="PostalCodeWorld_CanadaResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PostalCodeWorld_CanadaResult"
+                             type="tns:POSTALCODEWORLD_CANADA"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="POSTALCODEWORLD_CANADA">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CREDITSAVAILABLE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="POSTAL_CODE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PROVINCE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CITY" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PROVINCE_ABBR" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AREA_CODE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CITY_FLAG" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TIME_ZONE" type="s:float"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DAY_LIGHT_SAVING" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LATITUDE" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LONGITUDE" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ELEVATION" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="POPULATION" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DWELLING" type="s:float"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AREA_NAME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STREET_NAME" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STREET_TYPE_CODE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STREET_DIR_CODE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STREET_SEQ_CODE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STREET_FROM_NO" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STREET_FROM_SUFFIX" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STREET_TO_NO" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STREET_TO_SUFFIX" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MESSAGE" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="POSTALCODEWORLD_CANADA" nillable="true" type="tns:POSTALCODEWORLD_CANADA"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="PostalCodeWorld_CanadaSoapIn">
+      <wsdl:part name="parameters" element="tns:PostalCodeWorld_Canada"/>
+  </wsdl:message>
+  <wsdl:message name="PostalCodeWorld_CanadaSoapOut">
+      <wsdl:part name="parameters" element="tns:PostalCodeWorld_CanadaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PostalCodeWorld_CanadaHttpGetIn">
+      <wsdl:part name="PostalCode" type="s:string"/>
+      <wsdl:part name="LICENSE" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="PostalCodeWorld_CanadaHttpGetOut">
+      <wsdl:part name="Body" element="tns:POSTALCODEWORLD_CANADA"/>
+  </wsdl:message>
+  <wsdl:message name="PostalCodeWorld_CanadaHttpPostIn">
+      <wsdl:part name="PostalCode" type="s:string"/>
+      <wsdl:part name="LICENSE" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="PostalCodeWorld_CanadaHttpPostOut">
+      <wsdl:part name="Body" element="tns:POSTALCODEWORLD_CANADA"/>
+  </wsdl:message>
+  <wsdl:portType name="PostalCodeWorldCanada_WebServiceSoap">
+      <wsdl:operation name="PostalCodeWorld_Canada">
+         <wsdl:input message="tns:PostalCodeWorld_CanadaSoapIn"/>
+         <wsdl:output message="tns:PostalCodeWorld_CanadaSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="PostalCodeWorldCanada_WebServiceSoap"
+                 type="tns:PostalCodeWorldCanada_WebServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="PostalCodeWorld_Canada">
+         <soap:operation soapAction="http://ws.fraudlabs.com/PostalCodeWorld_Canada" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="PostalCodeWorldCanada_WebService">
+      <wsdl:port name="PostalCodeWorldCanada_WebServiceSoap"
+                 binding="tns:PostalCodeWorldCanada_WebServiceSoap">
+         <soap:address location="http://ws.soatrader.com/fraudlabs.com/0.1/PostalCodeWorldCanada_WebService"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

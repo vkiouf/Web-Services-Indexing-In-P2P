@@ -1,0 +1,69 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:si="http://soapinterop.org/xsd"
+             xmlns:tns="urn:stockquote"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="urn:stockquote">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema targetNamespace="urn:stockquote">
+         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+      </xsd:schema>
+   </types>
+   <message name="getStockQuoteRequest">
+      <part name="symbol" type="xsd:string"/>
+   </message>
+   <message name="getStockQuoteResponse">
+      <part name="return" type="xsd:decimal"/>
+   </message>
+   <portType name="stockserverPortType">
+      <operation name="getStockQuote">
+         <input message="tns:getStockQuoteRequest"/>
+         <output message="tns:getStockQuoteResponse"/>
+      </operation>
+   </portType>
+   <binding name="stockserverBinding" type="tns:stockserverPortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="getStockQuote">
+         <soap:operation soapAction="urn:stockquote#getStockQuote" style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:stockquote"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:stockquote"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+   <service name="stockserver">
+      <port name="stockserverPort" binding="tns:stockserverBinding">
+         <soap:address location="http://ws.soatrader.com/uct.ac.za/0.1/stockserver"/>
+      </port>
+   </service>
+</definitions>

@@ -1,0 +1,1617 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://producers.piskais.xtee.riik.ee/producer/piskais"
+             xmlns:kmais="http://producers.kmais.xtee.riik.ee/producer/kmais"
+             xmlns:xtee="http://x-tee.riik.ee/xsd/xtee.xsd"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:SOAPENC="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:SOAPENV="http://schemas.xmlsoap.org/soap/envelope/"
+             name="mydef"
+             targetNamespace="http://producers.piskais.xtee.riik.ee/producer/piskais">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://producers.piskais.xtee.riik.ee/producer/piskais">
+
+         <import namespace="http://x-tee.riik.ee/xsd/xtee.xsd"
+                 schemaLocation="http://x-tee.riik.ee/xsd/xtee.xsd"/>
+
+
+         <!-- Sõnumivahetuse sisendi ja väljundi detailelemendid -->
+
+  <simpleType name="ltSugu">
+            <restriction base="xsd:string">
+               <enumeration value="M">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>mees</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </enumeration>
+               <enumeration value="N">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>naine</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </enumeration>
+               <enumeration value="X">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>määramata</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </enumeration>
+            </restriction>
+         </simpleType>
+
+         <simpleType name="ltPakilisus">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Pakilisus</xtee:title>
+                  <xtee:technotes>Klassifikaator "Degree of urgency"</xtee:technotes>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <restriction base="xsd:integer">
+               <enumeration value="3">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Tavaline</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </enumeration>
+               <enumeration value="2">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Kiire</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </enumeration>
+               <enumeration value="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Kohe</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </enumeration>
+            </restriction>
+         </simpleType>
+
+         <xsd:simpleType name="riik">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Riik</xtee:title>
+                  <xtee:technotes>Riikide klassifikaator (3-kohaline kood)</xtee:technotes>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string">
+               <xsd:pattern value="[A-Z]{3}"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+
+         <xsd:simpleType name="maakond">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Maakond</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string"/>
+         </xsd:simpleType>
+
+         <xsd:simpleType name="postiindeks">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Postiindeks</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string">
+               <xsd:pattern value="[0-9]{5}"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+
+         <xsd:simpleType name="isikukood">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Isikukood</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string">
+               <xsd:pattern value="[0-9]{11}"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+
+         <xsd:simpleType name="reisiDokLiik">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Reisidokumendi liik</xtee:title>
+                  <xtee:technotes>Klassifikaator "Types of travel document"</xtee:technotes>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string">
+               <xsd:pattern value="[0-9]{2}"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+
+         <xsd:simpleType name="reisiEesmark">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Reisi eesmärk</xtee:title>
+                  <xtee:technotes>Klassifikaator "Purpose of stay"</xtee:technotes>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="00">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Tervislikud põhjused</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="01">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Ärireis</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="02">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kultuur</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="03">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Perekondlikud põhjused</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="04">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kutse</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="05">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Ametlik või poliitiline reis</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="06">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Ametireis</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="07">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Sport</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="08">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Koolitus</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="09">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Turism ja transiit</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="99">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Muud</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+
+            </xsd:restriction>
+         </xsd:simpleType>
+
+         <xsd:simpleType name="ltElukutse">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Elukutse</xtee:title>
+                  <xtee:technotes>Klassifikaator "Occupation"</xtee:technotes>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="01">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Talunik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="02">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Arhitekt</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="03">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Käsitööline</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="04">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Jurist</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="05">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kunstnik, artist</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="06">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Pankur, pangatöötaja</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="07">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kaupmees</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="08">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Juht, direktor</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="09">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Vaimulik, usutegelane</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="10">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Autojuht, veoautojuht</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="12">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Teadlane, teadusuurija</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="13">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Õpetaja</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="14">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Ametnik, tehniline töötaja</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="15">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Riigiametnik, ametiisik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="16">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Poliitik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="17">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Arvutiekspert</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="18">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Elektroonik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="19">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Keemik, keemiainsener</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="20">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Muu spetsialist</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="21">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Ajakirjanik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="22">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Arst, med-õde, veterinaar</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="23">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Meremees</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="24">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Tootmistööline</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="25">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Vabakutseline, üksikettevõtja</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="26">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Moekunstnik, kosmeetik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="27">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Politseinik, sõdur</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="28">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Pensionär</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="29">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Elukutseline sportlane</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="30">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Töötu</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="31">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Õpilane, üliõpilane, praktikant</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="32">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Diplomaat</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="33">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Admin-, tehniline teenistuja (dip- ja konsulaaresindustes)</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="34">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Diplomaadi erateenija</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="35">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kohtunik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="36">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Ärijuht, firma president</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="99">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Muud</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+
+            </xsd:restriction>
+         </xsd:simpleType>
+
+         <xsd:simpleType name="paringuallikas">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Kooskõlastamispäringu allikas</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eesti konsulaaresindusele antud viisataotlus</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="1">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eesti piiril esitatud viisataotlus</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="2">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>VISi kooskõlastamisnõue</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="3">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eesti konsulaaresindusele antud viisataotlus esindamise alusel</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="4">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eesti piiril esitatud viisataotlus esindamise alusel</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="5">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>VISi kooskõlastamisnõue esindamise alusel</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+            </xsd:restriction>
+         </xsd:simpleType>
+
+
+
+
+         <xsd:complexType name="struktElukohtEestis">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Elukoht Eestis</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="maakond" type="tns:maakond" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Maakond</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="postiindeks" type="tns:postiindeks" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Postiindeks</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="aadress" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Aadress</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:complexType>
+
+
+         <xsd:simpleType name="viisaLiik">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Viisa liik</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="A"/>
+               <xsd:enumeration value="B"/>
+               <xsd:enumeration value="C"/>
+               <xsd:enumeration value="C1"/>
+               <xsd:enumeration value="C2"/>
+               <xsd:enumeration value="C3"/>
+               <xsd:enumeration value="C5"/>
+               <xsd:enumeration value="D"/>
+               <xsd:enumeration value="DC"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+
+         <xsd:simpleType name="viisaKordsus">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Viisa kordsus</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="1">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Ühekordne</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="2">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kahekordne</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="M">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Mitmekordne</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+            </xsd:restriction>
+         </xsd:simpleType>
+
+
+         <xsd:simpleType name="visTaotluseLiik">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Taotluse liik</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="1">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Viisakutse taotlus</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="2">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eesti viisataotlus</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="3">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>VIS viisataotlus</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+               <xsd:enumeration value="4">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Viibimisaja pikendamise taotlus</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:enumeration>
+            </xsd:restriction>
+         </xsd:simpleType>
+
+         <!-- Sõnumivahetuse sisendi blokid-->
+
+  <xsd:complexType name="struktViisaTaotlus">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Viisataotluse andmed</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="allikas" type="tns:paringuallikas"/>
+               <xsd:element name="taotlusNr" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Viisataotluse number (väli esineb topelt)</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="asutus" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Menetleva asutuse nimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="asutuskood" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Menetleva asutuse kood</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="riik" type="tns:riik" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Menetlev riik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="esindatavRiik" type="tns:riik" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Esindatav riik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="viisaLiik" type="tns:viisaLiik"/>
+               <xsd:element name="viibimisaeg" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Taotletava viisa viibimisaeg (päevade arv)</xtee:title>
+                        <xtee:technotes>Päevade arv või M</xtee:technotes>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="kordsus" type="tns:viisaKordsus"/>
+               <xsd:element name="saabumineKuupaev" type="xsd:date" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Saabumise kuupäev</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="lahkumineKuupaev" type="xsd:date" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Lahkumise kuupäev</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="reisiEesmargid" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Reisi eesmärk</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:complexContent>
+                        <xsd:restriction base="SOAPENC:Array">
+                           <xsd:sequence>
+                              <xsd:element name="item" minOccurs="0" maxOccurs="3" type="tns:reisiEesmark"/>
+                           </xsd:sequence>
+                        </xsd:restriction>
+                     </xsd:complexContent>
+                  </xsd:complexType>
+               </xsd:element>
+
+               <xsd:element name="sihtkoht" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Sihtkoht</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="pakilisus" type="tns:ltPakilisus"/>
+
+               <xsd:element name="piiripunkt" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Piiripunkt</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+            </xsd:sequence>
+         </xsd:complexType>
+
+         <xsd:complexType name="struktViisaTaotleja">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Viisataotleja andmed</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="eesnimi" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eesnimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="perenimi" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Perekonnanimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="eelmisedperenimed" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eelmised perekonnanimed</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:complexContent>
+                        <xsd:restriction base="SOAPENC:Array">
+                           <xsd:sequence>
+                              <xsd:element name="item" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                           </xsd:sequence>
+                        </xsd:restriction>
+                     </xsd:complexContent>
+                  </xsd:complexType>
+               </xsd:element>
+
+               <xsd:element name="isikukood" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Isikukood</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="eelmisednimed" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eelmised nimed</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:complexContent>
+                        <xsd:restriction base="SOAPENC:Array">
+                           <xsd:sequence>
+                              <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
+                                 <xsd:complexType>
+                                    <xsd:sequence>
+                                       <xsd:element name="eesnimi" type="xsd:string">
+                                          <xsd:annotation>
+                                             <xsd:appinfo>
+                                                <xtee:title>Eesnimi</xtee:title>
+                                             </xsd:appinfo>
+                                          </xsd:annotation>
+                                       </xsd:element>
+                                       <xsd:element name="perenimi" type="xsd:string">
+                                          <xsd:annotation>
+                                             <xsd:appinfo>
+                                                <xtee:title>Perekonnanimi</xtee:title>
+                                             </xsd:appinfo>
+                                          </xsd:annotation>
+                                       </xsd:element>
+                                    </xsd:sequence>
+                                 </xsd:complexType>
+                              </xsd:element>
+                           </xsd:sequence>
+                        </xsd:restriction>
+                     </xsd:complexContent>
+                  </xsd:complexType>
+               </xsd:element>
+
+               <xsd:element name="synniaeg" type="xsd:date" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Sünniaeg</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="synniriik" type="tns:riik" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Sünniriik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="synnikoht" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Sünnikoht</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="sugu" type="tns:ltSugu">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Sugu</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="kodakondsused" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kodakondsus</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:complexContent>
+                        <xsd:restriction base="SOAPENC:Array">
+                           <xsd:sequence>
+                              <xsd:element name="item" minOccurs="0" maxOccurs="3" type="tns:riik"/>
+                           </xsd:sequence>
+                        </xsd:restriction>
+                     </xsd:complexContent>
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="kodakondsusSynd" type="tns:riik">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kodakondsus sündimisel</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="emaeesnimi" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Ema eesnimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="emaperenimi" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Ema perekonnanimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isaeesnimi" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Isa eesnimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="isaperenimi" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Isa perekonnanimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="vanemateNimed" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Vanemate nimed</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="elukutse" type="tns:ltElukutse" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Elukutse</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="tooandjaNimi" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Tööandja nimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="tooandjaAadress" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Tööandja aadress</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="reisiDokLiik" type="tns:reisiDokLiik">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Reisidokumendi liik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="reisiDokNr" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Reisidokumendi number</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="reisiDokRiik" type="tns:riik">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Reisidokumendi väljaandjariik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="reisiDokAsutus" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Reisidokumendi väljaandja asutuse nimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="reisiDokAsutusKood" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Reisidokumendi väljaandja asutuse kood</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="ELkodanikuPereliige" type="xsd:boolean" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Taotleja on Euroopa Liidu kodaniku priviligeeritud pereliige</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+            </xsd:sequence>
+         </xsd:complexType>
+
+         <xsd:complexType name="struktViisaKutsuja">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Kutsuja andmed</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="eesti_ik" type="tns:isikukood" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Isikukood</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="eesnimi" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eesnimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="perenimi" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Perekonnanimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="kodakondsus" type="tns:riik" minOccurs="0"/>
+               <xsd:element name="eelmisednimed" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eelmised nimed</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:complexContent>
+                        <xsd:restriction base="SOAPENC:Array">
+                           <xsd:sequence>
+                              <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
+                                 <xsd:complexType>
+                                    <xsd:sequence>
+                                       <xsd:element name="eesnimi" type="xsd:string">
+                                          <xsd:annotation>
+                                             <xsd:appinfo>
+                                                <xtee:title>Eesnimi</xtee:title>
+                                             </xsd:appinfo>
+                                          </xsd:annotation>
+                                       </xsd:element>
+                                       <xsd:element name="perenimi" type="xsd:string">
+                                          <xsd:annotation>
+                                             <xsd:appinfo>
+                                                <xtee:title>Perekonnanimi</xtee:title>
+                                             </xsd:appinfo>
+                                          </xsd:annotation>
+                                       </xsd:element>
+                                    </xsd:sequence>
+                                 </xsd:complexType>
+                              </xsd:element>
+                           </xsd:sequence>
+                        </xsd:restriction>
+                     </xsd:complexContent>
+                  </xsd:complexType>
+               </xsd:element>
+
+               <xsd:element name="synniaeg" type="xsd:date" minOccurs="0"/>
+               <xsd:element name="synnikoht" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Sünnikoht</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="elukohtEestis" type="tns:struktElukohtEestis"/>
+               <xsd:element name="telefon" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Telefoninumber</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="epost" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>E-posti aadress</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="tooandjaNimi" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Tööandja nimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="tooandja2Nimi" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Teise tööandja nimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:complexType>
+
+         <xsd:complexType name="struktViisaJurKutsuja">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Juriidilisest isikust kutsuja andmed</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+
+               <xsd:element name="registrikood" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Registrikood</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="nimi" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Nimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+            </xsd:sequence>
+         </xsd:complexType>
+
+         <xsd:complexType name="struktKutsujaAllkirjastaja">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Jur. kutsuja allkirjaõiguslik isik</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="eesti_ik" type="tns:isikukood" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Isikukood</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="eesnimi" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eesnimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="perenimi" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Perekonnanimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="synniaeg" type="xsd:date"/>
+            </xsd:sequence>
+         </xsd:complexType>
+
+         <xsd:complexType name="struktKaasreisija">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Kaasa reisiv isik</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="eesnimi" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eesnimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="perenimi" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Perekonnanimi</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="eelmisedperenimed" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eelmised perekonnanimed</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:complexContent>
+                        <xsd:restriction base="SOAPENC:Array">
+                           <xsd:sequence>
+                              <xsd:element name="item" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                           </xsd:sequence>
+                        </xsd:restriction>
+                     </xsd:complexContent>
+                  </xsd:complexType>
+               </xsd:element>
+
+               <xsd:element name="synniaeg" type="xsd:date">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Sünniaeg</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="synnikoht" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Sünnikoht</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+            </xsd:sequence>
+         </xsd:complexType>
+
+
+         <xsd:complexType name="aadressid">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Aadressid</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="eestiAadress" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Eestis viibimise aadress</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="elukohaRiik" type="tns:riik">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Elukoha riik</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="elukohaAadress" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Elukoha aadress</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:complexType>
+
+
+         <xsd:complexType name="lisainfo">
+            <xsd:annotation>
+               <xsd:appinfo>
+                  <xtee:title>Lisainfo</xtee:title>
+               </xsd:appinfo>
+            </xsd:annotation>
+            <xsd:all>
+               <xsd:element name="dipViisa" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Diplomaatilise viisa olemasolu</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="teenistuslikViisa" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Teenistusliku viisa olemasolu</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="kommentaar" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kommentaar</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:all>
+         </xsd:complexType>
+
+         <xsd:complexType name="muuTaotlus">
+            <xsd:sequence>
+               <xsd:element name="taotluseLiik" type="tns:visTaotluseLiik"/>
+               <xsd:element name="taotlusNr" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Taotluse number</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="otsus" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Otsus</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:complexType>
+
+
+
+
+
+         <!-- Kooskõlastamise päringu sõnumivahetuse sisend -->
+
+  <xsd:complexType name="kais_kooskolastamisparing_sisend">
+            <xsd:sequence>
+               <xsd:element name="paringId" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kooskõlastamise päringu identifikaator</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="taotlusNr" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Viisataotluse nr</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="kutseNr" type="xsd:string" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kutse nr</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+
+               <xsd:element name="viisaTaotluseAndmed" type="tns:struktViisaTaotlus"/>
+               <xsd:element name="viisaTaotlejaAndmed" type="tns:struktViisaTaotleja"/>
+               <xsd:element name="viisaKutsujaAndmed" type="tns:struktViisaKutsuja" minOccurs="0"/>
+               <xsd:element name="jurKutsuja" type="tns:struktViisaJurKutsuja" minOccurs="0"/>
+               <xsd:element name="jurKutsujaAllkirjaoiguslikIsik" type="tns:struktKutsujaAllkirjastaja"
+                            minOccurs="0"/>
+
+               <xsd:element name="vastuvotjad" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Vastuvõtjad</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:complexContent>
+                        <xsd:restriction base="SOAPENC:Array">
+                           <xsd:sequence>
+                              <xsd:element name="item" minOccurs="0" maxOccurs="2" type="xsd:string"/>
+                           </xsd:sequence>
+                        </xsd:restriction>
+                     </xsd:complexContent>
+                  </xsd:complexType>
+               </xsd:element>
+
+               <xsd:element name="varasemadviisad" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Taotleja varasemad viisad</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:complexContent>
+                        <xsd:restriction base="SOAPENC:Array">
+                           <xsd:sequence>
+                              <xsd:element name="item" minOccurs="0" maxOccurs="unbounded" type="tns:riik"/>
+                           </xsd:sequence>
+                        </xsd:restriction>
+                     </xsd:complexContent>
+                  </xsd:complexType>
+               </xsd:element>
+
+               <xsd:element name="kaasreisijad" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kaasreisijad</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:complexContent>
+                        <xsd:restriction base="SOAPENC:Array">
+                           <xsd:sequence>
+                              <xsd:element name="item" minOccurs="0" maxOccurs="unbounded" type="tns:struktKaasreisija"/>
+                           </xsd:sequence>
+                        </xsd:restriction>
+                     </xsd:complexContent>
+                  </xsd:complexType>
+               </xsd:element>
+
+               <xsd:element name="aadressid" type="tns:aadressid" minOccurs="0"/>
+               <xsd:element name="lisainfo" type="tns:lisainfo" minOccurs="0"/>
+
+               <xsd:element name="teisedTaotlused" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Taotleja virtuaalsesse kausta kuuluvad teised taotlused</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                     <xsd:complexContent>
+                        <xsd:restriction base="SOAPENC:Array">
+                           <xsd:sequence>
+                              <xsd:element name="item" minOccurs="0" maxOccurs="unbounded" type="tns:muuTaotlus"/>
+                           </xsd:sequence>
+                        </xsd:restriction>
+                     </xsd:complexContent>
+                  </xsd:complexType>
+               </xsd:element>
+
+               <xsd:element name="taotluseKuupaev" type="xsd:date" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Taotluse esitamise kuupäev</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="vastamiseTahtaeg" type="xsd:date">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Vastamise tähtaeg</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="lubatudPikendamiseTahtaeg" type="xsd:date">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Lubatud pikendamise tähtaeg</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="lyhiajaliseTooReg" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Lühiajalise töötamise registreerimine on nõutud</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+               <xsd:element name="onSIS" type="xsd:boolean" minOccurs="0">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kas on vaja ainult SISi kontrolli või kooskõlastamist</xtee:title>
+                        <xtee:technotes>Kasutusel ainult Politsei KAISis. Vastused: true - ainult SISi kontroll; false - kooskõlastamine (vaikimisi)</xtee:technotes>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+
+            </xsd:sequence>
+         </xsd:complexType>
+
+
+
+
+         <!-- Viisa andmise teate sisend -->
+
+    <xsd:complexType name="kais_viisaandmiseteade_sisend">
+            <xsd:sequence>
+               <xsd:element name="taotlusNr" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>viisataotluse nr</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="paringId" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Kooskõlastamise päringu identifikaator</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+               <xsd:element name="pohjendus" type="xsd:string">
+                  <xsd:annotation>
+                     <xsd:appinfo>
+                        <xtee:title>Põhjendus</xtee:title>
+                     </xsd:appinfo>
+                  </xsd:annotation>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:complexType>
+
+
+
+      </schema>
+   </types>
+
+   <portType name="myporttype">
+
+      <operation name="kais_kooskolastamisparing">
+         <documentation>
+            <xtee:title xml:lang="et">Kooskõlastamise päring</xtee:title>
+         </documentation>
+         <input message="tns:kais_kooskolastamisparing_paring"/>
+      </operation>
+
+      <operation name="kais_viisaandmiseteade">
+         <documentation>
+            <xtee:title xml:lang="et">Viisa andmise teade</xtee:title>
+         </documentation>
+         <input message="tns:kais_viisaandmiseteade_paring"/>
+      </operation>
+
+   </portType>
+
+   <binding name="mybinding" type="tns:myporttype">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <operation name="kais_kooskolastamisparing">
+         <xtee:version>v1</xtee:version>
+         <soap:operation/>
+        <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="keha"
+                       namespace="http://producers.piskais.xtee.riik.ee/producer/piskais"/>
+      
+      
+      
+      
+      
+      
+      
+         </input>
+      </operation>
+
+      <operation name="kais_viisaandmiseteade">
+         <xtee:version>v1</xtee:version>
+         <soap:operation/>
+        <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       parts="keha"
+                       namespace="http://producers.piskais.xtee.riik.ee/producer/piskais"/>
+      
+      
+      
+      
+      
+      
+      
+         </input>
+      </operation>
+
+   </binding>
+
+   <message name="kais_kooskolastamisparing_paring">
+      <part name="keha" type="tns:kais_kooskolastamisparing_sisend"/>
+   </message>
+
+   <message name="kais_viisaandmiseteade_paring">
+      <part name="keha" type="tns:kais_viisaandmiseteade_sisend"/>
+   </message>
+
+
+
+
+   <service name="myservice">
+      <port name="myport" binding="tns:mybinding">
+         <soap:address location="http://ws.soatrader.com/riik.ee/0.3/piskais"/>
+         <xtee:title>KAIS</xtee:title>
+         <xtee:address producer="piskais"/>
+      </port>
+   </service>
+</definitions>

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://teachatechie.com/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://teachatechie.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>&lt;table border='0'&gt;&lt;tr&gt;&lt;td valign='top'&gt;&lt;img src='http://teachatechie.com/GJTTWebServices/images/logo.gif' border='0'&gt;&lt;/td&gt;&lt;td valign='top' align='center'&gt;&lt;font size='4'&gt;Glenn Johnson Technical Training&lt;br&gt;Here is a collection of &lt;i&gt;&lt;FONT size='4' color='red'&gt;Zip Code&lt;/FONT&gt;&lt;/i&gt; functions.  &lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan='2' align='left'&gt;&lt;p&gt;&amp;nbsp;&lt;br&gt;I use this Web Service as an example in the courses that I teach. It should be up all of the time, so feel free to use it. If you are interested, the data is available from &lt;a href="http://www.zipcodedatabase.com"&gt;http://www.zipcodedatabase.com&lt;/a&gt;. If you decide to get the Zip Code Database from zipcodedatabase.com, they also provide the formulas to do all of the calculations (in Access DB). If you want an optimized SQL Server database structure (no data, just schema and functions and stored procedures) and the Web Service source code, I sell it for $395.00.&lt;p&gt;Be sure to visit &lt;a href='http://gjtt.com'&gt;GJTT.com&lt;/a&gt; for additional .NET support.  Feel free to &lt;a href='mailto:glenn@GJTT.com?subject=Zip Code Web Service'&gt;email me.&lt;/a&gt; if any questions.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;center&gt;&lt;IMG SRC='http://service.bfast.com/bfast/serve?bfmid=2181&amp;sourceid=38146648&amp;bfpid=0471430234&amp;bfmtype=book' BORDER='0' WIDTH='1' HEIGHT='1' NOSAVE &gt;&lt;A HREF='http://service.bfast.com/bfast/click?bfmid=2181&amp;sourceid=38146648&amp;bfpid=0471430234&amp;bfmtype=book' TARGET='_top'&gt;&lt;IMG SRC='http://images.barnesandnoble.com/images/8610000/8611258.gif' BORDER='0' ALIGN='center' ALT='ASP.Net in 60 Minutes a Day'  &gt;&lt;/a&gt;&lt;BR&gt;&lt;A HREF='http://service.bfast.com/bfast/click?bfmid=2181&amp;sourceid=38146648&amp;bfpid=0471430234&amp;bfmtype=book' TARGET='_top'&gt;Author of ASP.Net in 60 Minutes a Day&lt;/A&gt;&lt;br&gt;&lt;/center&gt;</wsdl:documentation>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://teachatechie.com/">
+         <s:element name="GetLocation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLocationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLocationResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCoordinate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="fmt" type="tns:CoordinateFormat"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="CoordinateFormat">
+            <s:restriction base="s:string">
+               <s:enumeration value="Raw"/>
+               <s:enumeration value="NOAA"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetCoordinateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetCoordinateResult" type="tns:Coordinate"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Coordinate">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="lat" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="lng" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetDistance">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ZipCode1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ZipCode2" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDistanceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetDistanceResult" type="s:decimal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNearbyLocations">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RadiusMiles" type="s:decimal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNearbyLocationsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetNearbyLocationsResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNearbyZipCodes">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RadiusMiles" type="s:decimal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNearbyZipCodesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetNearbyZipCodesResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNearbyZipCodesWhereClause">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RadiusMiles" type="s:decimal"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="WhereFieldName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNearbyZipCodesWhereClauseResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetNearbyZipCodesWhereClauseResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DataSet" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:element ref="s:schema"/>
+                  <s:any/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Coordinate" type="tns:Coordinate"/>
+         <s:element name="decimal" type="s:decimal"/>
+         <s:element name="string" nillable="true" type="s:string"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetLocationSoapIn">
+      <wsdl:part name="parameters" element="tns:GetLocation"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocationSoapOut">
+      <wsdl:part name="parameters" element="tns:GetLocationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCoordinateSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCoordinate"/>
+  </wsdl:message>
+  <wsdl:message name="GetCoordinateSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCoordinateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDistanceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetDistance"/>
+  </wsdl:message>
+  <wsdl:message name="GetDistanceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetDistanceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyLocationsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetNearbyLocations"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyLocationsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetNearbyLocationsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetNearbyZipCodes"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetNearbyZipCodesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesWhereClauseSoapIn">
+      <wsdl:part name="parameters" element="tns:GetNearbyZipCodesWhereClause"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesWhereClauseSoapOut">
+      <wsdl:part name="parameters" element="tns:GetNearbyZipCodesWhereClauseResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocationHttpGetIn">
+      <wsdl:part name="ZipCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocationHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetCoordinateHttpGetIn">
+      <wsdl:part name="ZipCode" type="s:string"/>
+      <wsdl:part name="fmt" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCoordinateHttpGetOut">
+      <wsdl:part name="Body" element="tns:Coordinate"/>
+  </wsdl:message>
+  <wsdl:message name="GetDistanceHttpGetIn">
+      <wsdl:part name="ZipCode1" type="s:string"/>
+      <wsdl:part name="ZipCode2" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetDistanceHttpGetOut">
+      <wsdl:part name="Body" element="tns:decimal"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyLocationsHttpGetIn">
+      <wsdl:part name="ZipCode" type="s:string"/>
+      <wsdl:part name="RadiusMiles" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyLocationsHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesHttpGetIn">
+      <wsdl:part name="ZipCode" type="s:string"/>
+      <wsdl:part name="RadiusMiles" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesWhereClauseHttpGetIn">
+      <wsdl:part name="ZipCode" type="s:string"/>
+      <wsdl:part name="RadiusMiles" type="s:string"/>
+      <wsdl:part name="WhereFieldName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesWhereClauseHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocationHttpPostIn">
+      <wsdl:part name="ZipCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocationHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetCoordinateHttpPostIn">
+      <wsdl:part name="ZipCode" type="s:string"/>
+      <wsdl:part name="fmt" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCoordinateHttpPostOut">
+      <wsdl:part name="Body" element="tns:Coordinate"/>
+  </wsdl:message>
+  <wsdl:message name="GetDistanceHttpPostIn">
+      <wsdl:part name="ZipCode1" type="s:string"/>
+      <wsdl:part name="ZipCode2" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetDistanceHttpPostOut">
+      <wsdl:part name="Body" element="tns:decimal"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyLocationsHttpPostIn">
+      <wsdl:part name="ZipCode" type="s:string"/>
+      <wsdl:part name="RadiusMiles" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyLocationsHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesHttpPostIn">
+      <wsdl:part name="ZipCode" type="s:string"/>
+      <wsdl:part name="RadiusMiles" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesWhereClauseHttpPostIn">
+      <wsdl:part name="ZipCode" type="s:string"/>
+      <wsdl:part name="RadiusMiles" type="s:string"/>
+      <wsdl:part name="WhereFieldName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetNearbyZipCodesWhereClauseHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="ZipCodeSoap" type="tns:ZipCodeSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetLocation">
+         <soap:operation soapAction="http://teachatechie.com/GetLocation" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCoordinate">
+         <soap:operation soapAction="http://teachatechie.com/GetCoordinate" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetDistance">
+         <soap:operation soapAction="http://teachatechie.com/GetDistance" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetNearbyLocations">
+         <soap:operation soapAction="http://teachatechie.com/GetNearbyLocations" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetNearbyZipCodes">
+         <soap:operation soapAction="http://teachatechie.com/GetNearbyZipCodes" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetNearbyZipCodesWhereClause">
+         <soap:operation soapAction="http://teachatechie.com/GetNearbyZipCodesWhereClause"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="ZipCode">
+      <wsdl:documentation>&lt;table border='0'&gt;&lt;tr&gt;&lt;td valign='top'&gt;&lt;img src='http://teachatechie.com/GJTTWebServices/images/logo.gif' border='0'&gt;&lt;/td&gt;&lt;td valign='top' align='center'&gt;&lt;font size='4'&gt;Glenn Johnson Technical Training&lt;br&gt;Here is a collection of &lt;i&gt;&lt;FONT size='4' color='red'&gt;Zip Code&lt;/FONT&gt;&lt;/i&gt; functions.  &lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan='2' align='left'&gt;&lt;p&gt;&amp;nbsp;&lt;br&gt;I use this Web Service as an example in the courses that I teach. It should be up all of the time, so feel free to use it. If you are interested, the data is available from &lt;a href="http://www.zipcodedatabase.com"&gt;http://www.zipcodedatabase.com&lt;/a&gt;. If you decide to get the Zip Code Database from zipcodedatabase.com, they also provide the formulas to do all of the calculations (in Access DB). If you want an optimized SQL Server database structure (no data, just schema and functions and stored procedures) and the Web Service source code, I sell it for $395.00.&lt;p&gt;Be sure to visit &lt;a href='http://gjtt.com'&gt;GJTT.com&lt;/a&gt; for additional .NET support.  Feel free to &lt;a href='mailto:glenn@GJTT.com?subject=Zip Code Web Service'&gt;email me.&lt;/a&gt; if any questions.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;center&gt;&lt;IMG SRC='http://service.bfast.com/bfast/serve?bfmid=2181&amp;sourceid=38146648&amp;bfpid=0471430234&amp;bfmtype=book' BORDER='0' WIDTH='1' HEIGHT='1' NOSAVE &gt;&lt;A HREF='http://service.bfast.com/bfast/click?bfmid=2181&amp;sourceid=38146648&amp;bfpid=0471430234&amp;bfmtype=book' TARGET='_top'&gt;&lt;IMG SRC='http://images.barnesandnoble.com/images/8610000/8611258.gif' BORDER='0' ALIGN='center' ALT='ASP.Net in 60 Minutes a Day'  &gt;&lt;/a&gt;&lt;BR&gt;&lt;A HREF='http://service.bfast.com/bfast/click?bfmid=2181&amp;sourceid=38146648&amp;bfpid=0471430234&amp;bfmtype=book' TARGET='_top'&gt;Author of ASP.Net in 60 Minutes a Day&lt;/A&gt;&lt;br&gt;&lt;/center&gt;</wsdl:documentation>
+      <wsdl:port name="ZipCodeSoap" binding="tns:ZipCodeSoap">
+         <soap:address location="http://ws.soatrader.com/teachatechie.com/0.3/ZipCode"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

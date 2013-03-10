@@ -1,0 +1,988 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.judysbook.com"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.judysbook.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>AggregationService upload web service</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.judysbook.com">
+         <s:element name="LoadDeal">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="text" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="affiliatenetworkmerchantId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="sourceofferId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="arRawData" type="tns:ArrayOfWsRawData"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfWsRawData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="wsRawData" nillable="true"
+                          type="tns:wsRawData"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsRawData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Field" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="LoadDealResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LoadDealResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LoadDeals">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="oDeals" type="tns:ArrayOfWsRawDeal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfWsRawDeal">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="wsRawDeal" nillable="true"
+                          type="tns:wsRawDeal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsRawDeal">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AffiliatenetworkMerchantId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SourceOfferId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="RawData" type="tns:wsRawData"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="LoadDealsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LoadDealsResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAffiliateNetworks">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAffiliateNetworksResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAffiliateNetworksResult"
+                             type="tns:ArrayOfWsAffiliateNetwork"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfWsAffiliateNetwork">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="wsAffiliateNetwork" nillable="true"
+                          type="tns:wsAffiliateNetwork"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsAffiliateNetwork">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="CreateAffiliateNetwork">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="affiliatenetworkName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="affiliatenetworkCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CreateAffiliateNetworkResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="AffiliateNetwork" nillable="true"
+                             type="tns:wsAffiliateNetwork"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMerchants">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetMerchantsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMerchantsResult"
+                             type="tns:ArrayOfWsMerchant"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfWsMerchant">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="wsMerchant" nillable="true"
+                          type="tns:wsMerchant"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsMerchant">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="JBMerchantId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="JBRiId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AffiliatenetworkMerchants"
+                          type="tns:wsAffiliatenetworkMerchant"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="MerchantDomains"
+                          type="tns:wsMerchantDomain"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsAffiliatenetworkMerchant">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AffiliateNetworkId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AffiliateNetworkName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AffiliateNetworkCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MerchantAffiliateCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UpdateFrequency" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UpdatedAt" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsMerchantDomain">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Domain" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MerchantId" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="InsertMerchant">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="merchantName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="jbMerchantId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="jbRiId" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InsertMerchantResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Merchant" nillable="true"
+                             type="tns:wsMerchant"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateMerchant">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="merchantId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="merchantName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="jbMerchantId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="jbRiId" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateMerchantResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="UpdateMerchantResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InsertMerchantAffiliation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="merchantId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="affiliatenetworkId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="affiliateCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="eCommissionType" type="tns:CommissionType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mCommissionFee" type="s:decimal"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mCommissionPct" type="s:decimal"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="categoryId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="UserCashbackPermitted" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="updateFrequency" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="reportId" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="returnDays" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="CommissionType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Unknown"/>
+               <s:enumeration value="FlatFee"/>
+               <s:enumeration value="Percent"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="InsertMerchantAffiliationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="AffiliatenetworkMerchant" nillable="true"
+                             type="tns:wsAffiliatenetworkMerchant"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateMerchantAffiliation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="affiliatenetworkmerchantId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="affiliateCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="categoryId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="UserCashbackPermitted" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="updateFrequency" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="reportId" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="returnDays" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateMerchantAffiliationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="UpdateMerchantAffiliationResult"
+                             type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCategories">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetCategoriesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCategoriesResult"
+                             type="tns:ArrayOfWsCategory"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfWsCategory">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="wsCategory" nillable="true"
+                          type="tns:wsCategory"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsCategory">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ParentId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UrlName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="InsertMerchantAffiliationData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="affiliatenetworkmerchantId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="dataField" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="dataValue" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InsertMerchantAffiliationDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="AffiliatenetworkMerchantData" nillable="true"
+                             type="tns:wsAffiliatenetworkMerchantData"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="wsAffiliatenetworkMerchantData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Field" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ArrayOfWsAffiliateNetwork" nillable="true"
+                    type="tns:ArrayOfWsAffiliateNetwork"/>
+         <s:element name="AffiliateNetwork" nillable="true" type="tns:wsAffiliateNetwork"/>
+         <s:element name="ArrayOfWsMerchant" nillable="true" type="tns:ArrayOfWsMerchant"/>
+         <s:element name="Merchant" nillable="true" type="tns:wsMerchant"/>
+         <s:element name="boolean" type="s:boolean"/>
+         <s:element name="AffiliatenetworkMerchant" nillable="true"
+                    type="tns:wsAffiliatenetworkMerchant"/>
+         <s:element name="ArrayOfWsCategory" nillable="true" type="tns:ArrayOfWsCategory"/>
+         <s:element name="AffiliatenetworkMerchantData" nillable="true"
+                    type="tns:wsAffiliatenetworkMerchantData"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.judysbook.com">
+         <s:element name="LoadDeal">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="text" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="affiliatenetworkmerchantId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="sourceofferId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="arRawData" type="tns:ArrayOfWsRawData"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfWsRawData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="wsRawData" nillable="true"
+                          type="tns:wsRawData"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsRawData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Field" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="LoadDealResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LoadDealResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LoadDeals">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="oDeals" type="tns:ArrayOfWsRawDeal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfWsRawDeal">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="wsRawDeal" nillable="true"
+                          type="tns:wsRawDeal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsRawDeal">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AffiliatenetworkMerchantId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SourceOfferId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="RawData" type="tns:wsRawData"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="LoadDealsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LoadDealsResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAffiliateNetworks">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAffiliateNetworksResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAffiliateNetworksResult"
+                             type="tns:ArrayOfWsAffiliateNetwork"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfWsAffiliateNetwork">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="wsAffiliateNetwork" nillable="true"
+                          type="tns:wsAffiliateNetwork"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsAffiliateNetwork">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="CreateAffiliateNetwork">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="affiliatenetworkName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="affiliatenetworkCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CreateAffiliateNetworkResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="AffiliateNetwork" nillable="true"
+                             type="tns:wsAffiliateNetwork"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMerchants">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetMerchantsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMerchantsResult"
+                             type="tns:ArrayOfWsMerchant"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfWsMerchant">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="wsMerchant" nillable="true"
+                          type="tns:wsMerchant"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsMerchant">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="JBMerchantId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="JBRiId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AffiliatenetworkMerchants"
+                          type="tns:wsAffiliatenetworkMerchant"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="MerchantDomains"
+                          type="tns:wsMerchantDomain"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsAffiliatenetworkMerchant">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AffiliateNetworkId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AffiliateNetworkName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AffiliateNetworkCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MerchantAffiliateCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UpdateFrequency" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UpdatedAt" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsMerchantDomain">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Domain" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MerchantId" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="InsertMerchant">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="merchantName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="jbMerchantId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="jbRiId" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InsertMerchantResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Merchant" nillable="true"
+                             type="tns:wsMerchant"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateMerchant">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="merchantId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="merchantName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="jbMerchantId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="jbRiId" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateMerchantResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="UpdateMerchantResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InsertMerchantAffiliation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="merchantId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="affiliatenetworkId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="affiliateCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="eCommissionType" type="tns:CommissionType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mCommissionFee" type="s:decimal"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mCommissionPct" type="s:decimal"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="categoryId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="UserCashbackPermitted" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="updateFrequency" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="reportId" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="returnDays" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="CommissionType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Unknown"/>
+               <s:enumeration value="FlatFee"/>
+               <s:enumeration value="Percent"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="InsertMerchantAffiliationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="AffiliatenetworkMerchant" nillable="true"
+                             type="tns:wsAffiliatenetworkMerchant"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateMerchantAffiliation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="affiliatenetworkmerchantId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="affiliateCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="categoryId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="UserCashbackPermitted" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="updateFrequency" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="reportId" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="returnDays" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateMerchantAffiliationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="UpdateMerchantAffiliationResult"
+                             type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCategories">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetCategoriesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCategoriesResult"
+                             type="tns:ArrayOfWsCategory"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfWsCategory">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="wsCategory" nillable="true"
+                          type="tns:wsCategory"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="wsCategory">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ParentId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UrlName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="InsertMerchantAffiliationData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="affiliatenetworkmerchantId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="dataField" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="dataValue" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InsertMerchantAffiliationDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="AffiliatenetworkMerchantData" nillable="true"
+                             type="tns:wsAffiliatenetworkMerchantData"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="wsAffiliatenetworkMerchantData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Field" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ArrayOfWsAffiliateNetwork" nillable="true"
+                    type="tns:ArrayOfWsAffiliateNetwork"/>
+         <s:element name="AffiliateNetwork" nillable="true" type="tns:wsAffiliateNetwork"/>
+         <s:element name="ArrayOfWsMerchant" nillable="true" type="tns:ArrayOfWsMerchant"/>
+         <s:element name="Merchant" nillable="true" type="tns:wsMerchant"/>
+         <s:element name="boolean" type="s:boolean"/>
+         <s:element name="AffiliatenetworkMerchant" nillable="true"
+                    type="tns:wsAffiliatenetworkMerchant"/>
+         <s:element name="ArrayOfWsCategory" nillable="true" type="tns:ArrayOfWsCategory"/>
+         <s:element name="AffiliatenetworkMerchantData" nillable="true"
+                    type="tns:wsAffiliatenetworkMerchantData"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoadDealSoapIn">
+      <wsdl:part name="parameters" element="tns:LoadDeal"/>
+  </wsdl:message>
+  <wsdl:message name="LoadDealSoapOut">
+      <wsdl:part name="parameters" element="tns:LoadDealResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LoadDealsSoapIn">
+      <wsdl:part name="parameters" element="tns:LoadDeals"/>
+  </wsdl:message>
+  <wsdl:message name="LoadDealsSoapOut">
+      <wsdl:part name="parameters" element="tns:LoadDealsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateNetworksSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAffiliateNetworks"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateNetworksSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAffiliateNetworksResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CreateAffiliateNetworkSoapIn">
+      <wsdl:part name="parameters" element="tns:CreateAffiliateNetwork"/>
+  </wsdl:message>
+  <wsdl:message name="CreateAffiliateNetworkSoapOut">
+      <wsdl:part name="parameters" element="tns:CreateAffiliateNetworkResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMerchantsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMerchants"/>
+  </wsdl:message>
+  <wsdl:message name="GetMerchantsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMerchantsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantSoapIn">
+      <wsdl:part name="parameters" element="tns:InsertMerchant"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantSoapOut">
+      <wsdl:part name="parameters" element="tns:InsertMerchantResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateMerchant"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateMerchantResponse"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationSoapIn">
+      <wsdl:part name="parameters" element="tns:InsertMerchantAffiliation"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationSoapOut">
+      <wsdl:part name="parameters" element="tns:InsertMerchantAffiliationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantAffiliationSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateMerchantAffiliation"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantAffiliationSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateMerchantAffiliationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCategoriesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCategories"/>
+  </wsdl:message>
+  <wsdl:message name="GetCategoriesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCategoriesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationDataSoapIn">
+      <wsdl:part name="parameters" element="tns:InsertMerchantAffiliationData"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationDataSoapOut">
+      <wsdl:part name="parameters" element="tns:InsertMerchantAffiliationDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateNetworksHttpGetIn"/>
+  <wsdl:message name="GetAffiliateNetworksHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfWsAffiliateNetwork"/>
+  </wsdl:message>
+  <wsdl:message name="CreateAffiliateNetworkHttpGetIn">
+      <wsdl:part name="affiliatenetworkName" type="s:string"/>
+      <wsdl:part name="affiliatenetworkCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="CreateAffiliateNetworkHttpGetOut">
+      <wsdl:part name="Body" element="tns:AffiliateNetwork"/>
+  </wsdl:message>
+  <wsdl:message name="GetMerchantsHttpGetIn"/>
+  <wsdl:message name="GetMerchantsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfWsMerchant"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantHttpGetIn">
+      <wsdl:part name="merchantName" type="s:string"/>
+      <wsdl:part name="jbMerchantId" type="s:string"/>
+      <wsdl:part name="jbRiId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantHttpGetOut">
+      <wsdl:part name="Body" element="tns:Merchant"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantHttpGetIn">
+      <wsdl:part name="merchantId" type="s:string"/>
+      <wsdl:part name="merchantName" type="s:string"/>
+      <wsdl:part name="jbMerchantId" type="s:string"/>
+      <wsdl:part name="jbRiId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationHttpGetIn">
+      <wsdl:part name="merchantId" type="s:string"/>
+      <wsdl:part name="affiliatenetworkId" type="s:string"/>
+      <wsdl:part name="affiliateCode" type="s:string"/>
+      <wsdl:part name="eCommissionType" type="s:string"/>
+      <wsdl:part name="mCommissionFee" type="s:string"/>
+      <wsdl:part name="mCommissionPct" type="s:string"/>
+      <wsdl:part name="categoryId" type="s:string"/>
+      <wsdl:part name="UserCashbackPermitted" type="s:string"/>
+      <wsdl:part name="updateFrequency" type="s:string"/>
+      <wsdl:part name="reportId" type="s:string"/>
+      <wsdl:part name="returnDays" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationHttpGetOut">
+      <wsdl:part name="Body" element="tns:AffiliatenetworkMerchant"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantAffiliationHttpGetIn">
+      <wsdl:part name="affiliatenetworkmerchantId" type="s:string"/>
+      <wsdl:part name="affiliateCode" type="s:string"/>
+      <wsdl:part name="categoryId" type="s:string"/>
+      <wsdl:part name="UserCashbackPermitted" type="s:string"/>
+      <wsdl:part name="updateFrequency" type="s:string"/>
+      <wsdl:part name="reportId" type="s:string"/>
+      <wsdl:part name="returnDays" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantAffiliationHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="GetCategoriesHttpGetIn"/>
+  <wsdl:message name="GetCategoriesHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfWsCategory"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationDataHttpGetIn">
+      <wsdl:part name="affiliatenetworkmerchantId" type="s:string"/>
+      <wsdl:part name="dataField" type="s:string"/>
+      <wsdl:part name="dataValue" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationDataHttpGetOut">
+      <wsdl:part name="Body" element="tns:AffiliatenetworkMerchantData"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateNetworksHttpPostIn"/>
+  <wsdl:message name="GetAffiliateNetworksHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfWsAffiliateNetwork"/>
+  </wsdl:message>
+  <wsdl:message name="CreateAffiliateNetworkHttpPostIn">
+      <wsdl:part name="affiliatenetworkName" type="s:string"/>
+      <wsdl:part name="affiliatenetworkCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="CreateAffiliateNetworkHttpPostOut">
+      <wsdl:part name="Body" element="tns:AffiliateNetwork"/>
+  </wsdl:message>
+  <wsdl:message name="GetMerchantsHttpPostIn"/>
+  <wsdl:message name="GetMerchantsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfWsMerchant"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantHttpPostIn">
+      <wsdl:part name="merchantName" type="s:string"/>
+      <wsdl:part name="jbMerchantId" type="s:string"/>
+      <wsdl:part name="jbRiId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantHttpPostOut">
+      <wsdl:part name="Body" element="tns:Merchant"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantHttpPostIn">
+      <wsdl:part name="merchantId" type="s:string"/>
+      <wsdl:part name="merchantName" type="s:string"/>
+      <wsdl:part name="jbMerchantId" type="s:string"/>
+      <wsdl:part name="jbRiId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationHttpPostIn">
+      <wsdl:part name="merchantId" type="s:string"/>
+      <wsdl:part name="affiliatenetworkId" type="s:string"/>
+      <wsdl:part name="affiliateCode" type="s:string"/>
+      <wsdl:part name="eCommissionType" type="s:string"/>
+      <wsdl:part name="mCommissionFee" type="s:string"/>
+      <wsdl:part name="mCommissionPct" type="s:string"/>
+      <wsdl:part name="categoryId" type="s:string"/>
+      <wsdl:part name="UserCashbackPermitted" type="s:string"/>
+      <wsdl:part name="updateFrequency" type="s:string"/>
+      <wsdl:part name="reportId" type="s:string"/>
+      <wsdl:part name="returnDays" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationHttpPostOut">
+      <wsdl:part name="Body" element="tns:AffiliatenetworkMerchant"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantAffiliationHttpPostIn">
+      <wsdl:part name="affiliatenetworkmerchantId" type="s:string"/>
+      <wsdl:part name="affiliateCode" type="s:string"/>
+      <wsdl:part name="categoryId" type="s:string"/>
+      <wsdl:part name="UserCashbackPermitted" type="s:string"/>
+      <wsdl:part name="updateFrequency" type="s:string"/>
+      <wsdl:part name="reportId" type="s:string"/>
+      <wsdl:part name="returnDays" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateMerchantAffiliationHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="GetCategoriesHttpPostIn"/>
+  <wsdl:message name="GetCategoriesHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfWsCategory"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationDataHttpPostIn">
+      <wsdl:part name="affiliatenetworkmerchantId" type="s:string"/>
+      <wsdl:part name="dataField" type="s:string"/>
+      <wsdl:part name="dataValue" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="InsertMerchantAffiliationDataHttpPostOut">
+      <wsdl:part name="Body" element="tns:AffiliatenetworkMerchantData"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="AggregationServiceSoap" type="tns:AggregationServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="LoadDeal">
+         <soap:operation soapAction="http://www.judysbook.com/LoadDeal" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LoadDeals">
+         <soap:operation soapAction="http://www.judysbook.com/LoadDeals" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAffiliateNetworks">
+         <soap:operation soapAction="http://www.judysbook.com/GetAffiliateNetworks" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CreateAffiliateNetwork">
+         <soap:operation soapAction="http://www.judysbook.com/CreateAffiliateNetwork" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMerchants">
+         <soap:operation soapAction="http://www.judysbook.com/GetMerchants" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="InsertMerchant">
+         <soap:operation soapAction="http://www.judysbook.com/InsertMerchant" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateMerchant">
+         <soap:operation soapAction="http://www.judysbook.com/UpdateMerchant" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="InsertMerchantAffiliation">
+         <soap:operation soapAction="http://www.judysbook.com/InsertMerchantAffiliation"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateMerchantAffiliation">
+         <soap:operation soapAction="http://www.judysbook.com/UpdateMerchantAffiliation"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCategories">
+         <soap:operation soapAction="http://www.judysbook.com/GetCategories" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="InsertMerchantAffiliationData">
+         <soap:operation soapAction="http://www.judysbook.com/InsertMerchantAffiliationData"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="AggregationService">
+      <wsdl:documentation>AggregationService upload web service</wsdl:documentation>
+      <wsdl:port name="AggregationServiceSoap" binding="tns:AggregationServiceSoap">
+         <soap:address location="http://ws.soatrader.com/judysbook.com/0.1/AggregationService"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

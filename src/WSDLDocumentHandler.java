@@ -1,36 +1,17 @@
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.Vector;
 
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.persistence.*;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 
 
 /**
- * Handler for wsdl handler as a specific type of xml handler. 
+ * Handler for wsdl documents as a specific type of xml handler. 
  * Parses wsdl file to extract useful features
  */
 public class WSDLDocumentHandler extends XMLHandler
@@ -46,32 +27,32 @@ public class WSDLDocumentHandler extends XMLHandler
 	private final static String messageTag = "wsdl:message";
 	private final static String portTag = "wsdl:portType";
 	private final static String webServiceTag = "wsdl:service";
+	private final static String wsdlDocumentationTag = "wsdl:documentation";
 	
-	private WSDLDocument wsdlDocument;											// Document of handler
+	private WSDLDocument wsdlDocument;											// WSDL Document to handle
 	public static String emptyContentWSDLFile = "empty_content.wsdl";			// WSDL File with empty text ( extract techninal terms)
 
 	// General computing words
 	public static String generalCompWordsFile = "general_computing_words.dat";	// General computing words including wsdl tags
 	public static Vector<String> generalComputingWords;							// Vector of general computing words
-	
+
 	// Features extracted from wsdl
 	private HashMap<String,Vector<String>> complexTypes;	// Key: Name of complex type 
-													// Value: Data Array of complex types
+															// Value: Data Array of complex types
 	private HashMap<String,Vector<String>> elementTypes;	// Key: Name of element
 															// Value: Data Array of element types
-	private HashMap<String,Integer> primitiveTypes;	// Key: Name of primitive type
-													// Value: Number of apperances in all complex types
-	
-	private HashMap<String,Vector<String>> messages;	// Key: Name of message
-												// Value: Parameters types
+	private HashMap<String,Integer> primitiveTypes;			// Key: Name of primitive type
+															// Value: Number of apperances in all complex types
+	private HashMap<String,Vector<String>> messages;				// Key: Name of message
+																	// Value: Parameters types
 	private HashMap<String,Vector<String>> messagesInSimpleTypes;	// Key:Name of message
 																	// Value: Paramaeters in simple types
 
 
 	private HashMap<String,Vector<String>> portMessagesSequence;			// Key: Name of port
-															// Value: Type of message ( input,output)
-	private HashMap<String,Vector<String>> portMessagesStructure;		// Key: Name of port
-											    			// Value: List of messages 
+																			// Value: Type of message ( input,output)
+	private HashMap<String,Vector<String>> portMessagesStructure;			// Key: Name of port
+											    							// Value: List of messages 
 	
 	/*=========================================================================
 	 *					Constructors
@@ -168,22 +149,63 @@ public class WSDLDocumentHandler extends XMLHandler
 		return portMessagesStructure;
 	}
 	
+	/**
+	 * @return the generalComputingWords
+	 */
+	public static Vector<String> getGeneralComputingWords()
+	{
+		if(generalComputingWords==null)
+			readGeneralComputingWords();
+		
+		return generalComputingWords;
+	}
+	
 	/*=========================================================================
 	 *					Methods
 	 *=========================================================================*/
 	
 	/**
-	 * Extract content from types names and attributes, messages, ports and urls.
-	 * The words extracted are stored in wsdl document.
+	 * Test if file is wsdl by testing if contains tag wsdl:definitions or definitions
 	 */
-	public void extractContent()
+	public boolean test()
 	{
-		String[] startNodeTags = new String[]{wsdlTypeTag,messageTag,portTag};
-		Document doc = createParser();	// create xml parser for document
-		NodeList startNodeList;	// collection of nodes specific tag
+		try
+		{
+			Document doc = createParser();	// create xml parser for document
+			NodeList startNodeList = doc.getElementsByTagName("wsdl:definitions");
+			if(startNodeList.getLength()==0)
+			{
+				startNodeList = doc.getElementsByTagName("definitions");
+				
+				if(startNodeList.getLength()==0)
+					return false;
+			}
+		
+			return true;
+		}
+		catch(Exception ex)
+		{
+			return false;
+		}
+	}
+	
+	/**
+	 * Extract content from types names and attributes, messages names, ports names and urls.
+	 * The words extracted are stored in wsdl document words.
+	 * 
+	 * @param isDescriptionIncluded True, if want to add description in word vector of document
+	 * @param isURLIncluded True, if extraction from urls desired
+	 * @param isCommentIncluded True, if extraction from comments is desired
+	 */
+	public void extractContent(boolean isDescriptionIncluded,boolean isURLIncluded,boolean isCommentIncluded)
+	{
+		String[] startNodeTags = new String[]{wsdlTypeTag,messageTag,portTag,"types","message","portType"};
+		Document doc = createParser();		// create xml parser for document
+		NodeList startNodeList;				// collection of nodes specific tag
 
 		int i=0;
 		
+		// iterate through wsdl types, ports, messages to extract names
 		for(String startNodeTag:startNodeTags)
 		{
 			startNodeList = doc.getElementsByTagName(startNodeTag);
@@ -191,6 +213,23 @@ public class WSDLDocumentHandler extends XMLHandler
 				if(startNodeList.item(i).getNodeType()== Node.ELEMENT_NODE)
 					getChildrenNodeNames(startNodeList.item(i));
 		}
+		
+		// extract tokens from descriptions
+		if(isDescriptionIncluded)
+		{
+			startNodeList = doc.getElementsByTagName(wsdlDocumentationTag);	
+			for(i=0;i<startNodeList.getLength();i++)
+				if(startNodeList.item(i).getNodeType() == Node.ELEMENT_NODE)
+					parseDocumentation(startNodeList.item(i));
+		}
+		
+		// extract tokens from urls
+		if(isURLIncluded)
+			parseURLs(doc.getChildNodes());
+		
+		// extract tokens from comments
+		if(isCommentIncluded)
+			parseComments(doc.getChildNodes());
 	}
 	
 	/**
@@ -201,25 +240,17 @@ public class WSDLDocumentHandler extends XMLHandler
 	private void getNodeName(Node node)
 	{
 		NamedNodeMap attrs;
-		String name;	// node name
-		Vector<String> simpleWords;	// composite name in its part names splitted by Upper case or underscore
+		String name;				// node name
+		Vector<String> simpleWords;	// composite name in its part names split by Upper case or underscore
 		
 		attrs = node.getAttributes();
 		if(attrs.getNamedItem("name")!=null)
 		{
-			name = attrs.getNamedItem("name").getNodeValue();
-			simpleWords = WordDatabase.splitWord(name);// name.split("(?=\\p{Upper})");
+			name = attrs.getNamedItem("name").getNodeValue();	// get string from name
+			simpleWords = WordDatabase.splitWord(name);			// split composite word into simple words
 			
 			for(String simpleWord:simpleWords)
 				this.wsdlDocument.addWord(simpleWord.toLowerCase());
-			/*for(String simpleWord:simpleWordsName)
-			{
-				if(simpleWord.matches(".*\\d.*")) // if word contains number remove
-					simpleWord = simpleWord.replaceAll("\\d","");
-				
-				if(!simpleWord.isEmpty() && simpleWord.length()>1 && !simpleWord.contains("_"))
-					this.wsdlDocument.addWord(simpleWord.toLowerCase());
-			}*/
 		}
 	}
 	
@@ -242,6 +273,116 @@ public class WSDLDocumentHandler extends XMLHandler
 	}
 	
 	/**
+	 * Get words from documentation nodes
+	 * @param documentationNode A documentation node
+	 */
+	private void parseDocumentation(Node documentationNode)
+	{
+		Node textNode;			// child of documentation node which is text
+		String description;		// text of documentation node
+		NodeList nodeList;		// children of documentation node
+		String[] tokens;		// tokens extracted from documentation text node
+		
+		nodeList = documentationNode.getChildNodes();
+		for(int i=0;i<nodeList.getLength();i++)
+			if(nodeList.item(i).getNodeType() == Node.TEXT_NODE)
+			{
+				textNode = nodeList.item(i);
+				description = textNode.getTextContent();
+				
+				//remove some common html tags in descriptions
+				description.replaceAll("<br\\>",  " ");
+				description.replaceAll("<br>",  " ");
+
+				tokens = description.split( "[\\W]");	// split description into tokens separated by white space characters
+				for(String token:tokens)
+					if(!token.matches(".*\\d.*") && !token.trim().isEmpty() )
+						this.wsdlDocument.addWord(token.toLowerCase().trim());
+			}
+	}
+	
+	/**
+	 * Extract tokens from all urls of document
+	 */
+	private void parseURLs(NodeList nodeList)
+	{
+		String[] urlAttrs= {"location","soapAction"};	// attributes contain urls
+		Node childNode;	// current child node
+		Node urlAttr;		// attrs of node
+		String url;
+		String[] tokens;	// the tokens extracted from url( separated by /)
+		
+		for(int i=0; i<nodeList.getLength(); i++)
+		{
+		      childNode = nodeList.item(i);
+		      
+		      if (childNode.getNodeType() == Node.ELEMENT_NODE)
+		      {
+		    	  // check if  attribute "location" exists
+		    	  urlAttr = childNode.getAttributes().getNamedItem(urlAttrs[0]);
+		    	  if(urlAttr==null)	// if location does not exist, try for soapaction attribute
+		    		  urlAttr = childNode.getAttributes().getNamedItem(urlAttrs[1]);
+		    	  
+		    	  // no url attribute for current node
+		    	  if(urlAttr!=null)
+		    	  {
+			    	  // url attribute exists
+			    	  url = urlAttr.getNodeValue();
+			    	  url = url.replaceAll("http://", "");	 // remove http from url
+			    	  tokens = url.split("/");
+			    	  for(int j=0;j<tokens.length;j++)
+			    		  if(tokens[j].contains("."))
+			    		  {
+			    			  tokens[j] = tokens[j].substring(0,tokens[j].lastIndexOf("."));	// remove .com or file extension
+			    			  tokens[j] = tokens[j].replace("www.", "");						// remove www
+			    			  this.wsdlDocument.addWord(tokens[j].toLowerCase().trim());
+			    		  }
+		    	  }
+		      }
+
+		      // parse recursively for children nodes
+		      NodeList children = childNode.getChildNodes();
+		      if (children != null)
+		    	  parseURLs(children);
+		    }
+	}
+	
+	/**
+	 * Extract tokens from all comments of document
+	 */
+	private void parseComments(NodeList nodeList)
+	{
+		Node childNode;		// current child node
+		String comment;		// comment text
+		String[] tokens;	// tokens extracted from comment
+
+		// For each node in nodelist, get its text node 
+		for(int i=0; i<nodeList.getLength(); i++)
+		{
+		      childNode = nodeList.item(i);	// Child of node
+		      
+		      // Get the text from each node except for documentation
+		      if ( !childNode.getParentNode().getNodeName().contains("documentation"))
+		      {
+		    	  // read comment and split into tokens separated by whitespace
+			      comment = childNode.getTextContent().trim();	
+		    	  tokens = comment.split("[\\W]");
+		    	  if(tokens.length>0)
+		    		  for(String token :tokens)
+		    			  if(!token.matches(".*\\d.*") && !token.trim().isEmpty())
+		    				  this.wsdlDocument.addWord(token.toLowerCase());
+			    	
+		      }
+
+		      // parse recursively for children nodes
+		      NodeList children = childNode.getChildNodes();
+		      if (children != null)
+		    	  parseComments(children);
+		    }
+	}
+
+	
+	/**
 	 * Get web service name from tag "service" of document
 	 * @return Web service name
 	 */
@@ -252,8 +393,7 @@ public class WSDLDocumentHandler extends XMLHandler
 		Node webServiceNode = doc.getElementsByTagName(webServiceTag).item(0);	// web service node
 		
 		webServiceName = webServiceNode.getAttributes().getNamedItem("name").getNodeValue();
-		
-				
+			
 		return webServiceName;
 	}
 	
@@ -276,13 +416,10 @@ public class WSDLDocumentHandler extends XMLHandler
 	 */
 	public void parseComplexTypes() // HashMap<String,String[]> getComplexTypesMap()
 	{
-		//Vector<String[]> complexTypes;	// Complex types
 		Vector<String> complexTypeElements=new Vector<String>();	// Complex type as an array of element
-		String complexTypeName="";			// Name of complex type element
 		String type;				// Single element type ( e.g. string)
 		
-		int i=0,j=0,k=0,l=0,m=0;
-		int numComplexTypes,numElements;
+		int i=0,j=0,k=0,l=0;
 		
 		Document doc = createParser();	// Document for parse
 		
@@ -295,9 +432,6 @@ public class WSDLDocumentHandler extends XMLHandler
 		Node schemaNode;
 		Node elementNode;
 		Node complexTypeNode;
-		Node sequenceNode;
-		Node typeNode;
-		Node attr;
 		
 		elementTypes = new HashMap<String,Vector<String>>();
 		complexTypes = new HashMap<String,Vector<String>>();
@@ -742,7 +876,7 @@ public class WSDLDocumentHandler extends XMLHandler
 			transformer.transform(source, result);
 			
 			System.out.println("Extract techinal terms using WVTool from"+emptyContentWSDLFile+"...");
-			WSDLDocument testWSDLDoc = new WSDLDocument(emptyContentWSDLFile);
+			WSDLDocument testWSDLDoc = new WSDLDocument("",emptyContentWSDLFile,"");
 			testWSDLDoc.parse(generalCompWordsFile);
 			System.out.println("Extracting techinal terms from "+document+"..."+"Ended");
 			System.out.println();
@@ -808,8 +942,8 @@ public class WSDLDocumentHandler extends XMLHandler
 		BufferedReader br=null;		// function word file reader
 		
 		// delete all entries
-		WebServicesClusterer.em.getTransaction().begin();
-		Query query = WebServicesClusterer.em.createQuery(
+		ObjectDBConn.em.getTransaction().begin();
+		Query query = ObjectDBConn.em.createQuery(
 			      "DELETE FROM GeneralComputingWord");
 		query.executeUpdate();
 				
@@ -836,8 +970,9 @@ public class WSDLDocumentHandler extends XMLHandler
 			for(int i=0;i<numGeneralCompWords;i++)
 				generalComputingWords.add(br.readLine().trim().toLowerCase());
 			
-			WebServicesClusterer.em.persist(new GeneralComputingWord(generalComputingWords));
-			WebServicesClusterer.em.getTransaction().commit();
+			ObjectDBConn.em.persist(new GeneralComputingWord(generalComputingWords));
+			ObjectDBConn.em.getTransaction().commit();
+			ObjectDBConn.em.clear();
 			
 			if(lineNumberReader!=null)
 				lineNumberReader.close();
@@ -857,13 +992,14 @@ public class WSDLDocumentHandler extends XMLHandler
 	 * and store them in generalComputingWords vector
 	 * @throws IOException 
 	 */
-	public static void readGeneralComputingWords()
+	private static void readGeneralComputingWords()
 	{
-		TypedQuery<GeneralComputingWord> query = WebServicesClusterer.em.createQuery(
+		TypedQuery<GeneralComputingWord> query = ObjectDBConn.em.createQuery(
 			      "SELECT gcw FROM GeneralComputingWord AS gcw ", GeneralComputingWord.class);
 		GeneralComputingWord generalComputingWord = query.getResultList().get(0);
 		
 		generalComputingWords = generalComputingWord.getWords();
+		
 	}
 	
 }

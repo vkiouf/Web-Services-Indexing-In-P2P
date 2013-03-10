@@ -1,0 +1,153 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.yellowworld.ch"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.yellowworld.ch">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>WebService for uploading invoices</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.yellowworld.ch">
+         <s:element name="UploadFiles">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="invoices" type="tns:ArrayOfInvoice"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillerID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfInvoice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Invoice" type="tns:Invoice"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Invoice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FileType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TransactionID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Data" type="s:base64Binary"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="UploadFilesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UploadFilesResult"
+                             type="tns:ArrayOfNotProcessedInvoice"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfNotProcessedInvoice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="NotProcessedInvoice"
+                          type="tns:NotProcessedInvoice"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="NotProcessedInvoice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FileType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TransactionID" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="UploadFilesReport">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="invoices" type="tns:ArrayOfInvoice"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillerID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UploadFilesReportResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UploadFilesReportResult"
+                             type="tns:ArrayOfProcessedInvoice"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfProcessedInvoice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ProcessedInvoice"
+                          type="tns:ProcessedInvoice"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ProcessedInvoice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FileType" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SubmitDate" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TransactionID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ProcessingState" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="UploadFilesSoapIn">
+      <wsdl:part name="parameters" element="tns:UploadFiles"/>
+  </wsdl:message>
+  <wsdl:message name="UploadFilesSoapOut">
+      <wsdl:part name="parameters" element="tns:UploadFilesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UploadFilesReportSoapIn">
+      <wsdl:part name="parameters" element="tns:UploadFilesReport"/>
+  </wsdl:message>
+  <wsdl:message name="UploadFilesReportSoapOut">
+      <wsdl:part name="parameters" element="tns:UploadFilesReportResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="UploadInvoiceSoap" type="tns:UploadInvoiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="UploadFiles">
+         <soap:operation soapAction="http://www.yellowworld.ch/UploadFiles" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UploadFilesReport">
+         <soap:operation soapAction="http://www.yellowworld.ch/UploadFilesReport" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="UploadInvoice">
+      <wsdl:documentation>WebService for uploading invoices</wsdl:documentation>
+      <wsdl:port name="UploadInvoiceSoap" binding="tns:UploadInvoiceSoap">
+         <soap:address location="http://ws.soatrader.com/yellowworld.ch/0.1/UploadInvoice"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

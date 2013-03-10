@@ -1,0 +1,98 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://cmsdoc.cern.ch/cms/grid/doc/DataLocationInterface.wsdl"
+             xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+             xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:ns="urn:DataLocationInterface"
+             xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+             name="DataLocationInterface"
+             targetNamespace="http://cmsdoc.cern.ch/cms/grid/doc/DataLocationInterface.wsdl">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="urn:DataLocationInterface"
+              elementFormDefault="unqualified"
+              attributeFormDefault="unqualified">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOfstring">
+            <complexContent>
+               <restriction base="SOAP-ENC:Array">
+                  <sequence>
+                     <element name="item" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                  </sequence>
+                  <attribute ref="SOAP-ENC:arrayType" WSDL:arrayType="xsd:string[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+
+   </types>
+
+   <message name="listReplicasRequest">
+      <part name="inputDataType" type="xsd:string"/>
+      <part name="inputData" type="xsd:string"/>
+   </message>
+
+   <message name="listReplicasResponse">
+      <part name="urlList" type="ns:ArrayOfstring"/>
+   </message>
+
+   <portType name="DataLocationInterfacePortType">
+      <operation name="listReplicas">
+         <documentation>Service definition of function ns__listReplicas</documentation>
+         <input message="tns:listReplicasRequest"/>
+         <output message="tns:listReplicasResponse"/>
+      </operation>
+   </portType>
+
+   <binding name="DataLocationInterface" type="tns:DataLocationInterfacePortType">
+      <SOAP:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="listReplicas">
+         <SOAP:operation style="rpc" soapAction=""/>
+         <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <SOAP:body use="encoded" namespace="urn:DataLocationInterface"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <SOAP:body use="encoded" namespace="urn:DataLocationInterface"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+
+   <service name="DataLocationInterface">
+      <documentation>gSOAP 2.6.0 generated service definition</documentation>
+      <port name="DataLocationInterface" binding="tns:DataLocationInterface">
+         <SOAP:address location="http://ws.soatrader.com/web.cern.ch/0.1/DataLocationInterface"/>
+      </port>
+   </service>
+
+</definitions>

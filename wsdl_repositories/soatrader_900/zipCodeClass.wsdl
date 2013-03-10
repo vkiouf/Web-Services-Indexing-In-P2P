@@ -1,0 +1,354 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://webservices"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://webservices"
+                  xmlns:intf="http://webservices"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://rpc.xml.coldfusion"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://webservices">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Macromedia ColdFusion MX version 7,0,1,116466-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://webservices">
+         <import namespace="http://rpc.xml.coldfusion"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOf_xsd_string">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOfArrayOf_xsd_anyType">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:anyType[][]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOf_xsd_anyType">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:anyType[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://rpc.xml.coldfusion">
+         <import namespace="http://webservices"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="QueryBean">
+            <sequence>
+               <element name="columnList" nillable="true" type="impl:ArrayOf_xsd_string"/>
+               <element name="data" nillable="true" type="impl:ArrayOfArrayOf_xsd_anyType"/>
+            </sequence>
+         </complexType>
+         <complexType name="CFCInvocationException">
+            <sequence/>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="getLocationDistanceRequest">
+
+      <wsdl:part name="lat1" type="xsd:string"/>
+
+      <wsdl:part name="lon1" type="xsd:string"/>
+
+      <wsdl:part name="lat2" type="xsd:string"/>
+
+      <wsdl:part name="lon2" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="CFCInvocationException">
+
+      <wsdl:part name="fault" type="tns1:CFCInvocationException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getZipCodeDistanceRequest">
+
+      <wsdl:part name="zipCode1" type="xsd:string"/>
+
+      <wsdl:part name="zipCode2" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLocationDistanceResponse">
+
+      <wsdl:part name="getLocationDistanceReturn" type="xsd:double"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getZipsWithinRadiusResponse">
+
+      <wsdl:part name="getZipsWithinRadiusReturn" type="impl:ArrayOf_xsd_anyType"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getZipCodeInfoRequest">
+
+      <wsdl:part name="key" type="xsd:string"/>
+
+      <wsdl:part name="zipCode" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getZipsWithinRadiusRequest">
+
+      <wsdl:part name="key" type="xsd:anyType"/>
+
+      <wsdl:part name="zipCode" type="xsd:string"/>
+
+      <wsdl:part name="distance" type="xsd:double"/>
+
+      <wsdl:part name="limit" type="xsd:double"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getZipCodeInfoResponse">
+
+      <wsdl:part name="getZipCodeInfoReturn" type="tns1:QueryBean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getZipCodeDistanceResponse">
+
+      <wsdl:part name="getZipCodeDistanceReturn" type="xsd:double"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="zipCodeWebService">
+
+      <wsdl:operation name="getZipCodeInfo" parameterOrder="key zipCode">
+
+         <wsdl:input message="impl:getZipCodeInfoRequest" name="getZipCodeInfoRequest"/>
+
+         <wsdl:output message="impl:getZipCodeInfoResponse" name="getZipCodeInfoResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getZipsWithinRadius" parameterOrder="key zipCode distance limit">
+
+         <wsdl:input message="impl:getZipsWithinRadiusRequest" name="getZipsWithinRadiusRequest"/>
+
+         <wsdl:output message="impl:getZipsWithinRadiusResponse" name="getZipsWithinRadiusResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getZipCodeDistance" parameterOrder="zipCode1 zipCode2">
+
+         <wsdl:input message="impl:getZipCodeDistanceRequest" name="getZipCodeDistanceRequest"/>
+
+         <wsdl:output message="impl:getZipCodeDistanceResponse" name="getZipCodeDistanceResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLocationDistance" parameterOrder="lat1 lon1 lat2 lon2">
+
+         <wsdl:input message="impl:getLocationDistanceRequest" name="getLocationDistanceRequest"/>
+
+         <wsdl:output message="impl:getLocationDistanceResponse" name="getLocationDistanceResponse"/>
+
+         <wsdl:fault message="impl:CFCInvocationException" name="CFCInvocationException"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="zipCodeWebService.cfcSoapBinding" type="impl:zipCodeWebService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getZipCodeInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getZipCodeInfoRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://webservices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getZipCodeInfoResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://webservices"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://webservices"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getZipsWithinRadius">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getZipsWithinRadiusRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://webservices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getZipsWithinRadiusResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://webservices"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://webservices"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getZipCodeDistance">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getZipCodeDistanceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://webservices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getZipCodeDistanceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://webservices"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://webservices"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLocationDistance">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getLocationDistanceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://webservices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getLocationDistanceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://webservices"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="CFCInvocationException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="CFCInvocationException"
+                            namespace="http://webservices"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="zipCodeClass">
+
+      <wsdl:port binding="impl:zipCodeWebService.cfcSoapBinding" name="zipCodeWebService.cfc">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/worldwildweb.biz/0.1/zipCodeClass"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

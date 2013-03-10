@@ -1,0 +1,357 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://harbormist.com/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://harbormist.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>A web service which gets stock quotes and analyses stocks, by scraping either the Yahoo or MSNBC websites.  [Programmers: Chung-Tah Tsao, Chin-Han Lee.]</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://harbormist.com/">
+         <s:element name="GetYahooStockInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="StockSymbols" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetYahooStockInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetYahooStockInfoResult"
+                             type="tns:ArrayOfStockInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfStockInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="StockInfo" nillable="true"
+                          type="tns:StockInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="StockInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StockSymbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StockName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StockMarket" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StockIndustry" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LatestPrice" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PriceChange" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PercentChange" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PrevClose" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DayLow" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DayHigh" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Volume" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rating" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="YearRange" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PEratio" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DivPerShare" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EarningPerShare" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetMSNBCStockInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="StockSymbols" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMSNBCStockInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMSNBCStockInfoResult"
+                             type="tns:ArrayOfStockInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMSNBCRatings">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="StockSymbols" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMSNBCRatingsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMSNBCRatingsResult"
+                             type="tns:ArrayOfStockInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetYahooRatings">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="StockSymbols" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetYahooRatingsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetYahooRatingsResult"
+                             type="tns:ArrayOfStockInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStockTARatings">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="StockSymbols" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStockTARatingsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStockTARatingsResult"
+                             type="tns:ArrayOfStockInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetOurRating">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="YahooStockRating" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSNBCStockRating" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StockTAStockRating" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetOurRatingResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetOurRatingResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ArrayOfStockInfo" nillable="true" type="tns:ArrayOfStockInfo"/>
+         <s:element name="int" type="s:int"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetYahooStockInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:GetYahooStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetYahooStockInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:GetYahooStockInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCStockInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMSNBCStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCStockInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMSNBCStockInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCRatingsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMSNBCRatings"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCRatingsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMSNBCRatingsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetYahooRatingsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetYahooRatings"/>
+  </wsdl:message>
+  <wsdl:message name="GetYahooRatingsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetYahooRatingsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockTARatingsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStockTARatings"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockTARatingsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStockTARatingsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetOurRatingSoapIn">
+      <wsdl:part name="parameters" element="tns:GetOurRating"/>
+  </wsdl:message>
+  <wsdl:message name="GetOurRatingSoapOut">
+      <wsdl:part name="parameters" element="tns:GetOurRatingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetYahooStockInfoHttpGetIn">
+      <wsdl:part name="StockSymbols" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetYahooStockInfoHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCStockInfoHttpGetIn">
+      <wsdl:part name="StockSymbols" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCStockInfoHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCRatingsHttpGetIn">
+      <wsdl:part name="StockSymbols" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCRatingsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetYahooRatingsHttpGetIn">
+      <wsdl:part name="StockSymbols" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetYahooRatingsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockTARatingsHttpGetIn">
+      <wsdl:part name="StockSymbols" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockTARatingsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetOurRatingHttpGetIn">
+      <wsdl:part name="YahooStockRating" type="s:string"/>
+      <wsdl:part name="MSNBCStockRating" type="s:string"/>
+      <wsdl:part name="StockTAStockRating" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetOurRatingHttpGetOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="GetYahooStockInfoHttpPostIn">
+      <wsdl:part name="StockSymbols" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetYahooStockInfoHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCStockInfoHttpPostIn">
+      <wsdl:part name="StockSymbols" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCStockInfoHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCRatingsHttpPostIn">
+      <wsdl:part name="StockSymbols" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNBCRatingsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetYahooRatingsHttpPostIn">
+      <wsdl:part name="StockSymbols" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetYahooRatingsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockTARatingsHttpPostIn">
+      <wsdl:part name="StockSymbols" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockTARatingsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfStockInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetOurRatingHttpPostIn">
+      <wsdl:part name="YahooStockRating" type="s:string"/>
+      <wsdl:part name="MSNBCStockRating" type="s:string"/>
+      <wsdl:part name="StockTAStockRating" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetOurRatingHttpPostOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="StockAnalysisServiceSoap" type="tns:StockAnalysisServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetYahooStockInfo">
+         <soap:operation soapAction="http://harbormist.com/GetYahooStockInfo" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMSNBCStockInfo">
+         <soap:operation soapAction="http://harbormist.com/GetMSNBCStockInfo" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMSNBCRatings">
+         <soap:operation soapAction="http://harbormist.com/GetMSNBCRatings" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetYahooRatings">
+         <soap:operation soapAction="http://harbormist.com/GetYahooRatings" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStockTARatings">
+         <soap:operation soapAction="http://harbormist.com/GetStockTARatings" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetOurRating">
+         <soap:operation soapAction="http://harbormist.com/GetOurRating" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="StockAnalysisService">
+      <wsdl:documentation>A web service which gets stock quotes and analyses stocks, by scraping either the Yahoo or MSNBC websites.  [Programmers: Chung-Tah Tsao, Chin-Han Lee.]</wsdl:documentation>
+      <wsdl:port name="StockAnalysisServiceSoap" binding="tns:StockAnalysisServiceSoap">
+         <soap:address location="http://ws.soatrader.com/harbormist.com/0.1/StockAnalysisService"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

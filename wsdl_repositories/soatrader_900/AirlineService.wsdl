@@ -1,0 +1,309 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:tns="http://www.pathfinder-xml.com/AirlineService.wsdl"
+             xmlns:ns="http://pathfinder-xml/AirlineService.xsd"
+             targetNamespace="http://www.pathfinder-xml.com/AirlineService.wsdl">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema elementFormDefault="qualified"
+                  targetNamespace="http://pathfinder-xml/AirlineService.xsd">
+         <xsd:complexType name="Airline">
+            <xsd:attribute name="AirlineCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="IATACode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ICAOCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Name" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineContact">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirlineContactPoint"
+                            type="ns:AirlineContactPoint"/>
+            </xsd:sequence>
+            <xsd:attribute name="AirlineCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Description" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Name" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Type" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineContactPoint">
+            <xsd:attribute name="ContactingSituation" type="xsd:string" use="optional"/>
+            <xsd:attribute name="CountryCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Type" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Value" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineDetail">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" minOccurs="0" name="Airline" type="ns:Airline"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirlineContact"
+                            type="ns:AirlineContact"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineGetAirlinesInfo">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" minOccurs="0" name="Airline" type="ns:Airline"/>
+               <xsd:element maxOccurs="1" minOccurs="0" name="SpecificationMatching"
+                            type="ns:SpecificationMatching"/>
+               <xsd:element maxOccurs="1" minOccurs="0" name="CriterionAirlines"
+                            type="ns:CriterionAirlines"/>
+               <xsd:element maxOccurs="1" minOccurs="0" name="AirlineGetAirlinesRequestedData"
+                            type="ns:AirlineGetAirlinesRequestedData"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineGetAirlinesRequestedData">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" minOccurs="0" name="AirlineGetAirlinesSorting"
+                            type="ns:AirlineGetAirlinesSorting"/>
+            </xsd:sequence>
+            <xsd:attribute name="AirlineDetails" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="DesiredResults" type="xsd:int" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineGetAirlinesSorting">
+            <xsd:attribute name="SortPriorityAirlineClassification" type="xsd:int" use="optional"/>
+            <xsd:attribute name="SortPriorityAirlineCode" type="xsd:int" use="optional"/>
+            <xsd:attribute name="SortPriorityAirlineName" type="xsd:int" use="optional"/>
+            <xsd:attribute name="SortPriorityCarrierCategory" type="xsd:int" use="optional"/>
+            <xsd:attribute name="SortPriorityFlightHistoryTracked" type="xsd:int" use="optional"/>
+            <xsd:attribute name="SortPriorityIataCode" type="xsd:int" use="optional"/>
+            <xsd:attribute name="SortPriorityIcaoCode" type="xsd:int" use="optional"/>
+            <xsd:attribute name="SortPriorityPrefixNumber" type="xsd:int" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="CriterionAirlines">
+            <xsd:attribute name="FlightHistoryTrackedOnly" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="MinAirlineClassification" type="xsd:int" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="Error">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" name="Message" type="xsd:string"/>
+               <xsd:element maxOccurs="1" name="StackTrace" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="MajorCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MinorCode" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="Login">
+            <xsd:attribute name="AccountId" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Guid" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Password" type="xsd:string" use="optional"/>
+            <xsd:attribute name="UserId" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="SpecificationMatching">
+            <xsd:attribute name="MatchAirlineCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MatchAirlineName" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MatchCarrierCategory" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MatchIataCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MatchIcaoCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MatchPrefixNumber" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MatchString" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:element name="AirlineGetAirlineDetailRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+                  <xsd:element name="Airline" type="ns:Airline"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="AirlineGetAirlineDetailResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element maxOccurs="unbounded" name="AirlineDetail" type="ns:AirlineDetail"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="AirlineGetAirlineRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+                  <xsd:element name="Airline" type="ns:Airline"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="AirlineGetAirlineResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element maxOccurs="unbounded" name="Airline" type="ns:Airline"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="AirlineGetAirlinesRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+                  <xsd:element name="AirlineGetAirlinesInfo" type="ns:AirlineGetAirlinesInfo"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="AirlineGetAirlinesResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element maxOccurs="unbounded" name="Airline" type="ns:Airline"/>
+                  <xsd:element maxOccurs="unbounded" name="AirlineDetail" type="ns:AirlineDetail"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="AirlineGetAllAirlinesRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="AirlineGetAllAirlinesResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element maxOccurs="unbounded" name="Airline" type="ns:Airline"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+  </types>
+  <message name="AirlineGetAirlineDetailRequest">
+      <part element="ns:AirlineGetAirlineDetailRequest"
+            name="AirlineGetAirlineDetailRequest"/>
+  </message>
+  <message name="AirlineGetAirlineDetailResponse">
+      <part element="ns:AirlineGetAirlineDetailResponse"
+            name="AirlineGetAirlineDetailResponse"/>
+  </message>
+  <message name="AirlineGetAirlineRequest">
+      <part element="ns:AirlineGetAirlineRequest" name="AirlineGetAirlineRequest"/>
+  </message>
+  <message name="AirlineGetAirlineResponse">
+      <part element="ns:AirlineGetAirlineResponse" name="AirlineGetAirlineResponse"/>
+  </message>
+  <message name="AirlineGetAirlinesRequest">
+      <part element="ns:AirlineGetAirlinesRequest" name="AirlineGetAirlinesRequest"/>
+  </message>
+  <message name="AirlineGetAirlinesResponse">
+      <part element="ns:AirlineGetAirlinesResponse" name="AirlineGetAirlinesResponse"/>
+  </message>
+  <message name="AirlineGetAllAirlinesRequest">
+      <part element="ns:AirlineGetAllAirlinesRequest" name="AirlineGetAllAirlinesRequest"/>
+  </message>
+  <message name="AirlineGetAllAirlinesResponse">
+      <part element="ns:AirlineGetAllAirlinesResponse" name="AirlineGetAllAirlinesResponse"/>
+  </message>
+  <portType name="AirlineGetAirlineDetailPort">
+      <operation name="AirlineGetAirlineDetailOperation">
+         <input message="tns:AirlineGetAirlineDetailRequest"/>
+         <output message="tns:AirlineGetAirlineDetailResponse"/>
+      </operation>
+  </portType>
+  <portType name="AirlineGetAirlinePort">
+      <operation name="AirlineGetAirlineOperation">
+         <input message="tns:AirlineGetAirlineRequest"/>
+         <output message="tns:AirlineGetAirlineResponse"/>
+      </operation>
+  </portType>
+  <portType name="AirlineGetAirlinesPort">
+      <operation name="AirlineGetAirlinesOperation">
+         <input message="tns:AirlineGetAirlinesRequest"/>
+         <output message="tns:AirlineGetAirlinesResponse"/>
+      </operation>
+  </portType>
+  <portType name="AirlineGetAllAirlinesPort">
+      <operation name="AirlineGetAllAirlinesOperation">
+         <input message="tns:AirlineGetAllAirlinesRequest"/>
+         <output message="tns:AirlineGetAllAirlinesResponse"/>
+      </operation>
+  </portType>
+  <binding name="AirlineGetAirlineDetailSOAPBinding"
+            type="tns:AirlineGetAirlineDetailPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="AirlineGetAirlineDetailOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <binding name="AirlineGetAirlineSOAPBinding" type="tns:AirlineGetAirlinePort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="AirlineGetAirlineOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <binding name="AirlineGetAirlinesSOAPBinding" type="tns:AirlineGetAirlinesPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="AirlineGetAirlinesOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <binding name="AirlineGetAllAirlinesSOAPBinding" type="tns:AirlineGetAllAirlinesPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="AirlineGetAllAirlinesOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="AirlineService">
+      <port binding="tns:AirlineGetAirlineDetailSOAPBinding"
+            name="AirlineGetAirlineDetailService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.2/AirlineService"/>
+      </port>
+      <port binding="tns:AirlineGetAirlineSOAPBinding" name="AirlineGetAirlineService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.2/AirlineService"/>
+      </port>
+      <port binding="tns:AirlineGetAirlinesSOAPBinding" name="AirlineGetAirlinesService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.2/AirlineService"/>
+      </port>
+      <port binding="tns:AirlineGetAllAirlinesSOAPBinding"
+            name="AirlineGetAllAirlinesService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.2/AirlineService"/>
+      </port>
+  </service>
+</definitions>

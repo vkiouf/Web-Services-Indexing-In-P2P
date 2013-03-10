@@ -1,0 +1,1787 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://holidayit.com/quickres/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://holidayit.com/quickres/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://holidayit.com/quickres/">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="Search">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameters" type="tns:SearchBasicRQ"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SearchBasicRQ">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRQBase">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Area" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="HotelName" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="Nights" type="s:short"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Rooms" type="tns:ArrayOfRoomInformation"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MaxPrice" type="s:decimal"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MinRating" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MaxRating" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AvailableOnly" type="s:boolean"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="BasicRQBase"/>
+         <s:complexType name="ArrayOfRoomInformation">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="RoomInformation" nillable="true"
+                          type="tns:RoomInformation"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RoomInformation">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Adults" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Children" type="s:short"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ChildDatesOfBirth" type="tns:ArrayOfDateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PassengerDetails"
+                          type="tns:ArrayOfBookBasicPerson"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfDateTime">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="dateTime" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfBookBasicPerson">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BookBasicPerson" nillable="true"
+                          type="tns:BookBasicPerson"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BookBasicPerson">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="TitleText" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Child" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DateOfBirth" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchResult" type="tns:SearchBasicRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SearchBasicRS">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRS">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Hotels" type="tns:ArrayOfSearchBasicHotel"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="BasicRS">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfErrorClass"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfErrorClass">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ErrorClass" nillable="true"
+                          type="tns:ErrorClass"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ErrorClass">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorNumber" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorText" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItineraryRef" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BookingNumber" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rescode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchBasicHotel">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchBasicHotel" nillable="true"
+                          type="tns:SearchBasicHotel"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchBasicHotel">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Summary" type="tns:HotelSummary"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rooms" type="tns:ArrayOfSearchBasicRoomList"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Extras" type="tns:ArrayOfSearchBasicExtras"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelSummary">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Rescode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AccommodationTypeID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Rating" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ShortDescription">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+               <s:element minOccurs="0" maxOccurs="1" name="Pictures" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FacilityList" type="tns:ArrayOfString"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ResortFee" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchBasicRoomList">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchBasicRoomList" nillable="true"
+                          type="tns:SearchBasicRoomList"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchBasicRoomList">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Rooms" type="tns:ArrayOfSearchBasicRoom"/>
+            </s:sequence>
+            <s:attribute name="Adults" type="s:short" use="required"/>
+            <s:attribute name="Children" type="s:short" use="required"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchBasicRoom">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchBasicRoom" nillable="true"
+                          type="tns:SearchBasicRoom"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchBasicRoom">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LongName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinOccupancy" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxOccupancy" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxAdults" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxChildren" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCost" type="tns:SearchBasicRoomCost"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchBasicRoomCost">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="RoomsFree" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OnRequest" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalCost" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PerNightCosts" type="tns:ArrayOfNightCost"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfNightCost">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="NightCost" nillable="true"
+                          type="tns:NightCost"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="NightCost">
+            <s:simpleContent>
+               <s:extension base="s:decimal">
+                  <s:attribute name="night" type="s:short" use="required"/>
+               </s:extension>
+            </s:simpleContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchBasicExtras">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchBasicExtras" nillable="true"
+                          type="tns:SearchBasicExtras"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchBasicExtras">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ExtraCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ExtraDescription" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PerNight" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Cost" type="s:decimal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AuthHeaderBasic" type="tns:AuthHeaderBasic"/>
+         <s:complexType name="AuthHeaderBasic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetHotelDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="rescode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetHotelDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetHotelDetailsResult"
+                             type="tns:GetHotelDetailsBasicRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GetHotelDetailsBasicRS">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRS">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="HotelDetails" type="tns:Hotel"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Hotel">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AreaID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rescode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AccommodationTypeID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+               <s:element minOccurs="1" maxOccurs="1" name="Rating" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+               <s:element minOccurs="1" maxOccurs="1" name="Included" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FaxNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Strapline" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RatingTypeID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RatingNote" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CancellationPolicy" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Priority" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ShortDescription">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+               <s:element minOccurs="1" maxOccurs="1" name="ResortFee" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinChildAge" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Pictures" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FacilityList" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Facilities" type="tns:ArrayOfHotelFacility"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Notes" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rates" type="tns:HotelRates"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHotelFacility">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HotelFacility" nillable="true"
+                          type="tns:HotelFacility"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelFacility">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelRates">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Rooms" type="tns:ArrayOfHotelRoom"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Seasons" type="tns:ArrayOfHotelSeason"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHotelRoom">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HotelRoom" nillable="true"
+                          type="tns:HotelRoom"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelRoom">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HotelID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="GroupID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HotelTaxBandID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExportToEngine" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IncludeOnSite" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExpiryDate" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LongName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DisplaySequence" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinOccupancy" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxOccupancy" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxAdults" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxChildren" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinNights" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExactNights" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHotelSeason">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HotelSeason" nillable="true"
+                          type="tns:HotelSeason"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelSeason">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="DateFrom" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DateTo" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DaysValid" type="s:unsignedByte"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rates" type="tns:ArrayOfHotelRoomRate"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHotelRoomRate">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HotelRoomRate" nillable="true"
+                          type="tns:HotelRoomRate"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelRoomRate">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Rate" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NotAvailable" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Book">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameters" type="tns:BookBasicRQ"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="BookBasicRQ">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRQBase">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ClientReference" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Contact" type="tns:ItineraryContact"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AllowRequests" type="s:boolean"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Bookings" type="tns:ArrayOfBookBasicBooking"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ItineraryContact">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfBookBasicBooking">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BookBasicBooking" nillable="true"
+                          type="tns:BookBasicBooking"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BookBasicBooking">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Rescode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Nights" type="s:short"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Occupancy" type="tns:ArrayOfRoomInformation"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Extras" type="tns:ArrayOfBookBasicExtra"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Notes" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfBookBasicExtra">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BookBasicExtra" nillable="true"
+                          type="tns:BookBasicExtra"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BookBasicExtra">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="BookResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="BookResult" type="tns:BookBasicRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="BookBasicRS">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRS">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="TotalCost" type="s:decimal"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Bookings" type="tns:ArrayOfBookingResult"/>
+                  </s:sequence>
+                  <s:attribute name="ClientReference" type="s:string"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfBookingResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BookingResult" nillable="true"
+                          type="tns:BookingResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BookingResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Number" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rescode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Cost" type="s:decimal"/>
+            </s:sequence>
+            <s:attribute name="Adults" type="s:short" use="required"/>
+            <s:attribute name="Children" type="s:short" use="required"/>
+         </s:complexType>
+         <s:element name="GetCountryList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetCountryListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCountryListResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStateList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="country" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStateListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStateListResult" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAreaList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="country" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAreaListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAreaListResult" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchByRescode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameters" type="tns:SearchBasicByRescodeRQ"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SearchBasicByRescodeRQ">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRQBase">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Rescodes" type="tns:ArrayOfString"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="Nights" type="s:short"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Rooms" type="tns:ArrayOfRoomInformation"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MaxPrice" type="s:decimal"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MinRating" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MaxRating" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AvailableOnly" type="s:boolean"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="SearchByRescodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchByRescodeResult"
+                             type="tns:SearchBasicRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AvailabilityByRescode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameters"
+                             type="tns:AvailabilityByRescodeRQ"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AvailabilityByRescodeRQ">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Recodes" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AvailabilityByRescodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AvailabilityByRescodeResult"
+                             type="tns:AvailabilityRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AvailabilityRS">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRS">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="HotelAvailability"
+                                type="tns:ArrayOfHotelAvailabilityInfo"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfHotelAvailabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HotelAvailabilityInfo"
+                          nillable="true"
+                          type="tns:HotelAvailabilityInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelAvailabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AllocationAvailability"
+                          type="tns:ArrayOfAllocationAvailabilityInfo"/>
+            </s:sequence>
+            <s:attribute name="Rescode" type="s:string"/>
+            <s:attribute name="NotAvailable" type="s:boolean" use="required"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfAllocationAvailabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AllocationAvailabilityInfo"
+                          nillable="true"
+                          type="tns:AllocationAvailabilityInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AllocationAvailabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AllocationCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCodes" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Availability"
+                          type="tns:ArrayOfAvailabilityInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfAvailabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AvailabilityInfo" nillable="true"
+                          type="tns:AvailabilityInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AvailabilityInfo">
+            <s:attribute name="AllocationDate" type="s:dateTime" use="required"/>
+            <s:attribute name="Availability" type="s:int" use="required"/>
+         </s:complexType>
+         <s:element name="FindItineraryByClientReference">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="clientReference" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FindItineraryByClientReferenceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FindItineraryByClientReferenceResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListItineraries">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListItinerariesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListItinerariesResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetItineraryStatusList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="references" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetItineraryStatusListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetItineraryStatusListResult"
+                             type="tns:ItineraryStatusRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ItineraryStatusRS">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRS">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Statuses"
+                                type="tns:ArrayOfItineraryStatusBasic"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfItineraryStatusBasic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ItineraryStatusBasic" nillable="true"
+                          type="tns:ItineraryStatusBasic"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ItineraryStatusBasic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BookingStatuses"
+                          type="tns:ArrayOfBookingStatusBasic"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfBookingStatusBasic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BookingStatusBasic" nillable="true"
+                          type="tns:BookingStatusBasic"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BookingStatusBasic">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Number" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="FindItineraryByDate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FindItineraryByDateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FindItineraryByDateResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://holidayit.com/quickres/">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="Search">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameters" type="tns:SearchBasicRQ"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SearchBasicRQ">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRQBase">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Area" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="HotelName" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="Nights" type="s:short"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Rooms" type="tns:ArrayOfRoomInformation"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MaxPrice" type="s:decimal"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MinRating" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MaxRating" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AvailableOnly" type="s:boolean"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="BasicRQBase"/>
+         <s:complexType name="ArrayOfRoomInformation">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="RoomInformation" nillable="true"
+                          type="tns:RoomInformation"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RoomInformation">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Adults" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Children" type="s:short"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ChildDatesOfBirth" type="tns:ArrayOfDateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PassengerDetails"
+                          type="tns:ArrayOfBookBasicPerson"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfDateTime">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="dateTime" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfBookBasicPerson">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BookBasicPerson" nillable="true"
+                          type="tns:BookBasicPerson"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BookBasicPerson">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="TitleText" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Child" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DateOfBirth" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchResult" type="tns:SearchBasicRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SearchBasicRS">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRS">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Hotels" type="tns:ArrayOfSearchBasicHotel"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="BasicRS">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfErrorClass"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfErrorClass">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ErrorClass" nillable="true"
+                          type="tns:ErrorClass"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ErrorClass">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorNumber" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorText" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItineraryRef" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BookingNumber" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rescode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchBasicHotel">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchBasicHotel" nillable="true"
+                          type="tns:SearchBasicHotel"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchBasicHotel">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Summary" type="tns:HotelSummary"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rooms" type="tns:ArrayOfSearchBasicRoomList"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Extras" type="tns:ArrayOfSearchBasicExtras"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelSummary">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Rescode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AccommodationTypeID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Rating" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ShortDescription">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+               <s:element minOccurs="0" maxOccurs="1" name="Pictures" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FacilityList" type="tns:ArrayOfString"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ResortFee" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchBasicRoomList">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchBasicRoomList" nillable="true"
+                          type="tns:SearchBasicRoomList"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchBasicRoomList">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Rooms" type="tns:ArrayOfSearchBasicRoom"/>
+            </s:sequence>
+            <s:attribute name="Adults" type="s:short" use="required"/>
+            <s:attribute name="Children" type="s:short" use="required"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchBasicRoom">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchBasicRoom" nillable="true"
+                          type="tns:SearchBasicRoom"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchBasicRoom">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LongName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinOccupancy" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxOccupancy" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxAdults" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxChildren" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCost" type="tns:SearchBasicRoomCost"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchBasicRoomCost">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="RoomsFree" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OnRequest" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalCost" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PerNightCosts" type="tns:ArrayOfNightCost"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfNightCost">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="NightCost" nillable="true"
+                          type="tns:NightCost"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="NightCost">
+            <s:simpleContent>
+               <s:extension base="s:decimal">
+                  <s:attribute name="night" type="s:short" use="required"/>
+               </s:extension>
+            </s:simpleContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchBasicExtras">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchBasicExtras" nillable="true"
+                          type="tns:SearchBasicExtras"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchBasicExtras">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ExtraCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ExtraDescription" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PerNight" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Cost" type="s:decimal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AuthHeaderBasic" type="tns:AuthHeaderBasic"/>
+         <s:complexType name="AuthHeaderBasic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetHotelDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="rescode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetHotelDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetHotelDetailsResult"
+                             type="tns:GetHotelDetailsBasicRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GetHotelDetailsBasicRS">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRS">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="HotelDetails" type="tns:Hotel"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Hotel">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AreaID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rescode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AccommodationTypeID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+               <s:element minOccurs="1" maxOccurs="1" name="Rating" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+               <s:element minOccurs="1" maxOccurs="1" name="Included" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FaxNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Strapline" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RatingTypeID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RatingNote" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CancellationPolicy" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Priority" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ShortDescription">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+               <s:element minOccurs="1" maxOccurs="1" name="ResortFee" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinChildAge" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Pictures" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FacilityList" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Facilities" type="tns:ArrayOfHotelFacility"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Notes" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rates" type="tns:HotelRates"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHotelFacility">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HotelFacility" nillable="true"
+                          type="tns:HotelFacility"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelFacility">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelRates">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Rooms" type="tns:ArrayOfHotelRoom"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Seasons" type="tns:ArrayOfHotelSeason"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHotelRoom">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HotelRoom" nillable="true"
+                          type="tns:HotelRoom"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelRoom">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HotelID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="GroupID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HotelTaxBandID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExportToEngine" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IncludeOnSite" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExpiryDate" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LongName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DisplaySequence" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinOccupancy" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxOccupancy" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxAdults" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxChildren" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinNights" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExactNights" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHotelSeason">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HotelSeason" nillable="true"
+                          type="tns:HotelSeason"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelSeason">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="DateFrom" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DateTo" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DaysValid" type="s:unsignedByte"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rates" type="tns:ArrayOfHotelRoomRate"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHotelRoomRate">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HotelRoomRate" nillable="true"
+                          type="tns:HotelRoomRate"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelRoomRate">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Rate" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NotAvailable" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Book">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameters" type="tns:BookBasicRQ"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="BookBasicRQ">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRQBase">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="ClientReference" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Contact" type="tns:ItineraryContact"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AllowRequests" type="s:boolean"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Bookings" type="tns:ArrayOfBookBasicBooking"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ItineraryContact">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfBookBasicBooking">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BookBasicBooking" nillable="true"
+                          type="tns:BookBasicBooking"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BookBasicBooking">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Rescode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Nights" type="s:short"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Occupancy" type="tns:ArrayOfRoomInformation"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Extras" type="tns:ArrayOfBookBasicExtra"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Notes" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfBookBasicExtra">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BookBasicExtra" nillable="true"
+                          type="tns:BookBasicExtra"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BookBasicExtra">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="BookResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="BookResult" type="tns:BookBasicRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="BookBasicRS">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRS">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="TotalCost" type="s:decimal"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Bookings" type="tns:ArrayOfBookingResult"/>
+                  </s:sequence>
+                  <s:attribute name="ClientReference" type="s:string"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfBookingResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BookingResult" nillable="true"
+                          type="tns:BookingResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BookingResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Number" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rescode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Cost" type="s:decimal"/>
+            </s:sequence>
+            <s:attribute name="Adults" type="s:short" use="required"/>
+            <s:attribute name="Children" type="s:short" use="required"/>
+         </s:complexType>
+         <s:element name="GetCountryList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetCountryListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCountryListResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStateList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="country" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStateListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStateListResult" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAreaList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="country" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAreaListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAreaListResult" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchByRescode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameters" type="tns:SearchBasicByRescodeRQ"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SearchBasicByRescodeRQ">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRQBase">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Rescodes" type="tns:ArrayOfString"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="Nights" type="s:short"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Rooms" type="tns:ArrayOfRoomInformation"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MaxPrice" type="s:decimal"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MinRating" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MaxRating" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AvailableOnly" type="s:boolean"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="SearchByRescodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchByRescodeResult"
+                             type="tns:SearchBasicRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AvailabilityByRescode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameters"
+                             type="tns:AvailabilityByRescodeRQ"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AvailabilityByRescodeRQ">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Recodes" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AvailabilityByRescodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AvailabilityByRescodeResult"
+                             type="tns:AvailabilityRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AvailabilityRS">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRS">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="HotelAvailability"
+                                type="tns:ArrayOfHotelAvailabilityInfo"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfHotelAvailabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HotelAvailabilityInfo"
+                          nillable="true"
+                          type="tns:HotelAvailabilityInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotelAvailabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AllocationAvailability"
+                          type="tns:ArrayOfAllocationAvailabilityInfo"/>
+            </s:sequence>
+            <s:attribute name="Rescode" type="s:string"/>
+            <s:attribute name="NotAvailable" type="s:boolean" use="required"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfAllocationAvailabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AllocationAvailabilityInfo"
+                          nillable="true"
+                          type="tns:AllocationAvailabilityInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AllocationAvailabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AllocationCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCodes" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Availability"
+                          type="tns:ArrayOfAvailabilityInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfAvailabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AvailabilityInfo" nillable="true"
+                          type="tns:AvailabilityInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AvailabilityInfo">
+            <s:attribute name="AllocationDate" type="s:dateTime" use="required"/>
+            <s:attribute name="Availability" type="s:int" use="required"/>
+         </s:complexType>
+         <s:element name="FindItineraryByClientReference">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="clientReference" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FindItineraryByClientReferenceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FindItineraryByClientReferenceResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListItineraries">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListItinerariesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListItinerariesResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetItineraryStatusList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="references" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetItineraryStatusListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetItineraryStatusListResult"
+                             type="tns:ItineraryStatusRS"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ItineraryStatusRS">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BasicRS">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Statuses"
+                                type="tns:ArrayOfItineraryStatusBasic"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfItineraryStatusBasic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ItineraryStatusBasic" nillable="true"
+                          type="tns:ItineraryStatusBasic"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ItineraryStatusBasic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BookingStatuses"
+                          type="tns:ArrayOfBookingStatusBasic"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfBookingStatusBasic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BookingStatusBasic" nillable="true"
+                          type="tns:BookingStatusBasic"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BookingStatusBasic">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Number" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="FindItineraryByDate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FindItineraryByDateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FindItineraryByDateResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchSoapIn">
+      <wsdl:part name="parameters" element="tns:Search"/>
+  </wsdl:message>
+  <wsdl:message name="SearchSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:message name="GetHotelDetailsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetHotelDetails"/>
+  </wsdl:message>
+  <wsdl:message name="GetHotelDetailsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetHotelDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetHotelDetailsAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:message name="BookSoapIn">
+      <wsdl:part name="parameters" element="tns:Book"/>
+  </wsdl:message>
+  <wsdl:message name="BookSoapOut">
+      <wsdl:part name="parameters" element="tns:BookResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BookAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:message name="GetCountryListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCountryList"/>
+  </wsdl:message>
+  <wsdl:message name="GetCountryListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCountryListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCountryListAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:message name="GetStateListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStateList"/>
+  </wsdl:message>
+  <wsdl:message name="GetStateListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStateListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStateListAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:message name="GetAreaListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAreaList"/>
+  </wsdl:message>
+  <wsdl:message name="GetAreaListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAreaListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAreaListAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByRescodeSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchByRescode"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByRescodeSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchByRescodeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByRescodeAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:message name="AvailabilityByRescodeSoapIn">
+      <wsdl:part name="parameters" element="tns:AvailabilityByRescode"/>
+  </wsdl:message>
+  <wsdl:message name="AvailabilityByRescodeSoapOut">
+      <wsdl:part name="parameters" element="tns:AvailabilityByRescodeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AvailabilityByRescodeAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:message name="FindItineraryByClientReferenceSoapIn">
+      <wsdl:part name="parameters" element="tns:FindItineraryByClientReference"/>
+  </wsdl:message>
+  <wsdl:message name="FindItineraryByClientReferenceSoapOut">
+      <wsdl:part name="parameters" element="tns:FindItineraryByClientReferenceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindItineraryByClientReferenceAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:message name="ListItinerariesSoapIn">
+      <wsdl:part name="parameters" element="tns:ListItineraries"/>
+  </wsdl:message>
+  <wsdl:message name="ListItinerariesSoapOut">
+      <wsdl:part name="parameters" element="tns:ListItinerariesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListItinerariesAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:message name="GetItineraryStatusListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetItineraryStatusList"/>
+  </wsdl:message>
+  <wsdl:message name="GetItineraryStatusListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetItineraryStatusListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetItineraryStatusListAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:message name="FindItineraryByDateSoapIn">
+      <wsdl:part name="parameters" element="tns:FindItineraryByDate"/>
+  </wsdl:message>
+  <wsdl:message name="FindItineraryByDateSoapOut">
+      <wsdl:part name="parameters" element="tns:FindItineraryByDateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FindItineraryByDateAuthHeaderBasic">
+      <wsdl:part name="AuthHeaderBasic" element="tns:AuthHeaderBasic"/>
+  </wsdl:message>
+  <wsdl:portType name="QRWSBasic01Soap">
+      <wsdl:operation name="Search">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search Returning summary and availability</documentation>
+         <wsdl:input message="tns:SearchSoapIn"/>
+         <wsdl:output message="tns:SearchSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetHotelDetails">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get Details of a specific Hotel</documentation>
+         <wsdl:input message="tns:GetHotelDetailsSoapIn"/>
+         <wsdl:output message="tns:GetHotelDetailsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="Book">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search Returning summary and availability</documentation>
+         <wsdl:input message="tns:BookSoapIn"/>
+         <wsdl:output message="tns:BookSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCountryList">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get List of Countries</documentation>
+         <wsdl:input message="tns:GetCountryListSoapIn"/>
+         <wsdl:output message="tns:GetCountryListSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetStateList">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get List of States for a Country</documentation>
+         <wsdl:input message="tns:GetStateListSoapIn"/>
+         <wsdl:output message="tns:GetStateListSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetAreaList">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get List of Areas for a State</documentation>
+         <wsdl:input message="tns:GetAreaListSoapIn"/>
+         <wsdl:output message="tns:GetAreaListSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SearchByRescode">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search Returning summary and availability for list of rescodes</documentation>
+         <wsdl:input message="tns:SearchByRescodeSoapIn"/>
+         <wsdl:output message="tns:SearchByRescodeSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AvailabilityByRescode">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search Returning summary and availability for list of rescodes</documentation>
+         <wsdl:input message="tns:AvailabilityByRescodeSoapIn"/>
+         <wsdl:output message="tns:AvailabilityByRescodeSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="FindItineraryByClientReference">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">List all itineraries with a specific client reference</documentation>
+         <wsdl:input message="tns:FindItineraryByClientReferenceSoapIn"/>
+         <wsdl:output message="tns:FindItineraryByClientReferenceSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="ListItineraries">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get List of Itineraries</documentation>
+         <wsdl:input message="tns:ListItinerariesSoapIn"/>
+         <wsdl:output message="tns:ListItinerariesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetItineraryStatusList">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get current status of an itinerary and bookings for a list of references</documentation>
+         <wsdl:input message="tns:GetItineraryStatusListSoapIn"/>
+         <wsdl:output message="tns:GetItineraryStatusListSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="FindItineraryByDate">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">List all itineraries with a start date between the two dates</documentation>
+         <wsdl:input message="tns:FindItineraryByDateSoapIn"/>
+         <wsdl:output message="tns:FindItineraryByDateSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="QRWSBasic01Soap" type="tns:QRWSBasic01Soap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="Search">
+         <soap:operation soapAction="http://holidayit.com/quickres/Search" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SearchAuthHeaderBasic" part="AuthHeaderBasic" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetHotelDetails">
+         <soap:operation soapAction="http://holidayit.com/quickres/GetHotelDetails" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetHotelDetailsAuthHeaderBasic" part="AuthHeaderBasic"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Book">
+         <soap:operation soapAction="http://holidayit.com/quickres/Book" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:BookAuthHeaderBasic" part="AuthHeaderBasic" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCountryList">
+         <soap:operation soapAction="http://holidayit.com/quickres/GetCountryList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCountryListAuthHeaderBasic" part="AuthHeaderBasic"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStateList">
+         <soap:operation soapAction="http://holidayit.com/quickres/GetStateList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetStateListAuthHeaderBasic" part="AuthHeaderBasic" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAreaList">
+         <soap:operation soapAction="http://holidayit.com/quickres/GetAreaList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetAreaListAuthHeaderBasic" part="AuthHeaderBasic" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchByRescode">
+         <soap:operation soapAction="http://holidayit.com/quickres/SearchByRescode" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SearchByRescodeAuthHeaderBasic" part="AuthHeaderBasic"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AvailabilityByRescode">
+         <soap:operation soapAction="http://holidayit.com/quickres/AvailabilityByRescode"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AvailabilityByRescodeAuthHeaderBasic" part="AuthHeaderBasic"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="FindItineraryByClientReference">
+         <soap:operation soapAction="http://holidayit.com/quickres/FindItineraryByClientReference"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:FindItineraryByClientReferenceAuthHeaderBasic"
+                         part="AuthHeaderBasic"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListItineraries">
+         <soap:operation soapAction="http://holidayit.com/quickres/ListItineraries" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:ListItinerariesAuthHeaderBasic" part="AuthHeaderBasic"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetItineraryStatusList">
+         <soap:operation soapAction="http://holidayit.com/quickres/GetItineraryStatusList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetItineraryStatusListAuthHeaderBasic" part="AuthHeaderBasic"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="FindItineraryByDate">
+         <soap:operation soapAction="http://holidayit.com/quickres/FindItineraryByDate" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:FindItineraryByDateAuthHeaderBasic" part="AuthHeaderBasic"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="QRWSBasic01">
+      <wsdl:port name="QRWSBasic01Soap" binding="tns:QRWSBasic01Soap">
+         <soap:address location="http://ws.soatrader.com/make-booking.com/0.1/QRWSBasic01"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

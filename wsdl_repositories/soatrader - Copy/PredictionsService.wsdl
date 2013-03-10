@@ -1,0 +1,132 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://opendap.co-ops.nos.noaa.gov/axis/webservices/predictions/wsdl"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://opendap.co-ops.nos.noaa.gov/axis/webservices/predictions/wsdl"
+                  xmlns:intf="http://opendap.co-ops.nos.noaa.gov/axis/webservices/predictions/wsdl"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://opendap.co-ops.nos.noaa.gov/axis/webservices/predictions/wsdl">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://opendap.co-ops.nos.noaa.gov/axis/webservices/predictions/wsdl">
+         <element name="Parameters">
+            <complexType>
+               <sequence>
+                  <element name="stationId" type="xsd:string"/>
+                  <element name="beginDate" type="xsd:string"/>
+                  <element name="endDate" type="xsd:string"/>
+                  <element name="datum" type="xsd:int"/>
+                  <element name="unit" type="xsd:int"/>
+                  <element name="timeZone" type="xsd:int"/>
+                  <element name="dataInterval" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="Data">
+            <sequence>
+               <element name="timeStamp" type="xsd:string"/>
+               <element name="pred" type="xsd:double"/>
+            </sequence>
+         </complexType>
+         <complexType name="item">
+            <sequence>
+               <element maxOccurs="unbounded" name="item" type="impl:Data"/>
+            </sequence>
+         </complexType>
+         <element name="PredictionsValues">
+            <complexType>
+               <sequence>
+                  <element name="data" type="impl:item"/>
+               </sequence>
+            </complexType>
+         </element>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="getPredictionsResponse">
+
+      <wsdl:part element="impl:PredictionsValues" name="PredictionsValues"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPredictionsRequest">
+
+      <wsdl:part element="impl:Parameters" name="Parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="PredictionsPortType">
+
+      <wsdl:operation name="getPredictions" parameterOrder="Parameters">
+
+         <wsdl:input message="impl:getPredictionsRequest" name="getPredictionsRequest"/>
+
+         <wsdl:output message="impl:getPredictionsResponse" name="getPredictionsResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="PredictionsSoapBinding" type="impl:PredictionsPortType">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getPredictions">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPredictionsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPredictionsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="PredictionsService">
+
+      <wsdl:port binding="impl:PredictionsSoapBinding" name="Predictions">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/nos.noaa.gov/0.1/PredictionsService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

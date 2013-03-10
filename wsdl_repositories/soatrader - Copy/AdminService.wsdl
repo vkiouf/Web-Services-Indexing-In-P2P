@@ -1,0 +1,84 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://xml.apache.org/axis/wsdd/"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://xml.apache.org/axis/wsdd/"
+                  xmlns:intf="http://xml.apache.org/axis/wsdd/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://xml.apache.org/axis/wsdd/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://xml.apache.org/axis/wsdd/">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <element name="AdminService" type="xsd:anyType"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://xml.apache.org/axis/wsdd/">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <element name="AdminService" type="xsd:anyType"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <element name="AdminServiceReturn" type="xsd:anyType"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <element name="AdminServiceReturn" type="xsd:anyType"/>
+      </schema>
+   </wsdl:types>
+  <wsdl:message name="AdminServiceRequest">
+      <wsdl:part element="impl:AdminService" name="part"/>
+  </wsdl:message>
+  <wsdl:message name="AdminServiceResponse">
+      <wsdl:part element="AdminServiceReturn" name="AdminServiceReturn"/>
+  </wsdl:message>
+  <wsdl:portType name="Admin">
+      <wsdl:operation name="AdminService">
+         <wsdl:input message="impl:AdminServiceRequest" name="AdminServiceRequest"/>
+         <wsdl:output message="impl:AdminServiceResponse" name="AdminServiceResponse"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AdminServiceSoapBinding" type="impl:Admin">
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="AdminService">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="AdminServiceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body namespace="http://xml.apache.org/axis/wsdd/" use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="AdminServiceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body namespace="http://xml.apache.org/axis/wsdd/" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AdminService">
+      <wsdl:port binding="impl:AdminServiceSoapBinding" name="AdminService">
+         <wsdlsoap:address location="http://ws.soatrader.com/arikan.at/0.1/AdminService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,145 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://www.afi.es/WSSearchEngine"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.afi.es/WSSearchEngine">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.afi.es/WSSearchEngine">
+         <s:element name="MunicipalitySearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="year" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="regionId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="provinceId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="populationRange" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="filterWithBudgetData" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="filterWithDebtData" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="filterWithEconomicData" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="filterWithIncumplidos" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="MunicipalitySearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MunicipalitySearchResult"
+                             type="tns:ArrayOfMunicipalitySearchResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfMunicipalitySearchResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="MunicipalitySearchResult"
+                          nillable="true"
+                          type="tns:MunicipalitySearchResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MunicipalitySearchResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="year" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="indicadores"
+                          type="tns:MunicipalityIndicators"/>
+               <s:element minOccurs="0" maxOccurs="1" name="informacionSuministrada"
+                          type="tns:MunicipalityInfo"/>
+               <s:element minOccurs="0" maxOccurs="1" name="datosEconomicos"
+                          type="tns:MunicipalityEconomicData"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MunicipalityIndicators">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="indicadorSolvenciaGeneral" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="indicadorSolvenciaFinanciera" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="indicadorLiquidez" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="indicadorDinamismoEconomico" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="indicadorSinteticoCalidadCrediticia"
+                          type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="incumplido" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="calificacionIndicadorSintetico"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MunicipalityInfo">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="presupuestoLiquidado" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="endeudamiento" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="datosEconomicos" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="todaLaInformacion" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MunicipalityEconomicData">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="habitantes" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="crecimientoDemografico" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="unidadesUrbanas" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="crecimientoUnidades" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="recorridoFiscal" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="MunicipalitySearchSoapIn">
+      <wsdl:part name="parameters" element="tns:MunicipalitySearch"/>
+  </wsdl:message>
+  <wsdl:message name="MunicipalitySearchSoapOut">
+      <wsdl:part name="parameters" element="tns:MunicipalitySearchResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="WSSearchEngineSoap">
+      <wsdl:operation name="MunicipalitySearch">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Recibe los siguientes parámetros:&lt;br&gt;- Usuario de la aplicación&lt;br&gt; - Contraseña&lt;br&gt; - Id del municipio (-1 para no tener este campo en cuenta en la busqueda)&lt;br&gt; - Nombre del municipio&lt;br&gt; - Año (-1 para indicar 'cualquiera')&lt;br&gt; - Id de la comunidad autónoma (-1 para indicar 'cualquiera')&lt;br&gt; - Id de la provincia que debe ser coherente con la comunidad autónoma (-1 para indicar 'cualquiera')&lt;br&gt; - Id del rango de población (-1 para indicar 'cualquiera')&lt;br&gt; - Filtrar los que tienen información de liquidación presupuestaria&lt;br&gt; - Filtrar los que tienen datos de endeudamiento&lt;br&gt; - Filtrar los que tienen datos económicos&lt;br&gt; - Filtrar los que han incumplido pagos&lt;br&gt;Devuelve los resultados de la búsqueda.</documentation>
+         <wsdl:input message="tns:MunicipalitySearchSoapIn"/>
+         <wsdl:output message="tns:MunicipalitySearchSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSSearchEngineSoap" type="tns:WSSearchEngineSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="MunicipalitySearch">
+         <soap:operation soapAction="http://www.afi.es/WSSearchEngine/MunicipalitySearch"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSSearchEngine">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Servicio web que permite buscar uno o varios municipios en función de una serie de criterios.</documentation>
+      <wsdl:port name="WSSearchEngineSoap" binding="tns:WSSearchEngineSoap">
+         <soap:address location="http://ws.soatrader.com/afi.es/0.1/WSSearchEngine"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

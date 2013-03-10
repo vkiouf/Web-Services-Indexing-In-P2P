@@ -1,0 +1,744 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://dealernet.volvocars.se/dealerlocator/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:s1="http://s.mappoint.net/mappoint-30/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:s="http://www.w3.org/2001/XMLSchema"
+             xmlns:s0="http://dealernet.volvocars.se/dealerlocator/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             targetNamespace="http://dealernet.volvocars.se/dealerlocator/">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://dealernet.volvocars.se/dealerlocator/">
+         <s:import namespace="http://s.mappoint.net/mappoint-30/"/>
+         <s:element name="GetMapByPostalCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strMarket" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strPostalCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="dblDistance" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="duDistanceUnit" type="s1:DistanceUnit"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="intMaxDealers" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mapStyle" type="s1:MapStyle"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMapByPostalCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMapByPostalCodeResult" type="s0:CMap"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CMap">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Map" type="s1:MapImage"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Dealers" type="s0:ArrayOfCDealerInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfCDealerInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CDealerInfo" nillable="true"
+                          type="s0:CDealerInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CDealerInfo">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="DealerId" type="s:long"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DealerName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DealerSiteUrl" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Market" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AddressLine1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AddressLine2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AddressLine3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AddressLine4" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AddressLine5" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FaxNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Geocode" type="s1:LatLong"/>
+               <s:element minOccurs="0" maxOccurs="1" name="hotArea" type="s1:HotArea"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ResultId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Sales" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="WorkShop" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Shop" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Gas" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CarRental" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UsedCarSales" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DistanceFromCenter" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetMapByCity">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strMarket" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strCity" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="intMaxDealers" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mapStyle" type="s1:MapStyle"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMapByCityResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMapByCityResult" type="s0:CMap"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMapByRegion">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strMarket" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strRegion" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="intMaxDealers" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mapStyle" type="s1:MapStyle"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMapByRegionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMapByRegionResult" type="s0:CMap"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMapByDealer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="lngDealerId" type="s:long"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mapStyle" type="s1:MapStyle"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMapByDealerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMapByDealerResult" type="s0:CMap"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMap">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strMarket" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="llCenterPoint" type="s1:LatLong"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="llOriginalCenterpoint" type="s1:LatLong"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="intMaxDealers" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mapScale" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mapStyle" type="s1:MapStyle"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMapResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMapResult" type="s0:CMap"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMapByCountry">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strCountry" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="enuMapStyle" type="s1:MapStyle"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMapByCountryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMapByCountryResult" type="s0:CMap"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMapByMarket">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strMarket" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strCountry" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="intMaxDealers" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="mapStyle" type="s1:MapStyle"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMapByMarketResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMapByMarketResult" type="s0:CMap"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FindPostalCodes">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strCountry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strPostalCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FindPostalCodesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FindPostalCodesResult" type="s1:FindResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CMap" nillable="true" type="s0:CMap"/>
+         <s:element name="FindResults" nillable="true" type="s1:FindResults"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://s.mappoint.net/mappoint-30/">
+         <s:simpleType name="DistanceUnit">
+            <s:restriction base="s:string">
+               <s:enumeration value="Kilometer"/>
+               <s:enumeration value="Mile"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="MapStyle">
+            <s:restriction base="s:string">
+               <s:enumeration value="DefaultStyle"/>
+               <s:enumeration value="Locator"/>
+               <s:enumeration value="Terrain"/>
+               <s:enumeration value="Road"/>
+               <s:enumeration value="Political"/>
+               <s:enumeration value="Small"/>
+               <s:enumeration value="LocatorBW"/>
+               <s:enumeration value="TerrainBW"/>
+               <s:enumeration value="RoadBW"/>
+               <s:enumeration value="PoliticalBW"/>
+               <s:enumeration value="SmallBW"/>
+               <s:enumeration value="Comprehensive"/>
+               <s:enumeration value="PhysicalFeatures"/>
+               <s:enumeration value="Tectonic"/>
+               <s:enumeration value="EarthByDay"/>
+               <s:enumeration value="EarthByNight"/>
+               <s:enumeration value="Ecoregions"/>
+               <s:enumeration value="Climate"/>
+               <s:enumeration value="TemperatureJanuary"/>
+               <s:enumeration value="TemperatureJuly"/>
+               <s:enumeration value="PrecipitationJanuary"/>
+               <s:enumeration value="PrecipitationJuly"/>
+               <s:enumeration value="PrecipitationAnnual"/>
+               <s:enumeration value="Languages"/>
+               <s:enumeration value="Religions"/>
+               <s:enumeration value="PopulationDensity"/>
+               <s:enumeration value="Parks"/>
+               <s:enumeration value="TimeZones"/>
+               <s:enumeration value="Outline"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="MapImage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="HotAreas" type="s1:ArrayOfHotArea"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MimeData" type="s1:MimeData"/>
+               <s:element minOccurs="0" maxOccurs="1" name="View" type="s1:MapViewRepresentations"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfHotArea">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="HotArea" nillable="true"
+                          type="s1:HotArea"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="HotArea">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="IconRectangle" type="s1:PixelRectangle"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LabelRectangle" type="s1:PixelRectangle"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PinID" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PixelRectangle">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Bottom" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Left" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Right" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Top" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MimeData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Bits" type="s:base64Binary"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ContentID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MimeType" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MapViewRepresentations">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ByScale" type="s1:ViewByScale"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ByHeightWidth" type="s1:ViewByHeightWidth"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ByBoundingRectangle"
+                          type="s1:ViewByBoundingRectangle"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ViewByScale">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:MapView">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="MapScale" type="s:double"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CenterPoint" type="s1:LatLong"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="MapView" abstract="true"/>
+         <s:complexType name="ViewByHeightWidth">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:MapView">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="Height" type="s:double"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="Width" type="s:double"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CenterPoint" type="s1:LatLong"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="LatLong">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" default="0" name="Latitude" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" default="0" name="Longitude" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ViewByBoundingLocations">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:MapView">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Locations" type="s1:ArrayOfLocation"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfLocation">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Location" nillable="true"
+                          type="s1:Location"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Location">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="LatLong" type="s1:LatLong"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Entity" type="s1:Entity"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address" type="s1:Address"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BestMapView" type="s1:MapViewRepresentations"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DataSourceName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Entity">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DisplayName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TypeName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Properties"
+                          type="s1:ArrayOfEntityPropertyValue"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfEntityPropertyValue">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Property" nillable="true"
+                          type="s1:EntityPropertyValue"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="EntityPropertyValue">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Address">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AddressLine" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PrimaryCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SecondaryCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Subdivision" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CountryRegion" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FormattedAddress" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ViewByBoundingRectangle">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:MapView">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="BoundingRectangle" type="s1:LatLongRectangle"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="LatLongRectangle">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Southwest" type="s1:LatLong"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Northeast" type="s1:LatLong"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="FindResults">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="NumberFound" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StartIndex" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Results" type="s1:ArrayOfFindResult"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TopScore" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfFindResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="FindResult" nillable="true"
+                          type="s1:FindResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="FindResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Score" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FoundLocation" type="s1:Location"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </types>
+  <message name="GetMapByPostalCodeSoapIn">
+      <part name="parameters" element="s0:GetMapByPostalCode"/>
+  </message>
+  <message name="GetMapByPostalCodeSoapOut">
+      <part name="parameters" element="s0:GetMapByPostalCodeResponse"/>
+  </message>
+  <message name="GetMapByCitySoapIn">
+      <part name="parameters" element="s0:GetMapByCity"/>
+  </message>
+  <message name="GetMapByCitySoapOut">
+      <part name="parameters" element="s0:GetMapByCityResponse"/>
+  </message>
+  <message name="GetMapByRegionSoapIn">
+      <part name="parameters" element="s0:GetMapByRegion"/>
+  </message>
+  <message name="GetMapByRegionSoapOut">
+      <part name="parameters" element="s0:GetMapByRegionResponse"/>
+  </message>
+  <message name="GetMapByDealerSoapIn">
+      <part name="parameters" element="s0:GetMapByDealer"/>
+  </message>
+  <message name="GetMapByDealerSoapOut">
+      <part name="parameters" element="s0:GetMapByDealerResponse"/>
+  </message>
+  <message name="GetMapSoapIn">
+      <part name="parameters" element="s0:GetMap"/>
+  </message>
+  <message name="GetMapSoapOut">
+      <part name="parameters" element="s0:GetMapResponse"/>
+  </message>
+  <message name="GetMapByCountrySoapIn">
+      <part name="parameters" element="s0:GetMapByCountry"/>
+  </message>
+  <message name="GetMapByCountrySoapOut">
+      <part name="parameters" element="s0:GetMapByCountryResponse"/>
+  </message>
+  <message name="GetMapByMarketSoapIn">
+      <part name="parameters" element="s0:GetMapByMarket"/>
+  </message>
+  <message name="GetMapByMarketSoapOut">
+      <part name="parameters" element="s0:GetMapByMarketResponse"/>
+  </message>
+  <message name="FindPostalCodesSoapIn">
+      <part name="parameters" element="s0:FindPostalCodes"/>
+  </message>
+  <message name="FindPostalCodesSoapOut">
+      <part name="parameters" element="s0:FindPostalCodesResponse"/>
+  </message>
+  <message name="GetMapByPostalCodeHttpGetIn">
+      <part name="strMarket" type="s:string"/>
+      <part name="strPostalCode" type="s:string"/>
+      <part name="dblDistance" type="s:string"/>
+      <part name="duDistanceUnit" type="s:string"/>
+      <part name="intMaxDealers" type="s:string"/>
+      <part name="mapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByPostalCodeHttpGetOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="GetMapByCityHttpGetIn">
+      <part name="strMarket" type="s:string"/>
+      <part name="strCity" type="s:string"/>
+      <part name="intMaxDealers" type="s:string"/>
+      <part name="mapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByCityHttpGetOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="GetMapByRegionHttpGetIn">
+      <part name="strMarket" type="s:string"/>
+      <part name="strRegion" type="s:string"/>
+      <part name="intMaxDealers" type="s:string"/>
+      <part name="mapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByRegionHttpGetOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="GetMapByDealerHttpGetIn">
+      <part name="lngDealerId" type="s:string"/>
+      <part name="mapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByDealerHttpGetOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="GetMapByCountryHttpGetIn">
+      <part name="strCountry" type="s:string"/>
+      <part name="enuMapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByCountryHttpGetOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="GetMapByMarketHttpGetIn">
+      <part name="strMarket" type="s:string"/>
+      <part name="strCountry" type="s:string"/>
+      <part name="intMaxDealers" type="s:string"/>
+      <part name="mapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByMarketHttpGetOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="FindPostalCodesHttpGetIn">
+      <part name="strCountry" type="s:string"/>
+      <part name="strPostalCode" type="s:string"/>
+  </message>
+  <message name="FindPostalCodesHttpGetOut">
+      <part name="Body" element="s0:FindResults"/>
+  </message>
+  <message name="GetMapByPostalCodeHttpPostIn">
+      <part name="strMarket" type="s:string"/>
+      <part name="strPostalCode" type="s:string"/>
+      <part name="dblDistance" type="s:string"/>
+      <part name="duDistanceUnit" type="s:string"/>
+      <part name="intMaxDealers" type="s:string"/>
+      <part name="mapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByPostalCodeHttpPostOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="GetMapByCityHttpPostIn">
+      <part name="strMarket" type="s:string"/>
+      <part name="strCity" type="s:string"/>
+      <part name="intMaxDealers" type="s:string"/>
+      <part name="mapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByCityHttpPostOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="GetMapByRegionHttpPostIn">
+      <part name="strMarket" type="s:string"/>
+      <part name="strRegion" type="s:string"/>
+      <part name="intMaxDealers" type="s:string"/>
+      <part name="mapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByRegionHttpPostOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="GetMapByDealerHttpPostIn">
+      <part name="lngDealerId" type="s:string"/>
+      <part name="mapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByDealerHttpPostOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="GetMapByCountryHttpPostIn">
+      <part name="strCountry" type="s:string"/>
+      <part name="enuMapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByCountryHttpPostOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="GetMapByMarketHttpPostIn">
+      <part name="strMarket" type="s:string"/>
+      <part name="strCountry" type="s:string"/>
+      <part name="intMaxDealers" type="s:string"/>
+      <part name="mapStyle" type="s:string"/>
+  </message>
+  <message name="GetMapByMarketHttpPostOut">
+      <part name="Body" element="s0:CMap"/>
+  </message>
+  <message name="FindPostalCodesHttpPostIn">
+      <part name="strCountry" type="s:string"/>
+      <part name="strPostalCode" type="s:string"/>
+  </message>
+  <message name="FindPostalCodesHttpPostOut">
+      <part name="Body" element="s0:FindResults"/>
+  </message>
+  <portType name="MapSearchSoap">
+      <operation name="GetMapByPostalCode">
+         <input message="s0:GetMapByPostalCodeSoapIn"/>
+         <output message="s0:GetMapByPostalCodeSoapOut"/>
+      </operation>
+      <operation name="GetMapByCity">
+         <input message="s0:GetMapByCitySoapIn"/>
+         <output message="s0:GetMapByCitySoapOut"/>
+      </operation>
+      <operation name="GetMapByRegion">
+         <input message="s0:GetMapByRegionSoapIn"/>
+         <output message="s0:GetMapByRegionSoapOut"/>
+      </operation>
+      <operation name="GetMapByDealer">
+         <input message="s0:GetMapByDealerSoapIn"/>
+         <output message="s0:GetMapByDealerSoapOut"/>
+      </operation>
+      <operation name="GetMap">
+         <input message="s0:GetMapSoapIn"/>
+         <output message="s0:GetMapSoapOut"/>
+      </operation>
+      <operation name="GetMapByCountry">
+         <input message="s0:GetMapByCountrySoapIn"/>
+         <output message="s0:GetMapByCountrySoapOut"/>
+      </operation>
+      <operation name="GetMapByMarket">
+         <input message="s0:GetMapByMarketSoapIn"/>
+         <output message="s0:GetMapByMarketSoapOut"/>
+      </operation>
+      <operation name="FindPostalCodes">
+         <input message="s0:FindPostalCodesSoapIn"/>
+         <output message="s0:FindPostalCodesSoapOut"/>
+      </operation>
+  </portType>
+  
+  
+  <binding name="MapSearchSoap" type="s0:MapSearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <operation name="GetMapByPostalCode">
+         <soap:operation soapAction="http://dealernet.volvocars.se/dealerlocator/GetMapByPostalCode"
+                         style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+      <operation name="GetMapByCity">
+         <soap:operation soapAction="http://dealernet.volvocars.se/dealerlocator/GetMapByCity"
+                         style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+      <operation name="GetMapByRegion">
+         <soap:operation soapAction="http://dealernet.volvocars.se/dealerlocator/GetMapByRegion"
+                         style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+      <operation name="GetMapByDealer">
+         <soap:operation soapAction="http://dealernet.volvocars.se/dealerlocator/GetMapByDealer"
+                         style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+      <operation name="GetMap">
+         <soap:operation soapAction="http://dealernet.volvocars.se/dealerlocator/GetMap"
+                         style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+      <operation name="GetMapByCountry">
+         <soap:operation soapAction="http://dealernet.volvocars.se/dealerlocator/GetMapByCountry"
+                         style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+      <operation name="GetMapByMarket">
+         <soap:operation soapAction="http://dealernet.volvocars.se/dealerlocator/GetMapByMarket"
+                         style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+      <operation name="FindPostalCodes">
+         <soap:operation soapAction="http://dealernet.volvocars.se/dealerlocator/FindPostalCodes"
+                         style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  
+  
+  <service name="MapSearch">
+      <port name="MapSearchSoap" binding="s0:MapSearchSoap">
+         <soap:address location="http://ws.soatrader.com/volvocars.se/0.1/MapSearch"/>
+      </port>
+      <port name="MapSearchHttpGet" binding="s0:MapSearchHttpGet">
+         <soap:address location="http://ws.soatrader.com/volvocars.se/0.1/MapSearch"/>
+         <http:address location="http://dealerlocator.volvocars.se/MapSearch.asmx"/>
+      </port>
+      <port name="MapSearchHttpPost" binding="s0:MapSearchHttpPost">
+         <soap:address location="http://ws.soatrader.com/volvocars.se/0.1/MapSearch"/>
+         <http:address location="http://dealerlocator.volvocars.se/MapSearch.asmx"/>
+      </port>
+  </service>
+</definitions>

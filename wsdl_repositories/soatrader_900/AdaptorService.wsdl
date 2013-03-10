@@ -1,0 +1,163 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://mhp-kdb.s3.uni-essen.de/jboss-net/services/RemoteAdaptor"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://mhp-kdb.s3.uni-essen.de/jboss-net/services/RemoteAdaptor"
+                  xmlns:intf="http://mhp-kdb.s3.uni-essen.de/jboss-net/services/RemoteAdaptor"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://net.jboss.org/jmx"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:xsd00="http://www.w3.org/2000/10/XMLSchema"
+                  xmlns:xsd99="http://www.w3.org/1999/XMLSchema"
+                  targetNamespace="http://mhp-kdb.s3.uni-essen.de/jboss-net/services/RemoteAdaptor">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://net.jboss.org/jmx">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <simpleType name="ObjectNameType">
+            <simpleContent>
+               <extension base="xsd:string"/>
+            </simpleContent>
+         </simpleType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://mhp-kdb.s3.uni-essen.de/jboss-net/services/RemoteAdaptor">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOf_xsd_anyType">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:anyType[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOf_xsd_string">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+   </wsdl:types>
+  <wsdl:message name="isRegisteredResponse">
+      <wsdl:part name="isRegisteredReturn" type="xsd:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="invokeResponse">
+      <wsdl:part name="invokeReturn" type="xsd:anyType"/>
+  </wsdl:message>
+  <wsdl:message name="getDefaultDomainResponse">
+      <wsdl:part name="getDefaultDomainReturn" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="invokeRequest">
+      <wsdl:part name="arg0" type="tns1:ObjectNameType"/>
+      <wsdl:part name="arg1" type="xsd:string"/>
+      <wsdl:part name="arg2" type="impl:ArrayOf_xsd_anyType"/>
+      <wsdl:part name="arg3" type="impl:ArrayOf_xsd_string"/>
+  </wsdl:message>
+  <wsdl:message name="isRegisteredRequest">
+      <wsdl:part name="arg0" type="tns1:ObjectNameType"/>
+  </wsdl:message>
+  <wsdl:message name="getDefaultDomainRequest">
+  </wsdl:message>
+  <wsdl:portType name="Adaptor">
+      <wsdl:operation name="invoke" parameterOrder="arg0 arg1 arg2 arg3">
+         <wsdl:input message="impl:invokeRequest" name="invokeRequest"/>
+         <wsdl:output message="impl:invokeResponse" name="invokeResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="isRegistered" parameterOrder="arg0">
+         <wsdl:input message="impl:isRegisteredRequest" name="isRegisteredRequest"/>
+         <wsdl:output message="impl:isRegisteredResponse" name="isRegisteredResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="getDefaultDomain">
+         <wsdl:input message="impl:getDefaultDomainRequest" name="getDefaultDomainRequest"/>
+         <wsdl:output message="impl:getDefaultDomainResponse" name="getDefaultDomainResponse"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RemoteAdaptorSoapBinding" type="impl:Adaptor">
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="invoke">
+         <wsdlsoap:operation soapAction="RemoteAdaptor"/>
+         <wsdl:input name="invokeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://mhp-kdb.s3.uni-essen.de/jboss-net/services/RemoteAdaptor"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="invokeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://mhp-kdb.s3.uni-essen.de/jboss-net/services/RemoteAdaptor"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="isRegistered">
+         <wsdlsoap:operation soapAction="RemoteAdaptor"/>
+         <wsdl:input name="isRegisteredRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://mhp-kdb.s3.uni-essen.de/jboss-net/services/RemoteAdaptor"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="isRegisteredResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://mhp-kdb.s3.uni-essen.de/jboss-net/services/RemoteAdaptor"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getDefaultDomain">
+         <wsdlsoap:operation soapAction="RemoteAdaptor"/>
+         <wsdl:input name="getDefaultDomainRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://mhp-kdb.s3.uni-essen.de/jboss-net/services/RemoteAdaptor"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="getDefaultDomainResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://mhp-kdb.s3.uni-essen.de/jboss-net/services/RemoteAdaptor"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AdaptorService">
+      <wsdl:port binding="impl:RemoteAdaptorSoapBinding" name="RemoteAdaptor">
+         <wsdlsoap:address location="http://ws.soatrader.com/s3.uni-essen.de/0.1/AdaptorService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

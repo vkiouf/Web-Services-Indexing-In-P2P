@@ -1,0 +1,120 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:element name="RegisterUserLocationRequest">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="movementThresshold" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="serviceId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="timestamp" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="webServiceUrl" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="signature" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RegisterUserLocationRequestResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="RegisterUserLocationRequestResult"
+                             type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UnRegisterUserLocationRequest">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="serviceId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="signature" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="timestamp" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="webServiceUrl" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UnRegisterUserLocationRequestResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="UnRegisterUserLocationRequestResult"
+                             type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RegisterUserLocationRequestSoapIn">
+      <wsdl:part name="parameters" element="tns:RegisterUserLocationRequest"/>
+  </wsdl:message>
+  <wsdl:message name="RegisterUserLocationRequestSoapOut">
+      <wsdl:part name="parameters" element="tns:RegisterUserLocationRequestResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UnRegisterUserLocationRequestSoapIn">
+      <wsdl:part name="parameters" element="tns:UnRegisterUserLocationRequest"/>
+  </wsdl:message>
+  <wsdl:message name="UnRegisterUserLocationRequestSoapOut">
+      <wsdl:part name="parameters" element="tns:UnRegisterUserLocationRequestResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="UserLocationSoap" type="tns:UserLocationSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="RegisterUserLocationRequest">
+         <soap:operation soapAction="http://tempuri.org/RegisterUserLocationRequest" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UnRegisterUserLocationRequest">
+         <soap:operation soapAction="http://tempuri.org/UnRegisterUserLocationRequest" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="UserLocation">
+      <wsdl:port name="UserLocationSoap" binding="tns:UserLocationSoap">
+         <soap:address location="http://ws.soatrader.com/streamspin.com/0.1/UserLocation"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

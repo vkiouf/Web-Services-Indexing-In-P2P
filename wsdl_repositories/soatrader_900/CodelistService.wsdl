@@ -1,0 +1,250 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://amportal.bm.dk/CompanyModuleServices/CodelistService/1/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:ams="http://rep.oio.dk/ams.dk/xml/schemas/2006/12/01/"
+                  xmlns:amsoces="http://rep.oio.dk/ams.dk/xml/schemas/2004/11/01/"
+                  xmlns:amsaoh="http://rep.oio.dk/ams.dk/xml/schemas/2005/09/01/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://amportal.bm.dk/CompanyModuleServices/CodelistService/1/"
+                  name="CodelistService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+    <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">
+        Service to supply a lists with codes and matching descriptions for use in other services.
+    </documentation>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+        <xsd:schema xmlns:tns="http://rep.oio.dk/ams.dk/xml/schemas/2006/12/01/"
+                  elementFormDefault="qualified"
+                  targetNamespace="http://rep.oio.dk/ams.dk/xml/schemas/2006/12/01/">
+            <xsd:element name="CodeIdentifier" type="tns:CodeIdentifierType"/>
+            <xsd:simpleType name="CodeIdentifierType">
+                <xsd:restriction base="xsd:int">
+                    <xsd:minInclusive value="0"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:element name="CodeIdentifierDescription" type="tns:CodeIdentifierDescriptionType"/>
+            <xsd:simpleType name="CodeIdentifierDescriptionType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="50"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:element name="CodelistItem" type="tns:CodelistItemType"/>
+            <xsd:complexType name="CodelistItemType">
+                <xsd:sequence>
+                    <xsd:element ref="tns:CodeIdentifier"/>
+                    <xsd:element ref="tns:CodeIdentifierDescription"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ContactPurposeRequest" type="tns:ContactPurposeRequestType"/>
+            <xsd:complexType name="ContactPurposeRequestType">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:element name="ContactPurposeResponse" type="tns:ContactPurposeResponseType"/>
+            <xsd:complexType name="ContactPurposeResponseType">
+                <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xsd:element ref="tns:CodelistItem"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ContactStatusRequest" type="tns:ContactStatusRequestType"/>
+            <xsd:complexType name="ContactStatusRequestType">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:element name="ContactStatusResponse" type="tns:ContactStatusResponseType"/>
+            <xsd:complexType name="ContactStatusResponseType">
+                <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xsd:element ref="tns:CodelistItem"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ContactTypeRequest" type="tns:ContactTypeRequestType"/>
+            <xsd:complexType name="ContactTypeRequestType">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:element name="ContactTypeResponse" type="tns:ContactTypeResponseType"/>
+            <xsd:complexType name="ContactTypeResponseType">
+                <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xsd:element ref="tns:CodelistItem"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema xmlns:tns="http://rep.oio.dk/ams.dk/xml/schemas/2004/11/01/"
+                  attributeFormDefault="unqualified"
+                  elementFormDefault="qualified"
+                  targetNamespace="http://rep.oio.dk/ams.dk/xml/schemas/2004/11/01/">
+            <xsd:element name="OcesCertHeader" type="tns:OcesCertHeader">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        This element is used in a SOAP header. It is
+                        used for sending the raw bytes from the public
+                        part of a X509 certificate.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:complexType name="OcesCertHeader">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="1" name="CertificateBytes" type="xsd:base64Binary"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema xmlns:tns="http://rep.oio.dk/ams.dk/xml/schemas/2005/09/01/"
+                  attributeFormDefault="unqualified"
+                  elementFormDefault="qualified"
+                  targetNamespace="http://rep.oio.dk/ams.dk/xml/schemas/2005/09/01/">
+            <xsd:element name="OrganisationTypeIdentifier" type="tns:OrganisationTypeIdentifierType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Identifies the type of organisation to which the
+                        user belongs to.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:simpleType name="OrganisationTypeIdentifierType">
+                <xsd:restriction base="xsd:int">
+                    <xsd:minInclusive value="1"/>
+                    <xsd:maxInclusive value="100"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:element name="OrganisationCode" type="tns:OrganisationCodeType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        The code that identifies the organisation. It
+                        could be a CVR number, an unemploymentfundcode,
+                        a municipality code
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:simpleType name="OrganisationCodeType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="1"/>
+                    <xsd:maxLength value="20"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:element name="ActiveOrganisationHeader" type="tns:ActiveOrganisationHeader">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        This element is used in a SOAP header. It is
+                        used for sending the type of organisation and
+                        the code of the organisation the user acts as.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:complexType name="ActiveOrganisationHeader">
+                <xsd:sequence>
+                    <xsd:element ref="tns:OrganisationTypeIdentifier"/>
+                    <xsd:element ref="tns:OrganisationCode"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="ContactPurposeRequestMsg">
+        <wsdl:part name="ContactPurposeRequestPart" element="ams:ContactPurposeRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ContactPurposeResponseMsg">
+        <wsdl:part name="ContactPurposeResponsePart" element="ams:ContactPurposeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ContactStatusRequestMsg">
+        <wsdl:part name="ContactStatusRequestPart" element="ams:ContactStatusRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ContactStatusResponseMsg">
+        <wsdl:part name="ContactStatusResponsePart" element="ams:ContactStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ContactTypeRequestMsg">
+        <wsdl:part name="ContactTypeRequestPart" element="ams:ContactTypeRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ContactTypeResponseMsg">
+        <wsdl:part name="ContactTypeResponsePart" element="ams:ContactTypeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ActiveOrganisationHeaderMsg">
+        <wsdl:part name="ActiveOrganisationHeaderPart" element="amsaoh:ActiveOrganisationHeader"/>
+    </wsdl:message>
+    <wsdl:message name="OcesCertHeaderMsg">
+        <wsdl:part name="OcesCertHeaderPart" element="amsoces:OcesCertHeader"/>
+    </wsdl:message>
+    <wsdl:portType name="CodelistServiceSOAP">
+        <wsdl:operation name="GetContactPurpose">
+            <wsdl:input message="tns:ContactPurposeRequestMsg"/>
+            <wsdl:output message="tns:ContactPurposeResponseMsg"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetContactStatus">
+            <wsdl:input message="tns:ContactStatusRequestMsg"/>
+            <wsdl:output message="tns:ContactStatusResponseMsg"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetContactType">
+            <wsdl:input message="tns:ContactTypeRequestMsg"/>
+            <wsdl:output message="tns:ContactTypeResponseMsg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CodelistServiceBinding" type="tns:CodelistServiceSOAP">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="GetContactPurpose">
+            <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/CodelistService/1/GetContactPurpose"/>
+            <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="literal" parts="ContactPurposeRequestPart"/>
+                <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+                <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="literal" parts="ContactPurposeResponsePart"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetContactStatus">
+            <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/CodelistService/1/GetContactStatus"/>
+            <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="literal" parts="ContactStatusRequestPart"/>
+                <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+                <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="literal" parts="ContactStatusResponsePart"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetContactType">
+            <soap:operation soapAction="http://amportal.bm.dk/CompanyModuleServices/CodelistService/1/GetContactType"/>
+            <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="literal" parts="ContactTypeRequestPart"/>
+                <soap:header message="tns:OcesCertHeaderMsg" part="OcesCertHeaderPart" use="literal"/>
+                <soap:header message="tns:ActiveOrganisationHeaderMsg" part="ActiveOrganisationHeaderPart"
+                         use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="literal" parts="ContactTypeResponsePart"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CodelistService">
+        <wsdl:port name="CodelistServicePort" binding="tns:CodelistServiceBinding">
+            <soap:address location="http://ws.soatrader.com/bm.dk/0.1/CodelistService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

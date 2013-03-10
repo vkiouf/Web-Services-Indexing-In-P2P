@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://tempuri.org/hamedbanaei/ajax"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/hamedbanaei/ajax">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://tempuri.org/hamedbanaei/ajax">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="GetComments">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="PostID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCommentsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCommentsResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SetComment">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="PostID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Comment" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strSite" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ADAD" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SetCommentResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SetCommentResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCommentsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetComments"/>
+  </wsdl:message>
+  <wsdl:message name="GetCommentsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCommentsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SetCommentSoapIn">
+      <wsdl:part name="parameters" element="tns:SetComment"/>
+  </wsdl:message>
+  <wsdl:message name="SetCommentSoapOut">
+      <wsdl:part name="parameters" element="tns:SetCommentResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ajaxSoap">
+      <wsdl:operation name="GetComments">
+         <wsdl:input message="tns:GetCommentsSoapIn"/>
+         <wsdl:output message="tns:GetCommentsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SetComment">
+         <wsdl:input message="tns:SetCommentSoapIn"/>
+         <wsdl:output message="tns:SetCommentSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ajaxSoap" type="tns:ajaxSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetComments">
+         <soap:operation soapAction="http://tempuri.org/hamedbanaei/ajax/GetComments" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SetComment">
+         <soap:operation soapAction="http://tempuri.org/hamedbanaei/ajax/SetComment" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ajax">
+      <wsdl:port name="ajaxSoap" binding="tns:ajaxSoap">
+         <soap:address location="http://ws.soatrader.com/hamedbanaei.com/0.1/ajax"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

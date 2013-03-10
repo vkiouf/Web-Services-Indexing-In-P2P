@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="com.esendex.ems.soapinterface"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="com.esendex.ems.soapinterface">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Implementation of the ScheduledSendService (for sending text messages at a specific time) with authentication information passed in as parameters rather than in a header. This allows development/runtime environments without support for the SOAPHeaders to consume the service. Click here for a &lt;a href="https://www.esendex.com/uk/evaluation/evaluation.aspx" title="SMS Service Trial"&gt;free trial&lt;/a&gt;.</wsdl:documentation>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="com.esendex.ems.soapinterface">
+         <s:element name="ScheduledSendMessageAt">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="recipient" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:MessageType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="submitAt" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="MessageType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Text"/>
+               <s:enumeration value="Binary"/>
+               <s:enumeration value="SmartMessage"/>
+               <s:enumeration value="Unicode"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="ScheduledSendMessageAtResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ScheduledSendMessageAtResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScheduledSendMessageAtFull">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="originator" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="recipient" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:MessageType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="validityperiod" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="submitAt" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScheduledSendMessageAtFullResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ScheduledSendMessageAtFullResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScheduledSendMessageIn">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="recipient" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:MessageType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="days" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="hours" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="minutes" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScheduledSendMessageInResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ScheduledSendMessageInResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScheduledSendMessageInFull">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="account" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="originator" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="recipient" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:MessageType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="validityperiod" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="days" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="hours" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="minutes" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScheduledSendMessageInFullResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ScheduledSendMessageInFullResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ScheduledSendMessageAtSoapIn">
+      <wsdl:part name="parameters" element="tns:ScheduledSendMessageAt"/>
+  </wsdl:message>
+  <wsdl:message name="ScheduledSendMessageAtSoapOut">
+      <wsdl:part name="parameters" element="tns:ScheduledSendMessageAtResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ScheduledSendMessageAtFullSoapIn">
+      <wsdl:part name="parameters" element="tns:ScheduledSendMessageAtFull"/>
+  </wsdl:message>
+  <wsdl:message name="ScheduledSendMessageAtFullSoapOut">
+      <wsdl:part name="parameters" element="tns:ScheduledSendMessageAtFullResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ScheduledSendMessageInSoapIn">
+      <wsdl:part name="parameters" element="tns:ScheduledSendMessageIn"/>
+  </wsdl:message>
+  <wsdl:message name="ScheduledSendMessageInSoapOut">
+      <wsdl:part name="parameters" element="tns:ScheduledSendMessageInResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ScheduledSendMessageInFullSoapIn">
+      <wsdl:part name="parameters" element="tns:ScheduledSendMessageInFull"/>
+  </wsdl:message>
+  <wsdl:message name="ScheduledSendMessageInFullSoapOut">
+      <wsdl:part name="parameters" element="tns:ScheduledSendMessageInFullResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="ScheduledSendServiceNoHeaderSoap"
+                 type="tns:ScheduledSendServiceNoHeaderSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="ScheduledSendMessageAt">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/ScheduledSendMessageAt"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ScheduledSendMessageAtFull">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/ScheduledSendMessageAtFull"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ScheduledSendMessageIn">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/ScheduledSendMessageIn"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ScheduledSendMessageInFull">
+         <soap:operation soapAction="com.esendex.ems.soapinterface/ScheduledSendMessageInFull"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="ScheduledSendServiceNoHeader">
+      <wsdl:documentation>Implementation of the ScheduledSendService (for sending text messages at a specific time) with authentication information passed in as parameters rather than in a header. This allows development/runtime environments without support for the SOAPHeaders to consume the service. Click here for a &lt;a href="https://www.esendex.com/uk/evaluation/evaluation.aspx" title="SMS Service Trial"&gt;free trial&lt;/a&gt;.</wsdl:documentation>
+      <wsdl:port name="ScheduledSendServiceNoHeaderSoap"
+                 binding="tns:ScheduledSendServiceNoHeaderSoap">
+         <soap:address location="http://ws.soatrader.com/esendex.com/0.1/ScheduledSendServiceNoHeader"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

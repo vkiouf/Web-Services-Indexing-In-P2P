@@ -1,0 +1,1592 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://source.trax.aero"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://source.trax.aero"
+                  xmlns:intf="http://source.trax.aero"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://out_srv_ntfn.tr.castor.trax.aero"
+                  xmlns:tns2="http://defect_report.techrecords.castor.trax.aero"
+                  xmlns:tns3="http://defect_mel_master.settings.castor.trax.aero"
+                  xmlns:tns4="http://wo.production.castor.trax.aero"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://source.trax.aero">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://out_srv_ntfn.tr.castor.trax.aero">
+         <import namespace="http://defect_report.techrecords.castor.trax.aero"/>
+         <import namespace="http://wo.production.castor.trax.aero"/>
+         <import namespace="http://defect_mel_master.settings.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="AC_In_Out_Service_Query_Type">
+            <sequence>
+               <element name="getDetailLevelSabreMessages" type="xsd:boolean"/>
+               <element name="getOnlyUnSentRecords" type="xsd:boolean"/>
+               <element name="get_OutOfService_Pending_Records" type="xsd:boolean"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Query_Element">
+            <complexContent>
+               <extension base="tns1:AC_In_Out_Service_Query_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Defect_Report_Outgoing_Element">
+            <complexContent>
+               <extension base="tns2:Defect_Report_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Line_Defect">
+            <sequence>
+               <element name="ac_Actual_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Out_Of_Svr_Advised_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Out_Service_Event" nillable="true" type="soapenc:string"/>
+               <element name="ac_Schedule_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Schedule_Out_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="confidence_Level" nillable="true" type="soapenc:string"/>
+               <element name="defect" nillable="true" type="soapenc:string"/>
+               <element name="defect_Item" type="xsd:int"/>
+               <element name="defect_Report_Outgoing_Element" nillable="true"
+                        type="tns1:Defect_Report_Outgoing_Element"/>
+               <element name="defect_Type" nillable="true" type="soapenc:string"/>
+               <element name="dispatch_Control_Number" type="xsd:long"/>
+               <element name="flight_Status" nillable="true" type="soapenc:string"/>
+               <element name="hold_Boarding" nillable="true" type="soapenc:string"/>
+               <element name="notes" nillable="true" type="soapenc:string"/>
+               <element name="update_Status_At_This_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="AC_In_Out_Service_Line_Defect_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="AC_In_Out_Service_Line_Defect" nillable="true"
+                        type="tns1:AC_In_Out_Service_Line_Defect"/>
+               <element name="AC_In_Out_Service_Line_DefectCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Lines_Defect">
+            <complexContent>
+               <extension base="tns1:AC_In_Out_Service_Line_Defect_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Scheduled_WO_Outgoing_Element">
+            <complexContent>
+               <extension base="tns4:Scheduled_WO_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Line_WO">
+            <sequence>
+               <element name="ac_Actual_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Out_Of_Svr_Advised_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Out_Service_Event" nillable="true" type="soapenc:string"/>
+               <element name="ac_Schedule_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Schedule_Out_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="confidence_Level" nillable="true" type="soapenc:string"/>
+               <element name="dispatch_Control_Number" type="xsd:long"/>
+               <element name="flight_Status" nillable="true" type="soapenc:string"/>
+               <element name="hold_Boarding" nillable="true" type="soapenc:string"/>
+               <element name="notes" nillable="true" type="soapenc:string"/>
+               <element name="scheduled_WO_Outgoing_Element" nillable="true"
+                        type="tns1:Scheduled_WO_Outgoing_Element"/>
+               <element name="update_Status_At_This_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo" type="xsd:int"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="AC_In_Out_Service_Line_WO_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="AC_In_Out_Service_Line_WO" nillable="true"
+                        type="tns1:AC_In_Out_Service_Line_WO"/>
+               <element name="AC_In_Out_Service_Line_WOCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Lines_WO">
+            <complexContent>
+               <extension base="tns1:AC_In_Out_Service_Line_WO_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_OUTSVC_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Out_Service_Event" nillable="true" type="soapenc:string"/>
+               <element name="advice" nillable="true" type="soapenc:string"/>
+               <element name="ata_Chapter_Section" nillable="true" type="soapenc:string"/>
+               <element name="begin_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="confidence" nillable="true" type="soapenc:string"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="defect_Code" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="discovered" nillable="true" type="soapenc:string"/>
+               <element name="end_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="hold_Boarding" nillable="true" type="soapenc:string"/>
+               <element name="hold_Fuel" nillable="true" type="soapenc:string"/>
+               <element name="hold_Pax" nillable="true" type="soapenc:string"/>
+               <element name="log_Page" nillable="true" type="soapenc:string"/>
+               <element name="log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="pilot_Action" nillable="true" type="soapenc:string"/>
+               <element name="planned" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_OUTSVC_MXCTRL">
+            <complexContent>
+               <extension base="tns1:Sabre_OUTSVC_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_RETURN_SERVICE_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Out_Service_Event" nillable="true" type="soapenc:string"/>
+               <element name="ata_Chapter_Section" nillable="true" type="soapenc:string"/>
+               <element name="begin_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="defect_Code" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="hold_Boarding" nillable="true" type="soapenc:string"/>
+               <element name="hold_Fuel" nillable="true" type="soapenc:string"/>
+               <element name="hold_Pax" nillable="true" type="soapenc:string"/>
+               <element name="log_Page" nillable="true" type="soapenc:string"/>
+               <element name="log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="resolved_By_Mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="return_To_Service_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_RETURN_SERVICE_MXCTRL">
+            <complexContent>
+               <extension base="tns1:Sabre_RETURN_SERVICE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_UPDATE_SERVICE_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Out_Service_Event" nillable="true" type="soapenc:string"/>
+               <element name="advice" nillable="true" type="soapenc:string"/>
+               <element name="ata_Chapter_Section" nillable="true" type="soapenc:string"/>
+               <element name="confidence" nillable="true" type="soapenc:string"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="defect_Code" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="discovered" nillable="true" type="soapenc:string"/>
+               <element name="end_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="hold_Boarding" nillable="true" type="soapenc:string"/>
+               <element name="hold_Fuel" nillable="true" type="soapenc:string"/>
+               <element name="hold_Pax" nillable="true" type="soapenc:string"/>
+               <element name="log_Page" nillable="true" type="soapenc:string"/>
+               <element name="log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_UPDATE_SERVICE_MXCTRL">
+            <complexContent>
+               <extension base="tns1:Sabre_UPDATE_SERVICE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Sabre">
+            <sequence>
+               <element maxOccurs="unbounded" name="sabre_OUTSVC_MXCTRL" nillable="true"
+                        type="tns1:Sabre_OUTSVC_MXCTRL"/>
+               <element name="sabre_OUTSVC_MXCTRLCount" type="xsd:int"/>
+               <element maxOccurs="unbounded" name="sabre_RETURN_SERVICE_MXCTRL" nillable="true"
+                        type="tns1:Sabre_RETURN_SERVICE_MXCTRL"/>
+               <element name="sabre_RETURN_SERVICE_MXCTRLCount" type="xsd:int"/>
+               <element maxOccurs="unbounded" name="sabre_UPDATE_SERVICE_MXCTRL" nillable="true"
+                        type="tns1:Sabre_UPDATE_SERVICE_MXCTRL"/>
+               <element name="sabre_UPDATE_SERVICE_MXCTRLCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="AC_In_Out_Service_Outgoing_Type">
+            <sequence>
+               <element name="AC_In_Out_Service_Lines_Defect" nillable="true"
+                        type="tns1:AC_In_Out_Service_Lines_Defect"/>
+               <element name="AC_In_Out_Service_Lines_WO" nillable="true"
+                        type="tns1:AC_In_Out_Service_Lines_WO"/>
+               <element name="ac" nillable="true" type="soapenc:string"/>
+               <element name="ac_Actual_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Out_Of_Svr_Advised_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Schedule_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Schedule_Out_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="description_of_originating_item" nillable="true" type="soapenc:string"/>
+               <element name="flight_status" nillable="true" type="soapenc:string"/>
+               <element name="interface_transaction" type="xsd:long"/>
+               <element name="modified_By" nillable="true" type="soapenc:string"/>
+               <element name="modified_date" nillable="true" type="xsd:dateTime"/>
+               <element name="out_Of_Service_Station" nillable="true" type="soapenc:string"/>
+               <element name="out_Service_No" type="xsd:int"/>
+               <element name="sabre" nillable="true" type="tns1:Sabre"/>
+               <element name="scheduled_event" nillable="true" type="soapenc:string"/>
+               <element name="transactionMethod" nillable="true" type="soapenc:string"/>
+               <element name="update_Status_At_This_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Outgoing_Element">
+            <complexContent>
+               <extension base="tns1:AC_In_Out_Service_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="AC_In_Out_Service_Outgoing_Array_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="AC_In_Out_Service_Outgoing_Element" nillable="true"
+                        type="tns1:AC_In_Out_Service_Outgoing_Element"/>
+               <element name="AC_In_Out_Service_Outgoing_ElementCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Outgoing_Array_Element">
+            <complexContent>
+               <extension base="tns1:AC_In_Out_Service_Outgoing_Array_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://out_srv_ntfn.tr.castor.trax.aero">
+         <import namespace="http://defect_report.techrecords.castor.trax.aero"/>
+         <import namespace="http://wo.production.castor.trax.aero"/>
+         <import namespace="http://defect_mel_master.settings.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="AC_In_Out_Service_Query_Type">
+            <sequence>
+               <element name="getDetailLevelSabreMessages" type="xsd:boolean"/>
+               <element name="getOnlyUnSentRecords" type="xsd:boolean"/>
+               <element name="get_OutOfService_Pending_Records" type="xsd:boolean"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Query_Element">
+            <complexContent>
+               <extension base="tns1:AC_In_Out_Service_Query_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Defect_Report_Outgoing_Element">
+            <complexContent>
+               <extension base="tns2:Defect_Report_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Line_Defect">
+            <sequence>
+               <element name="ac_Actual_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Out_Of_Svr_Advised_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Out_Service_Event" nillable="true" type="soapenc:string"/>
+               <element name="ac_Schedule_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Schedule_Out_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="confidence_Level" nillable="true" type="soapenc:string"/>
+               <element name="defect" nillable="true" type="soapenc:string"/>
+               <element name="defect_Item" type="xsd:int"/>
+               <element name="defect_Report_Outgoing_Element" nillable="true"
+                        type="tns1:Defect_Report_Outgoing_Element"/>
+               <element name="defect_Type" nillable="true" type="soapenc:string"/>
+               <element name="dispatch_Control_Number" type="xsd:long"/>
+               <element name="flight_Status" nillable="true" type="soapenc:string"/>
+               <element name="hold_Boarding" nillable="true" type="soapenc:string"/>
+               <element name="notes" nillable="true" type="soapenc:string"/>
+               <element name="update_Status_At_This_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="AC_In_Out_Service_Line_Defect_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="AC_In_Out_Service_Line_Defect" nillable="true"
+                        type="tns1:AC_In_Out_Service_Line_Defect"/>
+               <element name="AC_In_Out_Service_Line_DefectCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Lines_Defect">
+            <complexContent>
+               <extension base="tns1:AC_In_Out_Service_Line_Defect_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Scheduled_WO_Outgoing_Element">
+            <complexContent>
+               <extension base="tns4:Scheduled_WO_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Line_WO">
+            <sequence>
+               <element name="ac_Actual_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Out_Of_Svr_Advised_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Out_Service_Event" nillable="true" type="soapenc:string"/>
+               <element name="ac_Schedule_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Schedule_Out_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="confidence_Level" nillable="true" type="soapenc:string"/>
+               <element name="dispatch_Control_Number" type="xsd:long"/>
+               <element name="flight_Status" nillable="true" type="soapenc:string"/>
+               <element name="hold_Boarding" nillable="true" type="soapenc:string"/>
+               <element name="notes" nillable="true" type="soapenc:string"/>
+               <element name="scheduled_WO_Outgoing_Element" nillable="true"
+                        type="tns1:Scheduled_WO_Outgoing_Element"/>
+               <element name="update_Status_At_This_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo" type="xsd:int"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="AC_In_Out_Service_Line_WO_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="AC_In_Out_Service_Line_WO" nillable="true"
+                        type="tns1:AC_In_Out_Service_Line_WO"/>
+               <element name="AC_In_Out_Service_Line_WOCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Lines_WO">
+            <complexContent>
+               <extension base="tns1:AC_In_Out_Service_Line_WO_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_OUTSVC_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Out_Service_Event" nillable="true" type="soapenc:string"/>
+               <element name="advice" nillable="true" type="soapenc:string"/>
+               <element name="ata_Chapter_Section" nillable="true" type="soapenc:string"/>
+               <element name="begin_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="confidence" nillable="true" type="soapenc:string"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="defect_Code" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="discovered" nillable="true" type="soapenc:string"/>
+               <element name="end_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="hold_Boarding" nillable="true" type="soapenc:string"/>
+               <element name="hold_Fuel" nillable="true" type="soapenc:string"/>
+               <element name="hold_Pax" nillable="true" type="soapenc:string"/>
+               <element name="log_Page" nillable="true" type="soapenc:string"/>
+               <element name="log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="pilot_Action" nillable="true" type="soapenc:string"/>
+               <element name="planned" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_OUTSVC_MXCTRL">
+            <complexContent>
+               <extension base="tns1:Sabre_OUTSVC_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_RETURN_SERVICE_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Out_Service_Event" nillable="true" type="soapenc:string"/>
+               <element name="ata_Chapter_Section" nillable="true" type="soapenc:string"/>
+               <element name="begin_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="defect_Code" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="hold_Boarding" nillable="true" type="soapenc:string"/>
+               <element name="hold_Fuel" nillable="true" type="soapenc:string"/>
+               <element name="hold_Pax" nillable="true" type="soapenc:string"/>
+               <element name="log_Page" nillable="true" type="soapenc:string"/>
+               <element name="log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="resolved_By_Mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="return_To_Service_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_RETURN_SERVICE_MXCTRL">
+            <complexContent>
+               <extension base="tns1:Sabre_RETURN_SERVICE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_UPDATE_SERVICE_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Out_Service_Event" nillable="true" type="soapenc:string"/>
+               <element name="advice" nillable="true" type="soapenc:string"/>
+               <element name="ata_Chapter_Section" nillable="true" type="soapenc:string"/>
+               <element name="confidence" nillable="true" type="soapenc:string"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="defect_Code" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="discovered" nillable="true" type="soapenc:string"/>
+               <element name="end_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="hold_Boarding" nillable="true" type="soapenc:string"/>
+               <element name="hold_Fuel" nillable="true" type="soapenc:string"/>
+               <element name="hold_Pax" nillable="true" type="soapenc:string"/>
+               <element name="log_Page" nillable="true" type="soapenc:string"/>
+               <element name="log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_UPDATE_SERVICE_MXCTRL">
+            <complexContent>
+               <extension base="tns1:Sabre_UPDATE_SERVICE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Sabre">
+            <sequence>
+               <element maxOccurs="unbounded" name="sabre_OUTSVC_MXCTRL" nillable="true"
+                        type="tns1:Sabre_OUTSVC_MXCTRL"/>
+               <element name="sabre_OUTSVC_MXCTRLCount" type="xsd:int"/>
+               <element maxOccurs="unbounded" name="sabre_RETURN_SERVICE_MXCTRL" nillable="true"
+                        type="tns1:Sabre_RETURN_SERVICE_MXCTRL"/>
+               <element name="sabre_RETURN_SERVICE_MXCTRLCount" type="xsd:int"/>
+               <element maxOccurs="unbounded" name="sabre_UPDATE_SERVICE_MXCTRL" nillable="true"
+                        type="tns1:Sabre_UPDATE_SERVICE_MXCTRL"/>
+               <element name="sabre_UPDATE_SERVICE_MXCTRLCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="AC_In_Out_Service_Outgoing_Type">
+            <sequence>
+               <element name="AC_In_Out_Service_Lines_Defect" nillable="true"
+                        type="tns1:AC_In_Out_Service_Lines_Defect"/>
+               <element name="AC_In_Out_Service_Lines_WO" nillable="true"
+                        type="tns1:AC_In_Out_Service_Lines_WO"/>
+               <element name="ac" nillable="true" type="soapenc:string"/>
+               <element name="ac_Actual_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Out_Of_Svr_Advised_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Schedule_In_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ac_Schedule_Out_Service_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="description_of_originating_item" nillable="true" type="soapenc:string"/>
+               <element name="flight_status" nillable="true" type="soapenc:string"/>
+               <element name="interface_transaction" type="xsd:long"/>
+               <element name="modified_By" nillable="true" type="soapenc:string"/>
+               <element name="modified_date" nillable="true" type="xsd:dateTime"/>
+               <element name="out_Of_Service_Station" nillable="true" type="soapenc:string"/>
+               <element name="out_Service_No" type="xsd:int"/>
+               <element name="sabre" nillable="true" type="tns1:Sabre"/>
+               <element name="scheduled_event" nillable="true" type="soapenc:string"/>
+               <element name="transactionMethod" nillable="true" type="soapenc:string"/>
+               <element name="update_Status_At_This_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Outgoing_Element">
+            <complexContent>
+               <extension base="tns1:AC_In_Out_Service_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="AC_In_Out_Service_Outgoing_Array_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="AC_In_Out_Service_Outgoing_Element" nillable="true"
+                        type="tns1:AC_In_Out_Service_Outgoing_Element"/>
+               <element name="AC_In_Out_Service_Outgoing_ElementCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="AC_In_Out_Service_Outgoing_Array_Element">
+            <complexContent>
+               <extension base="tns1:AC_In_Out_Service_Outgoing_Array_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://defect_mel_master.settings.castor.trax.aero">
+         <import namespace="http://defect_report.techrecords.castor.trax.aero"/>
+         <import namespace="http://wo.production.castor.trax.aero"/>
+         <import namespace="http://out_srv_ntfn.tr.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="MEL_Master_Item">
+            <sequence>
+               <element name="mel_Master_Item_Number" type="xsd:int"/>
+               <element name="remarks" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="MEL_Item_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="MEL_Master_Item" nillable="true"
+                        type="tns3:MEL_Master_Item"/>
+               <element name="MEL_Master_ItemCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="MEL_Master_Items">
+            <complexContent>
+               <extension base="tns3:MEL_Item_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Defect_MEL_Master_Outgoing_Type">
+            <sequence>
+               <element name="AC_Series" nillable="true" type="soapenc:string"/>
+               <element name="AC_Type" nillable="true" type="soapenc:string"/>
+               <element name="MEL" nillable="true" type="soapenc:string"/>
+               <element name="MEL_Calendar_Days_Flag" nillable="true" type="soapenc:string"/>
+               <element name="MEL_Cycles" type="xsd:int"/>
+               <element name="MEL_Days" type="xsd:int"/>
+               <element name="MEL_Hours" type="xsd:int"/>
+               <element name="MEL_Master_Items" nillable="true" type="tns3:MEL_Master_Items"/>
+               <element name="MEL_Number" nillable="true" type="soapenc:string"/>
+               <element name="MEL_Sub" nillable="true" type="soapenc:string"/>
+               <element name="cat" nillable="true" type="soapenc:string"/>
+               <element name="cat_rating" nillable="true" type="soapenc:string"/>
+               <element name="created_By" nillable="true" type="soapenc:string"/>
+               <element name="created_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="discovery_Day" nillable="true" type="soapenc:string"/>
+               <element name="hour_Calendar_Control" nillable="true" type="soapenc:string"/>
+               <element name="modified_By" nillable="true" type="soapenc:string"/>
+               <element name="repeat" type="xsd:int"/>
+               <element name="restriction_ETOPS" nillable="true" type="soapenc:string"/>
+               <element name="restriction_Maintenance" nillable="true" type="soapenc:string"/>
+               <element name="restriction_Operation" nillable="true" type="soapenc:string"/>
+               <element name="restriction_Pax_Conv" nillable="true" type="soapenc:string"/>
+               <element name="rvsm" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://defect_mel_master.settings.castor.trax.aero">
+         <import namespace="http://defect_report.techrecords.castor.trax.aero"/>
+         <import namespace="http://wo.production.castor.trax.aero"/>
+         <import namespace="http://out_srv_ntfn.tr.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="MEL_Master_Item">
+            <sequence>
+               <element name="mel_Master_Item_Number" type="xsd:int"/>
+               <element name="remarks" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="MEL_Item_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="MEL_Master_Item" nillable="true"
+                        type="tns3:MEL_Master_Item"/>
+               <element name="MEL_Master_ItemCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="MEL_Master_Items">
+            <complexContent>
+               <extension base="tns3:MEL_Item_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Defect_MEL_Master_Outgoing_Type">
+            <sequence>
+               <element name="AC_Series" nillable="true" type="soapenc:string"/>
+               <element name="AC_Type" nillable="true" type="soapenc:string"/>
+               <element name="MEL" nillable="true" type="soapenc:string"/>
+               <element name="MEL_Calendar_Days_Flag" nillable="true" type="soapenc:string"/>
+               <element name="MEL_Cycles" type="xsd:int"/>
+               <element name="MEL_Days" type="xsd:int"/>
+               <element name="MEL_Hours" type="xsd:int"/>
+               <element name="MEL_Master_Items" nillable="true" type="tns3:MEL_Master_Items"/>
+               <element name="MEL_Number" nillable="true" type="soapenc:string"/>
+               <element name="MEL_Sub" nillable="true" type="soapenc:string"/>
+               <element name="cat" nillable="true" type="soapenc:string"/>
+               <element name="cat_rating" nillable="true" type="soapenc:string"/>
+               <element name="created_By" nillable="true" type="soapenc:string"/>
+               <element name="created_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="discovery_Day" nillable="true" type="soapenc:string"/>
+               <element name="hour_Calendar_Control" nillable="true" type="soapenc:string"/>
+               <element name="modified_By" nillable="true" type="soapenc:string"/>
+               <element name="repeat" type="xsd:int"/>
+               <element name="restriction_ETOPS" nillable="true" type="soapenc:string"/>
+               <element name="restriction_Maintenance" nillable="true" type="soapenc:string"/>
+               <element name="restriction_Operation" nillable="true" type="soapenc:string"/>
+               <element name="restriction_Pax_Conv" nillable="true" type="soapenc:string"/>
+               <element name="rvsm" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://defect_report.techrecords.castor.trax.aero">
+         <import namespace="http://wo.production.castor.trax.aero"/>
+         <import namespace="http://defect_mel_master.settings.castor.trax.aero"/>
+         <import namespace="http://out_srv_ntfn.tr.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Defect_Rep_Outgoing_MEL_Master">
+            <complexContent>
+               <extension base="tns3:Defect_MEL_Master_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_DEFERRAL_CLEAR_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Damage_Box" nillable="true" type="soapenc:string"/>
+               <element name="ata_Chapter_Section" nillable="true" type="soapenc:string"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="detailed_Corrective_Action" nillable="true" type="soapenc:string"/>
+               <element name="logged_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="repair_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="repair_Log_Page" nillable="true" type="soapenc:string"/>
+               <element name="repair_Log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="repair_Mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="short_Corrective_Action" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="solution_Code" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_DEFERRAL_CLEAR_MXCTRL">
+            <complexContent>
+               <extension base="tns2:Sabre_DEFERRAL_CLEAR_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_DEFERRAL_CREATE_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Damage_Box" nillable="true" type="soapenc:string"/>
+               <element name="ata_Chapter_Section" nillable="true" type="soapenc:string"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="item_Number" nillable="true" type="soapenc:string"/>
+               <element name="log_Page" nillable="true" type="soapenc:string"/>
+               <element name="log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="logged_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="logged_Station" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="position" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_DEFERRAL_CREATE_MXCTRL">
+            <complexContent>
+               <extension base="tns2:Sabre_DEFERRAL_CREATE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_DEFERRAL_EXTENSION_MXCTRL_Type">
+            <sequence>
+               <element name="authorization_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="total_Extended_Cycles" nillable="true" type="soapenc:string"/>
+               <element name="total_Extended_Hours" nillable="true" type="soapenc:string"/>
+               <element name="total_Extended_Other" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_DEFERRAL_EXTENSION_MXCTRL">
+            <complexContent>
+               <extension base="tns2:Sabre_DEFERRAL_EXTENSION_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_DEFERRAL_UPDATE_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Damage_Box" nillable="true" type="soapenc:string"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="item_Number" nillable="true" type="soapenc:string"/>
+               <element name="log_Page" nillable="true" type="soapenc:string"/>
+               <element name="log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="logged_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="position" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_DEFERRAL_UPDATE_MXCTRL">
+            <complexContent>
+               <extension base="tns2:Sabre_DEFERRAL_UPDATE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_TROUBLESHOOT_UPDATE_MXCTRL_Type">
+            <sequence>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="status" nillable="true" type="soapenc:string"/>
+               <element name="troubleshooting_Text" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_TROUBLESHOOT_UPDATE_MXCTRL">
+            <complexContent>
+               <extension base="tns2:Sabre_TROUBLESHOOT_UPDATE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Sabre">
+            <sequence>
+               <element name="sabre_DEFERRAL_CLEAR_MXCTRL" nillable="true"
+                        type="tns2:Sabre_DEFERRAL_CLEAR_MXCTRL"/>
+               <element name="sabre_DEFERRAL_CREATE_MXCTRL" nillable="true"
+                        type="tns2:Sabre_DEFERRAL_CREATE_MXCTRL"/>
+               <element name="sabre_DEFERRAL_EXTENSION_MXCTRL" nillable="true"
+                        type="tns2:Sabre_DEFERRAL_EXTENSION_MXCTRL"/>
+               <element name="sabre_DEFERRAL_UPDATE_MXCTRL" nillable="true"
+                        type="tns2:Sabre_DEFERRAL_UPDATE_MXCTRL"/>
+               <element maxOccurs="unbounded" name="sabre_TROUBLESHOOT_UPDATE_MXCTRL" nillable="true"
+                        type="tns2:Sabre_TROUBLESHOOT_UPDATE_MXCTRL"/>
+               <element name="sabre_TROUBLESHOOT_UPDATE_MXCTRLCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="Defect_Report_Troubleshooting_Type">
+            <sequence>
+               <element name="ac_Log" nillable="true" type="soapenc:string"/>
+               <element name="ac_Log_Item" type="xsd:int"/>
+               <element name="category" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="item" type="xsd:int"/>
+               <element name="manual" nillable="true" type="soapenc:string"/>
+               <element name="reference" nillable="true" type="soapenc:string"/>
+               <element name="rii" type="xsd:boolean"/>
+               <element name="rii_By" nillable="true" type="soapenc:string"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="status" nillable="true" type="soapenc:string"/>
+               <element name="troubleshooting_By" nillable="true" type="soapenc:string"/>
+               <element name="troubleshooting_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Troubleshooting">
+            <complexContent>
+               <extension base="tns2:Defect_Report_Troubleshooting_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Troubleshootings">
+            <sequence>
+               <element maxOccurs="unbounded" name="troubleshooting" nillable="true"
+                        type="tns2:Troubleshooting"/>
+               <element name="troubleshootingCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Work_Order_Outgoing_Element">
+            <complexContent>
+               <extension base="tns4:Scheduled_WO_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Defect_Report_Outgoing_Type">
+            <sequence>
+               <element name="AC" nillable="true" type="soapenc:string"/>
+               <element name="MDDR" nillable="true" type="soapenc:string"/>
+               <element name="MEL" nillable="true" type="soapenc:string"/>
+               <element name="MEL_Number" nillable="true" type="soapenc:string"/>
+               <element name="SDR" nillable="true" type="soapenc:string"/>
+               <element name="ac_Series" nillable="true" type="soapenc:string"/>
+               <element name="ac_Type" nillable="true" type="soapenc:string"/>
+               <element name="authorized_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="cador_Damage" nillable="true" type="soapenc:string"/>
+               <element name="capability_Area" nillable="true" type="soapenc:string"/>
+               <element name="chapter" type="xsd:long"/>
+               <element name="completed_Number" type="xsd:long"/>
+               <element name="defect" nillable="true" type="soapenc:string"/>
+               <element name="defect_Description" nillable="true" type="soapenc:string"/>
+               <element name="defect_Gate" nillable="true" type="soapenc:string"/>
+               <element name="defect_Item" type="xsd:long"/>
+               <element name="defect_Rep_Outgoing_MEL_Master" nillable="true"
+                        type="tns2:Defect_Rep_Outgoing_MEL_Master"/>
+               <element name="defect_Type" nillable="true" type="soapenc:string"/>
+               <element name="defer" nillable="true" type="soapenc:string"/>
+               <element name="defer_By" nillable="true" type="soapenc:string"/>
+               <element name="defer_Category" nillable="true" type="soapenc:string"/>
+               <element name="defer_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="defer_Notes" nillable="true" type="soapenc:string"/>
+               <element name="defer_To_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="defer_To_Next_EC" nillable="true" type="soapenc:string"/>
+               <element name="dispatcher_Notified" nillable="true" type="soapenc:string"/>
+               <element name="dispatcher_Notified_Resolution" nillable="true" type="soapenc:string"/>
+               <element name="do_Not_Allow_Concession" nillable="true" type="soapenc:string"/>
+               <element name="fault_Confirm" nillable="true" type="soapenc:string"/>
+               <element name="flight" nillable="true" type="soapenc:string"/>
+               <element name="flight_Phase" nillable="true" type="soapenc:string"/>
+               <element name="forecasted_due_date" nillable="true" type="xsd:dateTime"/>
+               <element name="ifsd" nillable="true" type="soapenc:string"/>
+               <element name="interface_transaction" type="xsd:long"/>
+               <element name="internal_Capability" nillable="true" type="soapenc:string"/>
+               <element name="man_Hours" nillable="true" type="soapenc:decimal"/>
+               <element name="man_Required" type="xsd:long"/>
+               <element name="mel_Calendar_Days_Flag" nillable="true" type="soapenc:string"/>
+               <element name="mis" nillable="true" type="soapenc:string"/>
+               <element name="modified_By" nillable="true" type="soapenc:string"/>
+               <element name="modified_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ref_Seq_Num" nillable="true" type="soapenc:string"/>
+               <element name="repeat_Number" type="xsd:long"/>
+               <element name="reported_By" nillable="true" type="soapenc:string"/>
+               <element name="reported_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="resolution_Category" nillable="true" type="soapenc:string"/>
+               <element name="resolution_Description" nillable="true" type="soapenc:string"/>
+               <element name="resolved_By" nillable="true" type="soapenc:string"/>
+               <element name="resolved_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="resolved_Location" nillable="true" type="soapenc:string"/>
+               <element name="sabre" nillable="true" type="tns2:Sabre"/>
+               <element name="sabre_Control_Number" nillable="true" type="soapenc:string"/>
+               <element name="schedule_Cycles" type="xsd:long"/>
+               <element name="schedule_Days" type="xsd:long"/>
+               <element name="schedule_Hours" type="xsd:long"/>
+               <element name="section" type="xsd:long"/>
+               <element name="skill" nillable="true" type="soapenc:string"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="transactionMethod" nillable="true" type="soapenc:string"/>
+               <element name="troubleshootings" nillable="true" type="tns2:Troubleshootings"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="work_Order_Outgoing_Element" nillable="true"
+                        type="tns2:Work_Order_Outgoing_Element"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://defect_report.techrecords.castor.trax.aero">
+         <import namespace="http://wo.production.castor.trax.aero"/>
+         <import namespace="http://defect_mel_master.settings.castor.trax.aero"/>
+         <import namespace="http://out_srv_ntfn.tr.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Defect_Rep_Outgoing_MEL_Master">
+            <complexContent>
+               <extension base="tns3:Defect_MEL_Master_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_DEFERRAL_CLEAR_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Damage_Box" nillable="true" type="soapenc:string"/>
+               <element name="ata_Chapter_Section" nillable="true" type="soapenc:string"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="detailed_Corrective_Action" nillable="true" type="soapenc:string"/>
+               <element name="logged_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="repair_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="repair_Log_Page" nillable="true" type="soapenc:string"/>
+               <element name="repair_Log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="repair_Mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="short_Corrective_Action" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="solution_Code" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_DEFERRAL_CLEAR_MXCTRL">
+            <complexContent>
+               <extension base="tns2:Sabre_DEFERRAL_CLEAR_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_DEFERRAL_CREATE_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Damage_Box" nillable="true" type="soapenc:string"/>
+               <element name="ata_Chapter_Section" nillable="true" type="soapenc:string"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="item_Number" nillable="true" type="soapenc:string"/>
+               <element name="log_Page" nillable="true" type="soapenc:string"/>
+               <element name="log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="logged_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="logged_Station" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="position" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_DEFERRAL_CREATE_MXCTRL">
+            <complexContent>
+               <extension base="tns2:Sabre_DEFERRAL_CREATE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_DEFERRAL_EXTENSION_MXCTRL_Type">
+            <sequence>
+               <element name="authorization_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="total_Extended_Cycles" nillable="true" type="soapenc:string"/>
+               <element name="total_Extended_Hours" nillable="true" type="soapenc:string"/>
+               <element name="total_Extended_Other" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_DEFERRAL_EXTENSION_MXCTRL">
+            <complexContent>
+               <extension base="tns2:Sabre_DEFERRAL_EXTENSION_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_DEFERRAL_UPDATE_MXCTRL_Type">
+            <sequence>
+               <element name="ac_Damage_Box" nillable="true" type="soapenc:string"/>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="item_Number" nillable="true" type="soapenc:string"/>
+               <element name="log_Page" nillable="true" type="soapenc:string"/>
+               <element name="log_Page_Item_Number" nillable="true" type="soapenc:string"/>
+               <element name="logged_Datetime" nillable="true" type="xsd:dateTime"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="position" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_DEFERRAL_UPDATE_MXCTRL">
+            <complexContent>
+               <extension base="tns2:Sabre_DEFERRAL_UPDATE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_TROUBLESHOOT_UPDATE_MXCTRL_Type">
+            <sequence>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="mechanic_Id" nillable="true" type="soapenc:string"/>
+               <element name="short_Description" nillable="true" type="soapenc:string"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="status" nillable="true" type="soapenc:string"/>
+               <element name="troubleshooting_Text" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_TROUBLESHOOT_UPDATE_MXCTRL">
+            <complexContent>
+               <extension base="tns2:Sabre_TROUBLESHOOT_UPDATE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Sabre">
+            <sequence>
+               <element name="sabre_DEFERRAL_CLEAR_MXCTRL" nillable="true"
+                        type="tns2:Sabre_DEFERRAL_CLEAR_MXCTRL"/>
+               <element name="sabre_DEFERRAL_CREATE_MXCTRL" nillable="true"
+                        type="tns2:Sabre_DEFERRAL_CREATE_MXCTRL"/>
+               <element name="sabre_DEFERRAL_EXTENSION_MXCTRL" nillable="true"
+                        type="tns2:Sabre_DEFERRAL_EXTENSION_MXCTRL"/>
+               <element name="sabre_DEFERRAL_UPDATE_MXCTRL" nillable="true"
+                        type="tns2:Sabre_DEFERRAL_UPDATE_MXCTRL"/>
+               <element maxOccurs="unbounded" name="sabre_TROUBLESHOOT_UPDATE_MXCTRL" nillable="true"
+                        type="tns2:Sabre_TROUBLESHOOT_UPDATE_MXCTRL"/>
+               <element name="sabre_TROUBLESHOOT_UPDATE_MXCTRLCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="Defect_Report_Troubleshooting_Type">
+            <sequence>
+               <element name="ac_Log" nillable="true" type="soapenc:string"/>
+               <element name="ac_Log_Item" type="xsd:int"/>
+               <element name="category" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="item" type="xsd:int"/>
+               <element name="manual" nillable="true" type="soapenc:string"/>
+               <element name="reference" nillable="true" type="soapenc:string"/>
+               <element name="rii" type="xsd:boolean"/>
+               <element name="rii_By" nillable="true" type="soapenc:string"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="status" nillable="true" type="soapenc:string"/>
+               <element name="troubleshooting_By" nillable="true" type="soapenc:string"/>
+               <element name="troubleshooting_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Troubleshooting">
+            <complexContent>
+               <extension base="tns2:Defect_Report_Troubleshooting_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Troubleshootings">
+            <sequence>
+               <element maxOccurs="unbounded" name="troubleshooting" nillable="true"
+                        type="tns2:Troubleshooting"/>
+               <element name="troubleshootingCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Work_Order_Outgoing_Element">
+            <complexContent>
+               <extension base="tns4:Scheduled_WO_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Defect_Report_Outgoing_Type">
+            <sequence>
+               <element name="AC" nillable="true" type="soapenc:string"/>
+               <element name="MDDR" nillable="true" type="soapenc:string"/>
+               <element name="MEL" nillable="true" type="soapenc:string"/>
+               <element name="MEL_Number" nillable="true" type="soapenc:string"/>
+               <element name="SDR" nillable="true" type="soapenc:string"/>
+               <element name="ac_Series" nillable="true" type="soapenc:string"/>
+               <element name="ac_Type" nillable="true" type="soapenc:string"/>
+               <element name="authorized_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="cador_Damage" nillable="true" type="soapenc:string"/>
+               <element name="capability_Area" nillable="true" type="soapenc:string"/>
+               <element name="chapter" type="xsd:long"/>
+               <element name="completed_Number" type="xsd:long"/>
+               <element name="defect" nillable="true" type="soapenc:string"/>
+               <element name="defect_Description" nillable="true" type="soapenc:string"/>
+               <element name="defect_Gate" nillable="true" type="soapenc:string"/>
+               <element name="defect_Item" type="xsd:long"/>
+               <element name="defect_Rep_Outgoing_MEL_Master" nillable="true"
+                        type="tns2:Defect_Rep_Outgoing_MEL_Master"/>
+               <element name="defect_Type" nillable="true" type="soapenc:string"/>
+               <element name="defer" nillable="true" type="soapenc:string"/>
+               <element name="defer_By" nillable="true" type="soapenc:string"/>
+               <element name="defer_Category" nillable="true" type="soapenc:string"/>
+               <element name="defer_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="defer_Notes" nillable="true" type="soapenc:string"/>
+               <element name="defer_To_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="defer_To_Next_EC" nillable="true" type="soapenc:string"/>
+               <element name="dispatcher_Notified" nillable="true" type="soapenc:string"/>
+               <element name="dispatcher_Notified_Resolution" nillable="true" type="soapenc:string"/>
+               <element name="do_Not_Allow_Concession" nillable="true" type="soapenc:string"/>
+               <element name="fault_Confirm" nillable="true" type="soapenc:string"/>
+               <element name="flight" nillable="true" type="soapenc:string"/>
+               <element name="flight_Phase" nillable="true" type="soapenc:string"/>
+               <element name="forecasted_due_date" nillable="true" type="xsd:dateTime"/>
+               <element name="ifsd" nillable="true" type="soapenc:string"/>
+               <element name="interface_transaction" type="xsd:long"/>
+               <element name="internal_Capability" nillable="true" type="soapenc:string"/>
+               <element name="man_Hours" nillable="true" type="soapenc:decimal"/>
+               <element name="man_Required" type="xsd:long"/>
+               <element name="mel_Calendar_Days_Flag" nillable="true" type="soapenc:string"/>
+               <element name="mis" nillable="true" type="soapenc:string"/>
+               <element name="modified_By" nillable="true" type="soapenc:string"/>
+               <element name="modified_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="ref_Seq_Num" nillable="true" type="soapenc:string"/>
+               <element name="repeat_Number" type="xsd:long"/>
+               <element name="reported_By" nillable="true" type="soapenc:string"/>
+               <element name="reported_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="resolution_Category" nillable="true" type="soapenc:string"/>
+               <element name="resolution_Description" nillable="true" type="soapenc:string"/>
+               <element name="resolved_By" nillable="true" type="soapenc:string"/>
+               <element name="resolved_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="resolved_Location" nillable="true" type="soapenc:string"/>
+               <element name="sabre" nillable="true" type="tns2:Sabre"/>
+               <element name="sabre_Control_Number" nillable="true" type="soapenc:string"/>
+               <element name="schedule_Cycles" type="xsd:long"/>
+               <element name="schedule_Days" type="xsd:long"/>
+               <element name="schedule_Hours" type="xsd:long"/>
+               <element name="section" type="xsd:long"/>
+               <element name="skill" nillable="true" type="soapenc:string"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="transactionMethod" nillable="true" type="soapenc:string"/>
+               <element name="troubleshootings" nillable="true" type="tns2:Troubleshootings"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="work_Order_Outgoing_Element" nillable="true"
+                        type="tns2:Work_Order_Outgoing_Element"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://wo.production.castor.trax.aero">
+         <import namespace="http://defect_report.techrecords.castor.trax.aero"/>
+         <import namespace="http://defect_mel_master.settings.castor.trax.aero"/>
+         <import namespace="http://out_srv_ntfn.tr.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="Sabre_MXPLANITEM_ADD_MXCTRL_Type">
+            <sequence>
+               <element name="identifier" nillable="true" type="soapenc:string"/>
+               <element name="install_Date" nillable="true" type="soapenc:string"/>
+               <element name="item_Class" nillable="true" type="soapenc:string"/>
+               <element name="item_Description" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail" nillable="true" type="soapenc:string"/>
+               <element name="part_Code" nillable="true" type="soapenc:string"/>
+               <element name="position" nillable="true" type="soapenc:string"/>
+               <element name="serial_Number" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_MXPLANITEM_ADD_MXCTRL">
+            <complexContent>
+               <extension base="tns4:Sabre_MXPLANITEM_ADD_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_MXVISIT_CREATE_MXCTRL_Type">
+            <sequence>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="end_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="priority" nillable="true" type="soapenc:string"/>
+               <element name="start_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_MXVISIT_CREATE_MXCTRL">
+            <complexContent>
+               <extension base="tns4:Sabre_MXVISIT_CREATE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_MXVISIT_REMOVE_MXCTRL_Type">
+            <sequence>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_MXVISIT_REMOVE_MXCTRL">
+            <complexContent>
+               <extension base="tns4:Sabre_MXVISIT_REMOVE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_MXVISIT_UPDATE_MXCTRL_Type">
+            <sequence>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="end_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="priority" nillable="true" type="soapenc:string"/>
+               <element name="start_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_MXVISIT_UPDATE_MXCTRL">
+            <complexContent>
+               <extension base="tns4:Sabre_MXVISIT_UPDATE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Sabre">
+            <sequence>
+               <element maxOccurs="unbounded" name="sabre_MXPLANITEM_ADD_MXCTRL" nillable="true"
+                        type="tns4:Sabre_MXPLANITEM_ADD_MXCTRL"/>
+               <element name="sabre_MXPLANITEM_ADD_MXCTRLCount" type="xsd:int"/>
+               <element name="sabre_MXVISIT_CREATE_MXCTRL" nillable="true"
+                        type="tns4:Sabre_MXVISIT_CREATE_MXCTRL"/>
+               <element name="sabre_MXVISIT_REMOVE_MXCTRL" nillable="true"
+                        type="tns4:Sabre_MXVISIT_REMOVE_MXCTRL"/>
+               <element name="sabre_MXVISIT_UPDATE_MXCTRL" nillable="true"
+                        type="tns4:Sabre_MXVISIT_UPDATE_MXCTRL"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="Scheduled_WO_Outgoing_Type">
+            <sequence>
+               <element name="AC" nillable="true" type="soapenc:string"/>
+               <element name="AC_SN" nillable="true" type="soapenc:string"/>
+               <element name="WO" type="xsd:int"/>
+               <element name="WO_Category" nillable="true" type="soapenc:string"/>
+               <element name="WO_Description" nillable="true" type="soapenc:string"/>
+               <element name="WO_Status" nillable="true" type="soapenc:string"/>
+               <element name="actual_Completion_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="actual_Start_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="expenditure" nillable="true" type="soapenc:string"/>
+               <element name="flight" nillable="true" type="soapenc:string"/>
+               <element name="interface_transaction" type="xsd:long"/>
+               <element name="location" nillable="true" type="soapenc:string"/>
+               <element name="modified_By" nillable="true" type="soapenc:string"/>
+               <element name="modified_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="priority" nillable="true" type="soapenc:string"/>
+               <element name="sabre" nillable="true" type="tns4:Sabre"/>
+               <element name="sabre_Control_Number" nillable="true" type="soapenc:string"/>
+               <element name="scheduled_Completion_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="scheduled_Start_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="site" nillable="true" type="soapenc:string"/>
+               <element name="tech_Log" nillable="true" type="soapenc:string"/>
+               <element name="tech_Log_Item" type="xsd:int"/>
+               <element name="tech_Log_Type" nillable="true" type="soapenc:string"/>
+               <element name="third_Party_WO" nillable="true" type="soapenc:string"/>
+               <element name="transactionMethod" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://wo.production.castor.trax.aero">
+         <import namespace="http://defect_report.techrecords.castor.trax.aero"/>
+         <import namespace="http://defect_mel_master.settings.castor.trax.aero"/>
+         <import namespace="http://out_srv_ntfn.tr.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="Sabre_MXPLANITEM_ADD_MXCTRL_Type">
+            <sequence>
+               <element name="identifier" nillable="true" type="soapenc:string"/>
+               <element name="install_Date" nillable="true" type="soapenc:string"/>
+               <element name="item_Class" nillable="true" type="soapenc:string"/>
+               <element name="item_Description" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail" nillable="true" type="soapenc:string"/>
+               <element name="part_Code" nillable="true" type="soapenc:string"/>
+               <element name="position" nillable="true" type="soapenc:string"/>
+               <element name="serial_Number" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_MXPLANITEM_ADD_MXCTRL">
+            <complexContent>
+               <extension base="tns4:Sabre_MXPLANITEM_ADD_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_MXVISIT_CREATE_MXCTRL_Type">
+            <sequence>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="end_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="priority" nillable="true" type="soapenc:string"/>
+               <element name="start_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_MXVISIT_CREATE_MXCTRL">
+            <complexContent>
+               <extension base="tns4:Sabre_MXVISIT_CREATE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_MXVISIT_REMOVE_MXCTRL_Type">
+            <sequence>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_MXVISIT_REMOVE_MXCTRL">
+            <complexContent>
+               <extension base="tns4:Sabre_MXVISIT_REMOVE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Sabre_MXVISIT_UPDATE_MXCTRL_Type">
+            <sequence>
+               <element name="control_Number" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="end_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="me_Tail_Number" nillable="true" type="soapenc:string"/>
+               <element name="priority" nillable="true" type="soapenc:string"/>
+               <element name="start_Date_Time" nillable="true" type="xsd:dateTime"/>
+               <element name="station" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo_Number" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Sabre_MXVISIT_UPDATE_MXCTRL">
+            <complexContent>
+               <extension base="tns4:Sabre_MXVISIT_UPDATE_MXCTRL_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Sabre">
+            <sequence>
+               <element maxOccurs="unbounded" name="sabre_MXPLANITEM_ADD_MXCTRL" nillable="true"
+                        type="tns4:Sabre_MXPLANITEM_ADD_MXCTRL"/>
+               <element name="sabre_MXPLANITEM_ADD_MXCTRLCount" type="xsd:int"/>
+               <element name="sabre_MXVISIT_CREATE_MXCTRL" nillable="true"
+                        type="tns4:Sabre_MXVISIT_CREATE_MXCTRL"/>
+               <element name="sabre_MXVISIT_REMOVE_MXCTRL" nillable="true"
+                        type="tns4:Sabre_MXVISIT_REMOVE_MXCTRL"/>
+               <element name="sabre_MXVISIT_UPDATE_MXCTRL" nillable="true"
+                        type="tns4:Sabre_MXVISIT_UPDATE_MXCTRL"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="Scheduled_WO_Outgoing_Type">
+            <sequence>
+               <element name="AC" nillable="true" type="soapenc:string"/>
+               <element name="AC_SN" nillable="true" type="soapenc:string"/>
+               <element name="WO" type="xsd:int"/>
+               <element name="WO_Category" nillable="true" type="soapenc:string"/>
+               <element name="WO_Description" nillable="true" type="soapenc:string"/>
+               <element name="WO_Status" nillable="true" type="soapenc:string"/>
+               <element name="actual_Completion_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="actual_Start_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="expenditure" nillable="true" type="soapenc:string"/>
+               <element name="flight" nillable="true" type="soapenc:string"/>
+               <element name="interface_transaction" type="xsd:long"/>
+               <element name="location" nillable="true" type="soapenc:string"/>
+               <element name="modified_By" nillable="true" type="soapenc:string"/>
+               <element name="modified_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="priority" nillable="true" type="soapenc:string"/>
+               <element name="sabre" nillable="true" type="tns4:Sabre"/>
+               <element name="sabre_Control_Number" nillable="true" type="soapenc:string"/>
+               <element name="scheduled_Completion_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="scheduled_Start_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="site" nillable="true" type="soapenc:string"/>
+               <element name="tech_Log" nillable="true" type="soapenc:string"/>
+               <element name="tech_Log_Item" type="xsd:int"/>
+               <element name="tech_Log_Type" nillable="true" type="soapenc:string"/>
+               <element name="third_Party_WO" nillable="true" type="soapenc:string"/>
+               <element name="transactionMethod" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="queryRecordsReturnStringRequest">
+
+      <wsdl:part name="q" type="tns1:AC_In_Out_Service_Query_Element"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="markTransactionResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRecordsRequest">
+
+      <wsdl:part name="q" type="tns1:AC_In_Out_Service_Query_Element"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="markTransactionRequest">
+
+      <wsdl:part name="transaction" type="xsd:long"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRecordsReturnStringResponse">
+
+      <wsdl:part name="queryRecordsReturnStringReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRecordsResponse">
+
+      <wsdl:part name="queryRecordsReturn" type="tns1:AC_In_Out_Service_Outgoing_Array_Element"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="AC_In_Out_Service_Master_Service">
+
+      <wsdl:operation name="queryRecords" parameterOrder="q">
+
+         <wsdl:input message="impl:queryRecordsRequest" name="queryRecordsRequest"/>
+
+         <wsdl:output message="impl:queryRecordsResponse" name="queryRecordsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="markTransaction" parameterOrder="transaction">
+
+         <wsdl:input message="impl:markTransactionRequest" name="markTransactionRequest"/>
+
+         <wsdl:output message="impl:markTransactionResponse" name="markTransactionResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRecordsReturnString" parameterOrder="q">
+
+         <wsdl:input message="impl:queryRecordsReturnStringRequest"
+                     name="queryRecordsReturnStringRequest"/>
+
+         <wsdl:output message="impl:queryRecordsReturnStringResponse"
+                      name="queryRecordsReturnStringResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="AC_In_Out_Service_Master_ServiceSoapBinding"
+                 type="impl:AC_In_Out_Service_Master_Service">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="queryRecords">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryRecordsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryRecordsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="markTransaction">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="markTransactionRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="markTransactionResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRecordsReturnString">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryRecordsReturnStringRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryRecordsReturnStringResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="AC_In_Out_Service_Master_ServiceService">
+
+      <wsdl:port binding="impl:AC_In_Out_Service_Master_ServiceSoapBinding"
+                 name="AC_In_Out_Service_Master_Service">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/trax.aero/0.1/AC_In_Out_Service_Master_ServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

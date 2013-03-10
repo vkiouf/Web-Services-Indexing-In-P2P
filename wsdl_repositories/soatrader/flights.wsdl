@@ -1,0 +1,168 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s0="http://ws.henoo.net/flight_search"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:s3="http://ws.henoo.net/flight_supplier_listResponse"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://ws.henoo.net/flights"
+                  xmlns:s1="http://ws.henoo.net/flight_searchResponse"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s2="http://ws.henoo.net/flight_supplier_list"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://ws.henoo.net/flights">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://ws.henoo.net/flight_search">
+         <s:element name="flight_Search">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="flight_supplier" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="departurePoint" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="arrivalPoint" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="departureDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="returnDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="wait_time" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="max_age_of_records" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://ws.henoo.net/flight_searchResponse">
+         <s:element name="flight_SearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="flight_searchResult">
+                     <s:complexType mixed="true">
+                        <s:sequence>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://ws.henoo.net/flight_supplier_list">
+         <s:element name="flight_supplier_list">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://ws.henoo.net/flight_supplier_listResponse">
+         <s:element name="flight_supplier_listResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="get_flight_suppliersResult">
+                     <s:complexType mixed="true">
+                        <s:sequence>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="flight_searchSoapIn">
+      <wsdl:part name="parameters" element="s0:flight_Search"/>
+  </wsdl:message>
+  <wsdl:message name="flight_searchSoapOut">
+      <wsdl:part name="parameters" element="s1:flight_SearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="get_flight_suppliersSoapIn">
+      <wsdl:part name="parameters" element="s2:flight_supplier_list"/>
+  </wsdl:message>
+  <wsdl:message name="get_flight_suppliersSoapOut">
+      <wsdl:part name="parameters" element="s3:flight_supplier_listResponse"/>
+  </wsdl:message>
+  <wsdl:message name="flight_searchHttpPostIn">
+      <wsdl:part name="flight_supplier" type="s:string"/>
+      <wsdl:part name="departurePoint" type="s:string"/>
+      <wsdl:part name="arrivalPoint" type="s:string"/>
+      <wsdl:part name="departureDate" type="s:string"/>
+      <wsdl:part name="returnDate" type="s:string"/>
+      <wsdl:part name="wait_time" type="s:string"/>
+      <wsdl:part name="max_age_of_records" type="s:string"/>
+      <wsdl:part name="user" type="s:string"/>
+      <wsdl:part name="password" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="flight_searchHttpPostOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="get_flight_suppliersHttpPostIn">
+      <wsdl:part name="user" type="s:string"/>
+      <wsdl:part name="password" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="get_flight_suppliersHttpPostOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  
+  
+  <wsdl:binding name="flightsSoap" type="tns:flightsSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="flight_search">
+         <soap:operation soapAction="http://ws.henoo.net/flight_search" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="get_flight_suppliers">
+         <soap:operation soapAction="http://ws.henoo.net/flight_supplier_list" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="flights">
+      <wsdl:port name="flightsSoap" binding="tns:flightsSoap">
+         <soap:address location="http://ws.soatrader.com/henoo.net/0.1/flights"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

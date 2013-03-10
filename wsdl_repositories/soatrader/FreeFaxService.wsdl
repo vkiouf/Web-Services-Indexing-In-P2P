@@ -1,0 +1,99 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://www.OneOutBox.com/wsdl/FreeFaxService.wsdl"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             name="FreeFaxService"
+             targetNamespace="http://www.OneOutBox.com/wsdl/FreeFaxService.wsdl">
+   <wsdl:types xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+	  <documentation>Further details at www.OneOutBox.com</documentation>
+
+	  <message name="freeFaxRequest">
+		    <part name="Sender" type="xsd:string">
+		       <documentation>Your email address, so that delivery notifices
+		can be forwarded to your attention.
+		Not used for other purposes.
+		</documentation>
+      </part>
+
+		    <part name="ToNum" type="xsd:string">
+		       <documentation>The international dialing code of the recipient
+		FAX machine.  e.g. USA dial 1+areacode+number.
+		Non-numerics within the string are ignored.
+		</documentation>
+      </part>
+
+		    <part name="Name" type="xsd:string">
+		       <documentation>Delivery information at the destination, such as
+		name and mailstop.  May include spaces (or _) and RETURN (or /)
+		</documentation>
+      </part>
+
+		    <part name="Text" type="xsd:string">
+		       <documentation>The contents of the FAX to be delivered.  Will
+		be formatted roughly 80 characters wide on the page.  No limit.
+		</documentation>
+      </part>
+
+	  </message>
+
+	  <message name="freeFaxResponse">
+		    <part name="return" type="xsd:string">
+		       <documentation>The return code is a tracking number.
+		Not used within the Free FAX service, but available for
+		tracking purposes in the commercial ProFAX.
+		</documentation>
+      </part>
+	  </message>
+
+	  <portType name="FreeFaxPortType">
+		    <operation name="SendFreeFAX">
+			      <input message="tns:freeFaxRequest"/>
+			      <output message="tns:freeFaxResponse"/>
+		    </operation>
+	  </portType>
+
+	  <binding name="FreeFaxBinding" type="tns:FreeFaxPortType">
+		    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <operation name="SendFreeFAX">
+			      <soap:operation soapAction="urn:OneOutBox#SendFreeFAX"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="encoded" namespace="urn:OneOutBox"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="encoded" namespace="urn:OneOutBox"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			      </output>
+		    </operation>
+	  </binding>
+
+	  <service name="FreeFaxService">
+		    <documentation>Provides a Web Services interface to free worldwide FAX transmission service, provided by 1outbox (www.1outbox.com).</documentation>
+		    <port name="FreeFaxPort" binding="tns:FreeFaxBinding">
+			      <soap:address location="http://ws.soatrader.com/banginghits.net/0.1/FreeFaxService"/>
+		    </port>
+	  </service>
+</definitions>

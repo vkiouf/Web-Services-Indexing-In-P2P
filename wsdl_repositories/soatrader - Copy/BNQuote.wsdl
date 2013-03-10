@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="BNQuoteService" targetNamespace="http://www.xmethods.net/sd/BNQuoteService.wsdl" xmlns:tns="http://www.xmethods.net/sd/BNQuoteService.wsdl" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soat="http://ws.soatrader.com/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ws.soatrader.com/" xmlns:soat="http://ws.soatrader.com/"><xs:element name="SOATraderLicense" type="xs:string"/><xs:element name="SOATraderUsageStatistics" type="soat:SOATraderUsageStatistics"/><xs:complexType name="SOATraderUsageStatistics"><xs:sequence><xs:element name="HitsMade" type="xs:decimal"/><xs:element name="HitsLeft" type="xs:decimal"/></xs:sequence></xs:complexType></xs:schema>
+  </types>
+  <message name="SOATraderLicense">
+    <part name="SOATraderLicense" element="soat:SOATraderLicense">
+    </part>
+  </message>
+  <message name="SOATraderUsageStatistics">
+    <part name="SOATraderUsageStatistics" element="soat:SOATraderUsageStatistics">
+    </part>
+  </message>
+  <message name="getPriceResponse">
+    <part name="return" type="xsd:float">
+    </part>
+  </message>
+  <message name="getPriceRequest">
+    <part name="isbn" type="xsd:string">
+    </part>
+  </message>
+  <portType name="BNQuotePortType">
+    <operation name="getPrice">
+      <input name="getPrice" message="tns:getPriceRequest">
+    </input>
+      <output name="getPriceResponse" message="tns:getPriceResponse">
+    </output>
+    </operation>
+  </portType>
+  <binding name="BNQuoteBinding" type="tns:BNQuotePortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getPrice">
+      <soap:operation soapAction=""/>
+      <input name="getPrice">
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:xmethods-BNPriceCheck"/>
+        <soap:header message="tns:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </soap:header>
+      </input>
+      <output name="getPriceResponse">
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:xmethods-BNPriceCheck"/>
+        <soap:header message="tns:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </soap:header>
+      </output>
+    </operation>
+  </binding>
+  <service name="BNQuoteService">
+<documentation>Returns price of a book at BN.com given an ISBN number</documentation>
+    <port name="BNQuotePort" binding="tns:BNQuoteBinding">
+      <soap:address location="http://ws.soatrader.com/xmethods.com/1.0/BNQuote"/>
+    </port>
+  </service>
+</definitions>

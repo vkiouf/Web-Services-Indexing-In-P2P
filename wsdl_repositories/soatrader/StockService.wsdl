@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.west-wind.com/scriptcallbacks/atlas/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.west-wind.com/scriptcallbacks/atlas/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.west-wind.com/scriptcallbacks/atlas/">
+         <s:element name="GetStockQuote">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStockQuoteResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStockQuoteResult" type="tns:StockQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="StockQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OpenPrice" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastPrice" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NetChange" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastQuoteTime" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastQuoteTimeString" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetStockQuotes">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbols" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetStockQuotesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStockQuotesResult"
+                             type="tns:ArrayOfStockQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfStockQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="StockQuote" nillable="true"
+                          type="tns:StockQuote"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetStockHistory">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Years" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStockHistoryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStockHistoryResult"
+                             type="tns:ArrayOfStockHistory"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfStockHistory">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="StockHistory" nillable="true"
+                          type="tns:StockHistory"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="StockHistory">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastPrice" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DateString" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="CreateStockHistoryGraph">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbols" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Years" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ImagePath" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CreateStockHistoryGraphResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CreateStockHistoryGraphResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="TestGetQuotes">
+            <s:complexType/>
+         </s:element>
+         <s:element name="TestGetQuotesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TestGetQuotesResult"
+                             type="tns:ArrayOfStockQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="TimeUntilClose">
+            <s:complexType/>
+         </s:element>
+         <s:element name="TimeUntilCloseResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TimeUntilCloseResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CheckStockForDupe">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CheckStockForDupeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CheckStockForDupeResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetStockQuoteSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStockQuote"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockQuoteSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStockQuoteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockQuotesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStockQuotes"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockQuotesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStockQuotesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockHistorySoapIn">
+      <wsdl:part name="parameters" element="tns:GetStockHistory"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockHistorySoapOut">
+      <wsdl:part name="parameters" element="tns:GetStockHistoryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CreateStockHistoryGraphSoapIn">
+      <wsdl:part name="parameters" element="tns:CreateStockHistoryGraph"/>
+  </wsdl:message>
+  <wsdl:message name="CreateStockHistoryGraphSoapOut">
+      <wsdl:part name="parameters" element="tns:CreateStockHistoryGraphResponse"/>
+  </wsdl:message>
+  <wsdl:message name="TestGetQuotesSoapIn">
+      <wsdl:part name="parameters" element="tns:TestGetQuotes"/>
+  </wsdl:message>
+  <wsdl:message name="TestGetQuotesSoapOut">
+      <wsdl:part name="parameters" element="tns:TestGetQuotesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="TimeUntilCloseSoapIn">
+      <wsdl:part name="parameters" element="tns:TimeUntilClose"/>
+  </wsdl:message>
+  <wsdl:message name="TimeUntilCloseSoapOut">
+      <wsdl:part name="parameters" element="tns:TimeUntilCloseResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CheckStockForDupeSoapIn">
+      <wsdl:part name="parameters" element="tns:CheckStockForDupe"/>
+  </wsdl:message>
+  <wsdl:message name="CheckStockForDupeSoapOut">
+      <wsdl:part name="parameters" element="tns:CheckStockForDupeResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="StockServiceSoap" type="tns:StockServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetStockQuote">
+         <soap:operation soapAction="http://www.west-wind.com/scriptcallbacks/atlas/GetStockQuote"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStockQuotes">
+         <soap:operation soapAction="http://www.west-wind.com/scriptcallbacks/atlas/GetStockQuotes"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStockHistory">
+         <soap:operation soapAction="http://www.west-wind.com/scriptcallbacks/atlas/GetStockHistory"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CreateStockHistoryGraph">
+         <soap:operation soapAction="http://www.west-wind.com/scriptcallbacks/atlas/CreateStockHistoryGraph"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="TestGetQuotes">
+         <soap:operation soapAction="http://www.west-wind.com/scriptcallbacks/atlas/TestGetQuotes"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="TimeUntilClose">
+         <soap:operation soapAction="http://www.west-wind.com/scriptcallbacks/atlas/TimeUntilClose"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CheckStockForDupe">
+         <soap:operation soapAction="http://www.west-wind.com/scriptcallbacks/atlas/CheckStockForDupe"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="StockService">
+      <wsdl:port name="StockServiceSoap" binding="tns:StockServiceSoap">
+         <soap:address location="http://ws.soatrader.com/west-wind.com/0.1/StockService"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

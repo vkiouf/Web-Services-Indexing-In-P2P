@@ -1,0 +1,273 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://www.digitalstripclub.com/dscwc/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.digitalstripclub.com/dscwc/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.digitalstripclub.com/dscwc/">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="Search">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="clubName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="searchMode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="distance" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="zip" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ClubDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="clubID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ClubDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClubDetailsResult">
+                     <s:complexType mixed="true">
+                        <s:sequence>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Register">
+            <s:complexType/>
+         </s:element>
+         <s:element name="RegisterResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="RegisterResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CallsRemaining">
+            <s:complexType/>
+         </s:element>
+         <s:element name="CallsRemainingResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallsRemainingResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DataSet" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:element ref="s:schema"/>
+                  <s:any/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="boolean" type="s:boolean"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchSoapIn">
+      <wsdl:part name="parameters" element="tns:Search"/>
+  </wsdl:message>
+  <wsdl:message name="SearchSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ClubDetailsSoapIn">
+      <wsdl:part name="parameters" element="tns:ClubDetails"/>
+  </wsdl:message>
+  <wsdl:message name="ClubDetailsSoapOut">
+      <wsdl:part name="parameters" element="tns:ClubDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RegisterSoapIn">
+      <wsdl:part name="parameters" element="tns:Register"/>
+  </wsdl:message>
+  <wsdl:message name="RegisterSoapOut">
+      <wsdl:part name="parameters" element="tns:RegisterResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CallsRemainingSoapIn">
+      <wsdl:part name="parameters" element="tns:CallsRemaining"/>
+  </wsdl:message>
+  <wsdl:message name="CallsRemainingSoapOut">
+      <wsdl:part name="parameters" element="tns:CallsRemainingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpGetIn">
+      <wsdl:part name="state" type="s:string"/>
+      <wsdl:part name="city" type="s:string"/>
+      <wsdl:part name="clubName" type="s:string"/>
+      <wsdl:part name="searchMode" type="s:string"/>
+      <wsdl:part name="distance" type="s:string"/>
+      <wsdl:part name="zip" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ClubDetailsHttpGetIn">
+      <wsdl:part name="clubID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ClubDetailsHttpGetOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="RegisterHttpGetIn"/>
+  <wsdl:message name="RegisterHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="CallsRemainingHttpGetIn"/>
+  <wsdl:message name="CallsRemainingHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpPostIn">
+      <wsdl:part name="state" type="s:string"/>
+      <wsdl:part name="city" type="s:string"/>
+      <wsdl:part name="clubName" type="s:string"/>
+      <wsdl:part name="searchMode" type="s:string"/>
+      <wsdl:part name="distance" type="s:string"/>
+      <wsdl:part name="zip" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ClubDetailsHttpPostIn">
+      <wsdl:part name="clubID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ClubDetailsHttpPostOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="RegisterHttpPostIn"/>
+  <wsdl:message name="RegisterHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="CallsRemainingHttpPostIn"/>
+  <wsdl:message name="CallsRemainingHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:portType name="ClubSearchSoap">
+      <wsdl:operation name="Search">
+         <wsdl:input message="tns:SearchSoapIn"/>
+         <wsdl:output message="tns:SearchSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="ClubDetails">
+         <wsdl:input message="tns:ClubDetailsSoapIn"/>
+         <wsdl:output message="tns:ClubDetailsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="Register">
+         <wsdl:input message="tns:RegisterSoapIn"/>
+         <wsdl:output message="tns:RegisterSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="CallsRemaining">
+         <wsdl:input message="tns:CallsRemainingSoapIn"/>
+         <wsdl:output message="tns:CallsRemainingSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="ClubSearchSoap" type="tns:ClubSearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="Search">
+         <soap:operation soapAction="http://www.digitalstripclub.com/dscwc/Search" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ClubDetails">
+         <soap:operation soapAction="http://www.digitalstripclub.com/dscwc/ClubDetails" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Register">
+         <soap:operation soapAction="http://www.digitalstripclub.com/dscwc/Register" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CallsRemaining">
+         <soap:operation soapAction="http://www.digitalstripclub.com/dscwc/CallsRemaining"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="ClubSearch">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/"/>
+      <wsdl:port name="ClubSearchSoap" binding="tns:ClubSearchSoap">
+         <soap:address location="http://ws.soatrader.com/digitalstripclub.com/0.1/ClubSearch"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

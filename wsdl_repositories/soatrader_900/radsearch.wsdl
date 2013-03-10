@@ -1,0 +1,129 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://services.getpos.de/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://services.getpos.de/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://services.getpos.de/">
+         <s:element name="GetLocations">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Distance" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLocationsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLocationsResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="string" nillable="true" type="s:string"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://services.getpos.de/">
+         <s:element name="GetLocations">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Distance" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLocationsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLocationsResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="string" nillable="true" type="s:string"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetLocationsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetLocations"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocationsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetLocationsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocationsHttpGetIn">
+      <wsdl:part name="UserName" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="CountryCode" type="s:string"/>
+      <wsdl:part name="ZipCode" type="s:string"/>
+      <wsdl:part name="Distance" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocationsHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocationsHttpPostIn">
+      <wsdl:part name="UserName" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="CountryCode" type="s:string"/>
+      <wsdl:part name="ZipCode" type="s:string"/>
+      <wsdl:part name="Distance" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocationsHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="radsearchSoap" type="tns:radsearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetLocations">
+         <soap:operation soapAction="http://services.getpos.de/GetLocations" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="radsearch">
+      <wsdl:port name="radsearchSoap" binding="tns:radsearchSoap">
+         <soap:address location="http://ws.soatrader.com/getpos.de/0.1/radsearch"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://dev.sms.ac/GMwsdl/GlobalMobileAPI"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://dev.sms.ac/GMwsdl/GlobalMobileAPI">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://dev.sms.ac/GMwsdl/GlobalMobileAPI">
+         <s:element name="SendMessage">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="transmission" type="tns:SMSacTransmission"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SMSacTransmission">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="TransmissionId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SmsacUserId" nillable="true" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SmsacPassword" nillable="true"
+                          type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Messages" type="tns:ArrayOfSMSacMessage"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSMSacMessage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SMSacMessage" nillable="true"
+                          type="tns:SMSacMessage"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SMSacMessage">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TargetId" nillable="true" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageText" nillable="true" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PodId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DeliveryDateTime" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SendMessageResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SendMessageResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPodInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPodInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPodInfoResult" type="tns:ArrayOfPodInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfPodInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PodInfo" nillable="true"
+                          type="tns:PodInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PodInfo">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="PodId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PodName" nillable="true" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendMessageSoapIn">
+      <wsdl:part name="parameters" element="tns:SendMessage"/>
+  </wsdl:message>
+  <wsdl:message name="SendMessageSoapOut">
+      <wsdl:part name="parameters" element="tns:SendMessageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPodInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPodInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetPodInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPodInfoResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GlobalMobileAPISoap">
+      <wsdl:operation name="SendMessage">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Using this WebMethod you can programmatically schedule messages or send real time messages to your user base</documentation>
+         <wsdl:input message="tns:SendMessageSoapIn"/>
+         <wsdl:output message="tns:SendMessageSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetPodInfo">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Use this WebMethod to retrieve all your Product Ids and names upon providing your Pod Developer ID and password</documentation>
+         <wsdl:input message="tns:GetPodInfoSoapIn"/>
+         <wsdl:output message="tns:GetPodInfoSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GlobalMobileAPISoap" type="tns:GlobalMobileAPISoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="SendMessage">
+         <soap:operation soapAction="http://dev.sms.ac/GMwsdl/GlobalMobileAPI/SendMessage"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPodInfo">
+         <soap:operation soapAction="http://dev.sms.ac/GMwsdl/GlobalMobileAPI/GetPodInfo"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GlobalMobileAPI">
+      <wsdl:port name="GlobalMobileAPISoap" binding="tns:GlobalMobileAPISoap">
+         <soap:address location="http://ws.soatrader.com/sms.ac/0.1/GlobalMobileAPI"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

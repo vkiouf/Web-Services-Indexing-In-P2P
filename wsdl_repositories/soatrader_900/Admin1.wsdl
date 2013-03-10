@@ -1,0 +1,2443 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://api.calltheoperator.com"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://api.calltheoperator.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>ADMIN1 of the API for 'CallTheOperator' programatic call placement. This page provides the programatic mechanisms to add/edit accounts and to report on call history. See http://api.calltheoperator.com for documentation.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://api.calltheoperator.com">
+         <s:element name="BuildVersion">
+            <s:complexType/>
+         </s:element>
+         <s:element name="BuildVersionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="BuildVersionResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BuildStatus">
+            <s:complexType/>
+         </s:element>
+         <s:element name="BuildStatusResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="BuildStatusResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="OptionalCustomerRate" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountFriendlyName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountChargeModel" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccountCharge" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MaxDuration" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="OptionalRateCap" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccountRechargeThreshold" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccountRechargeAmount" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OptionalCallerID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddAccountResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddBillingData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNameOrRef" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentAccountFirstName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentAccountFamilyName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentAccountRef" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PaymentExpiresMonth" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PaymentExpiresYear" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentAddress1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentAddress2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentCity" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentState" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentZipCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentCountryCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentCardType" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Priority" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PreChargeAmount" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddBillingDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddBillingDataResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddBillingCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReferrerURL" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FixedParty2" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddBillingCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddBillingCodeResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddCustomer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerRate" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddCustomerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddCustomerResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeAccountPassword">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OldAccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NewAccountPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeAccountPasswordResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChangeAccountPasswordResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeCustomerPassword">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OldCustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NewCustomerPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeCustomerPasswordResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChangeCustomerPasswordResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeChannelPassword">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OldChannelPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NewChannelPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeChannelPasswordResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChangeChannelPasswordResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChargeAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNameOrRef" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ChargeAmount" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChargeAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChargeAccountResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCTOConstants">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetCTOConstantsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCTOConstantsResult"
+                             type="tns:CTOConstants"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CTOConstants">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Account_ChargeModel_VariableCredit"
+                          type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Account_ChargeModel_VariableDebit"
+                          type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Account_ChargeModel_FixedCredit"
+                          type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Account_ChargeModel_FixedDebit"
+                          type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Account_MaxDurationSeconds" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Account_Charge" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PaymentCardType_VISA" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PaymentCardType_MasterCard" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PaymentCardType_Discover" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PaymentCardType_AmericanExpress"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="DisableAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNameOrRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DisableAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DisableAccountResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="EnableAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNameOrRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="EnableAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="EnableAccountResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DisableBillingCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DisableBillingCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DisableBillingCodeResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="EnableBillingCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="EnableBillingCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="EnableBillingCodeResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GenerateHTML">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RedirectOnError" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RedirectOnSuccess" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TextOnButton" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GenerateHTMLResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GenerateHTMLResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPriceQuoteMatrix">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPriceQuoteMatrixResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPriceQuoteMatrixResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCountry">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Party1" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCountryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCountryResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPriceQuote">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Party1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Party2" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPriceQuoteResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPriceQuoteResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListAccounts">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListAccountsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListAccountsResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListAccountsWithFilter">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNameOrRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListAccountsWithFilterResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListAccountsWithFilterResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListBillingCodes">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListBillingCodesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListBillingCodesResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListBillingData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OptionalOwnerRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListBillingDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListBillingDataResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RowLimit" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OrderByBillingCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListCallRecordsForAccountResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForCustomer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RowLimit" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OrderByAccountID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForCustomerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListCallRecordsForCustomerResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForChannel">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RowLimit" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OrderByCustomerID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForChannelResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListCallRecordsForChannelResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCustomers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCustomersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListCustomersResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListPaymentEventsForAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RowLimit" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListPaymentEventsForAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListPaymentEventsForAccountResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListPaymentEventsForCustomer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RowLimit" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListPaymentEventsForCustomerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListPaymentEventsForCustomerResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RemoveBillingData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingDataID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RemoveBillingDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RemoveBillingDataResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="TestWebService">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TestString" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="TestWebServiceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TestWebServiceResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="int" type="s:int"/>
+         <s:element name="string" nillable="true" type="s:string"/>
+         <s:element name="CTOConstants" nillable="true" type="tns:CTOConstants"/>
+         <s:element name="DataSet" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:element ref="s:schema"/>
+                  <s:any/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://api.calltheoperator.com">
+         <s:element name="BuildVersion">
+            <s:complexType/>
+         </s:element>
+         <s:element name="BuildVersionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="BuildVersionResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BuildStatus">
+            <s:complexType/>
+         </s:element>
+         <s:element name="BuildStatusResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="BuildStatusResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="OptionalCustomerRate" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountFriendlyName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountChargeModel" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccountCharge" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MaxDuration" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="OptionalRateCap" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccountRechargeThreshold" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccountRechargeAmount" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OptionalCallerID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddAccountResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddBillingData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNameOrRef" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentAccountFirstName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentAccountFamilyName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentAccountRef" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PaymentExpiresMonth" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PaymentExpiresYear" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentAddress1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentAddress2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentCity" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentState" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentZipCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentCountryCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PaymentCardType" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Priority" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PreChargeAmount" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddBillingDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddBillingDataResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddBillingCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReferrerURL" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FixedParty2" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddBillingCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddBillingCodeResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddCustomer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerRate" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddCustomerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddCustomerResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeAccountPassword">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OldAccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NewAccountPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeAccountPasswordResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChangeAccountPasswordResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeCustomerPassword">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OldCustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NewCustomerPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeCustomerPasswordResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChangeCustomerPasswordResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeChannelPassword">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OldChannelPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NewChannelPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChangeChannelPasswordResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChangeChannelPasswordResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChargeAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNameOrRef" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ChargeAmount" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ChargeAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChargeAccountResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCTOConstants">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetCTOConstantsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCTOConstantsResult"
+                             type="tns:CTOConstants"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CTOConstants">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Account_ChargeModel_VariableCredit"
+                          type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Account_ChargeModel_VariableDebit"
+                          type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Account_ChargeModel_FixedCredit"
+                          type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Account_ChargeModel_FixedDebit"
+                          type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Account_MaxDurationSeconds" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Account_Charge" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PaymentCardType_VISA" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PaymentCardType_MasterCard" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PaymentCardType_Discover" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PaymentCardType_AmericanExpress"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="DisableAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNameOrRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DisableAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DisableAccountResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="EnableAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNameOrRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="EnableAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="EnableAccountResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DisableBillingCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DisableBillingCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DisableBillingCodeResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="EnableBillingCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="EnableBillingCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="EnableBillingCodeResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GenerateHTML">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RedirectOnError" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RedirectOnSuccess" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TextOnButton" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GenerateHTMLResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GenerateHTMLResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPriceQuoteMatrix">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPriceQuoteMatrixResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPriceQuoteMatrixResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCountry">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Party1" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCountryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCountryResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPriceQuote">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Party1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Party2" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPriceQuoteResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPriceQuoteResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListAccounts">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListAccountsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListAccountsResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListAccountsWithFilter">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNameOrRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListAccountsWithFilterResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListAccountsWithFilterResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListBillingCodes">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListBillingCodesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListBillingCodesResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListBillingData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OptionalOwnerRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListBillingDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListBillingDataResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RowLimit" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OrderByBillingCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListCallRecordsForAccountResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForCustomer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RowLimit" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OrderByAccountID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForCustomerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListCallRecordsForCustomerResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForChannel">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RowLimit" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="OrderByCustomerID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCallRecordsForChannelResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListCallRecordsForChannelResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCustomers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ChannelPassword" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListCustomersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListCustomersResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListPaymentEventsForAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RowLimit" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListPaymentEventsForAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListPaymentEventsForAccountResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListPaymentEventsForCustomer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="StartDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EndDateTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RowLimit" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ListPaymentEventsForCustomerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListPaymentEventsForCustomerResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RemoveBillingData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CustomerPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillingDataID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RemoveBillingDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RemoveBillingDataResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="TestWebService">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TestString" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="TestWebServiceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TestWebServiceResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="int" type="s:int"/>
+         <s:element name="string" nillable="true" type="s:string"/>
+         <s:element name="CTOConstants" nillable="true" type="tns:CTOConstants"/>
+         <s:element name="DataSet" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:element ref="s:schema"/>
+                  <s:any/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="BuildVersionSoapIn">
+      <wsdl:part name="parameters" element="tns:BuildVersion"/>
+  </wsdl:message>
+  <wsdl:message name="BuildVersionSoapOut">
+      <wsdl:part name="parameters" element="tns:BuildVersionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BuildStatusSoapIn">
+      <wsdl:part name="parameters" element="tns:BuildStatus"/>
+  </wsdl:message>
+  <wsdl:message name="BuildStatusSoapOut">
+      <wsdl:part name="parameters" element="tns:BuildStatusResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddAccountSoapIn">
+      <wsdl:part name="parameters" element="tns:AddAccount"/>
+  </wsdl:message>
+  <wsdl:message name="AddAccountSoapOut">
+      <wsdl:part name="parameters" element="tns:AddAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingDataSoapIn">
+      <wsdl:part name="parameters" element="tns:AddBillingData"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingDataSoapOut">
+      <wsdl:part name="parameters" element="tns:AddBillingDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingCodeSoapIn">
+      <wsdl:part name="parameters" element="tns:AddBillingCode"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingCodeSoapOut">
+      <wsdl:part name="parameters" element="tns:AddBillingCodeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddCustomerSoapIn">
+      <wsdl:part name="parameters" element="tns:AddCustomer"/>
+  </wsdl:message>
+  <wsdl:message name="AddCustomerSoapOut">
+      <wsdl:part name="parameters" element="tns:AddCustomerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeAccountPasswordSoapIn">
+      <wsdl:part name="parameters" element="tns:ChangeAccountPassword"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeAccountPasswordSoapOut">
+      <wsdl:part name="parameters" element="tns:ChangeAccountPasswordResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeCustomerPasswordSoapIn">
+      <wsdl:part name="parameters" element="tns:ChangeCustomerPassword"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeCustomerPasswordSoapOut">
+      <wsdl:part name="parameters" element="tns:ChangeCustomerPasswordResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeChannelPasswordSoapIn">
+      <wsdl:part name="parameters" element="tns:ChangeChannelPassword"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeChannelPasswordSoapOut">
+      <wsdl:part name="parameters" element="tns:ChangeChannelPasswordResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ChargeAccountSoapIn">
+      <wsdl:part name="parameters" element="tns:ChargeAccount"/>
+  </wsdl:message>
+  <wsdl:message name="ChargeAccountSoapOut">
+      <wsdl:part name="parameters" element="tns:ChargeAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCTOConstantsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCTOConstants"/>
+  </wsdl:message>
+  <wsdl:message name="GetCTOConstantsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCTOConstantsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DisableAccountSoapIn">
+      <wsdl:part name="parameters" element="tns:DisableAccount"/>
+  </wsdl:message>
+  <wsdl:message name="DisableAccountSoapOut">
+      <wsdl:part name="parameters" element="tns:DisableAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="EnableAccountSoapIn">
+      <wsdl:part name="parameters" element="tns:EnableAccount"/>
+  </wsdl:message>
+  <wsdl:message name="EnableAccountSoapOut">
+      <wsdl:part name="parameters" element="tns:EnableAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DisableBillingCodeSoapIn">
+      <wsdl:part name="parameters" element="tns:DisableBillingCode"/>
+  </wsdl:message>
+  <wsdl:message name="DisableBillingCodeSoapOut">
+      <wsdl:part name="parameters" element="tns:DisableBillingCodeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="EnableBillingCodeSoapIn">
+      <wsdl:part name="parameters" element="tns:EnableBillingCode"/>
+  </wsdl:message>
+  <wsdl:message name="EnableBillingCodeSoapOut">
+      <wsdl:part name="parameters" element="tns:EnableBillingCodeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GenerateHTMLSoapIn">
+      <wsdl:part name="parameters" element="tns:GenerateHTML"/>
+  </wsdl:message>
+  <wsdl:message name="GenerateHTMLSoapOut">
+      <wsdl:part name="parameters" element="tns:GenerateHTMLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteMatrixSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPriceQuoteMatrix"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteMatrixSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPriceQuoteMatrixResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCountrySoapIn">
+      <wsdl:part name="parameters" element="tns:GetCountry"/>
+  </wsdl:message>
+  <wsdl:message name="GetCountrySoapOut">
+      <wsdl:part name="parameters" element="tns:GetCountryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPriceQuote"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPriceQuoteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsSoapIn">
+      <wsdl:part name="parameters" element="tns:ListAccounts"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsSoapOut">
+      <wsdl:part name="parameters" element="tns:ListAccountsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsWithFilterSoapIn">
+      <wsdl:part name="parameters" element="tns:ListAccountsWithFilter"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsWithFilterSoapOut">
+      <wsdl:part name="parameters" element="tns:ListAccountsWithFilterResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingCodesSoapIn">
+      <wsdl:part name="parameters" element="tns:ListBillingCodes"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingCodesSoapOut">
+      <wsdl:part name="parameters" element="tns:ListBillingCodesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingDataSoapIn">
+      <wsdl:part name="parameters" element="tns:ListBillingData"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingDataSoapOut">
+      <wsdl:part name="parameters" element="tns:ListBillingDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForAccountSoapIn">
+      <wsdl:part name="parameters" element="tns:ListCallRecordsForAccount"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForAccountSoapOut">
+      <wsdl:part name="parameters" element="tns:ListCallRecordsForAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForCustomerSoapIn">
+      <wsdl:part name="parameters" element="tns:ListCallRecordsForCustomer"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForCustomerSoapOut">
+      <wsdl:part name="parameters" element="tns:ListCallRecordsForCustomerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForChannelSoapIn">
+      <wsdl:part name="parameters" element="tns:ListCallRecordsForChannel"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForChannelSoapOut">
+      <wsdl:part name="parameters" element="tns:ListCallRecordsForChannelResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListCustomersSoapIn">
+      <wsdl:part name="parameters" element="tns:ListCustomers"/>
+  </wsdl:message>
+  <wsdl:message name="ListCustomersSoapOut">
+      <wsdl:part name="parameters" element="tns:ListCustomersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForAccountSoapIn">
+      <wsdl:part name="parameters" element="tns:ListPaymentEventsForAccount"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForAccountSoapOut">
+      <wsdl:part name="parameters" element="tns:ListPaymentEventsForAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForCustomerSoapIn">
+      <wsdl:part name="parameters" element="tns:ListPaymentEventsForCustomer"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForCustomerSoapOut">
+      <wsdl:part name="parameters" element="tns:ListPaymentEventsForCustomerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveBillingDataSoapIn">
+      <wsdl:part name="parameters" element="tns:RemoveBillingData"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveBillingDataSoapOut">
+      <wsdl:part name="parameters" element="tns:RemoveBillingDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="TestWebServiceSoapIn">
+      <wsdl:part name="parameters" element="tns:TestWebService"/>
+  </wsdl:message>
+  <wsdl:message name="TestWebServiceSoapOut">
+      <wsdl:part name="parameters" element="tns:TestWebServiceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BuildVersionHttpGetIn"/>
+  <wsdl:message name="BuildVersionHttpGetOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="BuildStatusHttpGetIn"/>
+  <wsdl:message name="BuildStatusHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddAccountHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="OptionalCustomerRate" type="s:string"/>
+      <wsdl:part name="AccountFriendlyName" type="s:string"/>
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="AccountChargeModel" type="s:string"/>
+      <wsdl:part name="AccountCharge" type="s:string"/>
+      <wsdl:part name="MaxDuration" type="s:string"/>
+      <wsdl:part name="OptionalRateCap" type="s:string"/>
+      <wsdl:part name="AccountRechargeThreshold" type="s:string"/>
+      <wsdl:part name="AccountRechargeAmount" type="s:string"/>
+      <wsdl:part name="OptionalCallerID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddAccountHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingDataHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountNameOrRef" type="s:string"/>
+      <wsdl:part name="PaymentType" type="s:string"/>
+      <wsdl:part name="PaymentAccountFirstName" type="s:string"/>
+      <wsdl:part name="PaymentAccountFamilyName" type="s:string"/>
+      <wsdl:part name="PaymentAccountRef" type="s:string"/>
+      <wsdl:part name="PaymentExpiresMonth" type="s:string"/>
+      <wsdl:part name="PaymentExpiresYear" type="s:string"/>
+      <wsdl:part name="PaymentAddress1" type="s:string"/>
+      <wsdl:part name="PaymentAddress2" type="s:string"/>
+      <wsdl:part name="PaymentCity" type="s:string"/>
+      <wsdl:part name="PaymentState" type="s:string"/>
+      <wsdl:part name="PaymentZipCode" type="s:string"/>
+      <wsdl:part name="PaymentCountryCode" type="s:string"/>
+      <wsdl:part name="PaymentCardType" type="s:string"/>
+      <wsdl:part name="Priority" type="s:string"/>
+      <wsdl:part name="PreChargeAmount" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingDataHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingCodeHttpGetIn">
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="BillingCode" type="s:string"/>
+      <wsdl:part name="ReferrerURL" type="s:string"/>
+      <wsdl:part name="FixedParty2" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingCodeHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddCustomerHttpGetIn">
+      <wsdl:part name="ChannelName" type="s:string"/>
+      <wsdl:part name="ChannelPassword" type="s:string"/>
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CustomerRate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddCustomerHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeAccountPasswordHttpGetIn">
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="OldAccountPassword" type="s:string"/>
+      <wsdl:part name="NewAccountPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeAccountPasswordHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeCustomerPasswordHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="OldCustomerPassword" type="s:string"/>
+      <wsdl:part name="NewCustomerPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeCustomerPasswordHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeChannelPasswordHttpGetIn">
+      <wsdl:part name="ChannelName" type="s:string"/>
+      <wsdl:part name="OldChannelPassword" type="s:string"/>
+      <wsdl:part name="NewChannelPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeChannelPasswordHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChargeAccountHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountNameOrRef" type="s:string"/>
+      <wsdl:part name="ChargeAmount" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChargeAccountHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCTOConstantsHttpGetIn"/>
+  <wsdl:message name="GetCTOConstantsHttpGetOut">
+      <wsdl:part name="Body" element="tns:CTOConstants"/>
+  </wsdl:message>
+  <wsdl:message name="DisableAccountHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountNameOrRef" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="DisableAccountHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="EnableAccountHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountNameOrRef" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="EnableAccountHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="DisableBillingCodeHttpGetIn">
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="BillingCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="DisableBillingCodeHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="EnableBillingCodeHttpGetIn">
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="BillingCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="EnableBillingCodeHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GenerateHTMLHttpGetIn">
+      <wsdl:part name="BillingCode" type="s:string"/>
+      <wsdl:part name="RedirectOnError" type="s:string"/>
+      <wsdl:part name="RedirectOnSuccess" type="s:string"/>
+      <wsdl:part name="TextOnButton" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GenerateHTMLHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteMatrixHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteMatrixHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetCountryHttpGetIn">
+      <wsdl:part name="Party1" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCountryHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="Party1" type="s:string"/>
+      <wsdl:part name="Party2" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsWithFilterHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountNameOrRef" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsWithFilterHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingCodesHttpGetIn">
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingCodesHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingDataHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="OptionalOwnerRef" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingDataHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForAccountHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="BillingCode" type="s:string"/>
+      <wsdl:part name="StartDateTime" type="s:string"/>
+      <wsdl:part name="EndDateTime" type="s:string"/>
+      <wsdl:part name="RowLimit" type="s:string"/>
+      <wsdl:part name="OrderByBillingCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForAccountHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForCustomerHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountID" type="s:string"/>
+      <wsdl:part name="StartDateTime" type="s:string"/>
+      <wsdl:part name="EndDateTime" type="s:string"/>
+      <wsdl:part name="RowLimit" type="s:string"/>
+      <wsdl:part name="OrderByAccountID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForCustomerHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForChannelHttpGetIn">
+      <wsdl:part name="ChannelName" type="s:string"/>
+      <wsdl:part name="ChannelPassword" type="s:string"/>
+      <wsdl:part name="CustomerID" type="s:string"/>
+      <wsdl:part name="StartDateTime" type="s:string"/>
+      <wsdl:part name="EndDateTime" type="s:string"/>
+      <wsdl:part name="RowLimit" type="s:string"/>
+      <wsdl:part name="OrderByCustomerID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForChannelHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListCustomersHttpGetIn">
+      <wsdl:part name="ChannelName" type="s:string"/>
+      <wsdl:part name="ChannelPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListCustomersHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForAccountHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="StartDateTime" type="s:string"/>
+      <wsdl:part name="EndDateTime" type="s:string"/>
+      <wsdl:part name="RowLimit" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForAccountHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForCustomerHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="StartDateTime" type="s:string"/>
+      <wsdl:part name="EndDateTime" type="s:string"/>
+      <wsdl:part name="RowLimit" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForCustomerHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveBillingDataHttpGetIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="BillingDataID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveBillingDataHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="TestWebServiceHttpGetIn">
+      <wsdl:part name="TestString" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="TestWebServiceHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="BuildVersionHttpPostIn"/>
+  <wsdl:message name="BuildVersionHttpPostOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="BuildStatusHttpPostIn"/>
+  <wsdl:message name="BuildStatusHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddAccountHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="OptionalCustomerRate" type="s:string"/>
+      <wsdl:part name="AccountFriendlyName" type="s:string"/>
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="AccountChargeModel" type="s:string"/>
+      <wsdl:part name="AccountCharge" type="s:string"/>
+      <wsdl:part name="MaxDuration" type="s:string"/>
+      <wsdl:part name="OptionalRateCap" type="s:string"/>
+      <wsdl:part name="AccountRechargeThreshold" type="s:string"/>
+      <wsdl:part name="AccountRechargeAmount" type="s:string"/>
+      <wsdl:part name="OptionalCallerID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddAccountHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingDataHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountNameOrRef" type="s:string"/>
+      <wsdl:part name="PaymentType" type="s:string"/>
+      <wsdl:part name="PaymentAccountFirstName" type="s:string"/>
+      <wsdl:part name="PaymentAccountFamilyName" type="s:string"/>
+      <wsdl:part name="PaymentAccountRef" type="s:string"/>
+      <wsdl:part name="PaymentExpiresMonth" type="s:string"/>
+      <wsdl:part name="PaymentExpiresYear" type="s:string"/>
+      <wsdl:part name="PaymentAddress1" type="s:string"/>
+      <wsdl:part name="PaymentAddress2" type="s:string"/>
+      <wsdl:part name="PaymentCity" type="s:string"/>
+      <wsdl:part name="PaymentState" type="s:string"/>
+      <wsdl:part name="PaymentZipCode" type="s:string"/>
+      <wsdl:part name="PaymentCountryCode" type="s:string"/>
+      <wsdl:part name="PaymentCardType" type="s:string"/>
+      <wsdl:part name="Priority" type="s:string"/>
+      <wsdl:part name="PreChargeAmount" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingDataHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingCodeHttpPostIn">
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="BillingCode" type="s:string"/>
+      <wsdl:part name="ReferrerURL" type="s:string"/>
+      <wsdl:part name="FixedParty2" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddBillingCodeHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddCustomerHttpPostIn">
+      <wsdl:part name="ChannelName" type="s:string"/>
+      <wsdl:part name="ChannelPassword" type="s:string"/>
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CustomerRate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="AddCustomerHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeAccountPasswordHttpPostIn">
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="OldAccountPassword" type="s:string"/>
+      <wsdl:part name="NewAccountPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeAccountPasswordHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeCustomerPasswordHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="OldCustomerPassword" type="s:string"/>
+      <wsdl:part name="NewCustomerPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeCustomerPasswordHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeChannelPasswordHttpPostIn">
+      <wsdl:part name="ChannelName" type="s:string"/>
+      <wsdl:part name="OldChannelPassword" type="s:string"/>
+      <wsdl:part name="NewChannelPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChangeChannelPasswordHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChargeAccountHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountNameOrRef" type="s:string"/>
+      <wsdl:part name="ChargeAmount" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ChargeAccountHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCTOConstantsHttpPostIn"/>
+  <wsdl:message name="GetCTOConstantsHttpPostOut">
+      <wsdl:part name="Body" element="tns:CTOConstants"/>
+  </wsdl:message>
+  <wsdl:message name="DisableAccountHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountNameOrRef" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="DisableAccountHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="EnableAccountHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountNameOrRef" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="EnableAccountHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="DisableBillingCodeHttpPostIn">
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="BillingCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="DisableBillingCodeHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="EnableBillingCodeHttpPostIn">
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="BillingCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="EnableBillingCodeHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GenerateHTMLHttpPostIn">
+      <wsdl:part name="BillingCode" type="s:string"/>
+      <wsdl:part name="RedirectOnError" type="s:string"/>
+      <wsdl:part name="RedirectOnSuccess" type="s:string"/>
+      <wsdl:part name="TextOnButton" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GenerateHTMLHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteMatrixHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteMatrixHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetCountryHttpPostIn">
+      <wsdl:part name="Party1" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCountryHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="Party1" type="s:string"/>
+      <wsdl:part name="Party2" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceQuoteHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsWithFilterHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountNameOrRef" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListAccountsWithFilterHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingCodesHttpPostIn">
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingCodesHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingDataHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="OptionalOwnerRef" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListBillingDataHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForAccountHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="BillingCode" type="s:string"/>
+      <wsdl:part name="StartDateTime" type="s:string"/>
+      <wsdl:part name="EndDateTime" type="s:string"/>
+      <wsdl:part name="RowLimit" type="s:string"/>
+      <wsdl:part name="OrderByBillingCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForAccountHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForCustomerHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountID" type="s:string"/>
+      <wsdl:part name="StartDateTime" type="s:string"/>
+      <wsdl:part name="EndDateTime" type="s:string"/>
+      <wsdl:part name="RowLimit" type="s:string"/>
+      <wsdl:part name="OrderByAccountID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForCustomerHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForChannelHttpPostIn">
+      <wsdl:part name="ChannelName" type="s:string"/>
+      <wsdl:part name="ChannelPassword" type="s:string"/>
+      <wsdl:part name="CustomerID" type="s:string"/>
+      <wsdl:part name="StartDateTime" type="s:string"/>
+      <wsdl:part name="EndDateTime" type="s:string"/>
+      <wsdl:part name="RowLimit" type="s:string"/>
+      <wsdl:part name="OrderByCustomerID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListCallRecordsForChannelHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListCustomersHttpPostIn">
+      <wsdl:part name="ChannelName" type="s:string"/>
+      <wsdl:part name="ChannelPassword" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListCustomersHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForAccountHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="AccountPassword" type="s:string"/>
+      <wsdl:part name="StartDateTime" type="s:string"/>
+      <wsdl:part name="EndDateTime" type="s:string"/>
+      <wsdl:part name="RowLimit" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForAccountHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForCustomerHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="AccountName" type="s:string"/>
+      <wsdl:part name="StartDateTime" type="s:string"/>
+      <wsdl:part name="EndDateTime" type="s:string"/>
+      <wsdl:part name="RowLimit" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ListPaymentEventsForCustomerHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveBillingDataHttpPostIn">
+      <wsdl:part name="CustomerName" type="s:string"/>
+      <wsdl:part name="CustomerPassword" type="s:string"/>
+      <wsdl:part name="BillingDataID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveBillingDataHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="TestWebServiceHttpPostIn">
+      <wsdl:part name="TestString" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="TestWebServiceHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="Admin1Soap" type="tns:Admin1Soap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="BuildVersion">
+         <soap:operation soapAction="http://api.calltheoperator.com/BuildVersion" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="BuildStatus">
+         <soap:operation soapAction="http://api.calltheoperator.com/BuildStatus" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddAccount">
+         <soap:operation soapAction="http://api.calltheoperator.com/AddAccount" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddBillingData">
+         <soap:operation soapAction="http://api.calltheoperator.com/AddBillingData" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddBillingCode">
+         <soap:operation soapAction="http://api.calltheoperator.com/AddBillingCode" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddCustomer">
+         <soap:operation soapAction="http://api.calltheoperator.com/AddCustomer" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ChangeAccountPassword">
+         <soap:operation soapAction="http://api.calltheoperator.com/ChangeAccountPassword"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ChangeCustomerPassword">
+         <soap:operation soapAction="http://api.calltheoperator.com/ChangeCustomerPassword"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ChangeChannelPassword">
+         <soap:operation soapAction="http://api.calltheoperator.com/ChangeChannelPassword"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ChargeAccount">
+         <soap:operation soapAction="http://api.calltheoperator.com/ChargeAccount" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCTOConstants">
+         <soap:operation soapAction="http://api.calltheoperator.com/GetCTOConstants" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DisableAccount">
+         <soap:operation soapAction="http://api.calltheoperator.com/DisableAccount" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="EnableAccount">
+         <soap:operation soapAction="http://api.calltheoperator.com/EnableAccount" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DisableBillingCode">
+         <soap:operation soapAction="http://api.calltheoperator.com/DisableBillingCode" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="EnableBillingCode">
+         <soap:operation soapAction="http://api.calltheoperator.com/EnableBillingCode" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GenerateHTML">
+         <soap:operation soapAction="http://api.calltheoperator.com/GenerateHTML" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPriceQuoteMatrix">
+         <soap:operation soapAction="http://api.calltheoperator.com/GetPriceQuoteMatrix"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCountry">
+         <soap:operation soapAction="http://api.calltheoperator.com/GetCountry" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPriceQuote">
+         <soap:operation soapAction="http://api.calltheoperator.com/GetPriceQuote" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListAccounts">
+         <soap:operation soapAction="http://api.calltheoperator.com/ListAccounts" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListAccountsWithFilter">
+         <soap:operation soapAction="http://api.calltheoperator.com/ListAccountsWithFilter"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListBillingCodes">
+         <soap:operation soapAction="http://api.calltheoperator.com/ListBillingCodes" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListBillingData">
+         <soap:operation soapAction="http://api.calltheoperator.com/ListBillingData" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListCallRecordsForAccount">
+         <soap:operation soapAction="http://api.calltheoperator.com/ListCallRecordsForAccount"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListCallRecordsForCustomer">
+         <soap:operation soapAction="http://api.calltheoperator.com/ListCallRecordsForCustomer"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListCallRecordsForChannel">
+         <soap:operation soapAction="http://api.calltheoperator.com/ListCallRecordsForChannel"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListCustomers">
+         <soap:operation soapAction="http://api.calltheoperator.com/ListCustomers" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListPaymentEventsForAccount">
+         <soap:operation soapAction="http://api.calltheoperator.com/ListPaymentEventsForAccount"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ListPaymentEventsForCustomer">
+         <soap:operation soapAction="http://api.calltheoperator.com/ListPaymentEventsForCustomer"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RemoveBillingData">
+         <soap:operation soapAction="http://api.calltheoperator.com/RemoveBillingData" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="TestWebService">
+         <soap:operation soapAction="http://api.calltheoperator.com/TestWebService" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="Admin1">
+      <wsdl:documentation>ADMIN1 of the API for 'CallTheOperator' programatic call placement. This page provides the programatic mechanisms to add/edit accounts and to report on call history. See http://api.calltheoperator.com for documentation.</wsdl:documentation>
+      <wsdl:port name="Admin1Soap" binding="tns:Admin1Soap">
+         <soap:address location="http://ws.soatrader.com/calltheoperator.com/0.1/Admin1"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

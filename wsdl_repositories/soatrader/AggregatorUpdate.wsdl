@@ -1,0 +1,190 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://tempuri.org/AggregatorTest/AggregatorUpdate"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/AggregatorTest/AggregatorUpdate">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://tempuri.org/AggregatorTest/AggregatorUpdate">
+         <s:element name="UpdateFeed">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="feedurl" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateFeedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdateFeedResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateAllFeeds">
+            <s:complexType/>
+         </s:element>
+         <s:element name="UpdateAllFeedsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdateAllFeedsResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="TestFeed">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="TestFeedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TestFeedResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="string" nillable="true" type="s:string"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="UpdateFeedSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateFeed"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateFeedSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateFeedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateAllFeedsSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateAllFeeds"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateAllFeedsSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateAllFeedsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="TestFeedSoapIn">
+      <wsdl:part name="parameters" element="tns:TestFeed"/>
+  </wsdl:message>
+  <wsdl:message name="TestFeedSoapOut">
+      <wsdl:part name="parameters" element="tns:TestFeedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateFeedHttpGetIn">
+      <wsdl:part name="feedurl" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateFeedHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateAllFeedsHttpGetIn"/>
+  <wsdl:message name="UpdateAllFeedsHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="TestFeedHttpGetIn">
+      <wsdl:part name="url" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="TestFeedHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateFeedHttpPostIn">
+      <wsdl:part name="feedurl" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateFeedHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateAllFeedsHttpPostIn"/>
+  <wsdl:message name="UpdateAllFeedsHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="TestFeedHttpPostIn">
+      <wsdl:part name="url" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="TestFeedHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:portType name="AggregatorUpdateSoap">
+      <wsdl:operation name="UpdateFeed">
+         <wsdl:input message="tns:UpdateFeedSoapIn"/>
+         <wsdl:output message="tns:UpdateFeedSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateAllFeeds">
+         <wsdl:input message="tns:UpdateAllFeedsSoapIn"/>
+         <wsdl:output message="tns:UpdateAllFeedsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="TestFeed">
+         <wsdl:input message="tns:TestFeedSoapIn"/>
+         <wsdl:output message="tns:TestFeedSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="AggregatorUpdateSoap" type="tns:AggregatorUpdateSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="UpdateFeed">
+         <soap:operation soapAction="http://tempuri.org/AggregatorTest/AggregatorUpdate/UpdateFeed"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateAllFeeds">
+         <soap:operation soapAction="http://tempuri.org/AggregatorTest/AggregatorUpdate/UpdateAllFeeds"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="TestFeed">
+         <soap:operation soapAction="http://tempuri.org/AggregatorTest/AggregatorUpdate/TestFeed"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="AggregatorUpdate">
+      <wsdl:port name="AggregatorUpdateSoap" binding="tns:AggregatorUpdateSoap">
+         <soap:address location="http://ws.soatrader.com/ds.uiuc.edu/0.1/AggregatorUpdate"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,241 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="urn:HurricaneService"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="urn:HurricaneService"
+                  xmlns:intf="urn:HurricaneService"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://wxsoap.terrapin"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="urn:HurricaneService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://wxsoap.terrapin">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="StormResult">
+            <sequence>
+               <element name="URL" nillable="true" type="xsd:string"/>
+               <element name="advDate" nillable="true" type="xsd:string"/>
+               <element name="lat" type="xsd:float"/>
+               <element name="lon" type="xsd:float"/>
+               <element name="pressure" type="xsd:int"/>
+               <element name="stormCode" nillable="true" type="xsd:string"/>
+               <element name="title" nillable="true" type="xsd:string"/>
+               <element name="wind" type="xsd:int"/>
+            </sequence>
+         </complexType>
+         <complexType name="StormDataResult">
+            <sequence>
+               <element name="advDate" nillable="true" type="xsd:dateTime"/>
+               <element name="lat" type="xsd:float"/>
+               <element name="lon" type="xsd:float"/>
+               <element name="pressure" type="xsd:int"/>
+               <element name="wind" type="xsd:int"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:HurricaneService">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="ArrayOf_tns1_StormResult">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:StormResult[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOf_tns1_StormDataResult">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:StormDataResult[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="getStormForecastPositionRequest">
+
+      <wsdl:part name="storm" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCurrentStormsResponse">
+
+      <wsdl:part name="getCurrentStormsReturn" type="impl:ArrayOf_tns1_StormResult"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getStormForecastPositionResponse">
+
+      <wsdl:part name="getStormForecastPositionReturn" type="impl:ArrayOf_tns1_StormDataResult"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCurrentStormsRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getStormPositionResponse">
+
+      <wsdl:part name="getStormPositionReturn" type="impl:ArrayOf_tns1_StormDataResult"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getStormPositionRequest">
+
+      <wsdl:part name="storm" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="HurricaneService">
+
+      <wsdl:operation name="getCurrentStorms">
+
+         <wsdl:input message="impl:getCurrentStormsRequest" name="getCurrentStormsRequest"/>
+
+         <wsdl:output message="impl:getCurrentStormsResponse" name="getCurrentStormsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStormPosition" parameterOrder="storm">
+
+         <wsdl:input message="impl:getStormPositionRequest" name="getStormPositionRequest"/>
+
+         <wsdl:output message="impl:getStormPositionResponse" name="getStormPositionResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStormForecastPosition" parameterOrder="storm">
+
+         <wsdl:input message="impl:getStormForecastPositionRequest"
+                     name="getStormForecastPositionRequest"/>
+
+         <wsdl:output message="impl:getStormForecastPositionResponse"
+                      name="getStormForecastPositionResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="rpcrouterSoapBinding" type="impl:HurricaneService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getCurrentStorms">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCurrentStormsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:HurricaneService"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCurrentStormsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:HurricaneService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStormPosition">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getStormPositionRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:HurricaneService"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getStormPositionResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:HurricaneService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStormForecastPosition">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getStormForecastPositionRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:HurricaneService"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getStormForecastPositionResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:HurricaneService"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="HurricaneServiceService">
+
+      <wsdl:port binding="impl:rpcrouterSoapBinding" name="rpcrouter">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/terrapin.com/0.1/HurricaneServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

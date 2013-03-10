@@ -1,0 +1,195 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="urn:Paracite"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:typens="urn:Paracite"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             name="Paracite"
+             targetNamespace="urn:Paracite">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema xmlns:SOAP-ENC="http://schemas.xmlsoap.org/wsdl/soap/encoding/"/>
+
+      <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema" name="ParaciteSearchResult">
+         <xs:all>
+            <xs:element name="estimatedTotalResultsCount" type="xsd:int"/>
+            <xs:element name="estimateIsExact" type="xsd:boolean"/>
+            <xs:element name="resultElements" type="typens:ResultElementArray"/>
+            <xs:element name="searchQuery" type="xsd:string"/>
+            <xs:element name="openURL" type="xsd:string"/>
+            <xs:element name="metadata" type="typens:Metadata"/> 
+         </xs:all>
+      </xs:complexType>
+
+      <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema" name="ResultElement">
+         <xs:all>
+            <xs:element name="URL" type="xsd:string"/>
+            <xs:element name="template" type="xsd:string"/>
+            <xs:element name="name" type="xsd:string"/>
+            <xs:element name="description" type="xsd:string"/>
+            <xs:element name="tollfree" type="xsd:boolean"/>
+            <xs:element name="fulltext" type="xsd:boolean"/>
+            <xs:element name="fallback" type="xsd:boolean"/>
+            <xs:element name="score" type="xsd:double"/>  
+         </xs:all>
+      </xs:complexType>
+
+      <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema" name="ResultElementArray">
+         <xs:complexContent>
+            <xs:restriction base="soapenc:Array">
+               <xs:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ResultElement[]"/>
+            </xs:restriction>
+         </xs:complexContent>
+      </xs:complexType>
+
+      <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema" name="Metadata">
+         <xs:all>
+            <xs:element name="sid" type="xsd:string"/>
+            <xs:element name="id" type="xsd:string"/>
+            <xs:element name="genre" type="xsd:string"/>
+            <xs:element name="aulast" type="xsd:string"/>
+            <xs:element name="aufirst" type="xsd:string"/>
+            <xs:element name="auinit" type="xsd:string"/>
+            <xs:element name="auinitm" type="xsd:string"/>
+            <xs:element name="coden" type="xsd:string"/>
+            <xs:element name="issn" type="xsd:string"/>
+            <xs:element name="eissn" type="xsd:string"/>
+            <xs:element name="isbn" type="xsd:string"/>
+            <xs:element name="title" type="xsd:string"/>
+            <xs:element name="stitle" type="xsd:string"/>
+            <xs:element name="atitle" type="xsd:string"/>
+            <xs:element name="volume" type="xsd:int"/>
+            <xs:element name="part" type="xsd:int"/>
+            <xs:element name="issue" type="xsd:int"/>
+            <xs:element name="spage" type="xsd:int"/>
+            <xs:element name="epage" type="xsd:int"/>
+            <xs:element name="pages" type="xsd:string"/>
+            <xs:element name="artnum" type="xsd:int"/>
+            <xs:element name="sici" type="xsd:string"/>
+            <xs:element name="bici" type="xsd:string"/>
+            <xs:element name="ssn" type="xsd:string"/>
+            <xs:element name="quarter" type="xsd:int"/>
+            <xs:element name="date" type="xsd:string"/>
+            <xs:element name="pid" type="xsd:string"/>
+         </xs:all>
+      </xs:complexType>
+   </types>
+
+
+
+   <message name="doParaciteSearch">
+      <part name="q" type="xsd:string"/>
+      <part name="baseurl" type="xsd:string"/>
+   </message>
+   <message name="doParaciteSearchResponse">
+      <part name="return" type="typens:ParaciteSearchResult"/>
+   </message>
+
+   <message name="doOpenURLConstruct">
+      <part name="q" type="xsd:string"/>
+      <part name="baseurl" type="xsd:string"/>
+   </message>
+   <message name="doOpenURLConstructResponse">
+      <part name="return" type="xsd:string"/>
+   </message>
+
+   <message name="doReferenceParse">
+      <part name="q" type="xsd:string"/>
+      <part name="baseurl" type="xsd:string"/>
+   </message>
+   <message name="doReferenceParseResponse">
+      <part name="return" type="typens:ParaciteSearchResult"/>
+   </message>
+   <!-- Ports -->
+
+<portType name="ParaciteSearchPort">
+      <operation name="doParaciteSearch">
+         <input message="typens:doParaciteSearch"/>
+         <output message="typens:doParaciteSearchResponse"/>
+      </operation>
+
+      <operation name="doOpenURLConstruct">
+         <input message="typens:doOpenURLConstruct"/>
+         <output message="typens:doOpenURLConstructResponse"/>
+      </operation>
+
+      <operation name="doReferenceParse">
+         <input message="typens:doReferenceParse"/>
+         <output message="typens:doReferenceParseResponse"/>
+      </operation>
+   </portType>
+
+   <binding name="ParaciteSearchBinding" type="typens:ParaciteSearchPort">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <operation name="doParaciteSearch">
+         <soap:operation soapAction="WebService#doParaciteSearch"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="WebService"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="WebService"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+
+      <operation name="doOpenURLConstruct">
+         <soap:operation soapAction="WebService#doOpenURLConstruct"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="WebService"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="WebService"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+
+      <operation name="doReferenceParse">
+         <soap:operation soapAction="WebService#doReferenceParse"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="WebService"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="WebService"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+
+   <service name="ParaciteSearchService">
+      <port binding="typens:ParaciteSearchBinding" name="ParaciteSearchPort">
+         <soap:address location="http://ws.soatrader.com/cpan.org/0.1/ParaciteSearchService"/>
+      </port>
+   </service>
+</definitions>

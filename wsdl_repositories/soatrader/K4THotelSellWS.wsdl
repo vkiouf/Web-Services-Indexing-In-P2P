@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://k4t.viatecla.pt/k4t/HotelSell"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://k4t.viatecla.pt/k4t/HotelSell">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Hotel Sell WebService. This WebService enables you to book a hotel on the GDS database. Demo Site - http://www.keyfortravel.com/</wsdl:documentation>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://k4t.viatecla.pt/k4t/HotelSell">
+         <s:element name="BookSoap">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="XmlRequest" type="tns:K4TRequest"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="K4TRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HotelSell" type="tns:HotelSellRequest"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Application" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="HotelSellRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Request" type="tns:Request"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Version" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="Request">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Items" type="tns:ArrayOfRequestItem"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PassengersInfo"
+                          type="tns:ArrayOfRequestPassenger"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfRequestItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Item" type="tns:RequestItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RequestItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumPersons" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumRooms" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Chain" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomMasterID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BIC" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumExtraAdults" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumExtraChildren" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumCrib" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumAdultRollaway" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumChildRollaway" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfRequestPassenger">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Passenger"
+                          type="tns:RequestPassenger"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RequestPassenger">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="BookSoapResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="BookSoapResult" type="tns:K4TResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="K4TResponse">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="HotelSell" type="tns:HotelSellResponse"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Author" type="s:string"/>
+            <s:attribute form="unqualified" name="Date" type="s:string"/>
+            <s:attribute form="unqualified" name="Time" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="HotelSellResponse">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Request" type="tns:Request"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Result" type="tns:Result"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:Error"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Version" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="Result">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Locator" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Items" type="tns:ArrayOfResultItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfResultItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Item" type="tns:ResultItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ResultItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Chain" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomMasterID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Room" type="tns:ResultItemRoom"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ResultItemRoom">
+            <s:attribute form="unqualified" name="Type" type="s:string"/>
+            <s:attribute form="unqualified" name="NumBeds" type="s:string"/>
+            <s:attribute form="unqualified" name="BedSize" type="s:string"/>
+            <s:attribute form="unqualified" name="BIC" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="Error">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorExtraData" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="BookSoapSoapIn">
+      <wsdl:part name="parameters" element="tns:BookSoap"/>
+  </wsdl:message>
+  <wsdl:message name="BookSoapSoapOut">
+      <wsdl:part name="parameters" element="tns:BookSoapResponse"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="K4THotelSellWSSoap" type="tns:K4THotelSellWSSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="BookSoap">
+         <soap:operation soapAction="http://k4t.viatecla.pt/k4t/HotelSell/BookSoap" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="K4THotelSellWS">
+      <wsdl:documentation>Hotel Sell WebService. This WebService enables you to book a hotel on the GDS database. Demo Site - http://www.keyfortravel.com/</wsdl:documentation>
+      <wsdl:port name="K4THotelSellWSSoap" binding="tns:K4THotelSellWSSoap">
+         <soap:address location="http://ws.soatrader.com/keyfortravel.com/0.2/K4THotelSellWS"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

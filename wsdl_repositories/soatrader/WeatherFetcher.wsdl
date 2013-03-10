@@ -1,0 +1,178 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://www.myasptools.com/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:s="http://www.w3.org/2001/XMLSchema"
+             xmlns:s0="http://www.myasptools.com/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             targetNamespace="http://www.myasptools.com/">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.myasptools.com/">
+         <s:element name="GetWeather">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="zipCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetWeatherResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetWeatherResult" type="s0:Weather"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Weather">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Temperature" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Windchill" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Heatindex" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Humidity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Dewpoint" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Wind" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Pressure" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Conditions" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Visibility" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sunrise" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sunset" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Moonrise" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Moonset" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetLicWeather">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="zipCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="licNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLicWeatherResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLicWeatherResult" type="s0:Weather"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Weather" nillable="true" type="s0:Weather"/>
+      </s:schema>
+  </types>
+  <message name="GetWeatherSoapIn">
+      <part name="parameters" element="s0:GetWeather"/>
+  </message>
+  <message name="GetWeatherSoapOut">
+      <part name="parameters" element="s0:GetWeatherResponse"/>
+  </message>
+  <message name="GetLicWeatherSoapIn">
+      <part name="parameters" element="s0:GetLicWeather"/>
+  </message>
+  <message name="GetLicWeatherSoapOut">
+      <part name="parameters" element="s0:GetLicWeatherResponse"/>
+  </message>
+  <message name="GetWeatherHttpGetIn">
+      <part name="zipCode" type="s:string"/>
+  </message>
+  <message name="GetWeatherHttpGetOut">
+      <part name="Body" element="s0:Weather"/>
+  </message>
+  <message name="GetLicWeatherHttpGetIn">
+      <part name="zipCode" type="s:string"/>
+      <part name="licNumber" type="s:string"/>
+  </message>
+  <message name="GetLicWeatherHttpGetOut">
+      <part name="Body" element="s0:Weather"/>
+  </message>
+  <message name="GetWeatherHttpPostIn">
+      <part name="zipCode" type="s:string"/>
+  </message>
+  <message name="GetWeatherHttpPostOut">
+      <part name="Body" element="s0:Weather"/>
+  </message>
+  <message name="GetLicWeatherHttpPostIn">
+      <part name="zipCode" type="s:string"/>
+      <part name="licNumber" type="s:string"/>
+  </message>
+  <message name="GetLicWeatherHttpPostOut">
+      <part name="Body" element="s0:Weather"/>
+  </message>
+  <portType name="WeatherFetcherSoap">
+      <operation name="GetWeather">
+         <documentation>This method returns the U.S. weather info based upon the 5 digit zip code</documentation>
+         <input message="s0:GetWeatherSoapIn"/>
+         <output message="s0:GetWeatherSoapOut"/>
+      </operation>
+      <operation name="GetLicWeather">
+         <documentation>This method returns the U.S. weather info based upon the 5 digit zip code</documentation>
+         <input message="s0:GetLicWeatherSoapIn"/>
+         <output message="s0:GetLicWeatherSoapOut"/>
+      </operation>
+  </portType>
+  
+  
+  <binding name="WeatherFetcherSoap" type="s0:WeatherFetcherSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <operation name="GetWeather">
+         <soap:operation soapAction="http://www.myasptools.com/GetWeather" style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+      <operation name="GetLicWeather">
+         <soap:operation soapAction="http://www.myasptools.com/GetLicWeather" style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  
+  
+  <service name="WeatherFetcher">
+      <port name="WeatherFetcherSoap" binding="s0:WeatherFetcherSoap">
+         <soap:address location="http://ws.soatrader.com/cs.uga.edu/0.1/WeatherFetcher"/>
+      </port>
+      <port name="WeatherFetcherHttpGet" binding="s0:WeatherFetcherHttpGet">
+         <soap:address location="http://ws.soatrader.com/cs.uga.edu/0.1/WeatherFetcher"/>
+         <http:address location="http://glkev.webs.innerhost.com/glkev_ws/WeatherFetcher.asmx"/>
+      </port>
+      <port name="WeatherFetcherHttpPost" binding="s0:WeatherFetcherHttpPost">
+         <soap:address location="http://ws.soatrader.com/cs.uga.edu/0.1/WeatherFetcher"/>
+         <http:address location="http://glkev.webs.innerhost.com/glkev_ws/WeatherFetcher.asmx"/>
+      </port>
+  </service>
+</definitions>

@@ -1,0 +1,136 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://gripsdb.dimdi.de/axis/services/LinkedSearch"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://gripsdb.dimdi.de/axis/services/LinkedSearch"
+                  xmlns:intf="http://gripsdb.dimdi.de/axis/services/LinkedSearch"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://gripsOpen.dimdi.de/bLogic/webservices/util"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://gripsdb.dimdi.de/axis/services/LinkedSearch">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.2RC3
+Built on Feb 28, 2005 (10:15:14 EST)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://gripsOpen.dimdi.de/bLogic/webservices/util">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="SortArg">
+            <sequence>
+               <element name="field" type="xsd:string"/>
+               <element name="sequence" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="ArrayOf_tns1_SortArg">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:SortArg[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="getLinkedSearchResponse">
+
+      <wsdl:part name="getLinkedSearchReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLinkedSearchRequest">
+
+      <wsdl:part name="user" type="soapenc:string"/>
+
+      <wsdl:part name="pwd" type="soapenc:string"/>
+
+      <wsdl:part name="dataBases" type="soapenc:string"/>
+
+      <wsdl:part name="queryString" type="soapenc:string"/>
+
+      <wsdl:part name="sortArgs" type="tns1:ArrayOf_tns1_SortArg"/>
+
+      <wsdl:part name="subset" type="soapenc:string"/>
+
+      <wsdl:part name="reqModifier" type="soapenc:string"/>
+
+      <wsdl:part name="layout" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="LinkedSearchHandler">
+
+      <wsdl:operation name="getLinkedSearch"
+                      parameterOrder="user pwd dataBases queryString sortArgs subset reqModifier layout">
+
+         <wsdl:input message="impl:getLinkedSearchRequest" name="getLinkedSearchRequest"/>
+
+         <wsdl:output message="impl:getLinkedSearchResponse" name="getLinkedSearchResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="LinkedSearchSoapBinding" type="impl:LinkedSearchHandler">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getLinkedSearch">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getLinkedSearchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.webservices.bLogic.gripsOpen.dimdi.de"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getLinkedSearchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://gripsdb.dimdi.de/axis/services/LinkedSearch"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="LinkedSearchHandlerService">
+
+      <wsdl:port binding="impl:LinkedSearchSoapBinding" name="LinkedSearch">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/dimdi.de/0.1/LinkedSearchHandlerService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

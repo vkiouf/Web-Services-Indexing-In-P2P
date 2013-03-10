@@ -1,0 +1,99 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="urn:/WServicesDev/wsdl"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             name="CurrencyRequest"
+             targetNamespace="urn:/WServicesDev/wsdl">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:soap11-enc="http://schemas.xmlsoap.org/soap/encoding/"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+              targetNamespace="urn:/WServicesDev/wsdl">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Currencies">
+            <sequence>
+               <element name="currencies" type="tns:ArrayOfCurrency"/>
+               <element name="errors" type="tns:ArrayOfstring"/>
+               <element name="transactionID" type="string"/>
+            </sequence>
+         </complexType>
+         <complexType name="ArrayOfCurrency">
+            <complexContent>
+               <restriction base="soap11-enc:Array">
+                  <attribute ref="soap11-enc:arrayType" wsdl:arrayType="tns:Currency[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="Currency">
+            <sequence>
+               <element name="from_code" type="string"/>
+               <element name="rate" type="float"/>
+               <element name="to_code" type="string"/>
+            </sequence>
+         </complexType>
+         <complexType name="ArrayOfstring">
+            <complexContent>
+               <restriction base="soap11-enc:Array">
+                  <attribute ref="soap11-enc:arrayType" wsdl:arrayType="string[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+   </types>
+  <message name="CurrencyRequestInterface_getCurrencyExchange">
+      <part name="String_1" type="xsd:string"/>
+      <part name="String_2" type="xsd:string"/>
+      <part name="float_3" type="xsd:float"/>
+   </message>
+  <message name="CurrencyRequestInterface_getCurrencyExchangeResponse">
+      <part name="result" type="tns:Currencies"/>
+   </message>
+  <portType name="CurrencyRequestInterface">
+      <operation name="getCurrencyExchange" parameterOrder="String_1 String_2 float_3">
+         <input message="tns:CurrencyRequestInterface_getCurrencyExchange"/>
+         <output message="tns:CurrencyRequestInterface_getCurrencyExchangeResponse"/>
+      </operation>
+   </portType>
+  <binding name="CurrencyRequestInterfaceBinding" type="tns:CurrencyRequestInterface">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+      <operation name="getCurrencyExchange">
+         <soap:operation soapAction=""/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded"
+                       namespace="urn:/WServicesDev/wsdl"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="encoded"
+                       namespace="urn:/WServicesDev/wsdl"/>
+         </output>
+      </operation>
+   </binding>
+  <service name="CurrencyRequest">
+      <port name="CurrencyRequestInterfacePort"
+            binding="tns:CurrencyRequestInterfaceBinding">
+         <soap:address location="http://ws.soatrader.com/viajez.com/0.1/CurrencyRequest"/>
+      </port>
+   </service>
+</definitions>

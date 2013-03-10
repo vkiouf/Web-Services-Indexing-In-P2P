@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://www.strikeiron.com"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://ws.strikeiron.com"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:si="http://www.strikeiron.com"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.strikeiron.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.strikeiron.com">
+         <s:element name="Lookup">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Number" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LookupResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LookupResult" type="si:Listing"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Listing">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ListingName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Published" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ResponseInfo" type="si:ResponseInfo"/>
+         <s:complexType name="ResponseInfo">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ResponseCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Response" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Validate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Number" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ValidateResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns1="http://ws.strikeiron.com"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified"
+                targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LookupSoapIn">
+      <wsdl:part name="parameters" element="si:Lookup"/>
+  </wsdl:message>
+  <wsdl:message name="LookupSoapOut">
+      <wsdl:part name="parameters" element="si:LookupResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LookupResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateSoapIn">
+      <wsdl:part name="parameters" element="si:Validate"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateSoapOut">
+      <wsdl:part name="parameters" element="si:ValidateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="s1:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="s1:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseInfoMessage">
+      <wsdl:part name="LicenseInfo" element="s1:LicenseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SubscriptionInfoMessage">
+      <wsdl:part name="SubscriptionInfo" element="s1:SubscriptionInfo"/>
+  </wsdl:message>
+  <wsdl:portType name="ReversePhoneLookupSoap">
+      <wsdl:operation name="Lookup">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Find out information for a phone number</documentation>
+         <wsdl:input message="si:LookupSoapIn"/>
+         <wsdl:output message="si:LookupSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="Validate">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Verify a phone number is true or not</documentation>
+         <wsdl:input message="si:ValidateSoapIn"/>
+         <wsdl:output message="si:ValidateSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <wsdl:input message="si:GetRemainingHitsSoapIn"/>
+         <wsdl:output message="si:GetRemainingHitsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ReversePhoneLookupSoap" type="si:ReversePhoneLookupSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="Lookup">
+         <soap:operation soapAction="http://www.strikeiron.com/Lookup" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <si:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Number) &gt; 0</tns:expression>
+                     <tns:description>Number is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </si:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:LookupResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Validate">
+         <soap:operation soapAction="http://www.strikeiron.com/Validate" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <si:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Number) &gt; 0</tns:expression>
+                     <tns:description>Number is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </si:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:ValidateResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation soapAction="http://ws.strikeiron.com/StrikeIron/ReversePhoneLookup/GetRemainingHits"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ReversePhoneLookup">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This Web service will allow people to look up a residential information</documentation>
+      <wsdl:port name="ReversePhoneLookupSoap" binding="si:ReversePhoneLookupSoap">
+         <soap:address location="http://ws.soatrader.com/strikeiron.com/0.1/ReversePhoneLookup"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

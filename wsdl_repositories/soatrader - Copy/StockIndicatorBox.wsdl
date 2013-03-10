@@ -1,0 +1,191 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.quisque.com/fr/techno/stock/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.quisque.com/fr/techno/stock/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>StockIndicator v1.0&lt;BR&gt;Formulas for stock charts.&lt;BR&gt;</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.quisque.com/fr/techno/stock/">
+         <s:element name="SimpleMovingAverages">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="tQuotes" type="tns:ArrayOfDouble"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="period" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDouble">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="double" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SimpleMovingAveragesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SimpleMovingAveragesResult"
+                             type="tns:ArrayOfDouble"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ExponentialMovingAverages">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="tQuotes" type="tns:ArrayOfDouble"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="period" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ExponentialMovingAveragesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ExponentialMovingAveragesResult"
+                             type="tns:ArrayOfDouble"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Momentum">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="tQuotes" type="tns:ArrayOfDouble"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="period" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="MomentumResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MomentumResult" type="tns:ArrayOfDouble"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RelativeStrengthIndex">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="tQuotes" type="tns:ArrayOfDouble"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="period" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RelativeStrengthIndexResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RelativeStrengthIndexResult"
+                             type="tns:ArrayOfDouble"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SimpleMovingAveragesSoapIn">
+      <wsdl:part name="parameters" element="tns:SimpleMovingAverages"/>
+  </wsdl:message>
+  <wsdl:message name="SimpleMovingAveragesSoapOut">
+      <wsdl:part name="parameters" element="tns:SimpleMovingAveragesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ExponentialMovingAveragesSoapIn">
+      <wsdl:part name="parameters" element="tns:ExponentialMovingAverages"/>
+  </wsdl:message>
+  <wsdl:message name="ExponentialMovingAveragesSoapOut">
+      <wsdl:part name="parameters" element="tns:ExponentialMovingAveragesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="MomentumSoapIn">
+      <wsdl:part name="parameters" element="tns:Momentum"/>
+  </wsdl:message>
+  <wsdl:message name="MomentumSoapOut">
+      <wsdl:part name="parameters" element="tns:MomentumResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RelativeStrengthIndexSoapIn">
+      <wsdl:part name="parameters" element="tns:RelativeStrengthIndex"/>
+  </wsdl:message>
+  <wsdl:message name="RelativeStrengthIndexSoapOut">
+      <wsdl:part name="parameters" element="tns:RelativeStrengthIndexResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="StockIndicatorBoxSoap" type="tns:StockIndicatorBoxSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="SimpleMovingAverages">
+         <soap:operation soapAction="http://www.quisque.com/fr/techno/stock/SimpleMovingAverages"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ExponentialMovingAverages">
+         <soap:operation soapAction="http://www.quisque.com/fr/techno/stock/ExponentialMovingAverages"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Momentum">
+         <soap:operation soapAction="http://www.quisque.com/fr/techno/stock/Momentum" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RelativeStrengthIndex">
+         <soap:operation soapAction="http://www.quisque.com/fr/techno/stock/RelativeStrengthIndex"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="StockIndicatorBox">
+      <wsdl:documentation>StockIndicator v1.0&lt;BR&gt;Formulas for stock charts.&lt;BR&gt;</wsdl:documentation>
+      <wsdl:port name="StockIndicatorBoxSoap" binding="tns:StockIndicatorBoxSoap">
+         <soap:address location="http://ws.soatrader.com/quisque.com/0.1/StockIndicatorBox"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

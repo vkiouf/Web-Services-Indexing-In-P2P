@@ -1,0 +1,104 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://example.com/AddressBook"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  name="AddressBook"
+                  targetNamespace="http://example.com/AddressBook">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <xsd:schema elementFormDefault="qualified" targetNamespace="http://example.com/AddressBook">
+			
+				     <xsd:complexType name="Address">
+					       <xsd:sequence>
+						         <xsd:element name="Street" type="xsd:string"/>
+						         <xsd:element name="City" type="xsd:string"/>
+						         <xsd:element name="Province" type="xsd:string"/>
+						         <xsd:element name="PostalCode" type="xsd:string"/>
+						         <xsd:element name="PhoneNumber" type="xsd:string"/>
+					       </xsd:sequence>
+				     </xsd:complexType>
+		
+         <xsd:complexType name="Name">
+					       <xsd:sequence>
+						         <xsd:element name="FirstName" type="xsd:string"/>
+						         <xsd:element name="LastName" type="xsd:string"/>
+					       </xsd:sequence>
+				     </xsd:complexType>
+			      <xsd:element name="Name" type="tns:Name">
+				
+			</xsd:element>
+
+			      <xsd:element name="AddressBookInfo">
+				        <xsd:complexType>
+					          <xsd:sequence>
+						            <xsd:element name="Name" type="tns:Name"/>
+						            <xsd:element name="Address" type="tns:Address"/>
+					          </xsd:sequence>
+				        </xsd:complexType>
+			      </xsd:element>
+
+		    </xsd:schema>
+	  </wsdl:types>
+	  <wsdl:message name="GetInfoByNameRequest">
+		    <wsdl:part name="Name" element="tns:Name"/>
+	  </wsdl:message>
+	  <wsdl:message name="GetInfoByNameResponse">
+		    <wsdl:part name="AddressBookInfo" element="tns:AddressBookInfo"/>
+	  </wsdl:message>
+	  <wsdl:message name="SaveInfoRequest">
+		    <wsdl:part name="AddressBookInfo" element="tns:AddressBookInfo"/>
+	  </wsdl:message>
+	  <wsdl:portType name="AddressBookPortType">
+		    <wsdl:operation name="GetInfoByName">
+			      <wsdl:input message="tns:GetInfoByNameRequest"/>
+			      <wsdl:output message="tns:GetInfoByNameResponse"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="SaveInfo">
+			      <wsdl:input message="tns:SaveInfoRequest"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+	  <wsdl:binding name="GetInfoByNameBinding" type="tns:AddressBookPortType">
+		    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <wsdl:operation name="GetInfoByName">
+			      <soap:operation soapAction="http://example.com/AddressBook/GetInfoByName"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+		    <wsdl:operation name="SaveInfo">
+			      <soap:operation soapAction="http://example.com/AddressBook/SaveInfo"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+		    </wsdl:operation>
+	  </wsdl:binding>
+	  <wsdl:service name="GetInfoByNameService">
+		    <wsdl:port name="Port" binding="tns:GetInfoByNameBinding">
+			      <soap:address location="http://ws.soatrader.com/ibm.com/0.1/GetInfoByNameService"/>
+		    </wsdl:port>
+	  </wsdl:service>
+</wsdl:definitions>

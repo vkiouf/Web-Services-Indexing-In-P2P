@@ -1,0 +1,894 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://source.trax.aero"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://source.trax.aero"
+                  xmlns:intf="http://source.trax.aero"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://transdua.packing_shipping.castor.trax.aero"
+                  xmlns:tns2="http://order.orders.castor.trax.aero"
+                  xmlns:tns3="http://pn_interchangeable.settings.castor.trax.aero"
+                  xmlns:tns4="http://notes.main.castor.trax.aero"
+                  xmlns:tns5="http://requisition.requisition.castor.trax.aero"
+                  xmlns:tns6="http://profile_master.settings.castor.trax.aero"
+                  xmlns:tns7="http://exception.trax.aero"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://source.trax.aero">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://transdua.packing_shipping.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="Pack_Ship_Transdua_Query_Type">
+            <sequence>
+               <element name="getOnlyUnSentRecords" type="xsd:boolean"/>
+               <element name="path" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Pack_Ship_Transdua_Query_Element">
+            <complexContent>
+               <extension base="tns1:Pack_Ship_Transdua_Query_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Order_Line">
+            <complexContent>
+               <extension base="tns2:Order_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Packing_Shipping_For_Transdua_Outgoing_Type">
+            <sequence>
+               <element name="batch" type="xsd:int"/>
+               <element name="created_By" nillable="true" type="soapenc:string"/>
+               <element name="created_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="goods_received_batch" type="xsd:int"/>
+               <element name="interface_Transaction_Number" type="xsd:long"/>
+               <element name="order_Line" nillable="true" type="tns1:Order_Line"/>
+               <element name="pn" nillable="true" type="soapenc:string"/>
+               <element name="pn_Description" nillable="true" type="soapenc:string"/>
+               <element name="qty" nillable="true" type="soapenc:decimal"/>
+               <element name="ship_To" nillable="true" type="soapenc:string"/>
+               <element name="ship_To_Category" nillable="true" type="soapenc:string"/>
+               <element name="shipped_From_Location" nillable="true" type="soapenc:string"/>
+               <element name="sn" nillable="true" type="soapenc:string"/>
+               <element name="transaction" nillable="true" type="soapenc:string"/>
+               <element name="transaction_Category" nillable="true" type="soapenc:string"/>
+               <element name="transaction_Line" type="xsd:int"/>
+               <element name="transaction_Number" type="xsd:int"/>
+               <element name="unit_of_Measure" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="value" nillable="true" type="soapenc:decimal"/>
+            </sequence>
+         </complexType>
+         <complexType name="Packing_Shipping_For_Transdua_Outgoing_Element">
+            <complexContent>
+               <extension base="tns1:Packing_Shipping_For_Transdua_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Packing_Shipping_For_Transdua_Outgoing_Array_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="packing_Shipping_For_Transdua_Outgoing_Element"
+                        nillable="true"
+                        type="tns1:Packing_Shipping_For_Transdua_Outgoing_Element"/>
+               <element name="packing_Shipping_For_Transdua_Outgoing_ElementCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Packing_Shipping_For_Transdua_Outgoing_Array_Element">
+            <complexContent>
+               <extension base="tns1:Packing_Shipping_For_Transdua_Outgoing_Array_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://transdua.packing_shipping.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="Pack_Ship_Transdua_Query_Type">
+            <sequence>
+               <element name="getOnlyUnSentRecords" type="xsd:boolean"/>
+               <element name="path" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Pack_Ship_Transdua_Query_Element">
+            <complexContent>
+               <extension base="tns1:Pack_Ship_Transdua_Query_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Order_Line">
+            <complexContent>
+               <extension base="tns2:Order_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Packing_Shipping_For_Transdua_Outgoing_Type">
+            <sequence>
+               <element name="batch" type="xsd:int"/>
+               <element name="created_By" nillable="true" type="soapenc:string"/>
+               <element name="created_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="goods_received_batch" type="xsd:int"/>
+               <element name="interface_Transaction_Number" type="xsd:long"/>
+               <element name="order_Line" nillable="true" type="tns1:Order_Line"/>
+               <element name="pn" nillable="true" type="soapenc:string"/>
+               <element name="pn_Description" nillable="true" type="soapenc:string"/>
+               <element name="qty" nillable="true" type="soapenc:decimal"/>
+               <element name="ship_To" nillable="true" type="soapenc:string"/>
+               <element name="ship_To_Category" nillable="true" type="soapenc:string"/>
+               <element name="shipped_From_Location" nillable="true" type="soapenc:string"/>
+               <element name="sn" nillable="true" type="soapenc:string"/>
+               <element name="transaction" nillable="true" type="soapenc:string"/>
+               <element name="transaction_Category" nillable="true" type="soapenc:string"/>
+               <element name="transaction_Line" type="xsd:int"/>
+               <element name="transaction_Number" type="xsd:int"/>
+               <element name="unit_of_Measure" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="value" nillable="true" type="soapenc:decimal"/>
+            </sequence>
+         </complexType>
+         <complexType name="Packing_Shipping_For_Transdua_Outgoing_Element">
+            <complexContent>
+               <extension base="tns1:Packing_Shipping_For_Transdua_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Packing_Shipping_For_Transdua_Outgoing_Array_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="packing_Shipping_For_Transdua_Outgoing_Element"
+                        nillable="true"
+                        type="tns1:Packing_Shipping_For_Transdua_Outgoing_Element"/>
+               <element name="packing_Shipping_For_Transdua_Outgoing_ElementCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Packing_Shipping_For_Transdua_Outgoing_Array_Element">
+            <complexContent>
+               <extension base="tns1:Packing_Shipping_For_Transdua_Outgoing_Array_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://pn_interchangeable.settings.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="PN_Interchangeable_Outgoing_Type">
+            <sequence>
+               <element name="PN_Category" nillable="true" type="soapenc:string"/>
+               <element name="PN_Interchangeable" nillable="true" type="soapenc:string"/>
+               <element name="PN_Main" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="manufacturer" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://pn_interchangeable.settings.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="PN_Interchangeable_Outgoing_Type">
+            <sequence>
+               <element name="PN_Category" nillable="true" type="soapenc:string"/>
+               <element name="PN_Interchangeable" nillable="true" type="soapenc:string"/>
+               <element name="PN_Main" nillable="true" type="soapenc:string"/>
+               <element name="description" nillable="true" type="soapenc:string"/>
+               <element name="manufacturer" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://order.orders.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="PN">
+            <complexContent>
+               <extension base="tns3:PN_Interchangeable_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Notes">
+            <complexContent>
+               <extension base="tns4:Note_Pad_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Requisition">
+            <complexContent>
+               <extension base="tns5:Requisition_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Requisition_Lines">
+            <sequence>
+               <element maxOccurs="unbounded" name="requisition" nillable="true"
+                        type="tns2:Requisition"/>
+               <element name="requisitionCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Order_Detail_Line">
+            <sequence>
+               <element name="PN" nillable="true" type="tns2:PN"/>
+               <element name="QTY_Received" nillable="true" type="soapenc:decimal"/>
+               <element name="QTY_Require" nillable="true" type="soapenc:decimal"/>
+               <element name="SN" nillable="true" type="soapenc:string"/>
+               <element name="ac" nillable="true" type="soapenc:string"/>
+               <element name="ac_Series" nillable="true" type="soapenc:string"/>
+               <element name="ac_Type" nillable="true" type="soapenc:string"/>
+               <element name="batch" type="xsd:int"/>
+               <element name="capital_Expenditure" nillable="true" type="soapenc:string"/>
+               <element name="delivery_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="discount" nillable="true" type="soapenc:decimal"/>
+               <element name="last_Date_Received" nillable="true" type="xsd:dateTime"/>
+               <element name="modified_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="notes" nillable="true" type="tns2:Notes"/>
+               <element name="order_Line" type="xsd:int"/>
+               <element name="requisition_Lines" nillable="true" type="tns2:Requisition_Lines"/>
+               <element name="ship_To_Location" nillable="true" type="soapenc:string"/>
+               <element name="unit_Cost" nillable="true" type="soapenc:decimal"/>
+               <element name="unit_Of_Measurement" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo" type="xsd:int"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="Order_Detail_Outgoing_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="order_Detail_Line" nillable="true"
+                        type="tns2:Order_Detail_Line"/>
+               <element name="order_Detail_LineCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Order_Detail_Lines">
+            <complexContent>
+               <extension base="tns2:Order_Detail_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Order_Header_Outgoing_Type">
+            <sequence>
+               <element name="currency" nillable="true" type="soapenc:string"/>
+               <element name="customer_PO" nillable="true" type="soapenc:string"/>
+               <element name="order_Number" type="xsd:int"/>
+               <element name="order_Type" nillable="true" type="soapenc:string"/>
+               <element name="priority" nillable="true" type="soapenc:string"/>
+               <element name="ship_To_Location" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="vendor" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Order_Header">
+            <complexContent>
+               <extension base="tns2:Order_Header_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Profile_Master">
+            <complexContent>
+               <extension base="tns6:Profile_Master_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Order_Outgoing_Type">
+            <sequence>
+               <element name="order_Detail_Lines" nillable="true" type="tns2:Order_Detail_Lines"/>
+               <element name="order_Header" nillable="true" type="tns2:Order_Header"/>
+               <element name="profile_Master" nillable="true" type="tns2:Profile_Master"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://order.orders.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="PN">
+            <complexContent>
+               <extension base="tns3:PN_Interchangeable_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Notes">
+            <complexContent>
+               <extension base="tns4:Note_Pad_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Requisition">
+            <complexContent>
+               <extension base="tns5:Requisition_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Requisition_Lines">
+            <sequence>
+               <element maxOccurs="unbounded" name="requisition" nillable="true"
+                        type="tns2:Requisition"/>
+               <element name="requisitionCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Order_Detail_Line">
+            <sequence>
+               <element name="PN" nillable="true" type="tns2:PN"/>
+               <element name="QTY_Received" nillable="true" type="soapenc:decimal"/>
+               <element name="QTY_Require" nillable="true" type="soapenc:decimal"/>
+               <element name="SN" nillable="true" type="soapenc:string"/>
+               <element name="ac" nillable="true" type="soapenc:string"/>
+               <element name="ac_Series" nillable="true" type="soapenc:string"/>
+               <element name="ac_Type" nillable="true" type="soapenc:string"/>
+               <element name="batch" type="xsd:int"/>
+               <element name="capital_Expenditure" nillable="true" type="soapenc:string"/>
+               <element name="delivery_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="discount" nillable="true" type="soapenc:decimal"/>
+               <element name="last_Date_Received" nillable="true" type="xsd:dateTime"/>
+               <element name="modified_Date" nillable="true" type="xsd:dateTime"/>
+               <element name="notes" nillable="true" type="tns2:Notes"/>
+               <element name="order_Line" type="xsd:int"/>
+               <element name="requisition_Lines" nillable="true" type="tns2:Requisition_Lines"/>
+               <element name="ship_To_Location" nillable="true" type="soapenc:string"/>
+               <element name="unit_Cost" nillable="true" type="soapenc:decimal"/>
+               <element name="unit_Of_Measurement" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="wo" type="xsd:int"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="Order_Detail_Outgoing_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="order_Detail_Line" nillable="true"
+                        type="tns2:Order_Detail_Line"/>
+               <element name="order_Detail_LineCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Order_Detail_Lines">
+            <complexContent>
+               <extension base="tns2:Order_Detail_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Order_Header_Outgoing_Type">
+            <sequence>
+               <element name="currency" nillable="true" type="soapenc:string"/>
+               <element name="customer_PO" nillable="true" type="soapenc:string"/>
+               <element name="order_Number" type="xsd:int"/>
+               <element name="order_Type" nillable="true" type="soapenc:string"/>
+               <element name="priority" nillable="true" type="soapenc:string"/>
+               <element name="ship_To_Location" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+               <element name="vendor" nillable="true" type="soapenc:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Order_Header">
+            <complexContent>
+               <extension base="tns2:Order_Header_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="Profile_Master">
+            <complexContent>
+               <extension base="tns6:Profile_Master_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Order_Outgoing_Type">
+            <sequence>
+               <element name="order_Detail_Lines" nillable="true" type="tns2:Order_Detail_Lines"/>
+               <element name="order_Header" nillable="true" type="tns2:Order_Header"/>
+               <element name="profile_Master" nillable="true" type="tns2:Profile_Master"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://notes.main.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Note_Pad_Line">
+            <sequence>
+               <element name="note_Pad_Line" type="xsd:int"/>
+               <element name="notes_Text" nillable="true" type="soapenc:string"/>
+               <element name="print_Notes" type="xsd:boolean"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="Note_Pad_Detail_Outgoing_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="note_Pad_Line" nillable="true"
+                        type="tns4:Note_Pad_Line"/>
+               <element name="note_Pad_LineCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Note_Pad_Lines">
+            <complexContent>
+               <extension base="tns4:Note_Pad_Detail_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Note_Pad_Outgoing_Type">
+            <sequence>
+               <element name="note_Pad_Lines" nillable="true" type="tns4:Note_Pad_Lines"/>
+               <element name="notes_Number" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://notes.main.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Note_Pad_Line">
+            <sequence>
+               <element name="note_Pad_Line" type="xsd:int"/>
+               <element name="notes_Text" nillable="true" type="soapenc:string"/>
+               <element name="print_Notes" type="xsd:boolean"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="Note_Pad_Detail_Outgoing_Type">
+            <sequence>
+               <element maxOccurs="unbounded" name="note_Pad_Line" nillable="true"
+                        type="tns4:Note_Pad_Line"/>
+               <element name="note_Pad_LineCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Note_Pad_Lines">
+            <complexContent>
+               <extension base="tns4:Note_Pad_Detail_Outgoing_Type">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Note_Pad_Outgoing_Type">
+            <sequence>
+               <element name="note_Pad_Lines" nillable="true" type="tns4:Note_Pad_Lines"/>
+               <element name="notes_Number" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://requisition.requisition.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Requisition_Detail_Line">
+            <sequence>
+               <element name="requisition_Line" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="Requisition_Outgoing_Detail">
+            <sequence>
+               <element maxOccurs="unbounded" name="requisition_Detail_Line" nillable="true"
+                        type="tns5:Requisition_Detail_Line"/>
+               <element name="requisition_Detail_LineCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Requisition_Detail_Lines">
+            <complexContent>
+               <extension base="tns5:Requisition_Outgoing_Detail">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Requisition_Outgoing_Header">
+            <sequence>
+               <element name="AC" nillable="true" type="soapenc:string"/>
+               <element name="requisition" type="xsd:int"/>
+               <element name="requisition_Type" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Requisition_Header">
+            <complexContent>
+               <extension base="tns5:Requisition_Outgoing_Header">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Requisition_Outgoing_Type">
+            <sequence>
+               <element name="requisition_Detail_Lines" nillable="true"
+                        type="tns5:Requisition_Detail_Lines"/>
+               <element name="requisition_Header" nillable="true" type="tns5:Requisition_Header"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://requisition.requisition.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="Requisition_Detail_Line">
+            <sequence>
+               <element name="requisition_Line" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType abstract="true" name="Requisition_Outgoing_Detail">
+            <sequence>
+               <element maxOccurs="unbounded" name="requisition_Detail_Line" nillable="true"
+                        type="tns5:Requisition_Detail_Line"/>
+               <element name="requisition_Detail_LineCount" type="xsd:int"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Requisition_Detail_Lines">
+            <complexContent>
+               <extension base="tns5:Requisition_Outgoing_Detail">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Requisition_Outgoing_Header">
+            <sequence>
+               <element name="AC" nillable="true" type="soapenc:string"/>
+               <element name="requisition" type="xsd:int"/>
+               <element name="requisition_Type" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="Requisition_Header">
+            <complexContent>
+               <extension base="tns5:Requisition_Outgoing_Header">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType abstract="true" name="Requisition_Outgoing_Type">
+            <sequence>
+               <element name="requisition_Detail_Lines" nillable="true"
+                        type="tns5:Requisition_Detail_Lines"/>
+               <element name="requisition_Header" nillable="true" type="tns5:Requisition_Header"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://profile_master.settings.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="Profile_Master_Outgoing_Type">
+            <sequence>
+               <element name="VAT" nillable="true" type="soapenc:string"/>
+               <element name="profile" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://profile_master.settings.castor.trax.aero">
+         <import namespace="http://exception.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="Profile_Master_Outgoing_Type">
+            <sequence>
+               <element name="VAT" nillable="true" type="soapenc:string"/>
+               <element name="profile" nillable="true" type="soapenc:string"/>
+               <element name="valid" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://exception.trax.aero">
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="TraxException">
+            <sequence/>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://exception.trax.aero">
+         <import namespace="http://profile_master.settings.castor.trax.aero"/>
+         <import namespace="http://transdua.packing_shipping.castor.trax.aero"/>
+         <import namespace="http://requisition.requisition.castor.trax.aero"/>
+         <import namespace="http://order.orders.castor.trax.aero"/>
+         <import namespace="http://pn_interchangeable.settings.castor.trax.aero"/>
+         <import namespace="http://notes.main.castor.trax.aero"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="TraxException">
+            <sequence/>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="TraxException">
+
+      <wsdl:part name="fault" type="tns7:TraxException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRecordsReturnStringRequest">
+
+      <wsdl:part name="q" type="tns1:Pack_Ship_Transdua_Query_Element"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="markTransactionResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRecordsRequest">
+
+      <wsdl:part name="q" type="tns1:Pack_Ship_Transdua_Query_Element"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="markTransactionRequest">
+
+      <wsdl:part name="transaction" type="xsd:long"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRecordsReturnStringResponse">
+
+      <wsdl:part name="queryRecordsReturnStringReturn" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRecordsResponse">
+
+      <wsdl:part name="queryRecordsReturn"
+                 type="tns1:Packing_Shipping_For_Transdua_Outgoing_Array_Element"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Packing_And_Shipping">
+
+      <wsdl:operation name="queryRecords" parameterOrder="q">
+
+         <wsdl:input message="impl:queryRecordsRequest" name="queryRecordsRequest"/>
+
+         <wsdl:output message="impl:queryRecordsResponse" name="queryRecordsResponse"/>
+
+         <wsdl:fault message="impl:TraxException" name="TraxException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="markTransaction" parameterOrder="transaction">
+
+         <wsdl:input message="impl:markTransactionRequest" name="markTransactionRequest"/>
+
+         <wsdl:output message="impl:markTransactionResponse" name="markTransactionResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRecordsReturnString" parameterOrder="q">
+
+         <wsdl:input message="impl:queryRecordsReturnStringRequest"
+                     name="queryRecordsReturnStringRequest"/>
+
+         <wsdl:output message="impl:queryRecordsReturnStringResponse"
+                      name="queryRecordsReturnStringResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="Packing_And_ShippingSoapBinding" type="impl:Packing_And_Shipping">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="queryRecords">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryRecordsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryRecordsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="TraxException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="TraxException"
+                            namespace="http://source.trax.aero"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="markTransaction">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="markTransactionRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="markTransactionResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRecordsReturnString">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryRecordsReturnStringRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryRecordsReturnStringResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://source.trax.aero"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="Packing_And_ShippingService">
+
+      <wsdl:port binding="impl:Packing_And_ShippingSoapBinding" name="Packing_And_Shipping">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/trax.aero/0.1/Packing_And_ShippingService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

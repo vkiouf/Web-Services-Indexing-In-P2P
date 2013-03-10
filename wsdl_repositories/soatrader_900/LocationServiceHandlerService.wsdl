@@ -1,0 +1,111 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://dealerlocationservice.webservices.manheim.com/"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://dealerlocationservice.webservices.manheim.com/"
+                  xmlns:intf="http://dealerlocationservice.webservices.manheim.com/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://dealerlocationservice.webservices.manheim.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://dealerlocationservice.webservices.manheim.com/">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="DealerLocationSelectionVO">
+            <sequence>
+               <element name="regionalCode" nillable="true" type="xsd:string"/>
+               <element name="externalClientID" nillable="true" type="xsd:string"/>
+               <element name="srvcGroup" nillable="true" type="xsd:string"/>
+               <element name="state" nillable="true" type="xsd:string"/>
+               <element name="asOfDate" nillable="true" type="xsd:string"/>
+               <element name="primaryOnly" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="DealerLocationVO">
+            <sequence>
+               <element name="zipCode" nillable="true" type="xsd:string"/>
+               <element name="addressName" nillable="true" type="xsd:string"/>
+               <element name="clientJdeKeyID" type="xsd:long"/>
+               <element name="state" nillable="true" type="xsd:string"/>
+               <element name="activeInd" nillable="true" type="xsd:string"/>
+               <element name="locType" type="xsd:long"/>
+               <element name="srvcGroup" nillable="true" type="xsd:string"/>
+               <element name="locAddCode" nillable="true" type="xsd:string"/>
+               <element name="clientLocCode" nillable="true" type="xsd:string"/>
+               <element name="addr2" nillable="true" type="xsd:string"/>
+               <element name="primaryFlag" nillable="true" type="xsd:string"/>
+               <element name="addr1" nillable="true" type="xsd:string"/>
+               <element name="phone" nillable="true" type="xsd:string"/>
+               <element name="cityName" nillable="true" type="xsd:string"/>
+               <element name="locTypeAndAddCode" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="arrayOfDealerLocationVO">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:DealerLocationVO[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+   </wsdl:types>
+  <wsdl:message name="getPrimaryLocationsRequest">
+      <wsdl:part name="dealerLocSelVO" type="intf:DealerLocationSelectionVO"/>
+  </wsdl:message>
+  <wsdl:message name="getPrimaryLocationsResponse">
+      <wsdl:part name="getPrimaryLocationsReturn" type="intf:arrayOfDealerLocationVO"/>
+  </wsdl:message>
+  <wsdl:portType name="LocationServiceHandler">
+      <wsdl:operation name="getPrimaryLocations" parameterOrder="dealerLocSelVO">
+         <wsdl:input message="intf:getPrimaryLocationsRequest" name="getPrimaryLocationsRequest"/>
+         <wsdl:output message="intf:getPrimaryLocationsResponse" name="getPrimaryLocationsResponse"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DealerLocationServiceSoapBinding" type="intf:LocationServiceHandler">
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="getPrimaryLocations">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getPrimaryLocationsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dealerlocationservice.webservices.manheim.com/"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="getPrimaryLocationsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dealerlocationservice.webservices.manheim.com/"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LocationServiceHandlerService">
+      <wsdl:port binding="intf:DealerLocationServiceSoapBinding" name="DealerLocationService">
+         <wsdlsoap:address location="http://ws.soatrader.com/auto-rs.com/0.1/LocationServiceHandlerService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

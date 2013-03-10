@@ -1,0 +1,429 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:tns="http://www.pathfinder-xml.com/EMSFlightMonitorService.wsdl"
+             xmlns:ns="http://pathfinder-xml/EMSFlightMonitorService.xsd"
+             targetNamespace="http://www.pathfinder-xml.com/EMSFlightMonitorService.wsdl">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema elementFormDefault="qualified"
+                  targetNamespace="http://pathfinder-xml/EMSFlightMonitorService.xsd">
+         <xsd:complexType name="Airline">
+            <xsd:attribute name="AirlineCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="IATACode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ICAOCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Name" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="Airport">
+            <xsd:attribute name="AirportCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="FAACode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="IATACode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ICAOCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Name" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="EMSDeliveryDestination">
+            <xsd:attribute name="EndTime" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Friday" type="xsd:boolean"/>
+            <xsd:attribute name="Id" type="xsd:int" use="optional"/>
+            <xsd:attribute name="Monday" type="xsd:boolean"/>
+            <xsd:attribute name="Name" type="xsd:string"/>
+            <xsd:attribute name="RuleSpecific" type="xsd:boolean"/>
+            <xsd:attribute name="Saturday" type="xsd:boolean"/>
+            <xsd:attribute name="StartTime" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Sunday" type="xsd:boolean"/>
+            <xsd:attribute name="Thursday" type="xsd:boolean"/>
+            <xsd:attribute name="Tuesday" type="xsd:boolean"/>
+            <xsd:attribute name="Type" type="xsd:string"/>
+            <xsd:attribute name="UserId" type="xsd:long" use="optional"/>
+            <xsd:attribute name="Value" type="xsd:string"/>
+            <xsd:attribute name="Wednesday" type="xsd:boolean"/>
+         </xsd:complexType>
+         <xsd:complexType name="EMSFlightDelayAndGateEvents">
+            <xsd:attribute name="ArrivalDelayAllowRunwayTimes" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="ArrivalDelayDelta" type="xsd:int" use="optional"/>
+            <xsd:attribute name="ArrivalDelayEvent" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="ArrivalDelayThreshold" type="xsd:int" use="optional"/>
+            <xsd:attribute name="ArrivalDelayWindowStart" type="xsd:int" use="optional"/>
+            <xsd:attribute name="ArrivalGateChange" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="ArrivalGateWindowStart" type="xsd:int" use="optional"/>
+            <xsd:attribute name="BaggageChangeWindowStart" type="xsd:int" use="optional"/>
+            <xsd:attribute name="BaggageChange" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="DepartureDelayAllowRunwayTimes" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="DepartureDelayDelta" type="xsd:int" use="optional"/>
+            <xsd:attribute name="DepartureDelayEvent" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="DepartureDelayThreshold" type="xsd:int" use="optional"/>
+            <xsd:attribute name="DepartureDelayWindowStart" type="xsd:int" use="optional"/>
+            <xsd:attribute name="DepartureGateChange" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="DepartureGateWindowStart" type="xsd:int" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="EMSFlightMonitorAddRulesInfo">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" name="EMSFlightRule" type="ns:EMSFlightRule"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="EMSFlightRule">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Airline" type="ns:Airline"/>
+               <xsd:element minOccurs="0" name="DepartureAirport" type="ns:Airport"/>
+               <xsd:element minOccurs="0" name="ArrivalAirport" type="ns:Airport"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="EMSFlightRuleEvents"
+                            type="ns:EMSFlightRuleEvents"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="EMSRuleNameValue"
+                            type="ns:EMSRuleNameValue"/>
+            </xsd:sequence>
+            <xsd:attribute name="Active" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="ArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="DepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="Description" type="xsd:string" use="optional"/>
+            <xsd:attribute name="FlightNumber" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Id" type="xsd:int" use="optional"/>
+            <xsd:attribute name="Name" type="xsd:string" use="optional"/>
+            <xsd:attribute name="UserId" type="xsd:long" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="EMSFlightRuleEvents">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" minOccurs="0" name="EMSFlightDelayAndGateEvents"
+                            type="ns:EMSFlightDelayAndGateEvents"/>
+               <xsd:element maxOccurs="unbounded" name="EMSDeliveryDestination"
+                            type="ns:EMSDeliveryDestination"/>
+            </xsd:sequence>
+            <xsd:attribute name="AllEvents" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="Arrived" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="Cancelled" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="Departed" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="Diverted" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="EMSRuleId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="FlightArrivedLateThreshold" type="xsd:int" use="optional"/>
+            <xsd:attribute name="FlightArrivedLate" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="FlightDepartedLateThreshold" type="xsd:int" use="optional"/>
+            <xsd:attribute name="FlightDepartedLate" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="Id" type="xsd:int" use="optional"/>
+            <xsd:attribute name="StatusBeforeArrivalMinutes" type="xsd:int" use="optional"/>
+            <xsd:attribute name="StatusBeforeArrival" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="StatusBeforeDeparture1Minutes" type="xsd:int" use="optional"/>
+            <xsd:attribute name="StatusBeforeDeparture1" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="StatusBeforeDeparture2Minutes" type="xsd:int" use="optional"/>
+            <xsd:attribute name="StatusBeforeDeparture2" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="StatusBeforeDeparture3Minutes" type="xsd:int" use="optional"/>
+            <xsd:attribute name="StatusBeforeDeparture3" type="xsd:boolean" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="EMSFlightRuleVerifyInfo">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Airline" type="ns:Airline"/>
+               <xsd:element minOccurs="0" name="ArrivalAirport" type="ns:Airport"/>
+               <xsd:element minOccurs="0" name="DepartureAirport" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="ArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="DepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="FlightNumber" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="EMSFlightRuleVerifyResult">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Airline" type="ns:Airline"/>
+               <xsd:element minOccurs="0" name="ArrivalAirport" type="ns:Airport"/>
+               <xsd:element minOccurs="0" name="DepartureAirport" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="ArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="DepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="FlightNumber" type="xsd:string" use="optional"/>
+            <xsd:attribute name="SupportsArrivalGateAssignment" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="SupportsBaggageClaim" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="SupportsDepartureGateAssignment" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="SupportsGateArrivalTime" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="SupportsGateDepartureTime" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="SupportsRunwayArrivalTime" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="SupportsRunwayDepartureTime" type="xsd:boolean" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="EMSRuleNameValue">
+            <xsd:attribute name="EMSRuleId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="Id" type="xsd:int" use="optional"/>
+            <xsd:attribute name="Name" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Value" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="Error">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" name="Message" type="xsd:string"/>
+               <xsd:element maxOccurs="1" name="StackTrace" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="MajorCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MinorCode" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="Login">
+            <xsd:attribute name="AccountId" type="xsd:string" use="required"/>
+            <xsd:attribute name="Guid" type="xsd:string"/>
+            <xsd:attribute name="Password" type="xsd:string" use="required"/>
+            <xsd:attribute name="UserId" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:element name="EMSFlightMonitorAddRulesRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+                  <xsd:element name="EMSFlightMonitorAddRulesInfo" type="ns:EMSFlightMonitorAddRulesInfo"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="EMSFlightMonitorAddRulesResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element maxOccurs="unbounded" name="EMSFlightRule" type="ns:EMSFlightRule"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="EMSFlightMonitorDeleteRulesRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+                  <xsd:element name="EMSFlightRule" type="ns:EMSFlightRule"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="EMSFlightMonitorDeleteRulesResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="EMSFlightMonitorGetRulesRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+                  <xsd:element maxOccurs="unbounded" name="EMSFlightRule" type="ns:EMSFlightRule"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="EMSFlightMonitorGetRulesResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element maxOccurs="unbounded" name="EMSFlightRule" type="ns:EMSFlightRule"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="EMSFlightMonitorUpdateRuleRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+                  <xsd:element name="EMSFlightRule" type="ns:EMSFlightRule"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="EMSFlightMonitorUpdateRuleResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element name="EMSFlightRule" type="ns:EMSFlightRule"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="EMSFlightMonitorVerifyRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+                  <xsd:element name="VerifyInfo" type="ns:EMSFlightRuleVerifyInfo"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="EMSFlightMonitorVerifyResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="VerificationResult"
+                               type="ns:EMSFlightRuleVerifyResult"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+  </types>
+  <message name="EMSFlightMonitorAddRulesRequest">
+      <part element="ns:EMSFlightMonitorAddRulesRequest"
+            name="EMSFlightMonitorAddRulesRequest"/>
+  </message>
+  <message name="EMSFlightMonitorAddRulesResponse">
+      <part element="ns:EMSFlightMonitorAddRulesResponse"
+            name="EMSFlightMonitorAddRulesResponse"/>
+  </message>
+  <message name="EMSFlightMonitorDeleteRulesRequest">
+      <part element="ns:EMSFlightMonitorDeleteRulesRequest"
+            name="EMSFlightMonitorDeleteRulesRequest"/>
+  </message>
+  <message name="EMSFlightMonitorDeleteRulesResponse">
+      <part element="ns:EMSFlightMonitorDeleteRulesResponse"
+            name="EMSFlightMonitorDeleteRulesResponse"/>
+  </message>
+  <message name="EMSFlightMonitorGetRulesRequest">
+      <part element="ns:EMSFlightMonitorGetRulesRequest"
+            name="EMSFlightMonitorGetRulesRequest"/>
+  </message>
+  <message name="EMSFlightMonitorGetRulesResponse">
+      <part element="ns:EMSFlightMonitorGetRulesResponse"
+            name="EMSFlightMonitorGetRulesResponse"/>
+  </message>
+  <message name="EMSFlightMonitorUpdateRuleRequest">
+      <part element="ns:EMSFlightMonitorUpdateRuleRequest"
+            name="EMSFlightMonitorUpdateRuleRequest"/>
+  </message>
+  <message name="EMSFlightMonitorUpdateRuleResponse">
+      <part element="ns:EMSFlightMonitorUpdateRuleResponse"
+            name="EMSFlightMonitorUpdateRuleResponse"/>
+  </message>
+  <message name="EMSFlightMonitorVerifyRequest">
+      <part element="ns:EMSFlightMonitorVerifyRequest" name="EMSFlightMonitorVerifyRequest"/>
+  </message>
+  <message name="EMSFlightMonitorVerifyResponse">
+      <part element="ns:EMSFlightMonitorVerifyResponse"
+            name="EMSFlightMonitorVerifyResponse"/>
+  </message>
+  <portType name="EMSFlightMonitorAddRulesPort">
+      <operation name="EMSFlightMonitorAddRulesOperation">
+         <input message="tns:EMSFlightMonitorAddRulesRequest"/>
+         <output message="tns:EMSFlightMonitorAddRulesResponse"/>
+      </operation>
+  </portType>
+  <portType name="EMSFlightMonitorDeleteRulesPort">
+      <operation name="EMSFlightMonitorDeleteRulesOperation">
+         <input message="tns:EMSFlightMonitorDeleteRulesRequest"/>
+         <output message="tns:EMSFlightMonitorDeleteRulesResponse"/>
+      </operation>
+  </portType>
+  <portType name="EMSFlightMonitorGetRulesPort">
+      <operation name="EMSFlightMonitorGetRulesOperation">
+         <input message="tns:EMSFlightMonitorGetRulesRequest"/>
+         <output message="tns:EMSFlightMonitorGetRulesResponse"/>
+      </operation>
+  </portType>
+  <portType name="EMSFlightMonitorUpdateRulePort">
+      <operation name="EMSFlightMonitorUpdateRuleOperation">
+         <input message="tns:EMSFlightMonitorUpdateRuleRequest"/>
+         <output message="tns:EMSFlightMonitorUpdateRuleResponse"/>
+      </operation>
+  </portType>
+  <portType name="EMSFlightMonitorVerifyPort">
+      <operation name="EMSFlightMonitorVerifyOperation">
+         <input message="tns:EMSFlightMonitorVerifyRequest"/>
+         <output message="tns:EMSFlightMonitorVerifyResponse"/>
+      </operation>
+  </portType>
+  <binding name="EMSFlightMonitorAddRulesSOAPBinding"
+            type="tns:EMSFlightMonitorAddRulesPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="EMSFlightMonitorAddRulesOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <binding name="EMSFlightMonitorDeleteRulesSOAPBinding"
+            type="tns:EMSFlightMonitorDeleteRulesPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="EMSFlightMonitorDeleteRulesOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <binding name="EMSFlightMonitorGetRulesSOAPBinding"
+            type="tns:EMSFlightMonitorGetRulesPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="EMSFlightMonitorGetRulesOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <binding name="EMSFlightMonitorUpdateRuleSOAPBinding"
+            type="tns:EMSFlightMonitorUpdateRulePort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="EMSFlightMonitorUpdateRuleOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <binding name="EMSFlightMonitorVerifySOAPBinding" type="tns:EMSFlightMonitorVerifyPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="EMSFlightMonitorVerifyOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="EMSFlightMonitorService">
+      <port binding="tns:EMSFlightMonitorAddRulesSOAPBinding"
+            name="EMSFlightMonitorAddRulesService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.1/EMSFlightMonitorService"/>
+      </port>
+      <port binding="tns:EMSFlightMonitorDeleteRulesSOAPBinding"
+            name="EMSFlightMonitorDeleteRulesService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.1/EMSFlightMonitorService"/>
+      </port>
+      <port binding="tns:EMSFlightMonitorGetRulesSOAPBinding"
+            name="EMSFlightMonitorGetRulesService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.1/EMSFlightMonitorService"/>
+      </port>
+      <port binding="tns:EMSFlightMonitorUpdateRuleSOAPBinding"
+            name="EMSFlightMonitorUpdateRuleService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.1/EMSFlightMonitorService"/>
+      </port>
+      <port binding="tns:EMSFlightMonitorVerifySOAPBinding"
+            name="EMSFlightMonitorVerifyService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.1/EMSFlightMonitorService"/>
+      </port>
+  </service>
+</definitions>

@@ -1,0 +1,212 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:adas="http://www.adas.de/spec/webshop/v2"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://www.adas.de/spec/webshop/v2"
+                  xmlns:zus="http://www.adas.de/spec/webshop/v2/zusatz"
+                  targetNamespace="http://www.adas.de/spec/webshop/v2">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <xs:schema targetNamespace="http://www.adas.de/spec/webshop/v2/zusatz">
+			      <xs:annotation>
+				        <xs:documentation>
+					Hier kann nicht der gleiche Namespace benutzt werden wie für das importierte
+					Schema.
+				</xs:documentation>
+			      </xs:annotation>
+			      <xs:import namespace="http://www.adas.de/spec/webshop/v2"/>
+			      <xs:element name="auth" type="adas:authentifizierung">
+			</xs:element>
+		    </xs:schema>
+	  </wsdl:types>
+	  <wsdl:message name="getFunktionsumfang">
+		    <wsdl:part name="auth" element="zus:auth"/>
+	  </wsdl:message>
+	  <wsdl:message name="returnFunktionsumfang">
+		    <wsdl:part name="data" element="adas:funktionsumfang"/>
+	  </wsdl:message>
+	  <wsdl:message name="errorAllgemein">
+		    <wsdl:part name="error" type="xs:string"/>
+	  </wsdl:message>
+	  <wsdl:message name="putFunktionsumfang">
+		    <wsdl:part name="auth" element="zus:auth"/>
+		    <wsdl:part name="data" element="adas:funktionsumfang"/>
+	  </wsdl:message>
+	  <wsdl:message name="getBestellung">
+		    <wsdl:part name="auth"/>
+	  </wsdl:message>
+	  <wsdl:message name="returnBestellung">
+		    <wsdl:part name="data" element="adas:bestellung"/>
+	  </wsdl:message>
+	  <wsdl:message name="putBestellung">
+		    <wsdl:part name="data" element="adas:bestellung"/>
+	  </wsdl:message>
+	  <wsdl:message name="putBestellstatus">
+		    <wsdl:part name="auth" element="zus:auth"/>
+		    <wsdl:part name="data" element="adas:bestellstatus"/>
+	  </wsdl:message>
+	  <wsdl:message name="returnDatenstand">
+		    <wsdl:part name="data" element="adas:datenstand"/>
+	  </wsdl:message>
+	  <wsdl:message name="returnKategorienliste">
+		    <wsdl:part name="data" element="adas:kategorienliste"/>
+	  </wsdl:message>
+	  <wsdl:message name="putPflege">
+		    <wsdl:part name="auth" element="zus:auth"/>
+		    <wsdl:part name="data" element="adas:pflege"/>
+	  </wsdl:message>
+	  <wsdl:message name="returnPromoliste">
+		    <wsdl:part name="data" element="adas:promoliste"/>
+	  </wsdl:message>
+	  <wsdl:message name="authAllgemein">
+		    <wsdl:part name="parameters" element="zus:auth"/>
+	  </wsdl:message>
+	  <wsdl:message name="returnArtikelstamm">
+		    <wsdl:part name="data" element="adas:artikelstamm"/>
+	  </wsdl:message>
+	  <wsdl:portType name="ADASWebshopPort">
+		    <wsdl:operation name="getArtikelkatalog">
+			      <wsdl:input message="tns:authAllgemein"/>
+			      <wsdl:output message="tns:returnArtikelstamm"/>
+			      <wsdl:fault name="FaultName" message="tns:errorAllgemein"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="getBestellung">
+			      <wsdl:input message="tns:authAllgemein"/>
+			      <wsdl:output message="tns:returnBestellung"/>
+			      <wsdl:fault name="FaultName" message="tns:errorAllgemein"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="getDatenstand">
+			      <wsdl:input message="tns:authAllgemein"/>
+			      <wsdl:output message="tns:returnDatenstand"/>
+			      <wsdl:fault name="FaultName" message="tns:errorAllgemein"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="getKategorien">
+			      <wsdl:input message="tns:authAllgemein"/>
+			      <wsdl:output message="tns:returnKategorienliste"/>
+			      <wsdl:fault name="FaultName" message="tns:errorAllgemein"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="getPromoliste">
+			      <wsdl:input message="tns:authAllgemein"/>
+			      <wsdl:output message="tns:returnPromoliste"/>
+			      <wsdl:fault name="FaultName" message="tns:errorAllgemein"/>
+		    </wsdl:operation>
+			   <wsdl:operation name="putBestellstatus">
+			      <wsdl:input message="tns:putBestellstatus"/>
+			      <wsdl:fault name="FaultName" message="tns:errorAllgemein"/> 
+		    </wsdl:operation> - - &gt;
+			<wsdl:operation name="putAngebot">
+			      <wsdl:input message="tns:putPflege"/>
+			      <wsdl:fault name="FaultName" message="tns:errorAllgemein"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+	  <wsdl:binding name="ADASWebshop" type="tns:ADASWebshopPort">
+		    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <wsdl:operation name="getBestellung">
+			      <soap:operation soapAction="urn:#getBestellung" style="document"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+			      <wsdl:fault name="FaultName"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="putBestellstatus">
+			      <soap:operation soapAction="urn:#putBestellstatus"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:fault name="FaultName"/>
+		    </wsdl:operation> - - &gt;
+		<wsdl:operation name="getDatenstand">
+			      <soap:operation soapAction="urn:#getdatenstand"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+			      <wsdl:fault name="FaultName"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="getPromoliste">
+			      <soap:operation soapAction="urn:#getPromoliste"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+			      <wsdl:fault name="FaultName"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="getKategorien">
+			      <soap:operation soapAction="urn:#getKategorienliste"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+			      <wsdl:fault name="FaultName"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="putAngebot">
+			      <soap:operation soapAction="urn:#putPflege"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:fault name="FaultName"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="getArtikelkatalog">
+			      <soap:operation soapAction="urn:#getArtikelkatalog"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+			      <wsdl:fault name="FaultName"/>
+		    </wsdl:operation>
+	  </wsdl:binding>
+	  <wsdl:service name="ADASWebshopService">
+		    <wsdl:port name="ADASWebshopPort" binding="tns:ADASWebshop">
+			      <soap:address location="http://ws.soatrader.com/adas.de/0.1/ADASWebshopService"/>
+		    </wsdl:port>
+	  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:ec.europa.eu:taxud:vies:services:checkVat" xmlns:impl="urn:ec.europa.eu:taxud:vies:services:checkVat" xmlns:intf="urn:ec.europa.eu:taxud:vies:services:checkVat" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns1="urn:ec.europa.eu:taxud:vies:services:checkVat:types" xmlns:soat="http://ws.soatrader.com/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+<documentation>
+Usage:
+The countryCode input parameter must follow the pattern [A-Z]{2}
+The vatNumber input parameter must follow the [0-9A-Za-z\+\*\.]{2,12}
+In case of problem, the returned FaultString can take the following specific values:
+- INVALID_INPUT: The provided CountryCode is invalid or the VAT number is empty;
+- SERVICE_UNAVAILABLE: The SOAP service is unavailable, try again later;
+- MS_UNAVAILABLE: The Member State service is unavailable, try again later or with another Member State;
+- TIMEOUT: The Member State service could not be reach in time, try again later or with another Member State;
+- SERVER_BUSY: The service can't process your request. Try again latter.
+
+</documentation>
+  <wsdl:types>
+    <schema targetNamespace="urn:ec.europa.eu:taxud:vies:services:checkVat:types" xmlns="http://www.w3.org/2001/XMLSchema">
+			<element name="checkVat">
+				<complexType>
+					<sequence>
+						<element name="countryCode" type="xsd:string"/>
+						<element name="vatNumber" type="xsd:string"/>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="checkVatResponse">
+				<complexType>
+					<sequence>
+						<element name="countryCode" type="xsd:string"/>
+						<element name="vatNumber" type="xsd:string"/>
+						<element name="requestDate" type="xsd:date"/>
+						<element name="valid" type="xsd:boolean"/>
+						<element name="name" type="xsd:string"/>
+						<element name="address" type="xsd:string"/>
+					</sequence>
+				</complexType>
+			</element>
+		</schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ws.soatrader.com/" xmlns:soat="http://ws.soatrader.com/"><xs:element name="SOATraderLicense" type="xs:string"/><xs:element name="SOATraderUsageStatistics" type="soat:SOATraderUsageStatistics"/><xs:complexType name="SOATraderUsageStatistics"><xs:sequence><xs:element name="HitsMade" type="xs:decimal"/><xs:element name="HitsLeft" type="xs:decimal"/></xs:sequence></xs:complexType></xs:schema>
+  </wsdl:types>
+  <wsdl:message name="SOATraderUsageStatistics">
+    <wsdl:part name="SOATraderUsageStatistics" element="soat:SOATraderUsageStatistics">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkVatRequest">
+    <wsdl:part name="parameters" element="tns1:checkVat">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkVatResponse">
+    <wsdl:part name="parameters" element="tns1:checkVatResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderLicense">
+    <wsdl:part name="SOATraderLicense" element="soat:SOATraderLicense">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="checkVatPortType">
+    <wsdl:operation name="checkVat">
+      <wsdl:input name="checkVatRequest" message="impl:checkVatRequest">
+    </wsdl:input>
+      <wsdl:output name="checkVatResponse" message="impl:checkVatResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="checkVatPortSoapBinding" type="impl:checkVatPortType">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="checkVat">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="checkVatRequest">
+        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:header message="impl:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="checkVatResponse">
+        <wsdlsoap:body use="literal"/>
+        <wsdlsoap:header message="impl:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </wsdlsoap:header>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="checkVatService">
+    <wsdl:port name="checkVatPort" binding="impl:checkVatPortSoapBinding">
+      <wsdlsoap:address location="http://ws.soatrader.com/soatrader.com/1.0/CheckEuropeanVATNumberValidity"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

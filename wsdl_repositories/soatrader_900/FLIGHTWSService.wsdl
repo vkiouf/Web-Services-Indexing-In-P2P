@@ -1,0 +1,114 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="com.datadirect/FLIGHTWS"
+             xmlns:wsdlns="com.datadirect/FLIGHTWS"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             name="FLIGHTWSService"
+             targetNamespace="com.datadirect/FLIGHTWS">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+              targetNamespace="com.datadirect/FLIGHTWS"
+              elementFormDefault="qualified">
+         <element name="FLIGHTWSRequest" type="wsdlns:FLIGHTWSRequest_Type"/>
+         <complexType name="FLIGHTWSRequest_Type">
+            <sequence>
+               <element name="Flightid" type="wsdlns:Flightid_Type"/>
+            </sequence>
+         </complexType>
+         <element name="FLIGHTWSResponse" type="wsdlns:FLIGHTWSResponse_Type"/>
+         <complexType name="FLIGHTWSResponse_Type">
+            <sequence>
+               <element name="Flightdetail" type="wsdlns:Flightdetail_Type"/>
+            </sequence>
+         </complexType>
+         <complexType name="Flightid_Type">
+            <sequence>
+               <element name="Flightid_flightnumber" type="xsd:unsignedShort"/>
+               <element name="Flightid_companyname" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="Flightdetail_Type">
+            <sequence>
+               <element name="Flightnumber" type="xsd:unsignedShort"/>
+               <element name="Companyname" type="xsd:string"/>
+               <element name="Origincity" type="xsd:string"/>
+               <element name="Destinationcity" type="xsd:string"/>
+               <element name="ArrayOfFrequency" type="wsdlns:ArrayOfFrequency_Type"/>
+               <element name="Fare" type="xsd:decimal"/>
+               <element name="Aircraft" type="xsd:string"/>
+               <element name="Departuretime" type="wsdlns:Departuretime_Type"/>
+               <element name="Arrivaltime" type="wsdlns:Arrivaltime_Type"/>
+            </sequence>
+         </complexType>
+         <complexType name="Departuretime_Type">
+            <sequence>
+               <element name="Departuretime_hh" type="xsd:unsignedShort"/>
+               <element name="Departuretime_mn" type="xsd:unsignedShort"/>
+            </sequence>
+         </complexType>
+         <complexType name="Arrivaltime_Type">
+            <sequence>
+               <element name="Arrivaltime_hh" type="xsd:unsignedShort"/>
+               <element name="Arrivaltime_mn" type="xsd:unsignedShort"/>
+            </sequence>
+         </complexType>
+         <complexType name="ArrayOfFrequency_Type">
+            <sequence>
+               <element name="Frequency" type="xsd:unsignedShort" minOccurs="0" maxOccurs="7"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </types>
+   <message name="FLIGHTWSRequestMsg">
+      <part name="body" element="wsdlns:FLIGHTWSRequest"/>
+   </message>
+   <message name="FLIGHTWSResponseMsg">
+      <part name="body" element="wsdlns:FLIGHTWSResponse"/>
+   </message>
+   <portType name="FLIGHTWSServicePort_Type">
+      <operation name="FLIGHTWS">
+         <input message="wsdlns:FLIGHTWSRequestMsg"/>
+         <output message="wsdlns:FLIGHTWSResponseMsg"/>
+      </operation>
+   </portType>
+   <binding name="FLIGHTWSServiceBinding" type="wsdlns:FLIGHTWSServicePort_Type">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="FLIGHTWS">
+         <soap:operation soapAction="FLIGHTWS" style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal" namespace="com.datadirect/FLIGHTWS"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal" namespace="com.datadirect/FLIGHTWS"/>
+         </output>
+      </operation>
+   </binding>
+   <service name="FLIGHTWSService">
+      <port name="FLIGHTWSServicePort" binding="wsdlns:FLIGHTWSServiceBinding">
+         <soap:address location="http://ws.soatrader.com/stylusstudio.com/0.1/FLIGHTWSService"/>
+      </port>
+   </service>
+</definitions>

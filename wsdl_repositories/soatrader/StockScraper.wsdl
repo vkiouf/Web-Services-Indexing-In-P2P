@@ -1,0 +1,122 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://tempuri.org/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:s="http://www.w3.org/2001/XMLSchema"
+             xmlns:s0="http://tempuri.org/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             targetNamespace="http://tempuri.org/">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:element name="GetQuote">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strSymbols" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetQuoteResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetQuoteResult" type="s0:ArrayOfStockQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfStockQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="StockQuote" nillable="true"
+                          type="s0:StockQuote"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="StockQuote">
+            <s:element name="Open" type="s:double"/>
+            <s:element name="Name" type="s:string"/>
+            <s:element name="Symbol" type="s:string"/>
+            <s:element name="Price" type="s:double"/>
+            <s:element name="Change" type="s:double"/>
+            <s:element name="DayHigh" type="s:double"/>
+            <s:element name="DayLow" type="s:double"/>
+            <s:element name="Volume" type="s:int"/>
+            <s:element name="Updated" type="s:dateTime"/>
+         </s:complexType>
+         <s:element name="ArrayOfStockQuote" nillable="true" type="s0:ArrayOfStockQuote"/>
+      </s:schema>
+  </types>
+  <message name="GetQuoteSoapIn">
+      <part name="parameters" element="s0:GetQuote"/>
+  </message>
+  <message name="GetQuoteSoapOut">
+      <part name="parameters" element="s0:GetQuoteResponse"/>
+  </message>
+  <message name="GetQuoteHttpGetIn">
+      <part name="strSymbols" type="s:string"/>
+  </message>
+  <message name="GetQuoteHttpGetOut">
+      <part name="Body" element="s0:ArrayOfStockQuote"/>
+  </message>
+  <message name="GetQuoteHttpPostIn">
+      <part name="strSymbols" type="s:string"/>
+  </message>
+  <message name="GetQuoteHttpPostOut">
+      <part name="Body" element="s0:ArrayOfStockQuote"/>
+  </message>
+  <portType name="StockScraperSoap">
+      <operation name="GetQuote">
+         <input message="s0:GetQuoteSoapIn"/>
+         <output message="s0:GetQuoteSoapOut"/>
+      </operation>
+  </portType>
+  
+  
+  <binding name="StockScraperSoap" type="s0:StockScraperSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <operation name="GetQuote">
+         <soap:operation soapAction="http://tempuri.org/GetQuote" style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  
+  
+  <service name="StockScraper">
+      <port name="StockScraperSoap" binding="s0:StockScraperSoap">
+         <soap:address location="http://ws.soatrader.com/cs.uga.edu/0.1/StockScraper"/>
+      </port>
+      <port name="StockScraperHttpGet" binding="s0:StockScraperHttpGet">
+         <soap:address location="http://ws.soatrader.com/cs.uga.edu/0.1/StockScraper"/>
+         <http:address location="http://www.syntheticstream.com/stockscraper/stockscraper.asmx"/>
+      </port>
+      <port name="StockScraperHttpPost" binding="s0:StockScraperHttpPost">
+         <soap:address location="http://ws.soatrader.com/cs.uga.edu/0.1/StockScraper"/>
+         <http:address location="http://www.syntheticstream.com/stockscraper/stockscraper.asmx"/>
+      </port>
+  </service>
+</definitions>

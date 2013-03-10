@@ -1,0 +1,157 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://netaspect.nl/certigo/ajaxservice/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://netaspect.nl/certigo/ajaxservice/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://netaspect.nl/certigo/ajaxservice/">
+         <s:element name="ProcessServiceRequest">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="functionName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="inputs" type="tns:ArrayOfInput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfInput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Input" nillable="true"
+                          type="tns:Input"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Input">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="inputName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="inputValue" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ProcessServiceRequestResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ProcessServiceRequestResult"
+                             type="tns:ArrayOfOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfOutput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Output" nillable="true"
+                          type="tns:Output"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Output">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="outputName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="outputValue" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="outputDescription" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="outputType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="outputOption" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="outputInnerText" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ProcessServiceRequestWithUrl">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="functionName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="inputs" type="tns:ArrayOfInput"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ProcessServiceRequestWithUrlResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ProcessServiceRequestWithUrlResult"
+                             type="tns:ArrayOfOutput"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ProcessServiceRequestSoapIn">
+      <wsdl:part name="parameters" element="tns:ProcessServiceRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessServiceRequestSoapOut">
+      <wsdl:part name="parameters" element="tns:ProcessServiceRequestResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessServiceRequestWithUrlSoapIn">
+      <wsdl:part name="parameters" element="tns:ProcessServiceRequestWithUrl"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessServiceRequestWithUrlSoapOut">
+      <wsdl:part name="parameters" element="tns:ProcessServiceRequestWithUrlResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="AjaxProxyServiceSoap">
+      <wsdl:operation name="ProcessServiceRequest">
+         <wsdl:input message="tns:ProcessServiceRequestSoapIn"/>
+         <wsdl:output message="tns:ProcessServiceRequestSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="ProcessServiceRequestWithUrl">
+         <wsdl:input message="tns:ProcessServiceRequestWithUrlSoapIn"/>
+         <wsdl:output message="tns:ProcessServiceRequestWithUrlSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AjaxProxyServiceSoap" type="tns:AjaxProxyServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="ProcessServiceRequest">
+         <soap:operation soapAction="http://netaspect.nl/certigo/ajaxservice/ProcessServiceRequest"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ProcessServiceRequestWithUrl">
+         <soap:operation soapAction="http://netaspect.nl/certigo/ajaxservice/ProcessServiceRequestWithUrl"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AjaxProxyService">
+      <wsdl:port name="AjaxProxyServiceSoap" binding="tns:AjaxProxyServiceSoap">
+         <soap:address location="http://ws.soatrader.com/salesgarant.nl/0.1/AjaxProxyService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

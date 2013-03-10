@@ -1,0 +1,321 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://ws.AcrossCommunications.com/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://ws.AcrossCommunications.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://ws.AcrossCommunications.com/">
+         <s:element name="GetPhonePrices">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetPhonePricesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPhonePricesResult"
+                             type="tns:ArrayOfPhonePrice"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfPhonePrice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PhonePrice" nillable="true"
+                          type="tns:PhonePrice"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PhonePrice">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TimeSpan" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Region" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetPhonePrice">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Number" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPhonePriceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPhonePriceResult" type="tns:PhonePrice"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSmsPrice">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetSmsPriceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetSmsPriceResult" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetEmailPrice">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetEmailPriceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetEmailPriceResult" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFaxPrice">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetFaxPriceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetFaxPriceResult" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetNumPagerPrice">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetNumPagerPriceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetNumPagerPriceResult" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetICQPrice">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetICQPriceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetICQPriceResult" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMSNPrice">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetMSNPriceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetMSNPriceResult" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetPhonePricesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPhonePrices"/>
+  </wsdl:message>
+  <wsdl:message name="GetPhonePricesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPhonePricesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPhonePriceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPhonePrice"/>
+  </wsdl:message>
+  <wsdl:message name="GetPhonePriceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPhonePriceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSmsPriceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSmsPrice"/>
+  </wsdl:message>
+  <wsdl:message name="GetSmsPriceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSmsPriceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmailPriceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetEmailPrice"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmailPriceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetEmailPriceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFaxPriceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFaxPrice"/>
+  </wsdl:message>
+  <wsdl:message name="GetFaxPriceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFaxPriceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetNumPagerPriceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetNumPagerPrice"/>
+  </wsdl:message>
+  <wsdl:message name="GetNumPagerPriceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetNumPagerPriceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetICQPriceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetICQPrice"/>
+  </wsdl:message>
+  <wsdl:message name="GetICQPriceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetICQPriceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNPriceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMSNPrice"/>
+  </wsdl:message>
+  <wsdl:message name="GetMSNPriceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMSNPriceResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="PricesSoap">
+      <wsdl:operation name="GetPhonePrices">
+         <wsdl:input message="tns:GetPhonePricesSoapIn"/>
+         <wsdl:output message="tns:GetPhonePricesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetPhonePrice">
+         <wsdl:input message="tns:GetPhonePriceSoapIn"/>
+         <wsdl:output message="tns:GetPhonePriceSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetSmsPrice">
+         <wsdl:input message="tns:GetSmsPriceSoapIn"/>
+         <wsdl:output message="tns:GetSmsPriceSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetEmailPrice">
+         <wsdl:input message="tns:GetEmailPriceSoapIn"/>
+         <wsdl:output message="tns:GetEmailPriceSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetFaxPrice">
+         <wsdl:input message="tns:GetFaxPriceSoapIn"/>
+         <wsdl:output message="tns:GetFaxPriceSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetNumPagerPrice">
+         <wsdl:input message="tns:GetNumPagerPriceSoapIn"/>
+         <wsdl:output message="tns:GetNumPagerPriceSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetICQPrice">
+         <wsdl:input message="tns:GetICQPriceSoapIn"/>
+         <wsdl:output message="tns:GetICQPriceSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetMSNPrice">
+         <wsdl:input message="tns:GetMSNPriceSoapIn"/>
+         <wsdl:output message="tns:GetMSNPriceSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PricesSoap" type="tns:PricesSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetPhonePrices">
+         <soap:operation soapAction="http://ws.AcrossCommunications.com/GetPhonePrices" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPhonePrice">
+         <soap:operation soapAction="http://ws.AcrossCommunications.com/GetPhonePrice" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSmsPrice">
+         <soap:operation soapAction="http://ws.AcrossCommunications.com/GetSmsPrice" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetEmailPrice">
+         <soap:operation soapAction="http://ws.AcrossCommunications.com/GetEmailPrice" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetFaxPrice">
+         <soap:operation soapAction="http://ws.AcrossCommunications.com/GetFaxPrice" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetNumPagerPrice">
+         <soap:operation soapAction="http://ws.AcrossCommunications.com/GetNumPagerPrice"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetICQPrice">
+         <soap:operation soapAction="http://ws.AcrossCommunications.com/GetICQPrice" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMSNPrice">
+         <soap:operation soapAction="http://ws.AcrossCommunications.com/GetMSNPrice" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Prices">
+      <wsdl:port name="PricesSoap" binding="tns:PricesSoap">
+         <soap:address location="http://ws.soatrader.com/acrosscommunications.com/0.1/Prices"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

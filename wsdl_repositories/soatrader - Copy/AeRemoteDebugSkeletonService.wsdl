@@ -1,0 +1,2098 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                  xmlns:intf="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns1="http://bpel.rt.activebpel.org"
+                  xmlns:tns2="http://rt.activebpel.org"
+                  xmlns:tns3="http://lang.java"
+                  xmlns:tns4="http://impl.bpel.rt.activebpel.org"
+                  xmlns:tns5="urn:AeAdminServices"
+                  xmlns:tns6="http://server.rdebug.admin.server.bpel.rt.activebpel.org"
+                  xmlns:tns7="http://list.impl.bpel.rt.activebpel.org"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://rt.activebpel.org">
+         <import namespace="http://impl.bpel.rt.activebpel.org"/>
+         <import namespace="urn:AeAdminServices"/>
+         <import namespace="http://bpel.rt.activebpel.org"/>
+         <import namespace="http://server.rdebug.admin.server.bpel.rt.activebpel.org"/>
+         <import namespace="http://lang.java"/>
+         <import namespace="http://list.impl.bpel.rt.activebpel.org"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="AeException">
+            <sequence>
+               <element name="info" nillable="true" type="soapenc:string"/>
+               <element name="rootCause" nillable="true" type="xsd:anyType"/>
+               <element name="rootRootCause" nillable="true" type="tns3:Throwable"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://bpel.rt.activebpel.org">
+         <import namespace="http://impl.bpel.rt.activebpel.org"/>
+         <import namespace="urn:AeAdminServices"/>
+         <import namespace="http://rt.activebpel.org"/>
+         <import namespace="http://server.rdebug.admin.server.bpel.rt.activebpel.org"/>
+         <import namespace="http://lang.java"/>
+         <import namespace="http://list.impl.bpel.rt.activebpel.org"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="AeBusinessProcessException">
+            <complexContent>
+               <extension base="tns2:AeException">
+                  <sequence/>
+               </extension>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://server.rdebug.admin.server.bpel.rt.activebpel.org">
+         <import namespace="http://impl.bpel.rt.activebpel.org"/>
+         <import namespace="urn:AeAdminServices"/>
+         <import namespace="http://bpel.rt.activebpel.org"/>
+         <import namespace="http://rt.activebpel.org"/>
+         <import namespace="http://lang.java"/>
+         <import namespace="http://list.impl.bpel.rt.activebpel.org"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="AeBreakpointInstanceDetail">
+            <sequence>
+               <element name="nodePath" nillable="true" type="soapenc:string"/>
+               <element name="processName" nillable="true" type="xsd:QName"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:AeAdminServices">
+         <import namespace="http://impl.bpel.rt.activebpel.org"/>
+         <import namespace="http://bpel.rt.activebpel.org"/>
+         <import namespace="http://rt.activebpel.org"/>
+         <import namespace="http://server.rdebug.admin.server.bpel.rt.activebpel.org"/>
+         <import namespace="http://lang.java"/>
+         <import namespace="http://list.impl.bpel.rt.activebpel.org"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="AeBreakpointInstanceDetailArray">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="tns6:AeBreakpointInstanceDetail[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="AeProcessInstanceDetailArray">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="tns7:AeProcessInstanceDetail[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://impl.bpel.rt.activebpel.org">
+         <import namespace="urn:AeAdminServices"/>
+         <import namespace="http://bpel.rt.activebpel.org"/>
+         <import namespace="http://rt.activebpel.org"/>
+         <import namespace="http://server.rdebug.admin.server.bpel.rt.activebpel.org"/>
+         <import namespace="http://lang.java"/>
+         <import namespace="http://list.impl.bpel.rt.activebpel.org"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="AeBreakpointList">
+            <sequence>
+               <element name="rowDetails" nillable="true" type="tns5:AeBreakpointInstanceDetailArray"/>
+               <element name="totalRowCount" type="xsd:int"/>
+            </sequence>
+         </complexType>
+         <complexType name="AeProcessFilter">
+            <complexContent>
+               <extension base="tns7:AeListingFilter">
+                  <sequence>
+                     <element name="advancedQuery" nillable="true" type="soapenc:string"/>
+                     <element name="processCompleteEnd" nillable="true" type="xsd:dateTime"/>
+                     <element name="processCompleteEndNextDay" nillable="true" type="xsd:dateTime"/>
+                     <element name="processCompleteStart" nillable="true" type="xsd:dateTime"/>
+                     <element name="processCreateEnd" nillable="true" type="xsd:dateTime"/>
+                     <element name="processCreateEndNextDay" nillable="true" type="xsd:dateTime"/>
+                     <element name="processCreateStart" nillable="true" type="xsd:dateTime"/>
+                     <element name="processName" nillable="true" type="xsd:QName"/>
+                     <element name="processState" type="xsd:int"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="AeProcessListResult">
+            <complexContent>
+               <extension base="tns7:AeListResult">
+                  <sequence>
+                     <element name="rowDetails" nillable="true" type="tns5:AeProcessInstanceDetailArray"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="AeProcessInstanceDetail">
+            <sequence>
+               <element name="ended" nillable="true" type="xsd:dateTime"/>
+               <element name="name" nillable="true" type="xsd:QName"/>
+               <element name="processId" type="xsd:long"/>
+               <element name="started" nillable="true" type="xsd:dateTime"/>
+               <element name="state" type="xsd:int"/>
+               <element name="stateReason" type="xsd:int"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://list.impl.bpel.rt.activebpel.org">
+         <import namespace="http://impl.bpel.rt.activebpel.org"/>
+         <import namespace="urn:AeAdminServices"/>
+         <import namespace="http://bpel.rt.activebpel.org"/>
+         <import namespace="http://rt.activebpel.org"/>
+         <import namespace="http://server.rdebug.admin.server.bpel.rt.activebpel.org"/>
+         <import namespace="http://lang.java"/>
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="AeListingFilter">
+            <sequence>
+               <element name="listStart" type="xsd:int"/>
+               <element name="maxReturn" type="xsd:int"/>
+            </sequence>
+         </complexType>
+         <complexType name="AeListResult">
+            <sequence>
+               <element name="completeRowCount" type="xsd:boolean"/>
+               <element name="empty" type="xsd:boolean"/>
+               <element name="totalRowCount" type="xsd:int"/>
+            </sequence>
+         </complexType>
+         <complexType name="AeProcessInstanceDetail">
+            <sequence>
+               <element name="ended" nillable="true" type="xsd:dateTime"/>
+               <element name="name" nillable="true" type="xsd:QName"/>
+               <element name="processId" type="xsd:long"/>
+               <element name="started" nillable="true" type="xsd:dateTime"/>
+               <element name="state" type="xsd:int"/>
+               <element name="stateReason" type="xsd:int"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="removeProcessListenerResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="addEngineListenerRequest">
+
+      <wsdl:part name="aContextId" type="xsd:long"/>
+
+      <wsdl:part name="aEndpointURL" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="removeEngineListenerRequest">
+
+      <wsdl:part name="aContextId" type="xsd:long"/>
+
+      <wsdl:part name="aEndpointURL" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessStateResponse">
+
+      <wsdl:part name="getProcessStateReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addBreakpointListenerRequest">
+
+      <wsdl:part name="aContextId" type="xsd:long"/>
+
+      <wsdl:part name="aEndpointURL" type="xsd:string"/>
+
+      <wsdl:part name="aBreakpointList" type="tns4:AeBreakpointList"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessListResponse">
+
+      <wsdl:part name="getProcessListReturn" type="tns4:AeProcessListResult"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="removeEngineListenerResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="resumeProcessObjectResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getAPIVersionRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getVariableStrRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+      <wsdl:part name="aVariablePath" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="terminateProcessResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="isInternalWorkManagerResponse">
+
+      <wsdl:part name="isInternalWorkManagerReturn" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessDefRequest">
+
+      <wsdl:part name="aProcessName" type="xsd:long"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessDigestRequest">
+
+      <wsdl:part name="aProcessName" type="xsd:long"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getConfigurationResponse">
+
+      <wsdl:part name="getConfiguration" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessDetailResponse">
+
+      <wsdl:part name="getProcessDetailReturn" type="tns4:AeProcessInstanceDetail"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAdminResponse">
+
+      <wsdl:part name="getAdminReturn" type="xsd:anyType"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="removeBreakpointListenerRequest">
+
+      <wsdl:part name="aContextId" type="xsd:long"/>
+
+      <wsdl:part name="aEndpointURL" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessDefResponse">
+
+      <wsdl:part name="getProcessDefReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setConfigurationResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getVariableResponse">
+
+      <wsdl:part name="getVariableReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="retryActivityResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="setVariableResponse">
+
+      <wsdl:part name="setVariableReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateBreakpointListResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessDigestResponse">
+
+      <wsdl:part name="getProcessDigestReturn" type="xsd:base64Binary"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="completeActivityResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="addProcessListenerRequest">
+
+      <wsdl:part name="aContextId" type="xsd:long"/>
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+      <wsdl:part name="aEndpointURL" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateBreakpointListRequest">
+
+      <wsdl:part name="aContextId" type="xsd:long"/>
+
+      <wsdl:part name="aEndpointURL" type="xsd:string"/>
+
+      <wsdl:part name="aBreakpointList" type="tns4:AeBreakpointList"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessLogRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="isInternalWorkManagerRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="setPartnerLinkDataResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="AeBusinessProcessException">
+
+      <wsdl:part name="fault" type="tns1:AeBusinessProcessException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="resumeProcessObjectRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+      <wsdl:part name="aLocation" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCorrelationSetDataResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="addEngineListenerResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="setVariableRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+      <wsdl:part name="aVariablePath" type="xsd:string"/>
+
+      <wsdl:part name="aVariableData" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessStateStrResponse">
+
+      <wsdl:part name="getProcessStateReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessDetailRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getConfigurationRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="setPartnerLinkDataRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+      <wsdl:part name="aIsPartnerRole" type="xsd:boolean"/>
+
+      <wsdl:part name="aLocationPath" type="xsd:string"/>
+
+      <wsdl:part name="aData" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setCorrelationSetDataRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+      <wsdl:part name="aLocationPath" type="xsd:string"/>
+
+      <wsdl:part name="aData" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="terminateProcessRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="deployBprRequest">
+
+      <wsdl:part name="aBprFilename" type="xsd:string"/>
+
+      <wsdl:part name="aBase64File" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessLogResponse">
+
+      <wsdl:part name="getProcessLogReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="resumeProcessRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="suspendProcessResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="retryActivityRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+      <wsdl:part name="aLocationPath" type="soapenc:string"/>
+
+      <wsdl:part name="aAtScope" type="xsd:boolean"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="addBreakpointListenerResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getAdminRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="addProcessListenerResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="removeBreakpointListenerResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="deployBprResponse">
+
+      <wsdl:part name="deployBprReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="removeProcessListenerRequest">
+
+      <wsdl:part name="aContextId" type="xsd:long"/>
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+      <wsdl:part name="aEndpointURL" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getVariableStrResponse">
+
+      <wsdl:part name="getVariableReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="completeActivityRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+      <wsdl:part name="aLocationPath" type="soapenc:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="suspendProcessRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessStateRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessStateStrRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProcessListRequest">
+
+      <wsdl:part name="aFilter" type="tns4:AeProcessFilter"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="AeException">
+
+      <wsdl:part name="fault" type="tns2:AeException"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAPIVersionResponse">
+
+      <wsdl:part name="getAPIVersionReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="resumeProcessResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="getVariableRequest">
+
+      <wsdl:part name="aPid" type="xsd:long"/>
+
+      <wsdl:part name="aVariablePath" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setConfigurationRequest">
+
+      <wsdl:part name="aXmlString" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="AeRemoteDebugSkeleton">
+
+      <wsdl:operation name="suspendProcess" parameterOrder="aPid">
+
+         <wsdl:input message="impl:suspendProcessRequest" name="suspendProcessRequest"/>
+
+         <wsdl:output message="impl:suspendProcessResponse" name="suspendProcessResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="resumeProcess" parameterOrder="aPid">
+
+         <wsdl:input message="impl:resumeProcessRequest" name="resumeProcessRequest"/>
+
+         <wsdl:output message="impl:resumeProcessResponse" name="resumeProcessResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="resumeProcessObject" parameterOrder="aPid aLocation">
+
+         <wsdl:input message="impl:resumeProcessObjectRequest" name="resumeProcessObjectRequest"/>
+
+         <wsdl:output message="impl:resumeProcessObjectResponse" name="resumeProcessObjectResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="terminateProcess" parameterOrder="aPid">
+
+         <wsdl:input message="impl:terminateProcessRequest" name="terminateProcessRequest"/>
+
+         <wsdl:output message="impl:terminateProcessResponse" name="terminateProcessResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addEngineListener" parameterOrder="aContextId aEndpointURL">
+
+         <wsdl:input message="impl:addEngineListenerRequest" name="addEngineListenerRequest"/>
+
+         <wsdl:output message="impl:addEngineListenerResponse" name="addEngineListenerResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addBreakpointListener"
+                      parameterOrder="aContextId aEndpointURL aBreakpointList">
+
+         <wsdl:input message="impl:addBreakpointListenerRequest" name="addBreakpointListenerRequest"/>
+
+         <wsdl:output message="impl:addBreakpointListenerResponse"
+                      name="addBreakpointListenerResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateBreakpointList"
+                      parameterOrder="aContextId aEndpointURL aBreakpointList">
+
+         <wsdl:input message="impl:updateBreakpointListRequest" name="updateBreakpointListRequest"/>
+
+         <wsdl:output message="impl:updateBreakpointListResponse" name="updateBreakpointListResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeEngineListener" parameterOrder="aContextId aEndpointURL">
+
+         <wsdl:input message="impl:removeEngineListenerRequest" name="removeEngineListenerRequest"/>
+
+         <wsdl:output message="impl:removeEngineListenerResponse" name="removeEngineListenerResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeBreakpointListener" parameterOrder="aContextId aEndpointURL">
+
+         <wsdl:input message="impl:removeBreakpointListenerRequest"
+                     name="removeBreakpointListenerRequest"/>
+
+         <wsdl:output message="impl:removeBreakpointListenerResponse"
+                      name="removeBreakpointListenerResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addProcessListener" parameterOrder="aContextId aPid aEndpointURL">
+
+         <wsdl:input message="impl:addProcessListenerRequest" name="addProcessListenerRequest"/>
+
+         <wsdl:output message="impl:addProcessListenerResponse" name="addProcessListenerResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeProcessListener" parameterOrder="aContextId aPid aEndpointURL">
+
+         <wsdl:input message="impl:removeProcessListenerRequest" name="removeProcessListenerRequest"/>
+
+         <wsdl:output message="impl:removeProcessListenerResponse"
+                      name="removeProcessListenerResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessList" parameterOrder="aFilter">
+
+         <wsdl:input message="impl:getProcessListRequest" name="getProcessListRequest"/>
+
+         <wsdl:output message="impl:getProcessListResponse" name="getProcessListResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessDetail" parameterOrder="aPid">
+
+         <wsdl:input message="impl:getProcessDetailRequest" name="getProcessDetailRequest"/>
+
+         <wsdl:output message="impl:getProcessDetailResponse" name="getProcessDetailResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessState" parameterOrder="aPid">
+
+         <wsdl:input message="impl:getProcessStateRequest" name="getProcessStateRequest"/>
+
+         <wsdl:output message="impl:getProcessStateResponse" name="getProcessStateResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getVariable" parameterOrder="aPid aVariablePath">
+
+         <wsdl:input message="impl:getVariableRequest" name="getVariableRequest"/>
+
+         <wsdl:output message="impl:getVariableResponse" name="getVariableResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setVariable" parameterOrder="aPid aVariablePath aVariableData">
+
+         <wsdl:input message="impl:setVariableRequest" name="setVariableRequest"/>
+
+         <wsdl:output message="impl:setVariableResponse" name="setVariableResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessStateStr" parameterOrder="aPid">
+
+         <wsdl:input message="impl:getProcessStateStrRequest" name="getProcessStateStrRequest"/>
+
+         <wsdl:output message="impl:getProcessStateStrResponse" name="getProcessStateStrResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getVariableStr" parameterOrder="aPid aVariablePath">
+
+         <wsdl:input message="impl:getVariableStrRequest" name="getVariableStrRequest"/>
+
+         <wsdl:output message="impl:getVariableStrResponse" name="getVariableStrResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessDigest" parameterOrder="aProcessName">
+
+         <wsdl:input message="impl:getProcessDigestRequest" name="getProcessDigestRequest"/>
+
+         <wsdl:output message="impl:getProcessDigestResponse" name="getProcessDigestResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessDef" parameterOrder="aProcessName">
+
+         <wsdl:input message="impl:getProcessDefRequest" name="getProcessDefRequest"/>
+
+         <wsdl:output message="impl:getProcessDefResponse" name="getProcessDefResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessLog" parameterOrder="aPid">
+
+         <wsdl:input message="impl:getProcessLogRequest" name="getProcessLogRequest"/>
+
+         <wsdl:output message="impl:getProcessLogResponse" name="getProcessLogResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAPIVersion">
+
+         <wsdl:input message="impl:getAPIVersionRequest" name="getAPIVersionRequest"/>
+
+         <wsdl:output message="impl:getAPIVersionResponse" name="getAPIVersionResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deployBpr" parameterOrder="aBprFilename aBase64File">
+
+         <wsdl:input message="impl:deployBprRequest" name="deployBprRequest"/>
+
+         <wsdl:output message="impl:deployBprResponse" name="deployBprResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getConfiguration">
+
+         <wsdl:input message="impl:getConfigurationRequest" name="getConfigurationRequest"/>
+
+         <wsdl:output message="impl:getConfigurationResponse" name="getConfigurationResponse"/>
+
+         <wsdl:fault message="impl:AeException" name="AeException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setConfiguration" parameterOrder="aXmlString">
+
+         <wsdl:input message="impl:setConfigurationRequest" name="setConfigurationRequest"/>
+
+         <wsdl:output message="impl:setConfigurationResponse" name="setConfigurationResponse"/>
+
+         <wsdl:fault message="impl:AeException" name="AeException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setPartnerLinkData"
+                      parameterOrder="aPid aIsPartnerRole aLocationPath aData">
+
+         <wsdl:input message="impl:setPartnerLinkDataRequest" name="setPartnerLinkDataRequest"/>
+
+         <wsdl:output message="impl:setPartnerLinkDataResponse" name="setPartnerLinkDataResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCorrelationSetData" parameterOrder="aPid aLocationPath aData">
+
+         <wsdl:input message="impl:setCorrelationSetDataRequest" name="setCorrelationSetDataRequest"/>
+
+         <wsdl:output message="impl:setCorrelationSetDataResponse"
+                      name="setCorrelationSetDataResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isInternalWorkManager">
+
+         <wsdl:input message="impl:isInternalWorkManagerRequest" name="isInternalWorkManagerRequest"/>
+
+         <wsdl:output message="impl:isInternalWorkManagerResponse"
+                      name="isInternalWorkManagerResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="retryActivity" parameterOrder="aPid aLocationPath aAtScope">
+
+         <wsdl:input message="impl:retryActivityRequest" name="retryActivityRequest"/>
+
+         <wsdl:output message="impl:retryActivityResponse" name="retryActivityResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="completeActivity" parameterOrder="aPid aLocationPath">
+
+         <wsdl:input message="impl:completeActivityRequest" name="completeActivityRequest"/>
+
+         <wsdl:output message="impl:completeActivityResponse" name="completeActivityResponse"/>
+
+         <wsdl:fault message="impl:AeBusinessProcessException" name="AeBusinessProcessException"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAdmin">
+
+         <wsdl:input message="impl:getAdminRequest" name="getAdminRequest"/>
+
+         <wsdl:output message="impl:getAdminResponse" name="getAdminResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="BpelEngineAdminSoapBinding" type="impl:AeRemoteDebugSkeleton">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="suspendProcess">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="suspendProcessRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="suspendProcessResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="urn:AeAdminServices"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="resumeProcess">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="resumeProcessRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="resumeProcessResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="urn:AeAdminServices"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="resumeProcessObject">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="resumeProcessObjectRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="resumeProcessObjectResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="urn:AeAdminServices"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="terminateProcess">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="terminateProcessRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="terminateProcessResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="urn:AeAdminServices"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addEngineListener">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addEngineListenerRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addEngineListenerResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addBreakpointListener">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addBreakpointListenerRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addBreakpointListenerResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateBreakpointList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateBreakpointListRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateBreakpointListResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeEngineListener">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="removeEngineListenerRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="removeEngineListenerResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeBreakpointListener">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="removeBreakpointListenerRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="removeBreakpointListenerResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addProcessListener">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addProcessListenerRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addProcessListenerResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeProcessListener">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="removeProcessListenerRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="removeProcessListenerResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProcessListRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProcessListResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessDetail">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProcessDetailRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProcessDetailResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessState">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProcessStateRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProcessStateResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getVariable">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getVariableRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getVariableResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setVariable">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setVariableRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setVariableResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessStateStr">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProcessStateStrRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProcessStateStrResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getVariableStr">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getVariableStrRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getVariableStrResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessDigest">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProcessDigestRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeEngineServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProcessDigestResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessDef">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProcessDefRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeEngineServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProcessDefResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProcessLog">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProcessLogRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeEngineServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProcessLogResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAPIVersion">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAPIVersionRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeEngineServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAPIVersionResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deployBpr">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deployBprRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeEngineServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deployBprResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getConfiguration">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getConfigurationRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeEngineServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getConfigurationResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="AeException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setConfiguration">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setConfigurationRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeEngineServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setConfigurationResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" name="AeException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setPartnerLinkData">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setPartnerLinkDataRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setPartnerLinkDataResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setCorrelationSetData">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setCorrelationSetDataRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeAdminServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setCorrelationSetDataResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isInternalWorkManager">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="isInternalWorkManagerRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="urn:AeEngineServices"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="isInternalWorkManagerResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="retryActivity">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="retryActivityRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.rdebug.bpel.axis.rt.activebpel.org"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="retryActivityResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="completeActivity">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="completeActivityRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.rdebug.bpel.axis.rt.activebpel.org"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="completeActivityResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AeBusinessProcessException">
+
+            <wsdlsoap:fault encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                            name="AeBusinessProcessException"
+                            namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                            use="encoded"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAdmin">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAdminRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://server.rdebug.bpel.axis.rt.activebpel.org"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAdminResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://trans.nict.go.jp/active-bpel/services/BpelEngineAdmin"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="AeRemoteDebugSkeletonService">
+
+      <wsdl:port binding="impl:BpelEngineAdminSoapBinding" name="BpelEngineAdmin">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/nict.go.jp/0.1/AeRemoteDebugSkeletonService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

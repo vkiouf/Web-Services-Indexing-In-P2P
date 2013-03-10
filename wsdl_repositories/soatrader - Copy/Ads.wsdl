@@ -1,0 +1,87 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:i0="http://tempuri.org/ClassifiedDS.xsd"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:import namespace="http://tempuri.org/ClassifiedDS.xsd"
+                location="http://www.corti.com/Classified/Ads.asmx?schema=ClassifiedDS"/>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:import namespace="http://tempuri.org/ClassifiedDS.xsd"/>
+         <s:element name="GetAds">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAdsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAdsResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="http://tempuri.org/ClassifiedDS.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAdsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAds"/>
+  </wsdl:message>
+  <wsdl:message name="GetAdsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAdsResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="AdsSoap">
+      <wsdl:operation name="GetAds">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Retrieve all current Ads as typed DataSet</documentation>
+         <wsdl:input message="tns:GetAdsSoapIn"/>
+         <wsdl:output message="tns:GetAdsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AdsSoap" type="tns:AdsSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetAds">
+         <soap:operation soapAction="http://tempuri.org/GetAds" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Ads">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/"/>
+      <wsdl:port name="AdsSoap" binding="tns:AdsSoap">
+         <soap:address location="http://ws.soatrader.com/corti.com/0.1/Ads"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

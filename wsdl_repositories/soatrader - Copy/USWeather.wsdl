@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.nws.noaa.gov/mdl/XML/DWMLgen/wsdl/ndfdXML.wsdl" xmlns:tns="http://www.nws.noaa.gov/mdl/XML/DWMLgen/wsdl/ndfdXML.wsdl" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:si="http://soapinterop.org/xsd" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.nws.noaa.gov/mdl/XML/DWMLgen/wsdl/ndfdXML.wsdl">
+ <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+ <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+ <xsd:complexType name="weatherParametersType">
+  <xsd:all>
+   <xsd:element name="maxt" type="xsd:boolean"/>
+   <xsd:element name="mint" type="xsd:boolean"/>
+   <xsd:element name="temp" type="xsd:boolean"/>
+   <xsd:element name="dew" type="xsd:boolean"/>
+   <xsd:element name="pop12" type="xsd:boolean"/>
+   <xsd:element name="qpf" type="xsd:boolean"/>
+   <xsd:element name="sky" type="xsd:boolean"/>
+   <xsd:element name="snow" type="xsd:boolean"/>
+   <xsd:element name="wspd" type="xsd:boolean"/>
+   <xsd:element name="wdir" type="xsd:boolean"/>
+   <xsd:element name="wx" type="xsd:boolean"/>
+   <xsd:element name="waveh" type="xsd:boolean"/>
+   <xsd:element name="icons" type="xsd:boolean"/>
+  </xsd:all>
+ </xsd:complexType>
+</xsd:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ws.soatrader.com/" xmlns:soat="http://ws.soatrader.com/"><xs:element name="SOATraderLicense" type="xs:string"/><xs:element name="SOATraderUsageStatistics" type="soat:SOATraderUsageStatistics"/><xs:complexType name="SOATraderUsageStatistics"><xs:sequence><xs:element name="HitsMade" type="xs:decimal"/><xs:element name="HitsLeft" type="xs:decimal"/></xs:sequence></xs:complexType></xs:schema>
+  </wsdl:types>
+  <wsdl:message name="SOATraderUsageStatistics">
+    <wsdl:part name="SOATraderUsageStatistics" element="soat:SOATraderUsageStatistics">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NDFDgenRequest">
+    <wsdl:part name="latitude" type="xsd:decimal">
+    </wsdl:part>
+    <wsdl:part name="longitude" type="xsd:decimal">
+    </wsdl:part>
+    <wsdl:part name="product" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="startTime" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="endTime" type="xsd:dateTime">
+    </wsdl:part>
+    <wsdl:part name="weatherParameters" type="tns:weatherParametersType">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderLicense">
+    <wsdl:part name="SOATraderLicense" element="soat:SOATraderLicense">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NDFDgenResponse">
+    <wsdl:part name="xmlOut" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ndfdXMLPortType">
+    <wsdl:operation name="NDFDgen">
+<documentation>Returns National Weather Service digital weather forecast data.  Supports latitudes and longitudes for the Continental United States only.  Allowable values for the input variable &quot;product&quot; are &quot;time-series&quot; and &quot;glance&quot;.  For both products, a start and end time are required.  For the time-series product, the input variable &quot;weatherParameters&quot; has array elements set to &quot;true&quot; to indicate which weather parameters are being requested.  If an array element is set to &quot;false&quot;, data for that weather parameter is not to be returned.</documentation>
+      <wsdl:input message="tns:NDFDgenRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:NDFDgenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ndfdXMLBinding" type="tns:ndfdXMLPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="NDFDgen">
+      <soap:operation soapAction="http://www.nws.noaa.gov/mdl/XML/DWMLgen/wsdl/ndfdXML.wsdl#NDFDgen" style="rpc"/>
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.nws.noaa.gov/mdl/XML/DWMLgen/wsdl/ndfdXML.wsdl"/>
+        <soap:header message="tns:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://www.nws.noaa.gov/mdl/XML/DWMLgen/wsdl/ndfdXML.wsdl"/>
+        <soap:header message="tns:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </soap:header>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ndfdXML">
+    <wsdl:port name="ndfdXMLPort" binding="tns:ndfdXMLBinding">
+      <soap:address location="http://ws.soatrader.com/weather.gov/1.0/USWeather"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

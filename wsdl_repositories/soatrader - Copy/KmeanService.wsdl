@@ -1,0 +1,156 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="urn:kmean"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="urn:kmean"
+                  xmlns:intf="urn:kmean"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="urn:kmean">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:documentation>
+      <date xmlns="http://schemas.xmlsoap.org/wsdl/">13:46:88 February 2005</date>
+      <version xmlns="http://schemas.xmlsoap.org/wsdl/">a1a4f9956b56e0f406fe3137a92221e0</version>
+   </wsdl:documentation>
+   <wsdl:message name="acknowledgeResponse">
+      <wsdl:part name="acknowledgeReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="acknowledgeRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+      <wsdl:part name="in1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="aboutOperationsResponse">
+      <wsdl:part name="aboutOperationsReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="aboutServiceResponse">
+      <wsdl:part name="aboutServiceReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="aboutOperationsRequest"/>
+   <wsdl:message name="getClusterRequest">
+      <wsdl:part name="in0" type="xsd:string"/>
+      <wsdl:part name="in1" type="xsd:int"/>
+      <wsdl:part name="in2" type="xsd:int"/>
+      <wsdl:part name="in3" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="aboutServiceRequest"/>
+   <wsdl:message name="getClusterResponse">
+      <wsdl:part name="getClusterReturn" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:portType name="Kmean">
+      <wsdl:operation name="getCluster" parameterOrder="in0 in1 in2 in3">
+         <wsdl:input message="impl:getClusterRequest" name="getClusterRequest"/>
+         <wsdl:output message="impl:getClusterResponse" name="getClusterResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="aboutService">
+         <wsdl:input message="impl:aboutServiceRequest" name="aboutServiceRequest"/>
+         <wsdl:output message="impl:aboutServiceResponse" name="aboutServiceResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="aboutOperations">
+         <wsdl:input message="impl:aboutOperationsRequest" name="aboutOperationsRequest"/>
+         <wsdl:output message="impl:aboutOperationsResponse" name="aboutOperationsResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="acknowledge" parameterOrder="in0 in1">
+         <wsdl:input message="impl:acknowledgeRequest" name="acknowledgeRequest"/>
+         <wsdl:output message="impl:acknowledgeResponse" name="acknowledgeResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="kmeanSoapBinding" type="impl:Kmean">
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="getCluster">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getClusterRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:kmean"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="getClusterResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:kmean"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="aboutService">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="aboutServiceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:kmean"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="aboutServiceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:kmean"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="aboutOperations">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="aboutOperationsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:kmean"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="aboutOperationsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:kmean"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="acknowledge">
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="acknowledgeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:kmean"
+                           use="encoded"/>
+         </wsdl:input>
+         <wsdl:output name="acknowledgeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:kmean"
+                           use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="KmeanService">
+      <wsdl:port binding="impl:kmeanSoapBinding" name="kmean">
+         <wsdlsoap:address location="http://ws.soatrader.com/vbi.vt.edu/0.3/KmeanService"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

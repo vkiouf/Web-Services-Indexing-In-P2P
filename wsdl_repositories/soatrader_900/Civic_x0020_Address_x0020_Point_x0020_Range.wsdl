@@ -1,0 +1,1256 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://www.opengis.net/gml"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://142.176.62.103/Geonova_WS/CivicAddressPointRange"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://142.176.62.103/Geonova_WS/CivicAddressPointRange">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://142.176.62.103/Geonova_WS/CivicAddressPointRange">
+         <s:import namespace="http://www.opengis.net/gml"/>
+         <s:element name="GetCapabilities">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCapabilitiesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetCapabilitiesResult" nillable="true"
+                             type="tns:MethodCollection"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="MethodCollection">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Method" type="tns:Method"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Method">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Version" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Parameters" type="tns:ArrayOfParameter"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfParameter">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Parameter" nillable="true"
+                          type="tns:Parameter"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Parameter">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AcceptedValues" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Required" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DefaultValue" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetMunicipalities">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MUN_CODE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MUN_NAME" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GEOMETRY" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMunicipalitiesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Municipalities" type="tns:Municipalities"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Municipalities">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:MunicipalitesCollection"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="MunicipalitesCollection">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureCollectionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Municipality" type="tns:Municipality"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="MunicipalityType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Mun_Name" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="SHORT_MUN_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Mun_Code" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CO_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" ref="s1:centerOf"/>
+                     <s:element minOccurs="0" maxOccurs="1" ref="s1:BoundingBox"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Municipality">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:MunicipalityType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="GetGSAs">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MUN_CODE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MUN_NAME" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GSA_KEY" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GSA_NAME" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GEOMETRY" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetGSAsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GSAs" type="tns:GSAs"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="GSAs">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:GSACollection"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="GSACollection">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureCollectionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="GeneralServiceArea"
+                                type="tns:GeneralServiceArea"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="GeneralServiceArea">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:GeneralServiceAreaType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="GeneralServiceAreaType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureCollectionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="GSA_KEY" type="s:integer"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GSA_CODE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GSA_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CO_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="MUN_CODE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="MUN_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" ref="s1:centerOf"/>
+                     <s:element minOccurs="0" maxOccurs="1" ref="s1:BoundingCoords"/>
+                     <s:element minOccurs="0" maxOccurs="1" ref="s1:BoundingBox"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="GetStreets">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MUN_CODE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MUN_NAME" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GSA_KEY" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GSA_Name" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_KEY" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_NAME" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_TYPE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="F_STR_TYPE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_DIR" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NAME_CODE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GEOMETRY" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStreetsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Streets" type="tns:Streets"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Streets">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:StreetsCollection"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="StreetsCollection">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureCollectionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Street" type="tns:Street"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Street">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:StreetType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="StreetType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="STR_KEY" type="s:integer"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="STR_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="STR_TYPE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="F_STR_TYPE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="STR_DIR" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="NAMECODE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="STATUS" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="MUN_CODE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="MUN_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GSA_KEY" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GSA_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CO_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Segments" type="tns:Segments"/>
+                     <s:element minOccurs="0" maxOccurs="1" ref="s1:BoundingBox"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Segments">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:SegmentCollection"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SegmentCollection">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:MultiLineStringPropertyType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="GetCivicAddress">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MUN_CODE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MUN_NAME" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GSA_KEY" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GSA_NAME" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_KEY" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_NAME" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_TYPE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="F_STR_TYPE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_DIR" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CIVIC_NUM" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UNIT_NUM" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NAMECODE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GEOMETRY" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCivicAddressResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CivicAddresses" type="tns:CivicAddresses"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CivicAddresses">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:CivicAddressCollection"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="CivicAddressCollection">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureCollectionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="CivicAddress" type="tns:CivicAddress"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="CivicAddress">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:CivicAddressType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="CivicAddressType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="CIVICNUM" type="s:integer"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="UNIT_NUM" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BLDG_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BLDG_USE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="POSTAL_CODE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="PNTID" type="s:integer"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="SEGID" type="s:integer"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="MUN_CODE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="SHORT_MUN_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="MUN_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GSA_KEY" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GSA_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CO_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="STR_KEY" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="STR_NAME" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="STR_TYPE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="F_STR_TYPE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="STR_DIR" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="NAMECODE" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="CivicAddressPoint"
+                                type="tns:CivicAddressPoint"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="InterpolatedPoint"
+                                type="tns:InterpolatedPoint"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="CivicAddressPoint">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:CivicAddressPointType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="CivicAddressPointType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:PointPropertyType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="InterpolatedPoint">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:InterpolatedPointType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="InterpolatedPointType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:PointPropertyType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="ValidateCivicAddress">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MUN_CODE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MUN_NAME" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GSA_KEY" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GSA_NAME" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_KEY" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_NAME" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_TYPE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="F_STR_TYPE" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_DIR" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CIVIC_NUM" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UNIT_NUM" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateCivicAddressResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ValidateCivicAddressResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStreetDirections">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetStreetDirectionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Lookups" type="tns:Lookups"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Lookups">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:LookupsCollection"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="LookupsCollection">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureCollectionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Lookup" type="tns:Lookup"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Lookup">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:LookupType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="LookupType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ObjectID" type="s:integer"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetStreetTypes">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetStreetTypesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Str_Types" type="tns:Str_Types"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Str_Types">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Str_TypesCollection"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Str_TypesCollection">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureCollectionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="Str_Type" type="tns:Str_Type"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Str_Type">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Str_Type_Type"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Str_Type_Type">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ObjectID" type="s:integer"/>
+               <s:element minOccurs="0" maxOccurs="1" name="STR_TYPE" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Describe_" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Origin" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Origin_Description" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetAddressRange">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_Name" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="STR_Type" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MUN_Code" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GSA_Key" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NameCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAddressRangeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetAddressRangeResult" nillable="true"
+                             type="tns:AddressRangeCollection"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AddressRangeCollection">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AddressRange" type="tns:AddressRange"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AddressRange">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FromEven" type="s:integer"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ToEven" type="s:integer"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FromOdd" type="s:integer"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ToOdd" type="s:integer"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="MethodCollection" nillable="true" type="tns:MethodCollection"/>
+         <s:element name="Municipalities" type="tns:Municipalities"/>
+         <s:element name="GSAs" type="tns:GSAs"/>
+         <s:element name="Streets" type="tns:Streets"/>
+         <s:element name="CivicAddresses" type="tns:CivicAddresses"/>
+         <s:element name="boolean" type="s:boolean"/>
+         <s:element name="Lookups" type="tns:Lookups"/>
+         <s:element name="Str_Types" type="tns:Str_Types"/>
+         <s:element name="AddressRangeCollection" nillable="true" type="tns:AddressRangeCollection"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.opengis.net/gml">
+         <s:import namespace="http://142.176.62.103/Geonova_WS/CivicAddressPointRange"/>
+         <s:complexType name="AbstractFeatureCollectionType" abstract="true">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureCollectionBaseType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="featureMember"
+                                type="s1:featureMember"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="AbstractFeatureCollectionBaseType" abstract="true">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="AbstractFeatureType" abstract="true">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="description" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="boundedBy" type="s1:boundedBy"/>
+            </s:sequence>
+            <s:attribute form="qualified" name="fid" type="s:ID"/>
+         </s:complexType>
+         <s:complexType name="boundedBy">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:BoundingShapeType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="BoundingShapeType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Box" type="s1:Box"/>
+               <s:element minOccurs="0" maxOccurs="1" name="null" type="s1:NullType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Box">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:BoxType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="BoxType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractGeometryType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="coord" type="s1:coord"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="coordinates" type="s1:coordinates"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="AbstractGeometryType" abstract="true">
+            <s:attribute form="unqualified" name="gid" type="s:ID"/>
+            <s:attribute form="unqualified" name="srsName" type="s:anyURI"/>
+         </s:complexType>
+         <s:complexType name="AbstractGeometryCollectionBaseType" abstract="true">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractGeometryType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="PointType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractGeometryType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="coord" type="s1:coord"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="coordinates" type="s1:coordinates"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="coord">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:CoordType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="CoordType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="X" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Y" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Z" type="s:decimal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="coordinates">
+            <s:simpleContent>
+               <s:extension base="s1:CoordinatesType"/>
+            </s:simpleContent>
+         </s:complexType>
+         <s:complexType name="CoordinatesType">
+            <s:simpleContent>
+               <s:extension base="s:string">
+                  <s:attribute form="qualified" name="decimal" type="s:string"/>
+                  <s:attribute form="qualified" name="cs" type="s:string"/>
+                  <s:attribute form="qualified" name="ts" type="s:string"/>
+               </s:extension>
+            </s:simpleContent>
+         </s:complexType>
+         <s:complexType name="Point">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:PointType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="LinearRingType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractGeometryType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="coord" type="s1:coord"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="coordinates" type="s1:coordinates"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="LinearRing">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:LinearRingType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="PolygonType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractGeometryType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="outerBoundaryIs" type="s1:outerBoundaryIs"/>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="innerBoundaryIs"
+                                type="s1:innerBoundaryIs"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="outerBoundaryIs">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:LinearRingMemberType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="LinearRingMemberType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:GeometryAssociationType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="LinearRing" type="s1:LinearRing"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="GeometryAssociationType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="_Geometry" type="s1:_Geometry"/>
+            </s:sequence>
+            <s:attribute form="qualified" name="type" type="s:string"/>
+            <s:attribute name="href" type="s:anyURI"/>
+            <s:attribute name="role" type="s:anyURI"/>
+            <s:attribute name="arcrole" type="s:anyURI"/>
+            <s:attribute name="title" type="s:string"/>
+            <s:attribute name="show" type="s1:show"/>
+            <s:attribute name="actuate" type="s1:actuate"/>
+            <s:attribute name="remoteSchema" type="s:anyURI"/>
+         </s:complexType>
+         <s:complexType name="_Geometry" abstract="true">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractGeometryType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="show">
+            <s:restriction base="s:string">
+               <s:enumeration value="new"/>
+               <s:enumeration value="replace"/>
+               <s:enumeration value="embed"/>
+               <s:enumeration value="other"/>
+               <s:enumeration value="none"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="actuate">
+            <s:restriction base="s:string">
+               <s:enumeration value="onLoad"/>
+               <s:enumeration value="onRequest"/>
+               <s:enumeration value="other"/>
+               <s:enumeration value="none"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="PolygonPropertyType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:GeometryAssociationType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Polygon" type="s1:Polygon"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Polygon">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:PolygonType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="PolygonBoundingType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:PolygonPropertyType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="BoundingBox">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:PolygonBoundingType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="PointPropertyType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:GeometryAssociationType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Point" type="s1:Point"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="centerOf">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:PointPropertyType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="innerBoundaryIs">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:LinearRingMemberType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="LineStringType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractGeometryType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="coord" type="s1:coord"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="coordinates" type="s1:coordinates"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="NullType">
+            <s:restriction base="s:string">
+               <s:enumeration value="inapplicable"/>
+               <s:enumeration value="unknown"/>
+               <s:enumeration value="unavailable"/>
+               <s:enumeration value="missing"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="centerOf" type="s1:centerOf"/>
+         <s:element name="BoundingBox" type="s1:BoundingBox"/>
+         <s:complexType name="_Feature" abstract="true">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractFeatureType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="featureMember">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:FeatureAssociationType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="FeatureAssociationType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="_Feature" type="s1:_Feature"/>
+            </s:sequence>
+            <s:attribute form="qualified" name="type" type="s:string"/>
+            <s:attribute name="href" type="s:anyURI"/>
+            <s:attribute name="role" type="s:anyURI"/>
+            <s:attribute name="arcrole" type="s:anyURI"/>
+            <s:attribute name="title" type="s:string"/>
+            <s:attribute name="show" type="s1:show"/>
+            <s:attribute name="actuate" type="s1:actuate"/>
+            <s:attribute name="remoteSchema" type="s:anyURI"/>
+         </s:complexType>
+         <s:element name="BoundingCoords" type="s1:BoundingCoords"/>
+         <s:complexType name="BoundingCoords">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:PolygonBoundingType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="MultiLineStringPropertyType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:GeometryAssociationType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="MultiLineString" type="s1:MultiLineString"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="MultiLineString">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:MultiLineStringType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="MultiLineStringType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:GeometryCollectionType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="lineStringMember"
+                                type="s1:lineStringMember"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="GeometryCollectionType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:AbstractGeometryCollectionBaseType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="geometryMember"
+                                type="s1:geometryMember"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="geometryMember">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:GeometryAssociationType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="lineStringMember">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:LineStringMemberType"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="LineStringMemberType">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:GeometryAssociationType">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="LineString" type="s1:LineString"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="LineString">
+            <s:complexContent mixed="false">
+               <s:extension base="s1:LineStringType"/>
+            </s:complexContent>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCapabilitiesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCapabilities"/>
+  </wsdl:message>
+  <wsdl:message name="GetCapabilitiesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCapabilitiesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMunicipalitiesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMunicipalities"/>
+  </wsdl:message>
+  <wsdl:message name="GetMunicipalitiesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMunicipalitiesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetGSAsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetGSAs"/>
+  </wsdl:message>
+  <wsdl:message name="GetGSAsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetGSAsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStreets"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStreetsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCivicAddressSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCivicAddress"/>
+  </wsdl:message>
+  <wsdl:message name="GetCivicAddressSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCivicAddressResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCivicAddressSoapIn">
+      <wsdl:part name="parameters" element="tns:ValidateCivicAddress"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCivicAddressSoapOut">
+      <wsdl:part name="parameters" element="tns:ValidateCivicAddressResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetDirectionsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStreetDirections"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetDirectionsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStreetDirectionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetTypesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStreetTypes"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetTypesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStreetTypesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressRangeSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAddressRange"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressRangeSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAddressRangeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCapabilitiesHttpGetIn">
+      <wsdl:part name="Version" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCapabilitiesHttpGetOut">
+      <wsdl:part name="Body" element="tns:MethodCollection"/>
+  </wsdl:message>
+  <wsdl:message name="GetMunicipalitiesHttpGetIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="MUN_CODE" type="s:string"/>
+      <wsdl:part name="MUN_NAME" type="s:string"/>
+      <wsdl:part name="GEOMETRY" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetMunicipalitiesHttpGetOut">
+      <wsdl:part name="Body" element="tns:Municipalities"/>
+  </wsdl:message>
+  <wsdl:message name="GetGSAsHttpGetIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="MUN_CODE" type="s:string"/>
+      <wsdl:part name="MUN_NAME" type="s:string"/>
+      <wsdl:part name="GSA_KEY" type="s:string"/>
+      <wsdl:part name="GSA_NAME" type="s:string"/>
+      <wsdl:part name="GEOMETRY" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetGSAsHttpGetOut">
+      <wsdl:part name="Body" element="tns:GSAs"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetsHttpGetIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="MUN_CODE" type="s:string"/>
+      <wsdl:part name="MUN_NAME" type="s:string"/>
+      <wsdl:part name="GSA_KEY" type="s:string"/>
+      <wsdl:part name="GSA_Name" type="s:string"/>
+      <wsdl:part name="STR_KEY" type="s:string"/>
+      <wsdl:part name="STR_NAME" type="s:string"/>
+      <wsdl:part name="STR_TYPE" type="s:string"/>
+      <wsdl:part name="F_STR_TYPE" type="s:string"/>
+      <wsdl:part name="STR_DIR" type="s:string"/>
+      <wsdl:part name="NAME_CODE" type="s:string"/>
+      <wsdl:part name="GEOMETRY" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetsHttpGetOut">
+      <wsdl:part name="Body" element="tns:Streets"/>
+  </wsdl:message>
+  <wsdl:message name="GetCivicAddressHttpGetIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="MUN_CODE" type="s:string"/>
+      <wsdl:part name="MUN_NAME" type="s:string"/>
+      <wsdl:part name="GSA_KEY" type="s:string"/>
+      <wsdl:part name="GSA_NAME" type="s:string"/>
+      <wsdl:part name="STR_KEY" type="s:string"/>
+      <wsdl:part name="STR_NAME" type="s:string"/>
+      <wsdl:part name="STR_TYPE" type="s:string"/>
+      <wsdl:part name="F_STR_TYPE" type="s:string"/>
+      <wsdl:part name="STR_DIR" type="s:string"/>
+      <wsdl:part name="CIVIC_NUM" type="s:string"/>
+      <wsdl:part name="UNIT_NUM" type="s:string"/>
+      <wsdl:part name="NAMECODE" type="s:string"/>
+      <wsdl:part name="GEOMETRY" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCivicAddressHttpGetOut">
+      <wsdl:part name="Body" element="tns:CivicAddresses"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCivicAddressHttpGetIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="MUN_CODE" type="s:string"/>
+      <wsdl:part name="MUN_NAME" type="s:string"/>
+      <wsdl:part name="GSA_KEY" type="s:string"/>
+      <wsdl:part name="GSA_NAME" type="s:string"/>
+      <wsdl:part name="STR_KEY" type="s:string"/>
+      <wsdl:part name="STR_NAME" type="s:string"/>
+      <wsdl:part name="STR_TYPE" type="s:string"/>
+      <wsdl:part name="F_STR_TYPE" type="s:string"/>
+      <wsdl:part name="STR_DIR" type="s:string"/>
+      <wsdl:part name="CIVIC_NUM" type="s:string"/>
+      <wsdl:part name="UNIT_NUM" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCivicAddressHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetDirectionsHttpGetIn"/>
+  <wsdl:message name="GetStreetDirectionsHttpGetOut">
+      <wsdl:part name="Body" element="tns:Lookups"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetTypesHttpGetIn"/>
+  <wsdl:message name="GetStreetTypesHttpGetOut">
+      <wsdl:part name="Body" element="tns:Str_Types"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressRangeHttpGetIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="STR_Name" type="s:string"/>
+      <wsdl:part name="STR_Type" type="s:string"/>
+      <wsdl:part name="MUN_Code" type="s:string"/>
+      <wsdl:part name="GSA_Key" type="s:string"/>
+      <wsdl:part name="NameCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressRangeHttpGetOut">
+      <wsdl:part name="Body" element="tns:AddressRangeCollection"/>
+  </wsdl:message>
+  <wsdl:message name="GetCapabilitiesHttpPostIn">
+      <wsdl:part name="Version" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCapabilitiesHttpPostOut">
+      <wsdl:part name="Body" element="tns:MethodCollection"/>
+  </wsdl:message>
+  <wsdl:message name="GetMunicipalitiesHttpPostIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="MUN_CODE" type="s:string"/>
+      <wsdl:part name="MUN_NAME" type="s:string"/>
+      <wsdl:part name="GEOMETRY" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetMunicipalitiesHttpPostOut">
+      <wsdl:part name="Body" element="tns:Municipalities"/>
+  </wsdl:message>
+  <wsdl:message name="GetGSAsHttpPostIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="MUN_CODE" type="s:string"/>
+      <wsdl:part name="MUN_NAME" type="s:string"/>
+      <wsdl:part name="GSA_KEY" type="s:string"/>
+      <wsdl:part name="GSA_NAME" type="s:string"/>
+      <wsdl:part name="GEOMETRY" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetGSAsHttpPostOut">
+      <wsdl:part name="Body" element="tns:GSAs"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetsHttpPostIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="MUN_CODE" type="s:string"/>
+      <wsdl:part name="MUN_NAME" type="s:string"/>
+      <wsdl:part name="GSA_KEY" type="s:string"/>
+      <wsdl:part name="GSA_Name" type="s:string"/>
+      <wsdl:part name="STR_KEY" type="s:string"/>
+      <wsdl:part name="STR_NAME" type="s:string"/>
+      <wsdl:part name="STR_TYPE" type="s:string"/>
+      <wsdl:part name="F_STR_TYPE" type="s:string"/>
+      <wsdl:part name="STR_DIR" type="s:string"/>
+      <wsdl:part name="NAME_CODE" type="s:string"/>
+      <wsdl:part name="GEOMETRY" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetsHttpPostOut">
+      <wsdl:part name="Body" element="tns:Streets"/>
+  </wsdl:message>
+  <wsdl:message name="GetCivicAddressHttpPostIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="MUN_CODE" type="s:string"/>
+      <wsdl:part name="MUN_NAME" type="s:string"/>
+      <wsdl:part name="GSA_KEY" type="s:string"/>
+      <wsdl:part name="GSA_NAME" type="s:string"/>
+      <wsdl:part name="STR_KEY" type="s:string"/>
+      <wsdl:part name="STR_NAME" type="s:string"/>
+      <wsdl:part name="STR_TYPE" type="s:string"/>
+      <wsdl:part name="F_STR_TYPE" type="s:string"/>
+      <wsdl:part name="STR_DIR" type="s:string"/>
+      <wsdl:part name="CIVIC_NUM" type="s:string"/>
+      <wsdl:part name="UNIT_NUM" type="s:string"/>
+      <wsdl:part name="NAMECODE" type="s:string"/>
+      <wsdl:part name="GEOMETRY" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCivicAddressHttpPostOut">
+      <wsdl:part name="Body" element="tns:CivicAddresses"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCivicAddressHttpPostIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="MUN_CODE" type="s:string"/>
+      <wsdl:part name="MUN_NAME" type="s:string"/>
+      <wsdl:part name="GSA_KEY" type="s:string"/>
+      <wsdl:part name="GSA_NAME" type="s:string"/>
+      <wsdl:part name="STR_KEY" type="s:string"/>
+      <wsdl:part name="STR_NAME" type="s:string"/>
+      <wsdl:part name="STR_TYPE" type="s:string"/>
+      <wsdl:part name="F_STR_TYPE" type="s:string"/>
+      <wsdl:part name="STR_DIR" type="s:string"/>
+      <wsdl:part name="CIVIC_NUM" type="s:string"/>
+      <wsdl:part name="UNIT_NUM" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCivicAddressHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetDirectionsHttpPostIn"/>
+  <wsdl:message name="GetStreetDirectionsHttpPostOut">
+      <wsdl:part name="Body" element="tns:Lookups"/>
+  </wsdl:message>
+  <wsdl:message name="GetStreetTypesHttpPostIn"/>
+  <wsdl:message name="GetStreetTypesHttpPostOut">
+      <wsdl:part name="Body" element="tns:Str_Types"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressRangeHttpPostIn">
+      <wsdl:part name="Version" type="s:string"/>
+      <wsdl:part name="STR_Name" type="s:string"/>
+      <wsdl:part name="STR_Type" type="s:string"/>
+      <wsdl:part name="MUN_Code" type="s:string"/>
+      <wsdl:part name="GSA_Key" type="s:string"/>
+      <wsdl:part name="NameCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressRangeHttpPostOut">
+      <wsdl:part name="Body" element="tns:AddressRangeCollection"/>
+  </wsdl:message>
+  <wsdl:portType name="Civic_x0020_Address_x0020_Point_x0020_RangeSoap">
+      <wsdl:operation name="GetCapabilities">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The purpose of the GetCapabilities operation is to provide general information about the service itself and specific information about the name sources used.</documentation>
+         <wsdl:input message="tns:GetCapabilitiesSoapIn"/>
+         <wsdl:output message="tns:GetCapabilitiesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetMunicipalities">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method returns the Municipality ID, Code, Name and Geometry (if required)</documentation>
+         <wsdl:input message="tns:GetMunicipalitiesSoapIn"/>
+         <wsdl:output message="tns:GetMunicipalitiesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetGSAs">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method returns a GSA ID, Name, and Geometry (if required)</documentation>
+         <wsdl:input message="tns:GetGSAsSoapIn"/>
+         <wsdl:output message="tns:GetGSAsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetStreets">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method returns StreetID, Name, and Geometry (if requested), GSA Name &amp; Municipality Name</documentation>
+         <wsdl:input message="tns:GetStreetsSoapIn"/>
+         <wsdl:output message="tns:GetStreetsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCivicAddress">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method returns a full civic address set of attributes and the geometry (if requested). The geometry will include two sets of coordinates.  The first being the x/y coordinates from the civic address point layer if an  existing address is found in the address master table.  The second being the  x/y coordinates of an interpolated point on the street of the civic address.   This interpolated point will be returned regardless of whether the civic address  point exists or not as long as it falls within the civic range of the street.</documentation>
+         <wsdl:input message="tns:GetCivicAddressSoapIn"/>
+         <wsdl:output message="tns:GetCivicAddressSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="ValidateCivicAddress">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method returns True or False.  It accepts all of the parts of the Civic Address, then it validates the data against the official civic address master table and returns a True or False based on whether it exists or not.This is an exact match validation so it does not accept wildcard search strings. If there is more than one match for the criteria passed in then the method will return a True, the GetCivicAddress method can be used to return the multiple matches.</documentation>
+         <wsdl:input message="tns:ValidateCivicAddressSoapIn"/>
+         <wsdl:output message="tns:ValidateCivicAddressSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetStreetDirections">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method returns a collection of lookup objects containing the possible values for Street Direction.</documentation>
+         <wsdl:input message="tns:GetStreetDirectionsSoapIn"/>
+         <wsdl:output message="tns:GetStreetDirectionsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetStreetTypes">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method returns a collection of lookup objects containing the possible values for Street Types.</documentation>
+         <wsdl:input message="tns:GetStreetTypesSoapIn"/>
+         <wsdl:output message="tns:GetStreetTypesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetAddressRange">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns the valid address ranges from the database</documentation>
+         <wsdl:input message="tns:GetAddressRangeSoapIn"/>
+         <wsdl:output message="tns:GetAddressRangeSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="Civic_x0020_Address_x0020_Point_x0020_RangeSoap"
+                 type="tns:Civic_x0020_Address_x0020_Point_x0020_RangeSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetCapabilities">
+         <soap:operation soapAction="http://142.176.62.103/Geonova_WS/CivicAddressPointRange/GetCapabilities"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMunicipalities">
+         <soap:operation soapAction="http://142.176.62.103/Geonova_WS/CivicAddressPointRange/GetMunicipalities"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetGSAs">
+         <soap:operation soapAction="http://142.176.62.103/Geonova_WS/CivicAddressPointRange/GetGSAs"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStreets">
+         <soap:operation soapAction="http://142.176.62.103/Geonova_WS/CivicAddressPointRange/GetStreets"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCivicAddress">
+         <soap:operation soapAction="http://142.176.62.103/Geonova_WS/CivicAddressPointRange/GetCivicAddress"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ValidateCivicAddress">
+         <soap:operation soapAction="http://142.176.62.103/Geonova_WS/CivicAddressPointRange/ValidateCivicAddress"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStreetDirections">
+         <soap:operation soapAction="http://142.176.62.103/Geonova_WS/CivicAddressPointRange/GetStreetDirections"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStreetTypes">
+         <soap:operation soapAction="http://142.176.62.103/Geonova_WS/CivicAddressPointRange/GetStreetTypes"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAddressRange">
+         <soap:operation soapAction="http://142.176.62.103/Geonova_WS/CivicAddressPointRange/GetAddressRange"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="Civic_x0020_Address_x0020_Point_x0020_Range">
+      <wsdl:port name="Civic_x0020_Address_x0020_Point_x0020_RangeSoap"
+                 binding="tns:Civic_x0020_Address_x0020_Point_x0020_RangeSoap">
+         <soap:address location="http://ws.soatrader.com/142.176.62.103/0.1/Civic_x0020_Address_x0020_Point_x0020_Range"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

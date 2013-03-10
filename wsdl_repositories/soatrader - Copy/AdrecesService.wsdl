@@ -1,0 +1,120 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://rol.ibit.org/integracio/wsdl/adreces"
+                  xmlns:ibit="http://rol.ibit.org/integracio/wsdl/adreces"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:adreca="http://rol.ibit.org/integracio/xsd/Adreca.xsd"
+                  xmlns:empresa="http://rol.ibit.org/integracio/xsd/Empresa.xsd"
+                  xmlns:persona="http://rol.ibit.org/integracio/xsd/Persona.xsd"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  name="Integracio"
+                  targetNamespace="http://rol.ibit.org/integracio/wsdl/adreces">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+	  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <xsd:schema targetNamespace="http://rol.ibit.org/integracio/wsdl/adreces">
+			      <xsd:import namespace="http://rol.ibit.org/integracio/xsd/Adreca.xsd"
+                     schemaLocation="http://rol.ibit.org/integracio/xsd/Adreca.xsd"/>
+			      <xsd:import namespace="http://rol.ibit.org/integracio/xsd/Empresa.xsd"
+                     schemaLocation="http://rol.ibit.org/integracio/xsd/Empresa.xsd"/>
+			      <xsd:import namespace="http://rol.ibit.org/integracio/xsd/Persona.xsd"
+                     schemaLocation="http://rol.ibit.org/integracio/xsd/Persona.xsd"/>
+
+			      <xsd:element name="adreca" type="adreca:formatAdreca"/>
+			      <xsd:element name="cif" type="empresa:formatCif"/>
+			      <xsd:element name="document" type="persona:formatDocument"/>
+			      <xsd:element name="adreces" type="adreca:formatAdreca"/>
+		    </xsd:schema>
+      <xsd:schema targetNamespace="http://rol.ibit.org/integracio/wsdl/adreces">
+			      <xsd:import namespace="http://rol.ibit.org/integracio/xsd/Adreca.xsd"
+                     schemaLocation="http://rol.ibit.org/integracio/xsd/Adreca.xsd"/>
+			      <xsd:import namespace="http://rol.ibit.org/integracio/xsd/Empresa.xsd"
+                     schemaLocation="http://rol.ibit.org/integracio/xsd/Empresa.xsd"/>
+			      <xsd:import namespace="http://rol.ibit.org/integracio/xsd/Persona.xsd"
+                     schemaLocation="http://rol.ibit.org/integracio/xsd/Persona.xsd"/>
+
+			      <xsd:element name="adreca" type="adreca:formatAdreca"/>
+			      <xsd:element name="cif" type="empresa:formatCif"/>
+			      <xsd:element name="document" type="persona:formatDocument"/>
+			      <xsd:element name="adreces" type="adreca:formatAdreca"/>
+		    </xsd:schema>
+	  </wsdl:types>
+
+	  <wsdl:message name="obtenirAdrecaRequest">
+		    <wsdl:part name="cif" element="ibit:cif"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="obtenirAdrecaResponse">
+		    <wsdl:part name="adreca" element="ibit:adreca"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="obtenirAdrecesRequest">
+		    <wsdl:part name="document" element="ibit:document"/>
+	  </wsdl:message>
+	  <wsdl:message name="obtenirAdrecesResponse">
+		    <wsdl:part name="adreces" element="ibit:adreces"/>
+	  </wsdl:message>
+
+	  <wsdl:portType name="AdrecesPortType">
+		    <wsdl:operation name="obtenirAdreca">
+			      <wsdl:input message="ibit:obtenirAdrecaRequest"/>
+			      <wsdl:output message="ibit:obtenirAdrecaResponse"/>
+		    </wsdl:operation>
+		    <wsdl:operation name="obtenirAdreces">
+			      <wsdl:input message="ibit:obtenirAdrecesRequest"/>
+			      <wsdl:output message="ibit:obtenirAdrecesResponse"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+
+	  <wsdl:binding name="AdrecesBinding" type="ibit:AdrecesPortType">
+		    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <wsdl:operation name="obtenirAdreca">
+			      <soap:operation soapAction="http://rol.ibit.org/integracio/wsdl/adreces/obtenirAdreca"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+		    <wsdl:operation name="obtenirAdreces">
+			      <soap:operation soapAction="http://rol.ibit.org/integracio/wsdl/adreces/obtenirAdreces"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+	  </wsdl:binding>
+
+	  <wsdl:service name="AdrecesService">
+		    <wsdl:port name="AdrecesPort" binding="ibit:AdrecesBinding">
+			      <soap:address location="http://ws.soatrader.com/195.57.128.81/0.1/AdrecesService"/>
+		    </wsdl:port>
+	  </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,118 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.alessandropilotti.com/whois/client/ws"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.alessandropilotti.com/whois/client/ws">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.alessandropilotti.com/whois/client/ws">
+         <s:element name="WhoisQuery">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="query" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="host" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="port" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="WhoisQueryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="WhoisQueryResult"
+                             type="tns:ArrayOfQueryResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfQueryResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="QueryResult" nillable="true"
+                          type="tns:QueryResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="QueryResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="host" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="port" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="data" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ArrayOfQueryResult" nillable="true" type="tns:ArrayOfQueryResult"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="WhoisQuerySoapIn">
+      <wsdl:part name="parameters" element="tns:WhoisQuery"/>
+  </wsdl:message>
+  <wsdl:message name="WhoisQuerySoapOut">
+      <wsdl:part name="parameters" element="tns:WhoisQueryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="WhoisQueryHttpGetIn">
+      <wsdl:part name="query" type="s:string"/>
+      <wsdl:part name="host" type="s:string"/>
+      <wsdl:part name="port" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="WhoisQueryHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfQueryResult"/>
+  </wsdl:message>
+  <wsdl:message name="WhoisQueryHttpPostIn">
+      <wsdl:part name="query" type="s:string"/>
+      <wsdl:part name="host" type="s:string"/>
+      <wsdl:part name="port" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="WhoisQueryHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfQueryResult"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="WhoisClientServiceSoap" type="tns:WhoisClientServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="WhoisQuery">
+         <soap:operation soapAction="http://www.alessandropilotti.com/whois/client/ws/WhoisQuery"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="WhoisClientService">
+      <wsdl:port name="WhoisClientServiceSoap" binding="tns:WhoisClientServiceSoap">
+         <soap:address location="http://ws.soatrader.com/alessandropilotti.com/0.1/WhoisClientService"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

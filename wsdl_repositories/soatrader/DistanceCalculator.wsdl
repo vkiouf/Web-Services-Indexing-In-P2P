@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservices.imacination.com/distance/Distance.jws" xmlns:impl="http://webservices.imacination.com/distance/Distance.jws" xmlns:intf="http://webservices.imacination.com/distance/Distance.jws" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ws.soatrader.com/" xmlns:soat="http://ws.soatrader.com/"><xs:element name="SOATraderLicense" type="xs:string"/><xs:element name="SOATraderUsageStatistics" type="soat:SOATraderUsageStatistics"/><xs:complexType name="SOATraderUsageStatistics"><xs:sequence><xs:element name="HitsMade" type="xs:decimal"/><xs:element name="HitsLeft" type="xs:decimal"/></xs:sequence></xs:complexType></xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getLocationResponse">
+    <wsdl:part name="getLocationReturn" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderUsageStatistics">
+    <wsdl:part name="SOATraderUsageStatistics" element="soat:SOATraderUsageStatistics">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderLicense">
+    <wsdl:part name="SOATraderLicense" element="soat:SOATraderLicense">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCityResponse">
+    <wsdl:part name="getCityReturn" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStateResponse">
+    <wsdl:part name="getStateReturn" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStateRequest">
+    <wsdl:part name="zip" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLatitudeRequest">
+    <wsdl:part name="zip" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLongitudeResponse">
+    <wsdl:part name="getLongitudeReturn" type="xsd:double">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDistanceResponse">
+    <wsdl:part name="getDistanceReturn" type="xsd:double">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCityRequest">
+    <wsdl:part name="zip" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLongitudeRequest">
+    <wsdl:part name="zip" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLocationRequest">
+    <wsdl:part name="zip" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDistanceRequest">
+    <wsdl:part name="fromZip" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="toZip" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLatitudeResponse">
+    <wsdl:part name="getLatitudeReturn" type="xsd:double">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Distance">
+    <wsdl:operation name="getState" parameterOrder="zip">
+      <wsdl:input name="getStateRequest" message="impl:getStateRequest">
+    </wsdl:input>
+      <wsdl:output name="getStateResponse" message="impl:getStateResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLocation" parameterOrder="zip">
+      <wsdl:input name="getLocationRequest" message="impl:getLocationRequest">
+    </wsdl:input>
+      <wsdl:output name="getLocationResponse" message="impl:getLocationResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCity" parameterOrder="zip">
+      <wsdl:input name="getCityRequest" message="impl:getCityRequest">
+    </wsdl:input>
+      <wsdl:output name="getCityResponse" message="impl:getCityResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDistance" parameterOrder="fromZip toZip">
+      <wsdl:input name="getDistanceRequest" message="impl:getDistanceRequest">
+    </wsdl:input>
+      <wsdl:output name="getDistanceResponse" message="impl:getDistanceResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLatitude" parameterOrder="zip">
+      <wsdl:input name="getLatitudeRequest" message="impl:getLatitudeRequest">
+    </wsdl:input>
+      <wsdl:output name="getLatitudeResponse" message="impl:getLatitudeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLongitude" parameterOrder="zip">
+      <wsdl:input name="getLongitudeRequest" message="impl:getLongitudeRequest">
+    </wsdl:input>
+      <wsdl:output name="getLongitudeResponse" message="impl:getLongitudeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DistanceSoapBinding" type="impl:Distance">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getCity">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCityRequest">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace"/>
+        <wsdlsoap:header message="impl:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="getCityResponse">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservices.imacination.com/distance/Distance.jws"/>
+        <wsdlsoap:header message="impl:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </wsdlsoap:header>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDistance">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getDistanceRequest">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace"/>
+        <wsdlsoap:header message="impl:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="getDistanceResponse">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservices.imacination.com/distance/Distance.jws"/>
+        <wsdlsoap:header message="impl:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </wsdlsoap:header>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLatitude">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getLatitudeRequest">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace"/>
+        <wsdlsoap:header message="impl:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="getLatitudeResponse">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservices.imacination.com/distance/Distance.jws"/>
+        <wsdlsoap:header message="impl:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </wsdlsoap:header>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLocation">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getLocationRequest">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace"/>
+        <wsdlsoap:header message="impl:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="getLocationResponse">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservices.imacination.com/distance/Distance.jws"/>
+        <wsdlsoap:header message="impl:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </wsdlsoap:header>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLongitude">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getLongitudeRequest">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace"/>
+        <wsdlsoap:header message="impl:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="getLongitudeResponse">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservices.imacination.com/distance/Distance.jws"/>
+        <wsdlsoap:header message="impl:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </wsdlsoap:header>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getState">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getStateRequest">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DefaultNamespace"/>
+        <wsdlsoap:header message="impl:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="getStateResponse">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservices.imacination.com/distance/Distance.jws"/>
+        <wsdlsoap:header message="impl:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </wsdlsoap:header>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DistanceService">
+    <wsdl:port name="Distance" binding="impl:DistanceSoapBinding">
+      <wsdlsoap:address location="http://ws.soatrader.com/imacination.com/1.0/DistanceCalculator"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,305 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://service.falconwebtech.com/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://service.falconwebtech.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Airport Data Service</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://service.falconwebtech.com/">
+         <s:import namespace="http://www.tempuri.org/AirportDataSet.xsd"/>
+         <s:import schemaLocation="http://service.falconwebtech.com/aptDataService.asmx?schema=AirportDataSet"
+                   namespace="http://www.tempuri.org/AirportDataSet.xsd"/>
+         <s:element name="getAirport">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="aptID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getAirportResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getAirportResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="validID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="aptID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="validIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="validIDResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getAirportsByCity">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ST" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getAirportsByCityResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getAirportsByCityResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getDistance">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="aptID1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="aptID2" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getDistanceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getDistanceResult" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getAirportData">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="aptID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getAirportDataResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getAirportDataResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getAirportGenInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="aptID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getAirportGenInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getAirportGenInfoResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="http://www.tempuri.org/AirportDataSet.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getRunwayInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="aptID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getRunwayInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getRunwayInfoResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="http://www.tempuri.org/AirportDataSet.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getAirportSoapIn">
+      <wsdl:part name="parameters" element="tns:getAirport"/>
+  </wsdl:message>
+  <wsdl:message name="getAirportSoapOut">
+      <wsdl:part name="parameters" element="tns:getAirportResponse"/>
+  </wsdl:message>
+  <wsdl:message name="validIDSoapIn">
+      <wsdl:part name="parameters" element="tns:validID"/>
+  </wsdl:message>
+  <wsdl:message name="validIDSoapOut">
+      <wsdl:part name="parameters" element="tns:validIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getAirportsByCitySoapIn">
+      <wsdl:part name="parameters" element="tns:getAirportsByCity"/>
+  </wsdl:message>
+  <wsdl:message name="getAirportsByCitySoapOut">
+      <wsdl:part name="parameters" element="tns:getAirportsByCityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getDistanceSoapIn">
+      <wsdl:part name="parameters" element="tns:getDistance"/>
+  </wsdl:message>
+  <wsdl:message name="getDistanceSoapOut">
+      <wsdl:part name="parameters" element="tns:getDistanceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getAirportDataSoapIn">
+      <wsdl:part name="parameters" element="tns:getAirportData"/>
+  </wsdl:message>
+  <wsdl:message name="getAirportDataSoapOut">
+      <wsdl:part name="parameters" element="tns:getAirportDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getAirportGenInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:getAirportGenInfo"/>
+  </wsdl:message>
+  <wsdl:message name="getAirportGenInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:getAirportGenInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getRunwayInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:getRunwayInfo"/>
+  </wsdl:message>
+  <wsdl:message name="getRunwayInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:getRunwayInfoResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="AirportDataServiceSoap" type="tns:AirportDataServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="getAirport">
+         <soap:operation soapAction="http://service.falconwebtech.com/getAirport" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="validID">
+         <soap:operation soapAction="http://service.falconwebtech.com/validID" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getAirportsByCity">
+         <soap:operation soapAction="http://service.falconwebtech.com/getAirportsByCity"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getDistance">
+         <soap:operation soapAction="http://service.falconwebtech.com/getDistance" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getAirportData">
+         <soap:operation soapAction="http://service.falconwebtech.com/getAirportData" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getAirportGenInfo">
+         <soap:operation soapAction="http://service.falconwebtech.com/getAirportGenInfo"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getRunwayInfo">
+         <soap:operation soapAction="http://service.falconwebtech.com/getRunwayInfo" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="AirportDataService">
+      <wsdl:documentation>Airport Data Service</wsdl:documentation>
+      <wsdl:port name="AirportDataServiceSoap" binding="tns:AirportDataServiceSoap">
+         <soap:address location="http://ws.soatrader.com/falconwebtech.com/0.1/AirportDataService"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

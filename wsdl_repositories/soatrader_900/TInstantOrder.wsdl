@@ -1,0 +1,155 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://aspxdelphi.net/Store/WebServices">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns:soat="http://ws.soatrader.com/" xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="xs:string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="xs:decimal" name="HitsMade"/>
+               <element type="xs:decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                xmlns:s="http://www.w3.org/2001/XMLSchema"
+                xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                xmlns:tns="http://aspxdelphi.net/Store/WebServices"
+                xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                elementFormDefault="qualified"
+                targetNamespace="http://aspxdelphi.net/Store/WebServices">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="OrderItem">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="productID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="quantity" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="OrderItemResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="OrderItemResult" type="tns:TOrderDetailsDB"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="TOrderDetailsDB">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="OrderDate" type="tns:TDateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ShipDate" type="tns:TDateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OrderTotal" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OrderItems">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="TDateTime"/>
+         <s:element name="CheckStatus">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="orderID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CheckStatusResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckStatusResult" type="tns:TOrderDetailsDB"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="OrderItemSoapIn">
+      <wsdl:part name="parameters" element="tns:OrderItem"/>
+  </wsdl:message>
+  <wsdl:message name="OrderItemSoapOut">
+      <wsdl:part name="parameters" element="tns:OrderItemResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CheckStatusSoapIn">
+      <wsdl:part name="parameters" element="tns:CheckStatus"/>
+  </wsdl:message>
+  <wsdl:message name="CheckStatusSoapOut">
+      <wsdl:part name="parameters" element="tns:CheckStatusResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="TInstantOrderSoap">
+      <wsdl:operation name="OrderItem">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The OrderItem method enables a remote client to programmatically place an order using a WebService.</documentation>
+         <wsdl:input message="tns:OrderItemSoapIn"/>
+         <wsdl:output message="tns:OrderItemSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="CheckStatus">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The CheckStatus method enables a remote client to programmatically query the current status of an order in the IBuySpy System.</documentation>
+         <wsdl:input message="tns:CheckStatusSoapIn"/>
+         <wsdl:output message="tns:CheckStatusSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TInstantOrderSoap" type="tns:TInstantOrderSoap">
+      <soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                    transport="http://schemas.xmlsoap.org/soap/http"
+                    style="document"/>
+      <wsdl:operation name="OrderItem">
+         <soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         soapAction="http://aspxdelphi.net/Store/WebServices/OrderItem"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CheckStatus">
+         <soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         soapAction="http://aspxdelphi.net/Store/WebServices/CheckStatus"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TInstantOrder">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Web Service Development with Delphi for .Net</documentation>
+      <wsdl:port name="TInstantOrderSoap" binding="tns:TInstantOrderSoap">
+         <soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                       location="http://ws.soatrader.com/aspxdelphi.net/0.4/TInstantOrder"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

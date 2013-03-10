@@ -1,0 +1,274 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="urn:schemas-himsa-com:WebServices.eTONA"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="urn:schemas-himsa-com:WebServices.eTONA">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>eTONA WebService for Siemens Companies.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="urn:schemas-himsa-com:WebServices.eTONA">
+         <s:element name="Login">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="loginID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="loginData" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LoginResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="transactionToken" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="serverResponseData" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="updateAccountList" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Logoff">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="transactionToken" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LogoffResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="Transmit">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="transactionToken" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="transactionList" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="retransmission" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="TransmitResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="QueryStatusUpdates">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="transactionToken" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="databaseID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="QueryStatusUpdatesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="statusUpdateData" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendStatusUpdates">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="transactionToken" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="statusUpdateList" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="retransmission" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendStatusUpdatesResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="AcceptStatusUpdate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="transactionToken" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="databaseID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="transactionID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="transactionItemID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="statusUpdateID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="statusCode" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AcceptStatusUpdateResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAccountList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="transactionToken" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAccountListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="accountList" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoginSoapIn">
+      <wsdl:part name="parameters" element="tns:Login"/>
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+      <wsdl:part name="parameters" element="tns:LoginResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LogoffSoapIn">
+      <wsdl:part name="parameters" element="tns:Logoff"/>
+  </wsdl:message>
+  <wsdl:message name="LogoffSoapOut">
+      <wsdl:part name="parameters" element="tns:LogoffResponse"/>
+  </wsdl:message>
+  <wsdl:message name="TransmitSoapIn">
+      <wsdl:part name="parameters" element="tns:Transmit"/>
+  </wsdl:message>
+  <wsdl:message name="TransmitSoapOut">
+      <wsdl:part name="parameters" element="tns:TransmitResponse"/>
+  </wsdl:message>
+  <wsdl:message name="QueryStatusUpdatesSoapIn">
+      <wsdl:part name="parameters" element="tns:QueryStatusUpdates"/>
+  </wsdl:message>
+  <wsdl:message name="QueryStatusUpdatesSoapOut">
+      <wsdl:part name="parameters" element="tns:QueryStatusUpdatesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendStatusUpdatesSoapIn">
+      <wsdl:part name="parameters" element="tns:SendStatusUpdates"/>
+  </wsdl:message>
+  <wsdl:message name="SendStatusUpdatesSoapOut">
+      <wsdl:part name="parameters" element="tns:SendStatusUpdatesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AcceptStatusUpdateSoapIn">
+      <wsdl:part name="parameters" element="tns:AcceptStatusUpdate"/>
+  </wsdl:message>
+  <wsdl:message name="AcceptStatusUpdateSoapOut">
+      <wsdl:part name="parameters" element="tns:AcceptStatusUpdateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAccountListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAccountList"/>
+  </wsdl:message>
+  <wsdl:message name="GetAccountListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAccountListResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="eTONAWebServiceSoap" type="tns:eTONAWebServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="Login">
+         <soap:operation soapAction="urn:schemas-himsa-com:WebServices.eTONA/Login" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Logoff">
+         <soap:operation soapAction="urn:schemas-himsa-com:WebServices.eTONA/Logoff" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Transmit">
+         <soap:operation soapAction="urn:schemas-himsa-com:WebServices.eTONA/Transmit" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="QueryStatusUpdates">
+         <soap:operation soapAction="urn:schemas-himsa-com:WebServices.eTONA/QueryStatusUpdates"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendStatusUpdates">
+         <soap:operation soapAction="urn:schemas-himsa-com:WebServices.eTONA/SendStatusUpdates"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AcceptStatusUpdate">
+         <soap:operation soapAction="urn:schemas-himsa-com:WebServices.eTONA/AcceptStatusUpdate"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAccountList">
+         <soap:operation soapAction="urn:schemas-himsa-com:WebServices.eTONA/GetAccountList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="eTONAWebService">
+      <wsdl:documentation>eTONA WebService for Siemens Companies.</wsdl:documentation>
+      <wsdl:port name="eTONAWebServiceSoap" binding="tns:eTONAWebServiceSoap">
+         <soap:address location="http://ws.soatrader.com/siemens-hearing.com.au/0.1/eTONAWebService"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

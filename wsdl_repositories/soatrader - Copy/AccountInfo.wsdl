@@ -1,0 +1,304 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:n4="http://www.webmethods.com/package/com.esri.is.services.soap.v3.accountinfo/"
+                  xmlns:n5="http://www.themindelectric.com/2001/schemaArray/"
+                  xmlns:n6="http://www.webmethods.com/package/com.esri.is.services.soap.v3.common/"
+                  xmlns:tns="http://www.arcwebservices.com/v2006"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  name="AccountInfo"
+                  targetNamespace="http://www.arcwebservices.com/v2006">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema targetNamespace="http://www.webmethods.com/package/com.esri.is.services.soap.v3.accountinfo/">
+         <xsd:import namespace="http://www.themindelectric.com/2001/schemaArray/"/>
+         <xsd:complexType name="ServiceSummary">
+            <xsd:sequence>
+               <xsd:element name="servicesInfo" nillable="true" type="n4:ArrayOfServiceInfo"/>
+               <xsd:element name="user" nillable="true" type="n4:User"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ServiceInfo">
+            <xsd:sequence>
+               <xsd:element name="dataSourcesInfo" nillable="true" type="n4:ArrayOfDataSourceInfo"/>
+               <xsd:element name="desc" nillable="true" type="xsd:string"/>
+               <xsd:element name="name" nillable="true" type="xsd:string"/>
+               <xsd:element name="wsdl" nillable="true" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="DataSourceInfo">
+            <xsd:sequence>
+               <xsd:element name="name" nillable="true" type="xsd:string"/>
+               <xsd:element name="summary" nillable="true" type="xsd:string"/>
+               <xsd:element name="supportsArcXML" type="xsd:boolean"/>
+               <xsd:element name="supportsWMS" type="xsd:boolean"/>
+               <xsd:element name="title" nillable="true" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ArrayOfDataSourceInfo">
+            <xsd:sequence>
+               <xsd:element name="DataSourceInfo" maxOccurs="unbounded" nillable="true" form="qualified"
+                            type="n4:DataSourceInfo"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ArrayOfServiceInfo">
+            <xsd:sequence>
+               <xsd:element name="ServiceInfo" maxOccurs="unbounded" nillable="true" form="qualified"
+                            type="n4:ServiceInfo"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="User">
+            <xsd:sequence>
+               <xsd:element name="emailAddress" nillable="true" type="xsd:string"/>
+               <xsd:element name="firstName" nillable="true" type="xsd:string"/>
+               <xsd:element name="isActive" type="xsd:boolean"/>
+               <xsd:element name="isAdmin" type="xsd:boolean"/>
+               <xsd:element name="lastName" nillable="true" type="xsd:string"/>
+               <xsd:element name="username" nillable="true" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ArrayOfServiceSummary">
+            <xsd:sequence>
+               <xsd:element name="ServiceSummary" maxOccurs="unbounded" nillable="true" form="qualified"
+                            type="n4:ServiceSummary"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="AccountInfoOptions">
+            <xsd:sequence>
+               <xsd:element name="adminOptions" nillable="true" type="n4:AdminOptions"/>
+               <xsd:element name="returnDataSources" nillable="true" type="n5:ArrayOfstring"/>
+               <xsd:element name="returnDetailedInfo" type="xsd:boolean"/>
+               <xsd:element name="returnServices" nillable="true" type="n5:ArrayOfstring"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="AdminOptions">
+            <xsd:sequence>
+               <xsd:element name="returnGroupUsage" type="xsd:boolean"/>
+               <xsd:element name="returnUsers" nillable="true" type="n5:ArrayOfstring"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="AccountSummary">
+            <xsd:sequence>
+               <xsd:element name="groupUsage" nillable="true" type="n4:AccountUsage"/>
+               <xsd:element name="usageByUser" nillable="true" type="n4:ArrayOfUserUsage"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="AccountUsage">
+            <xsd:sequence>
+               <xsd:element name="averageDailyCreditUsage" type="xsd:double"/>
+               <xsd:element name="creditsRemaining" type="xsd:double"/>
+               <xsd:element name="creditsUsed" type="xsd:double"/>
+               <xsd:element name="dailyStorageCost" type="xsd:double"/>
+               <xsd:element name="diskStorageQuota" type="xsd:long"/>
+               <xsd:element name="diskStorageUsed" type="xsd:long"/>
+               <xsd:element name="estimatedEndDate" type="xsd:long"/>
+               <xsd:element name="expiration" type="xsd:long"/>
+               <xsd:element name="totalStorageCost" type="xsd:double"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="UserUsage">
+            <xsd:sequence>
+               <xsd:element name="accountUsage" nillable="true" type="n4:AccountUsage"/>
+               <xsd:element name="servicesUsage" nillable="true" type="n4:ArrayOfServiceUsage"/>
+               <xsd:element name="user" nillable="true" type="n4:User"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ServiceUsage">
+            <xsd:sequence>
+               <xsd:element name="dataSourcesUsage" nillable="true" type="n4:ArrayOfDataSourceUsage"/>
+               <xsd:element name="name" nillable="true" type="xsd:string"/>
+               <xsd:element name="usage" nillable="true" type="n4:UsageInfo"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="DataSourceUsage">
+            <xsd:sequence>
+               <xsd:element name="name" nillable="true" type="xsd:string"/>
+               <xsd:element name="title" nillable="true" type="xsd:string"/>
+               <xsd:element name="usage" nillable="true" type="n4:UsageInfo"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="UsageInfo">
+            <xsd:sequence>
+               <xsd:element name="creditsUsed" type="xsd:double"/>
+               <xsd:element name="dateLastUsed" type="xsd:long"/>
+               <xsd:element name="numRequests" type="xsd:long"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ArrayOfDataSourceUsage">
+            <xsd:sequence>
+               <xsd:element name="DataSourceUsage" maxOccurs="unbounded" nillable="true" form="qualified"
+                            type="n4:DataSourceUsage"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ArrayOfServiceUsage">
+            <xsd:sequence>
+               <xsd:element name="ServiceUsage" maxOccurs="unbounded" nillable="true" form="qualified"
+                            type="n4:ServiceUsage"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ArrayOfUserUsage">
+            <xsd:sequence>
+               <xsd:element name="UserUsage" maxOccurs="unbounded" nillable="true" form="qualified"
+                            type="n4:UserUsage"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+      <xsd:schema targetNamespace="http://www.themindelectric.com/2001/schemaArray/">
+         <xsd:complexType name="ArrayOfstring">
+            <xsd:sequence>
+               <xsd:element name="string" maxOccurs="unbounded" nillable="true" form="qualified"
+                            type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+      <xsd:schema targetNamespace="http://www.webmethods.com/package/com.esri.is.services.soap.v3.common/">
+         <xsd:complexType name="DateTimeRange">
+            <xsd:sequence>
+               <xsd:element name="end" type="xsd:long"/>
+               <xsd:element name="start" type="xsd:long"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+      <xsd:schema elementFormDefault="qualified"
+                  targetNamespace="http://www.arcwebservices.com/v2006">
+         <xsd:import namespace="http://www.webmethods.com/package/com.esri.is.services.soap.v3.common/"/>
+         <xsd:import namespace="http://www.webmethods.com/package/com.esri.is.services.soap.v3.accountinfo/"/>
+         <xsd:element name="getServices">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="accountInfoOptions" type="n4:AccountInfoOptions"/>
+                  <xsd:element name="token" type="xsd:string"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="getServicesResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Result" nillable="true" type="n4:ArrayOfServiceSummary"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="getUsage">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="accountInfoOptions" type="n4:AccountInfoOptions"/>
+                  <xsd:element name="dateTimeRange" type="n6:DateTimeRange"/>
+                  <xsd:element name="token" type="xsd:string"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="getUsageResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Result" nillable="true" type="n4:AccountSummary"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="getVersion">
+            <xsd:complexType>
+               <xsd:sequence/>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="getVersionResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Result" nillable="true" type="xsd:string"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="getServices0In">
+      <wsdl:part name="parameters" element="tns:getServices"/>
+   </wsdl:message>
+   <wsdl:message name="getServices0Out">
+      <wsdl:part name="parameters" element="tns:getServicesResponse"/>
+   </wsdl:message>
+   <wsdl:message name="getUsage1In">
+      <wsdl:part name="parameters" element="tns:getUsage"/>
+   </wsdl:message>
+   <wsdl:message name="getUsage1Out">
+      <wsdl:part name="parameters" element="tns:getUsageResponse"/>
+   </wsdl:message>
+   <wsdl:message name="getVersion2In">
+      <wsdl:part name="parameters" element="tns:getVersion"/>
+   </wsdl:message>
+   <wsdl:message name="getVersion2Out">
+      <wsdl:part name="parameters" element="tns:getVersionResponse"/>
+   </wsdl:message>
+   <wsdl:portType name="IAccountInfo">
+      <wsdl:operation name="getServices">
+         <wsdl:input name="getServices0In" message="tns:getServices0In"/>
+         <wsdl:output name="getServices0Out" message="tns:getServices0Out"/>
+      </wsdl:operation>
+      <wsdl:operation name="getUsage">
+         <wsdl:input name="getUsage1In" message="tns:getUsage1In"/>
+         <wsdl:output name="getUsage1Out" message="tns:getUsage1Out"/>
+      </wsdl:operation>
+      <wsdl:operation name="getVersion">
+         <wsdl:input name="getVersion2In" message="tns:getVersion2In"/>
+         <wsdl:output name="getVersion2Out" message="tns:getVersion2Out"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="IAccountInfo" type="tns:IAccountInfo">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="getServices">
+         <soap:operation soapAction="getServices" style="document"/>
+         <wsdl:input name="getServices0In">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getServices0Out">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getUsage">
+         <soap:operation soapAction="getUsage" style="document"/>
+         <wsdl:input name="getUsage1In">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getUsage1Out">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getVersion">
+         <soap:operation soapAction="getVersion" style="document"/>
+         <wsdl:input name="getVersion2In">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getVersion2Out">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="AccountInfo">
+      <wsdl:documentation>Account Info Web Service provides information about your ArcWeb Services account such as usage statistics on ArcWeb services and data sources. Information from Account Info Web Service is available through a SOAP interface and through the ArcWeb Services Web site.</wsdl:documentation>
+      <wsdl:port name="IAccountInfo" binding="tns:IAccountInfo">
+         <soap:address location="http://ws.soatrader.com/arcwebservices.com/0.1/AccountInfo"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

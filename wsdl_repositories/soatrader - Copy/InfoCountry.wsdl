@@ -1,0 +1,92 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://www.InfoCountry.com/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.InfoCountry.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.InfoCountry.com/">
+         <s:element name="SMSInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RequestType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RequestMsg" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RequestRef" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SMSInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SMSInfoResult" type="tns:SMSInfoProperties"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SMSInfoProperties">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ResponseMsg" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ResponseDesc" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrMsg" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IsValid" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SMSInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:SMSInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SMSInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:SMSInfoResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="InfoCountrySoap">
+      <wsdl:operation name="SMSInfo">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Send a Message to us and we will respond with the business detail requested. Method: SMSInfo(UserName As String, Password As String, RequestType As String, RequestMsg As String, RequestRef as String). Ex: SMSInfo("test", "test", "sms", "Help", "0821234567"). Where as: RequestType = 'sms' or 'webservice', RequestMsg = 'The information required' and RequestRef = If 'sms' then: valid phone number elseif 'webservice' then: valid URL link.</documentation>
+         <wsdl:input message="tns:SMSInfoSoapIn"/>
+         <wsdl:output message="tns:SMSInfoSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="InfoCountrySoap" type="tns:InfoCountrySoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="SMSInfo">
+         <soap:operation soapAction="http://www.InfoCountry.com/SMSInfo" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InfoCountry">
+      <wsdl:port name="InfoCountrySoap" binding="tns:InfoCountrySoap">
+         <soap:address location="http://ws.soatrader.com/infocountry.co.za/0.1/InfoCountry"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

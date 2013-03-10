@@ -1,0 +1,900 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.xignite.com/services/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.xignite.com/services/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Complete stock option management application.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.xignite.com/services/">
+         <s:element name="GetGrantDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Grants" type="tns:ArrayOfGrant"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Exercises" type="tns:ArrayOfExercise"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfGrant">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Grant" nillable="true"
+                          type="tns:Grant"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Grant">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="GrantType" type="tns:OptionTypes"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDate" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantExpirationDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="GrantPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="GrantShares" type="s:double"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Common">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Outcome" type="tns:OutcomeTypes"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Identity" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Delay" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="OutcomeTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Success"/>
+               <s:enumeration value="SystemError"/>
+               <s:enumeration value="RequestError"/>
+               <s:enumeration value="RegistrationError"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="Details">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="GrantType" type="tns:OptionTypes"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDate" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantExpirationDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="OriginalGrantPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="GrantPrice" type="s:double"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalGranted" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalExercised" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalVested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalUnvested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalSold" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalHeld" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesGranted" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesExercised" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesVested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesUnvested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesSold" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesHeld" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MarketPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountNeededToExercise" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountExercised" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountVested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountUnvested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountHeld" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountSold" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountCommissions" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountTotal" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="RealizedCost" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="RealizedValue" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="RealizedGain" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestedCost" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestedValue" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestedGain" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="UnVestedCost" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="UnVestedValue" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="UnVestedGain" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SplitRatio" type="s:double"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="OptionTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="ISO"/>
+               <s:enumeration value="NQSO"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfSchedule">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Schedule" nillable="true"
+                          type="tns:Schedule"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Schedule">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="PeriodType" type="tns:Type"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentageVesting" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PeriodsFromGrantDate" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="Type">
+            <s:restriction base="s:string">
+               <s:enumeration value="Year"/>
+               <s:enumeration value="Month"/>
+               <s:enumeration value="Day"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfExercise">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Exercise" nillable="true"
+                          type="tns:Exercise"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Exercise">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Shares" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Commission" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseType" type="tns:ExerciseTypes"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="ExerciseTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Cashless"/>
+               <s:enumeration value="Regular"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetGrantDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetGrantDetailsResult"
+                             type="tns:ArrayOfDetails"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDetails">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Details" nillable="true"
+                          type="tns:Details"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Header" type="tns:Header"/>
+         <s:complexType name="Header">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Tracer" type="s:string"/>
+            </s:sequence>
+            <s:anyAttribute/>
+         </s:complexType>
+         <s:element name="GetVestingDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Grants" type="tns:ArrayOfGrant"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Exercises" type="tns:ArrayOfExercise"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetVestingDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetVestingDetailsResult"
+                             type="tns:ArrayOfDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDetail">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Detail" nillable="true"
+                          type="tns:Detail"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Detail">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="VestingDate" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingShares" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingCost" type="s:double"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="GetDeterministicValues">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ExpectedGrowthRate" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Grants" type="tns:ArrayOfGrant"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Exercises" type="tns:ArrayOfExercise"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDeterministicValuesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetDeterministicValuesResult"
+                             type="tns:ArrayOfDeterministic"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDeterministic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Deterministic" nillable="true"
+                          type="tns:Deterministic"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Deterministic">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="VestingDate" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingShares" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingCost" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MarketPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingValue" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingNet" type="s:double"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="GetStochasticValues">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="SimulationRuns" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MonthsToUseForStatistics" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PercentilesToDisplay" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Grants" type="tns:ArrayOfGrant"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Exercises" type="tns:ArrayOfExercise"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStochasticValuesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStochasticValuesResult"
+                             type="tns:ArrayOfStochastic"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfStochastic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Stochastic" nillable="true"
+                          type="tns:Stochastic"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Stochastic">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Percentile" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="VestingDate" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingShares" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingCost" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MarketPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingValue" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingNet" type="s:double"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="GetExerciseResults">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ExerciseScenario" type="tns:ExerciseScenario"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TaxProfile" type="tns:TaxProfile"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Grants" type="tns:ArrayOfGrant"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Exercises" type="tns:ArrayOfExercise"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ExerciseScenario">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExercisePrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseQuantity" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseStrategy"
+                          type="tns:ExerciseStrategies"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseOrder" type="tns:ExerciseOrders"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="ExerciseStrategies">
+            <s:restriction base="s:string">
+               <s:enumeration value="Cashless"/>
+               <s:enumeration value="Regular"/>
+               <s:enumeration value="NQSOsOnly"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="ExerciseOrders">
+            <s:restriction base="s:string">
+               <s:enumeration value="FIFO"/>
+               <s:enumeration value="LIFO"/>
+               <s:enumeration value="HighestCostFirst"/>
+               <s:enumeration value="LowestCostFirst"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="TaxProfile">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="FederalRate" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StateRate" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetExerciseResultsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetExerciseResultsResult"
+                             type="tns:ExerciseResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ExerciseResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Scenario" type="tns:ExerciseScenario"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDetails" type="tns:ArrayOfDetails"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="NewExercises" type="tns:ArrayOfExercise"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="ExerciseSummary" type="tns:ExerciseSummary"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ExerciseSummary">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseQuantity" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExercisePrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseCosts" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseProceeds" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseFederalTax" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseStateTax" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="QuantityNotExercised" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.xignite.com/services/">
+         <s:element name="GetGrantDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Grants" type="tns:ArrayOfGrant"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Exercises" type="tns:ArrayOfExercise"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfGrant">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Grant" nillable="true"
+                          type="tns:Grant"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Grant">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="GrantType" type="tns:OptionTypes"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDate" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantExpirationDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="GrantPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="GrantShares" type="s:double"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Common">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Outcome" type="tns:OutcomeTypes"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Identity" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Delay" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="OutcomeTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Success"/>
+               <s:enumeration value="SystemError"/>
+               <s:enumeration value="RequestError"/>
+               <s:enumeration value="RegistrationError"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="Details">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="GrantType" type="tns:OptionTypes"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDate" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantExpirationDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="OriginalGrantPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="GrantPrice" type="s:double"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalGranted" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalExercised" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalVested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalUnvested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalSold" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesOriginalHeld" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesGranted" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesExercised" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesVested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesUnvested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesSold" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SharesHeld" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MarketPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountNeededToExercise" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountExercised" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountVested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountUnvested" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountHeld" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountSold" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountCommissions" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AmountTotal" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="RealizedCost" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="RealizedValue" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="RealizedGain" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestedCost" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestedValue" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestedGain" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="UnVestedCost" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="UnVestedValue" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="UnVestedGain" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="SplitRatio" type="s:double"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="OptionTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="ISO"/>
+               <s:enumeration value="NQSO"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfSchedule">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Schedule" nillable="true"
+                          type="tns:Schedule"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Schedule">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="PeriodType" type="tns:Type"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentageVesting" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PeriodsFromGrantDate" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="Type">
+            <s:restriction base="s:string">
+               <s:enumeration value="Year"/>
+               <s:enumeration value="Month"/>
+               <s:enumeration value="Day"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfExercise">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Exercise" nillable="true"
+                          type="tns:Exercise"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Exercise">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Shares" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Commission" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseType" type="tns:ExerciseTypes"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="ExerciseTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Cashless"/>
+               <s:enumeration value="Regular"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetGrantDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetGrantDetailsResult"
+                             type="tns:ArrayOfDetails"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDetails">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Details" nillable="true"
+                          type="tns:Details"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Header" type="tns:Header"/>
+         <s:complexType name="Header">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Tracer" type="s:string"/>
+            </s:sequence>
+            <s:anyAttribute/>
+         </s:complexType>
+         <s:element name="GetVestingDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Grants" type="tns:ArrayOfGrant"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Exercises" type="tns:ArrayOfExercise"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetVestingDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetVestingDetailsResult"
+                             type="tns:ArrayOfDetail"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDetail">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Detail" nillable="true"
+                          type="tns:Detail"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Detail">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="VestingDate" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingShares" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingCost" type="s:double"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="GetDeterministicValues">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ExpectedGrowthRate" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Grants" type="tns:ArrayOfGrant"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Exercises" type="tns:ArrayOfExercise"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDeterministicValuesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetDeterministicValuesResult"
+                             type="tns:ArrayOfDeterministic"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDeterministic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Deterministic" nillable="true"
+                          type="tns:Deterministic"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Deterministic">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="VestingDate" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingShares" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingCost" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MarketPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingValue" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingNet" type="s:double"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="GetStochasticValues">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="SimulationRuns" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MonthsToUseForStatistics" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PercentilesToDisplay" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Grants" type="tns:ArrayOfGrant"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Exercises" type="tns:ArrayOfExercise"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStochasticValuesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStochasticValuesResult"
+                             type="tns:ArrayOfStochastic"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfStochastic">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Stochastic" nillable="true"
+                          type="tns:Stochastic"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Stochastic">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Percentile" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="VestingDate" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantNumber" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDate" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingShares" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingCost" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="MarketPrice" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingValue" type="s:double"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="VestingNet" type="s:double"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="GetExerciseResults">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ExerciseScenario" type="tns:ExerciseScenario"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TaxProfile" type="tns:TaxProfile"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Grants" type="tns:ArrayOfGrant"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Exercises" type="tns:ArrayOfExercise"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ExerciseScenario">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExercisePrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseQuantity" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseStrategy"
+                          type="tns:ExerciseStrategies"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseOrder" type="tns:ExerciseOrders"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="ExerciseStrategies">
+            <s:restriction base="s:string">
+               <s:enumeration value="Cashless"/>
+               <s:enumeration value="Regular"/>
+               <s:enumeration value="NQSOsOnly"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="ExerciseOrders">
+            <s:restriction base="s:string">
+               <s:enumeration value="FIFO"/>
+               <s:enumeration value="LIFO"/>
+               <s:enumeration value="HighestCostFirst"/>
+               <s:enumeration value="LowestCostFirst"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="TaxProfile">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="FederalRate" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StateRate" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetExerciseResultsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetExerciseResultsResult"
+                             type="tns:ExerciseResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ExerciseResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Scenario" type="tns:ExerciseScenario"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="GrantDetails" type="tns:ArrayOfDetails"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="NewExercises" type="tns:ArrayOfExercise"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="ExerciseSummary" type="tns:ExerciseSummary"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ExerciseSummary">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseQuantity" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExercisePrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseCosts" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseProceeds" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseFederalTax" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExerciseStateTax" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="QuantityNotExercised" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetGrantDetailsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetGrantDetails"/>
+  </wsdl:message>
+  <wsdl:message name="GetGrantDetailsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetGrantDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetGrantDetailsHeader">
+      <wsdl:part name="Header" element="tns:Header"/>
+  </wsdl:message>
+  <wsdl:message name="GetVestingDetailsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetVestingDetails"/>
+  </wsdl:message>
+  <wsdl:message name="GetVestingDetailsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetVestingDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVestingDetailsHeader">
+      <wsdl:part name="Header" element="tns:Header"/>
+  </wsdl:message>
+  <wsdl:message name="GetDeterministicValuesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetDeterministicValues"/>
+  </wsdl:message>
+  <wsdl:message name="GetDeterministicValuesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetDeterministicValuesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDeterministicValuesHeader">
+      <wsdl:part name="Header" element="tns:Header"/>
+  </wsdl:message>
+  <wsdl:message name="GetStochasticValuesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStochasticValues"/>
+  </wsdl:message>
+  <wsdl:message name="GetStochasticValuesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStochasticValuesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStochasticValuesHeader">
+      <wsdl:part name="Header" element="tns:Header"/>
+  </wsdl:message>
+  <wsdl:message name="GetExerciseResultsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetExerciseResults"/>
+  </wsdl:message>
+  <wsdl:message name="GetExerciseResultsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetExerciseResultsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetExerciseResultsHeader">
+      <wsdl:part name="Header" element="tns:Header"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="XigniteStockOptionsSoap" type="tns:XigniteStockOptionsSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetGrantDetails">
+         <soap:operation soapAction="http://www.xignite.com/services/GetGrantDetails" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetGrantDetailsHeader" part="Header" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetVestingDetails">
+         <soap:operation soapAction="http://www.xignite.com/services/GetVestingDetails" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetVestingDetailsHeader" part="Header" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetDeterministicValues">
+         <soap:operation soapAction="http://www.xignite.com/services/GetDeterministicValues"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetDeterministicValuesHeader" part="Header" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStochasticValues">
+         <soap:operation soapAction="http://www.xignite.com/services/GetStochasticValues"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetStochasticValuesHeader" part="Header" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetExerciseResults">
+         <soap:operation soapAction="http://www.xignite.com/services/GetExerciseResults"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetExerciseResultsHeader" part="Header" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="XigniteStockOptions">
+      <wsdl:documentation>Complete stock option management application.</wsdl:documentation>
+      <wsdl:port name="XigniteStockOptionsSoap" binding="tns:XigniteStockOptionsSoap">
+         <soap:address location="http://ws.soatrader.com/xignite.com/0.1/XigniteStockOptions"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

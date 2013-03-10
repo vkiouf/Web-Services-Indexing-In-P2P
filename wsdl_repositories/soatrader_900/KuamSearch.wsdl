@@ -1,0 +1,200 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://kuam.com/encodedTypes"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://kuam.com"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://kuam.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://kuam.com">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="SearchKuamNewsArchivesAsDotNetDataSet">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="searchText" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchKuamNewsArchivesAsDotNetDataSetResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchKuamNewsArchivesAsDotNetDataSetResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DataSet" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:element ref="s:schema"/>
+                  <s:any/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="KUAMNews" nillable="true" type="tns:Rundown"/>
+         <s:complexType name="Rundown">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="KUAMSearch"
+                          type="tns:ArrayOfKuamNewsSearchResults"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfKuamNewsSearchResults">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Story" nillable="true"
+                          type="tns:KuamNewsSearchResults"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="KuamNewsSearchResults">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="URL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Body" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema targetNamespace="http://kuam.com/encodedTypes">
+         <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <s:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+         <s:complexType name="Rundown">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Results"
+                          type="s1:ArrayOfKuamNewsSearchResults"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfKuamNewsSearchResults">
+            <s:complexContent mixed="false">
+               <s:restriction base="soapenc:Array">
+                  <s:attribute wsdl:arrayType="s1:KuamNewsSearchResults[]" ref="soapenc:arrayType"/>
+               </s:restriction>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="KuamNewsSearchResults">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="URL" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Body" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchKuamNewsArchivesAsDotNetDataSetSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchKuamNewsArchivesAsDotNetDataSet"/>
+  </wsdl:message>
+  <wsdl:message name="SearchKuamNewsArchivesAsDotNetDataSetSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchKuamNewsArchivesAsDotNetDataSetResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchKuamNewsArchivesSoapIn">
+      <wsdl:part name="searchText" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchKuamNewsArchivesSoapOut">
+      <wsdl:part name="SearchKuamNewsArchivesResult" type="s1:Rundown"/>
+  </wsdl:message>
+  <wsdl:message name="SearchKuamNewsArchivesAsDotNetDataSetHttpGetIn">
+      <wsdl:part name="searchText" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchKuamNewsArchivesAsDotNetDataSetHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="SearchKuamNewsArchivesHttpGetIn">
+      <wsdl:part name="searchText" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchKuamNewsArchivesHttpGetOut">
+      <wsdl:part name="Body" element="tns:KUAMNews"/>
+  </wsdl:message>
+  <wsdl:message name="SearchKuamNewsArchivesAsDotNetDataSetHttpPostIn">
+      <wsdl:part name="searchText" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchKuamNewsArchivesAsDotNetDataSetHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="SearchKuamNewsArchivesHttpPostIn">
+      <wsdl:part name="searchText" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchKuamNewsArchivesHttpPostOut">
+      <wsdl:part name="Body" element="tns:KUAMNews"/>
+  </wsdl:message>
+  <wsdl:portType name="KuamSearchSoap">
+      <wsdl:operation name="SearchKuamNewsArchivesAsDotNetDataSet">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns the top matching news articles in the KUAM News Archives as a strongly-typed, schema-defined, tabluar DataSet.  Use this WebMethod if you're developing .NET client applications.</documentation>
+         <wsdl:input message="tns:SearchKuamNewsArchivesAsDotNetDataSetSoapIn"/>
+         <wsdl:output message="tns:SearchKuamNewsArchivesAsDotNetDataSetSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SearchKuamNewsArchives">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns the top matching news articles in the KUAM.COM News Archives as untyped XML data.  Use this WebMethod if you're developing Java, PHP or client-side XMLDOM applications.</documentation>
+         <wsdl:input message="tns:SearchKuamNewsArchivesSoapIn"/>
+         <wsdl:output message="tns:SearchKuamNewsArchivesSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="KuamSearchSoap" type="tns:KuamSearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="SearchKuamNewsArchivesAsDotNetDataSet">
+         <soap:operation soapAction="http://kuam.com/SearchKuamNewsArchivesAsDotNetDataSet"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchKuamNewsArchives">
+         <soap:operation soapAction="http://kuam.com/SearchKuamNewsArchives" style="rpc"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://kuam.com"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://kuam.com"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="KuamSearch">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">KUAM.COM Web Services Library for Guam News Headlines</documentation>
+      <wsdl:port name="KuamSearchSoap" binding="tns:KuamSearchSoap">
+         <soap:address location="http://ws.soatrader.com/kuam.com/0.1/KuamSearch"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

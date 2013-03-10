@@ -1,0 +1,1240 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://dg.travelnow.com/services/GuidesService"
+                  xmlns:impl="http://dg.travelnow.com/services/GuidesService"
+                  xmlns:intf="http://dg.travelnow.com/services/GuidesService"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns1="http://xml.travelnow.com/services/GuidesService/types/"
+                  xmlns:common="http://common.xml.travelnow.com/types"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://dg.travelnow.com/services/GuidesService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+     <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+
+          <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://common.xml.travelnow.com/types">
+
+               <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+               <complexType name="AuthInfo">
+
+                    <sequence>
+
+                         <element name="affiliateId" nillable="false" type="xsd:long"/>
+
+                    </sequence>
+
+               </complexType>
+
+          </schema>
+
+          <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://xml.travelnow.com/services/GuidesService/types/">
+
+               <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+               <complexType name="Form">
+
+                    <sequence>
+
+                         <element name="formId" nillable="true" type="xsd:int"/>
+
+                         <element name="formType" type="xsd:int"/>
+
+                         <element name="locationId" nillable="true" type="xsd:int"/>
+
+                         <element name="name" nillable="true" type="xsd:string"/>
+
+                         <element name="parentFormId" nillable="true" type="xsd:int"/>
+
+                         <element name="text" nillable="true" type="xsd:string"/>
+
+                    </sequence>
+
+               </complexType>
+
+               <complexType name="FormPart">
+
+                    <sequence>
+
+                         <element name="formId" nillable="true" type="xsd:int"/>
+
+                         <element name="formType" type="xsd:int"/>
+
+                         <element name="name" nillable="true" type="xsd:string"/>
+
+                         <element name="parentFormId" nillable="true" type="xsd:int"/>
+
+                    </sequence>
+
+               </complexType>
+
+               <complexType name="LocationPart">
+
+                    <sequence>
+
+                         <element name="description" nillable="true" type="xsd:string"/>
+
+                         <element name="locationId" nillable="true" type="xsd:int"/>
+
+                    </sequence>
+
+               </complexType>
+
+               <complexType name="Location">
+
+                    <sequence>
+
+                         <element name="isbn" type="xsd:string"/>
+
+                         <element name="description" nillable="true" type="xsd:string"/>
+
+                         <element name="locationId" nillable="true" type="xsd:int"/>
+
+                         <element name="locationType" type="xsd:int"/>
+
+                         <element name="parentCountry" nillable="true" type="xsd:string"/>
+
+                         <element name="parentId" nillable="true" type="xsd:int"/>
+
+                         <element name="parentState" nillable="true" type="xsd:string"/>
+
+                         <element name="primary" type="xsd:boolean"/>
+
+                         <element name="regionId" nillable="true" type="xsd:int"/>
+
+                    </sequence>
+
+               </complexType>
+
+               <complexType name="BestOf">
+
+                    <sequence>
+
+                         <element name="linkId" nillable="true" type="xsd:int"/>
+
+                         <element name="name" nillable="true" type="xsd:string"/>
+
+                         <element name="sequence" nillable="true" type="xsd:int"/>
+
+                         <element name="text" nillable="true" type="xsd:string"/>
+
+                    </sequence>
+
+               </complexType>
+
+               <complexType name="Region">
+
+                    <sequence>
+
+                         <element name="name" nillable="true" type="xsd:string"/>
+
+                         <element name="regionId" nillable="true" type="xsd:int"/>
+
+                    </sequence>
+
+               </complexType>
+
+               <complexType name="ArrayOfLocationPart">
+
+                    <complexContent>
+
+                         <restriction base="soapenc:Array">
+
+                              <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:LocationPart[]"/>
+
+                         </restriction>
+
+                    </complexContent>
+
+               </complexType>
+
+               <complexType name="ArrayOfRegion">
+
+                    <complexContent>
+
+                         <restriction base="soapenc:Array">
+
+                              <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:Region[]"/>
+
+                         </restriction>
+
+                    </complexContent>
+
+               </complexType>
+
+               <complexType name="ArrayOfForm">
+
+                    <complexContent>
+
+                         <restriction base="soapenc:Array">
+
+                              <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:Form[]"/>
+
+                         </restriction>
+
+                    </complexContent>
+
+               </complexType>
+
+               <complexType name="ArrayOfFormPart">
+
+                    <complexContent>
+
+                         <restriction base="soapenc:Array">
+
+                              <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:FormPart[]"/>
+
+                         </restriction>
+
+                    </complexContent>
+
+               </complexType>
+
+               <complexType name="ArrayOfBestOf">
+
+                    <complexContent>
+
+                         <restriction base="soapenc:Array">
+
+                              <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:BestOf[]"/>
+
+                         </restriction>
+
+                    </complexContent>
+
+               </complexType>
+
+               <complexType name="ArrayOfString">
+
+                    <complexContent>
+
+                         <restriction base="soapenc:Array">
+
+                              <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+
+                         </restriction>
+
+                    </complexContent>
+
+               </complexType>
+
+          </schema>
+
+     </wsdl:types>
+
+     <wsdl:message name="getChildLocationPartsByTypeRequest">
+
+          <wsdl:part name="parentId" type="xsd:int"/>
+
+          <wsdl:part name="locationType" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="searchForLocationRequest">
+
+          <wsdl:part name="city" type="xsd:string"/>
+
+          <wsdl:part name="parentState" type="xsd:string"/>
+
+          <wsdl:part name="parentCountry" type="xsd:string"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getFormRequest">
+
+          <wsdl:part name="formId" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getLocationPartsByCountryRequest">
+
+          <wsdl:part name="parentCountry" type="xsd:string"/>
+
+          <wsdl:part name="locationType" type="xsd:int"/>
+
+          <wsdl:part name="primaryOnly" type="xsd:boolean"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getChildLocationPartsByTypeResponse">
+
+          <wsdl:part name="getChildLocationPartsByTypeReturn" type="tns1:ArrayOfLocationPart"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getFormPartsByLocationRequest">
+
+          <wsdl:part name="locationId" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getLocationResponse">
+
+          <wsdl:part name="getLocationReturn" type="tns1:Location"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getLocationPartRequest">
+
+          <wsdl:part name="locationId" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getLocationPartsByRegionResponse">
+
+          <wsdl:part name="getLocationPartsByRegionReturn" type="tns1:ArrayOfLocationPart"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getLocationPartsByRegionRequest">
+
+          <wsdl:part name="regionId" type="xsd:int"/>
+
+          <wsdl:part name="locationType" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getFormPartsByLocationResponse">
+
+          <wsdl:part name="getFormPartsByLocationReturn" type="tns1:ArrayOfFormPart"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getBestOfRequest">
+
+          <wsdl:part name="formId" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getLocationPartsByStateResponse">
+
+          <wsdl:part name="getLocationPartsByStateReturn" type="tns1:ArrayOfLocationPart"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getChildFormPartsResponse">
+
+          <wsdl:part name="getChildFormPartsReturn" type="tns1:ArrayOfFormPart"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getChildLocationPartsRequest">
+
+          <wsdl:part name="parentId" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="searchForLocationResponse">
+
+          <wsdl:part name="searchForLocationReturn" type="tns1:ArrayOfLocationPart"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getIntroductionFormResponse">
+
+          <wsdl:part name="getIntroductionFormReturn" type="tns1:Form"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getFormResponse">
+
+          <wsdl:part name="getFormReturn" type="tns1:Form"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getFormPartResponse">
+
+          <wsdl:part name="getFormPartReturn" type="tns1:FormPart"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getLocationPartsByCountryResponse">
+
+          <wsdl:part name="getLocationPartsByCountryReturn" type="tns1:ArrayOfLocationPart"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getAllRegionsRequest">
+
+     </wsdl:message>
+
+     <wsdl:message name="getIntroductionFormRequest">
+
+          <wsdl:part name="locationId" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getFormPartRequest">
+
+          <wsdl:part name="formId" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getChildFormPartsRequest">
+
+          <wsdl:part name="formId" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getRegionResponse">
+
+          <wsdl:part name="getRegionReturn" type="tns1:Region"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getLocationPartsByStateRequest">
+
+          <wsdl:part name="parentState" type="xsd:string"/>
+
+          <wsdl:part name="locationType" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getRegionRequest">
+
+          <wsdl:part name="regionId" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getChildLocationPartsResponse">
+
+          <wsdl:part name="getChildLocationPartsReturn" type="tns1:ArrayOfLocationPart"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getAllRegionsResponse">
+
+          <wsdl:part name="getAllRegionsReturn" type="tns1:ArrayOfRegion"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getBestOfResponse">
+
+          <wsdl:part name="getBestOfReturn" type="tns1:ArrayOfBestOf"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getLocationRequest">
+
+          <wsdl:part name="locationId" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getLocationPartResponse">
+
+          <wsdl:part name="getLocationPartReturn" type="tns1:LocationPart"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="soapHeader">
+
+          <wsdl:part name="authInfo" type="common:AuthInfo"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getRelatedBooksRequest">
+
+          <wsdl:part name="locationId" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getRelatedBooksResponse">
+
+          <wsdl:part name="getRelatedBooksReturn" type="tns1:ArrayOfString"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getFormsByLocationRequest">
+
+          <wsdl:part name="locationId" type="xsd:int"/>
+
+          <wsdl:part name="formType" type="xsd:int"/>
+
+     </wsdl:message>
+
+     <wsdl:message name="getFormsByLocationResponse">
+
+        <wsdl:part name="getFormsByLocationReturn" type="tns1:ArrayOfForm"/>
+
+     </wsdl:message>
+
+
+    <!-- ports -->
+
+     <wsdl:portType name="GuidesService">
+
+          <wsdl:operation name="getLocation" parameterOrder="locationId">
+
+               <wsdl:input name="getLocationRequest" message="impl:getLocationRequest"/>
+
+               <wsdl:output name="getLocationResponse" message="impl:getLocationResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getIntroductionForm" parameterOrder="locationId">
+
+               <wsdl:input name="getIntroductionFormRequest" message="impl:getIntroductionFormRequest"/>
+
+               <wsdl:output name="getIntroductionFormResponse" message="impl:getIntroductionFormResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="searchForLocation" parameterOrder="city parentState parentCountry">
+
+               <wsdl:input name="searchForLocationRequest" message="impl:searchForLocationRequest"/>
+
+               <wsdl:output name="searchForLocationResponse" message="impl:searchForLocationResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getRegion" parameterOrder="regionId">
+
+               <wsdl:input name="getRegionRequest" message="impl:getRegionRequest"/>
+
+               <wsdl:output name="getRegionResponse" message="impl:getRegionResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getAllRegions">
+
+               <wsdl:input name="getAllRegionsRequest" message="impl:getAllRegionsRequest"/>
+
+               <wsdl:output name="getAllRegionsResponse" message="impl:getAllRegionsResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getLocationPart" parameterOrder="locationId">
+
+               <wsdl:input name="getLocationPartRequest" message="impl:getLocationPartRequest"/>
+
+               <wsdl:output name="getLocationPartResponse" message="impl:getLocationPartResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getLocationPartsByRegion" parameterOrder="regionId locationType">
+
+               <wsdl:input name="getLocationPartsByRegionRequest"
+                     message="impl:getLocationPartsByRegionRequest"/>
+
+               <wsdl:output name="getLocationPartsByRegionResponse"
+                      message="impl:getLocationPartsByRegionResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getLocationPartsByCountry"
+                      parameterOrder="parentCountry locationType primaryOnly">
+
+               <wsdl:input name="getLocationPartsByCountryRequest"
+                     message="impl:getLocationPartsByCountryRequest"/>
+
+               <wsdl:output name="getLocationPartsByCountryResponse"
+                      message="impl:getLocationPartsByCountryResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getLocationPartsByState" parameterOrder="parentState locationType">
+
+               <wsdl:input name="getLocationPartsByStateRequest"
+                     message="impl:getLocationPartsByStateRequest"/>
+
+               <wsdl:output name="getLocationPartsByStateResponse"
+                      message="impl:getLocationPartsByStateResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getChildLocationParts" parameterOrder="parentId">
+
+               <wsdl:input name="getChildLocationPartsRequest" message="impl:getChildLocationPartsRequest"/>
+
+               <wsdl:output name="getChildLocationPartsResponse"
+                      message="impl:getChildLocationPartsResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getChildLocationPartsByType" parameterOrder="parentId locationType">
+
+               <wsdl:input name="getChildLocationPartsByTypeRequest"
+                     message="impl:getChildLocationPartsByTypeRequest"/>
+
+               <wsdl:output name="getChildLocationPartsByTypeResponse"
+                      message="impl:getChildLocationPartsByTypeResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getForm" parameterOrder="formId">
+
+               <wsdl:input name="getFormRequest" message="impl:getFormRequest"/>
+
+               <wsdl:output name="getFormResponse" message="impl:getFormResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getFormPart" parameterOrder="formId">
+
+               <wsdl:input name="getFormPartRequest" message="impl:getFormPartRequest"/>
+
+               <wsdl:output name="getFormPartResponse" message="impl:getFormPartResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getFormPartsByLocation" parameterOrder="locationId">
+
+               <wsdl:input name="getFormPartsByLocationRequest"
+                     message="impl:getFormPartsByLocationRequest"/>
+
+               <wsdl:output name="getFormPartsByLocationResponse"
+                      message="impl:getFormPartsByLocationResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getChildFormParts" parameterOrder="formId">
+
+               <wsdl:input name="getChildFormPartsRequest" message="impl:getChildFormPartsRequest"/>
+
+               <wsdl:output name="getChildFormPartsResponse" message="impl:getChildFormPartsResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getBestOf" parameterOrder="formId">
+
+               <wsdl:input name="getBestOfRequest" message="impl:getBestOfRequest"/>
+
+               <wsdl:output name="getBestOfResponse" message="impl:getBestOfResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getFormsByLocation" parameterOrder="locationId formType">
+
+               <wsdl:input name="getFormsByLocationRequest" message="impl:getFormsByLocationRequest"/>
+
+               <wsdl:output name="getFormsByLocationResponse" message="impl:getFormsByLocationResponse"/>
+
+          </wsdl:operation>
+
+          <wsdl:operation name="getRelatedBooks" parameterOrder="locationId">
+
+               <wsdl:input name="getRelatedBooksRequest" message="impl:getRelatedBooksRequest"/>
+
+               <wsdl:output name="getRelatedBooksResponse" message="impl:getRelatedBooksResponse"/>
+
+          </wsdl:operation>
+
+     </wsdl:portType>
+
+
+     <wsdl:binding name="GuidesServiceSoapBinding" type="impl:GuidesService">
+
+          <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+
+          <wsdl:operation name="getLocation">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getLocationRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getLocationResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getIntroductionForm">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getIntroductionFormRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getIntroductionFormResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="searchForLocation">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="searchForLocationRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="searchForLocationResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getRegion">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getRegionRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getRegionResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getAllRegions">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getAllRegionsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getAllRegionsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getLocationPart">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getLocationPartRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getLocationPartResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getLocationPartsByRegion">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getLocationPartsByRegionRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getLocationPartsByRegionResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getLocationPartsByCountry">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getLocationPartsByCountryRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getLocationPartsByCountryResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getLocationPartsByState">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getLocationPartsByStateRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getLocationPartsByStateResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getChildLocationParts">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getChildLocationPartsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getChildLocationPartsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getChildLocationPartsByType">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getChildLocationPartsByTypeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getChildLocationPartsByTypeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getForm">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getFormRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getFormResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getFormPart">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getFormPartRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getFormPartResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getFormPartsByLocation">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getFormPartsByLocationRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getFormPartsByLocationResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getChildFormParts">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getChildFormPartsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getChildFormPartsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getBestOf">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getBestOfRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getBestOfResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getFormsByLocation">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getFormsByLocationRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getFormsByLocationResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+          <wsdl:operation name="getRelatedBooks">
+
+               <wsdlsoap:operation soapAction=""/>
+
+               <wsdl:input name="getRelatedBooksRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+                    <wsdlsoap:header message="impl:soapHeader" part="authInfo" use="encoded"
+                             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                             namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:input>
+
+               <wsdl:output name="getRelatedBooksResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+                    <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://dg.travelnow.com/services/GuidesService"/>
+
+               </wsdl:output>
+
+          </wsdl:operation>
+
+
+     </wsdl:binding>
+
+
+     <wsdl:service name="GuidesServiceService">
+
+          <wsdl:port name="GuidesService" binding="impl:GuidesServiceSoapBinding">
+
+               <wsdlsoap:address location="http://ws.soatrader.com/travelnow.com/0.1/GuidesServiceService"/>
+
+          </wsdl:port>
+
+     </wsdl:service>
+
+</wsdl:definitions>

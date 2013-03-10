@@ -1,0 +1,486 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://k4t.int.viatecla.pt/k4t/AirReservations"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://k4t.int.viatecla.pt/k4t/AirReservations">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://k4t.int.viatecla.pt/k4t/AirReservations">
+         <s:element name="Book">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Xml" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartAirport" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndAirport" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AirVendor" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FlightNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Class" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReturnDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReturnStartTime" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReturnEndTime" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReturnAirVendor" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReturnFlightNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReturnClass" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BookResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="K4TResponse" type="tns:K4TResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="K4TResponse">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AirSell" type="tns:K4TResponseAirSell"/>
+            </s:sequence>
+            <s:attribute name="Author" type="s:string"/>
+            <s:attribute name="Date" type="s:string"/>
+            <s:attribute name="Time" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSell">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Request" type="tns:K4TResponseAirSellRequest"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Result" type="tns:K4TResponseAirSellResult"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Error" type="tns:K4TResponseAirSellError"/>
+            </s:sequence>
+            <s:attribute name="Version" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Client" type="tns:K4TClientInfo"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sectors"
+                          type="tns:K4TResponseAirSellRequestSectors"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PassengersInfo"
+                          type="tns:K4TResponseAirSellRequestPassengersInfo"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PhoneInfo"
+                          type="tns:K4TResponseAirSellRequestPhoneInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TClientInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="EMail" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NewPassword" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Treatment" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Gender" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalCodeExt" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Place" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CountryId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="WorkPhone" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HomePhone" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MobilePhone" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Fax" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="Id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellRequestSectors">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Sector"
+                          type="tns:K4TResponseAirSellRequestSectorsSector"/>
+            </s:sequence>
+            <s:attribute name="CRS" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellRequestSectorsSector">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AirVendor" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FlightNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Class" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumPsgrs" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartAirport"
+                          type="tns:K4TResponseAirSellRequestSectorsSectorStartAirport"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndAirport"
+                          type="tns:K4TResponseAirSellRequestSectorsSectorEndAirport"/>
+            </s:sequence>
+            <s:attribute name="RequestSector" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellRequestSectorsSectorStartAirport">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Query" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellRequestSectorsSectorEndAirport">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Query" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellRequestPassengersInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Passenger"
+                          type="tns:K4TResponseAirSellRequestPassengersInfoPassenger"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellRequestPassengersInfoPassenger">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sex" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellRequestPhoneInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CityCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="File" type="tns:K4TResponseAirSellResultFile"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellResultFile">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Reservation"
+                          type="tns:K4TResponseAirSellResultFileReservation"/>
+            </s:sequence>
+            <s:attribute name="Id" type="s:string"/>
+            <s:attribute name="Code" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellResultFileReservation">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Sectors"
+                          type="tns:ArrayOfK4TResponseAirSellResultFileReservationSectorsSector"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Passengers"
+                          type="tns:ArrayOfK4TResponseAirSellResultFileReservationPassengersPassenger"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Quotes"
+                          type="tns:K4TResponseAirSellResultFileReservationQuotes"/>
+            </s:sequence>
+            <s:attribute name="Type" type="s:string"/>
+            <s:attribute name="Id" type="s:string"/>
+            <s:attribute name="State" type="s:string"/>
+            <s:attribute name="ProviderId" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfK4TResponseAirSellResultFileReservationSectorsSector">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Sector"
+                          type="tns:K4TResponseAirSellResultFileReservationSectorsSector"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellResultFileReservationSectorsSector">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FlightNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Class" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CRSMessage" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AirVendor"
+                          type="tns:K4TResponseAirSellResultFileReservationSectorsSectorAirVendor"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartAirport"
+                          type="tns:K4TResponseAirSellResultFileReservationSectorsSectorStartAirport"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndAirport"
+                          type="tns:K4TResponseAirSellResultFileReservationSectorsSectorEndAirport"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellResultFileReservationSectorsSectorAirVendor">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellResultFileReservationSectorsSectorStartAirport">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellResultFileReservationSectorsSectorEndAirport">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfK4TResponseAirSellResultFileReservationPassengersPassenger">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Passenger"
+                          type="tns:K4TResponseAirSellResultFileReservationPassengersPassenger"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellResultFileReservationPassengersPassenger">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sex" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellResultFileReservationQuotes">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="QuoteTotal"
+                          type="tns:K4TResponseAirSellResultFileReservationQuotesQuoteTotal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellResultFileReservationQuotesQuoteTotal">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="BaseFare" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Tax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SecurityTax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Total" type="s:string"/>
+            </s:sequence>
+            <s:attribute name="Currency" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TResponseAirSellError">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorExtraData" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="BookSoap">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="K4TRequest" type="tns:K4TRequest"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="K4TRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AirSell" type="tns:K4TRequestAirSell"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Application" type="s:string"/>
+            <s:attribute name="Username" type="s:string"/>
+            <s:attribute name="Password" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TRequestAirSell">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Request" type="tns:K4TRequestAirSellRequest"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="Version" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TRequestAirSellRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Client" type="tns:K4TClientInfo"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sectors"
+                          type="tns:K4TRequestAirSellRequestSectors"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PassengersInfo"
+                          type="tns:K4TRequestAirSellRequestPassengersInfo"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PhoneInfo"
+                          type="tns:K4TRequestAirSellRequestPhoneInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TRequestAirSellRequestSectors">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Sector"
+                          type="tns:K4TRequestAirSellRequestSectorsSector"/>
+            </s:sequence>
+            <s:attribute name="CRS" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TRequestAirSellRequestSectorsSector">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AirVendor" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FlightNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Class" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumPsgrs" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartAirport"
+                          type="tns:K4TRequestAirSellRequestSectorsSectorStartAirport"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndAirport"
+                          type="tns:K4TRequestAirSellRequestSectorsSectorEndAirport"/>
+            </s:sequence>
+            <s:attribute name="RequestSector" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="K4TRequestAirSellRequestSectorsSectorStartAirport">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Query" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TRequestAirSellRequestSectorsSectorEndAirport">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Query" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TRequestAirSellRequestPassengersInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Passenger"
+                          type="tns:K4TRequestAirSellRequestPassengersInfoPassenger"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TRequestAirSellRequestPassengersInfoPassenger">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sex" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="K4TRequestAirSellRequestPhoneInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CityCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="BookSoapResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="K4TResponse" type="tns:K4TResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="K4TResponse" type="tns:K4TResponse"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="BookSoapIn">
+      <wsdl:part name="parameters" element="tns:Book"/>
+  </wsdl:message>
+  <wsdl:message name="BookSoapOut">
+      <wsdl:part name="parameters" element="tns:BookResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BookSoapSoapIn">
+      <wsdl:part name="parameters" element="tns:BookSoap"/>
+  </wsdl:message>
+  <wsdl:message name="BookSoapSoapOut">
+      <wsdl:part name="parameters" element="tns:BookSoapResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BookHttpGetIn">
+      <wsdl:part name="Xml" type="s:string"/>
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="ClientId" type="s:string"/>
+      <wsdl:part name="StartAirport" type="s:string"/>
+      <wsdl:part name="EndAirport" type="s:string"/>
+      <wsdl:part name="StartDate" type="s:string"/>
+      <wsdl:part name="StartTime" type="s:string"/>
+      <wsdl:part name="EndTime" type="s:string"/>
+      <wsdl:part name="AirVendor" type="s:string"/>
+      <wsdl:part name="FlightNumber" type="s:string"/>
+      <wsdl:part name="Class" type="s:string"/>
+      <wsdl:part name="ReturnDate" type="s:string"/>
+      <wsdl:part name="ReturnStartTime" type="s:string"/>
+      <wsdl:part name="ReturnEndTime" type="s:string"/>
+      <wsdl:part name="ReturnAirVendor" type="s:string"/>
+      <wsdl:part name="ReturnFlightNumber" type="s:string"/>
+      <wsdl:part name="ReturnClass" type="s:string"/>
+      <wsdl:part name="FirstName" type="s:string"/>
+      <wsdl:part name="LastName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="BookHttpGetOut">
+      <wsdl:part name="Body" element="tns:K4TResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BookHttpPostIn">
+      <wsdl:part name="Xml" type="s:string"/>
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="ClientId" type="s:string"/>
+      <wsdl:part name="StartAirport" type="s:string"/>
+      <wsdl:part name="EndAirport" type="s:string"/>
+      <wsdl:part name="StartDate" type="s:string"/>
+      <wsdl:part name="StartTime" type="s:string"/>
+      <wsdl:part name="EndTime" type="s:string"/>
+      <wsdl:part name="AirVendor" type="s:string"/>
+      <wsdl:part name="FlightNumber" type="s:string"/>
+      <wsdl:part name="Class" type="s:string"/>
+      <wsdl:part name="ReturnDate" type="s:string"/>
+      <wsdl:part name="ReturnStartTime" type="s:string"/>
+      <wsdl:part name="ReturnEndTime" type="s:string"/>
+      <wsdl:part name="ReturnAirVendor" type="s:string"/>
+      <wsdl:part name="ReturnFlightNumber" type="s:string"/>
+      <wsdl:part name="ReturnClass" type="s:string"/>
+      <wsdl:part name="FirstName" type="s:string"/>
+      <wsdl:part name="LastName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="BookHttpPostOut">
+      <wsdl:part name="Body" element="tns:K4TResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="K4TAirReservationsWSSoap">
+      <wsdl:operation name="Book">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method allows a simple booking by passing indivual parameters or advanced booking passing a XML string on the first parameter.</documentation>
+         <wsdl:input message="tns:BookSoapIn"/>
+         <wsdl:output message="tns:BookSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="BookSoap">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This method allows advanced booking.</documentation>
+         <wsdl:input message="tns:BookSoapSoapIn"/>
+         <wsdl:output message="tns:BookSoapSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="K4TAirReservationsWSSoap" type="tns:K4TAirReservationsWSSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="Book">
+         <soap:operation soapAction="http://k4t.int.viatecla.pt/k4t/AirReservations/Book"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="BookSoap">
+         <soap:operation soapAction="http://k4t.int.viatecla.pt/k4t/AirReservations/BookSoap"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="K4TAirReservationsWS">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Air Reservations WebService. This WebService allows you to book a flight. Demo Site - http://www.keyfortravel.com</documentation>
+      <wsdl:port name="K4TAirReservationsWSSoap" binding="tns:K4TAirReservationsWSSoap">
+         <soap:address location="http://ws.soatrader.com/keyfortravel.com/0.2/K4TAirReservationsWS"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

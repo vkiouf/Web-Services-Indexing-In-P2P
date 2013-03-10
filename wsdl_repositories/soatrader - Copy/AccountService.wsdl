@@ -1,0 +1,2146 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://superlister.aucland.com/QxlRicardoServices/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://superlister.aucland.com/QxlRicardoServices/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://superlister.aucland.com/QxlRicardoServices/">
+         <s:element name="CheckAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="userNick" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="userPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="userIP" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="userCountryNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="identifier" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CheckAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckAccountResult" type="tns:AccountInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AccountInfo">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:MemberInfo">
+                  <s:sequence>
+                     <s:element minOccurs="1" maxOccurs="1" name="AccountStatus" type="tns:AccountStatus"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="EMail" type="s:string"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="MemberInfo">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Member">
+                  <s:sequence>
+                     <s:element minOccurs="1" maxOccurs="1" name="CountryID" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="PartnerID" type="s:int"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="County" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Zip" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="RegisterDate" type="s:dateTime"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Member">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Alias" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Rate" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PositiveRate" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Moneybookers" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Ambassador" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SoldItemsQuantity" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BoughtItemsQuantity" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="AccountStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="Active"/>
+               <s:enumeration value="Closed"/>
+               <s:enumeration value="NotValidAliasPwd"/>
+               <s:enumeration value="NotSetSAC"/>
+               <s:enumeration value="NotSetAddressPhone"/>
+               <s:enumeration value="Debited"/>
+               <s:enumeration value="Banned"/>
+               <s:enumeration value="NotValidEmail"/>
+               <s:enumeration value="BlacklistedIP"/>
+               <s:enumeration value="NotValidIdentifier"/>
+               <s:enumeration value="ActiveWithMoneyBookers"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="AddAuctions">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AuctionsArray" type="tns:ArrayOfAuction"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAuction">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Auction" nillable="true"
+                          type="tns:Auction"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Auction">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BaseArticle">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" default="None" name="TransactionFlags"
+                                type="tns:ETransactionFlags"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="BidID" type="s:int"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="1900-01-01T00:00:00" name="BidDate"
+                                type="s:dateTime"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="BidPrice" type="s:decimal"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="BidQty" type="s:short"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="BuyerID" type="s:int"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BuyerAlias" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BuyerEmail" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BuyerFirstName" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BuyerLastName" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BuyerTel1" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BuyerTel2" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BuyerAdr1" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BuyerAdr2" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BuyerZIP" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BuyerCity" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="BuyerCountry" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:short"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="CurrentQuantity" type="s:short"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="-1" name="ThemeID" type="s:int"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="-1" name="WarrantyID" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="DeliveryID" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="PaymentID" type="s:int"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="PaymentMethodsFlags" type="s:int"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="None" name="Flags" type="tns:EFlags"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="StartPrice" type="s:decimal"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="ReservePrice" type="s:decimal"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="BuyNowPrice" type="s:decimal"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="PriceIncrement" type="s:decimal"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="DeliveryCost" type="s:decimal"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AvailabilityID" type="s:int"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="ReactTimes" type="s:unsignedByte"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="false" name="Reminder" type="s:boolean"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="ReminderMins" type="s:short"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="false" name="CantChangeDuration"
+                                type="s:boolean"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="Observers" type="s:int"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="Bids" type="s:int"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="PlannedListID" type="s:int"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="0" name="PlannedID" type="s:int"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="BaseArticle" abstract="true">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" default="Custom" name="FolderType"
+                          type="tns:EFolderType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Channel" type="tns:EChannel"/>
+               <s:element minOccurs="0" maxOccurs="1" default="New" name="SyncStatus"
+                          type="tns:ESyncStatus"/>
+               <s:element minOccurs="0" maxOccurs="1" default="0" name="LiveAuctionID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" default="0" name="PreviousLiveAuctionID"
+                          type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" default="0" name="Visits" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StateID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" default="1900-01-01T00:00:00" name="SentDate"
+                          type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" default="Normal" name="CategoryType"
+                          type="tns:ECategoryType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Motor" type="tns:Motor"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PartnerID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CurrencyID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TextList" type="tns:ArrayOfText"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ItemID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CategoryID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ImagesCount" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" default="0" name="ServerImagesCount" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RemoteImages" type="tns:ArrayOfImg"/>
+               <s:element minOccurs="0" maxOccurs="1" default="0" name="OnlineImagesCount" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" default="false" name="IsImagesListChanged"
+                          type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" default="None" name="PromotionFlags"
+                          type="tns:EPromotionFlags"/>
+               <s:element minOccurs="0" maxOccurs="1" default="None" name="ArticleStatus"
+                          type="tns:EArticleStatus"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Duration" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="EFolderType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Root"/>
+               <s:enumeration value="Local"/>
+               <s:enumeration value="LocalAuctions"/>
+               <s:enumeration value="Templates"/>
+               <s:enumeration value="Drafts"/>
+               <s:enumeration value="Outbox"/>
+               <s:enumeration value="Sent"/>
+               <s:enumeration value="Rejected"/>
+               <s:enumeration value="Trash"/>
+               <s:enumeration value="LocalClassified"/>
+               <s:enumeration value="LocalClassifiedTemplates"/>
+               <s:enumeration value="LocalClassifiedDrafts"/>
+               <s:enumeration value="LocalClassifiedOutbox"/>
+               <s:enumeration value="LocalClassifiedSent"/>
+               <s:enumeration value="LocalClassifiedRejected"/>
+               <s:enumeration value="LocalClassifiedTrash"/>
+               <s:enumeration value="Selling"/>
+               <s:enumeration value="SellingAuctions"/>
+               <s:enumeration value="SellingPlanned"/>
+               <s:enumeration value="SellingOpen"/>
+               <s:enumeration value="SellingSold"/>
+               <s:enumeration value="SellingUnsold"/>
+               <s:enumeration value="SellingCompleted"/>
+               <s:enumeration value="SellingBlacklist"/>
+               <s:enumeration value="SellingClassified"/>
+               <s:enumeration value="SellingClassifiedOpen"/>
+               <s:enumeration value="SellingClassifiedClosed"/>
+               <s:enumeration value="SellingArchive"/>
+               <s:enumeration value="SellingArchiveSold"/>
+               <s:enumeration value="SellingArchiveUnsold"/>
+               <s:enumeration value="SellingArchiveCompleted"/>
+               <s:enumeration value="SellingArchiveClassifiedClosed"/>
+               <s:enumeration value="Buying"/>
+               <s:enumeration value="BuyingOpen"/>
+               <s:enumeration value="BuyingWon"/>
+               <s:enumeration value="BuyingLost"/>
+               <s:enumeration value="BuyingCompleted"/>
+               <s:enumeration value="Ratings"/>
+               <s:enumeration value="RatingsOutbox"/>
+               <s:enumeration value="RatingsReceived"/>
+               <s:enumeration value="RatingsOpen"/>
+               <s:enumeration value="RatingsSended"/>
+               <s:enumeration value="Favorites"/>
+               <s:enumeration value="SearchAgent"/>
+               <s:enumeration value="PreferredSellers"/>
+               <s:enumeration value="Observer"/>
+               <s:enumeration value="LocalSearch"/>
+               <s:enumeration value="Custom"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="EChannel">
+            <s:list>
+               <s:simpleType>
+                  <s:restriction base="s:string">
+                     <s:enumeration value="None"/>
+                     <s:enumeration value="Auction"/>
+                     <s:enumeration value="Fixed"/>
+                     <s:enumeration value="Classified"/>
+                     <s:enumeration value="LongFixed"/>
+                     <s:enumeration value="AuctionFixed"/>
+                     <s:enumeration value="All"/>
+                  </s:restriction>
+               </s:simpleType>
+            </s:list>
+         </s:simpleType>
+         <s:simpleType name="ESyncStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="New"/>
+               <s:enumeration value="Live"/>
+               <s:enumeration value="Edit"/>
+               <s:enumeration value="EditCancelled"/>
+               <s:enumeration value="Delete"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="ECategoryType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Undefined"/>
+               <s:enumeration value="Normal"/>
+               <s:enumeration value="_Reserved"/>
+               <s:enumeration value="Erotic"/>
+               <s:enumeration value="Military"/>
+               <s:enumeration value="Car"/>
+               <s:enumeration value="Bike"/>
+               <s:enumeration value="Boats"/>
+               <s:enumeration value="RealEstate"/>
+               <s:enumeration value="Jobs"/>
+               <s:enumeration value="SearchAds"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="Motor">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Gears" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Cylinders" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="EngineCapacity" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Seats" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Doors" type="s:short"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RegNumber" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CatalogPrice" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RepairCosts" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IsMetallicColor" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="WT_Place" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="WT_DamagedItemsFlag" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="WT_UsefulItemsFlag" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="WT_VATCalculationNr" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="InspectionDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ODO" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="WarrantyMonths" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ConditionID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MakeID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Model" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TransmissionID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TypeID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="FuelID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StarterTypeID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PowerSourceID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PowerKW" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PowerHP" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RegDate" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfText">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Text" nillable="true" type="tns:Text"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Text">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Lng" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Desc" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Payment" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Delivery" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Warranty" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MotorAccessories" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MotorUpholstery" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MotorExtColor" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MotorIntColor" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfImg">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Img" nillable="true" type="tns:Img"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="EPromotionFlags">
+            <s:list>
+               <s:simpleType>
+                  <s:restriction base="s:string">
+                     <s:enumeration value="None"/>
+                     <s:enumeration value="Bold"/>
+                     <s:enumeration value="HomePage"/>
+                     <s:enumeration value="TopCat"/>
+                     <s:enumeration value="Gallery"/>
+                     <s:enumeration value="Highlight"/>
+                     <s:enumeration value="FeatListing"/>
+                     <s:enumeration value="PersonalHomePage"/>
+                  </s:restriction>
+               </s:simpleType>
+            </s:list>
+         </s:simpleType>
+         <s:simpleType name="EArticleStatus">
+            <s:list>
+               <s:simpleType>
+                  <s:restriction base="s:string">
+                     <s:enumeration value="None"/>
+                     <s:enumeration value="MakeMeAnOffer"/>
+                     <s:enumeration value="Banished"/>
+                     <s:enumeration value="ReUploadedByCopy"/>
+                     <s:enumeration value="OneCh"/>
+                     <s:enumeration value="NoFiveMin"/>
+                     <s:enumeration value="ClosedByExtFraudTool"/>
+                     <s:enumeration value="ScannedByFraudTool"/>
+                     <s:enumeration value="UploadedByAssistant"/>
+                  </s:restriction>
+               </s:simpleType>
+            </s:list>
+         </s:simpleType>
+         <s:simpleType name="ETransactionFlags">
+            <s:list>
+               <s:simpleType>
+                  <s:restriction base="s:string">
+                     <s:enumeration value="None"/>
+                     <s:enumeration value="ContactMember"/>
+                     <s:enumeration value="ReContactMember"/>
+                     <s:enumeration value="ItemTransferred"/>
+                     <s:enumeration value="MoneyTransferred"/>
+                     <s:enumeration value="RatingGiven"/>
+                     <s:enumeration value="RatingReminder"/>
+                     <s:enumeration value="RatedByMember"/>
+                     <s:enumeration value="Cancelled"/>
+                     <s:enumeration value="Completed"/>
+                  </s:restriction>
+               </s:simpleType>
+            </s:list>
+         </s:simpleType>
+         <s:simpleType name="EFlags">
+            <s:list>
+               <s:simpleType>
+                  <s:restriction base="s:string">
+                     <s:enumeration value="None"/>
+                     <s:enumeration value="UserTheme"/>
+                     <s:enumeration value="ManualPriceIncrement"/>
+                     <s:enumeration value="StartDatePlanned"/>
+                     <s:enumeration value="IsReactivated"/>
+                     <s:enumeration value="Reminder"/>
+                     <s:enumeration value="CantChangeDuration"/>
+                  </s:restriction>
+               </s:simpleType>
+            </s:list>
+         </s:simpleType>
+         <s:element name="AddAuctionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddAuctionsResult" type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="UploadResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="HasError" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MessageKey" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Cost" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ItemsList" type="tns:ArrayOfUploadResultItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfUploadResultItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="UploadResultItem" nillable="true"
+                          type="tns:UploadResultItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="UploadResultItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ItemID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MessageKeys" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddPictures">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AuctionNrInList" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="imageList" type="tns:ArrayOfImg"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddPicturesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddPicturesResult" type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FinalizeAuctionsAdding">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FinalizeAuctionsAddingResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FinalizeAuctionsAddingResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetOpenRatings">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetOpenRatingsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetOpenRatingsResult"
+                             type="tns:ArrayOfRatingOpen"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfRatingOpen">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="RatingOpen" nillable="true"
+                          type="tns:RatingOpen"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="RatingOpen">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="BidID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LotID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LotTitle" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Qty" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UserType" type="tns:UserType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MemberAlias" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberRate" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberPositiveRate" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberSoldItemsQuantity" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberBoughtItemsQuantity" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="UserType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Seller"/>
+               <s:enumeration value="Buyer"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetRatings">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetRatingsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRatingsResult" type="tns:ArrayOfRating"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfRating">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Rating" nillable="true"
+                          type="tns:Rating"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Rating">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Status" type="tns:RatingStatus"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LotID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BidID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UserType" type="tns:UserType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MemberAlias" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberRate" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberPositiveRate" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberSoldItemsQuantity" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberBoughtItemsQuantity" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Score" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Comment" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AnswerComment" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Date" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="RatingStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="Incoming"/>
+               <s:enumeration value="Outgoing"/>
+               <s:enumeration value="Sent"/>
+               <s:enumeration value="AnswerToIncomig"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="AddRatings">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RatingsToAddList" type="tns:ArrayOfRating"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddRatingsResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="AddRatingAnswers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RatingsToAnswerList" type="tns:ArrayOfRating"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddRatingAnswersResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetSearchOrders">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSearchOrdersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSearchOrdersResult"
+                             type="tns:ArrayOfSearchOrder"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfSearchOrder">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchOrder" nillable="true"
+                          type="tns:SearchOrder"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchOrder">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Status" type="tns:ESyncStatus"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OrderID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:ESearchOrderType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductType" type="tns:ECategoryType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ModifiedDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NewAuctions" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalAuctions" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Channel" type="tns:EChannel"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AllOfWords" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OneOfWords" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ExactPhrase" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ExcludeWords" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CategoryID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LngID" type="s:unsignedByte"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CountryID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CountyID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StateID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinPrice" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxPrice" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerAlias" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VehicleManufacturerID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VehicleModel" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VehicleTypeID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VehicleConditionID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VehicleFirstRegDate" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VehicleKilometrageID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VehicleWarrantyID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VehicleTransmissionID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="EmailAlert" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OnlyWithPicture" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TitleAndDescription" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IsNeedProlongation" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="ESearchOrderType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Auction"/>
+               <s:enumeration value="Seller"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetPreferredSeller">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPreferredSellerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPreferredSellerResult"
+                             type="tns:ArrayOfSearchOrder"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateSearchOrders">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="listSearchOrder"
+                             type="tns:ArrayOfSearchOrder"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateSearchOrdersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdateSearchOrdersResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdatePreferredSellers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="listSearchOrder"
+                             type="tns:ArrayOfSearchOrder"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdatePreferredSellersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdatePreferredSellersResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetBuyerAuctionList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="buyerAuctionType" type="tns:EFolderType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="lowerDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetBuyerAuctionListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetBuyerAuctionListResult"
+                             type="tns:ArrayOfBuyerAuction"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfBuyerAuction">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BuyerAuction" nillable="true"
+                          type="tns:BuyerAuction"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BuyerAuction">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="FolderType" type="tns:EFolderType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="InfoFlags" type="tns:EAuctionInfoFlags"/>
+               <s:element minOccurs="0" maxOccurs="1" default="0" name="BidID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SellerID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerAlias" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ImageBuffer" type="s:base64Binary"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AuctionID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BougthQuantity" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalQuantity" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BidDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Bids" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BuyNow" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HighestBid" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="YourMaxBid" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerEmail" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerFirstName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerLastName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerTel1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerTel2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerAdr1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerAdr2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerZIP" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SellerCountry" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TransactionFlags"
+                          type="tns:ETransactionFlags"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NotificationFlags"
+                          type="tns:ENotificationFlags"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NotificationThreshold" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SyncStatus" type="tns:ESyncStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="EAuctionInfoFlags">
+            <s:list>
+               <s:simpleType>
+                  <s:restriction base="s:string">
+                     <s:enumeration value="New"/>
+                     <s:enumeration value="EndingAfter3h"/>
+                     <s:enumeration value="EndingAfter24h"/>
+                     <s:enumeration value="ManyBids"/>
+                     <s:enumeration value="ReservePriceNotReached"/>
+                     <s:enumeration value="ReservePriceReached"/>
+                  </s:restriction>
+               </s:simpleType>
+            </s:list>
+         </s:simpleType>
+         <s:simpleType name="ENotificationFlags">
+            <s:list>
+               <s:simpleType>
+                  <s:restriction base="s:string">
+                     <s:enumeration value="Email"/>
+                     <s:enumeration value="SMS"/>
+                  </s:restriction>
+               </s:simpleType>
+            </s:list>
+         </s:simpleType>
+         <s:element name="UpdateObservers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="listBuyerAuction"
+                             type="tns:ArrayOfBuyerAuction"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateObserversResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdateObserversResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateAuctions">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="listAuction" type="tns:ArrayOfAuction"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateAuctionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdateAuctionsResult" type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CloseOpenAuctions">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="listAuction" type="tns:ArrayOfAuctionNumbers"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAuctionNumbers">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AuctionNumbers" nillable="true"
+                          type="tns:AuctionNumbers"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AuctionNumbers">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ItemId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LiveAuctionNr" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ListNr" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AuctionNrInList" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="CloseOpenAuctionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CloseOpenAuctionsResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ClosePlannedAuctions">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="listAuction" type="tns:ArrayOfAuctionNumbers"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ClosePlannedAuctionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClosePlannedAuctionsResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdatePictures">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AuctionNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="imageList" type="tns:ArrayOfImg"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdatePicturesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdatePicturesResult" type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdatePicturesForPlannedAuction">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ListNr" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AuctionNrInList" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="imageList" type="tns:ArrayOfImg"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdatePicturesForPlannedAuctionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdatePicturesForPlannedAuctionResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSellerAuctionList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="sellerAuctionType" type="tns:EFolderType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="lowerDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="numberOfLines" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PageNumber" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSellerAuctionListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSellerAuctionListResult"
+                             type="tns:ArrayOfAuction"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SynchronizeAuctionsArchive">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="sellerAuctionType" type="tns:EFolderType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="offlineArhcivedItems"
+                             type="tns:ArrayOfKeySyncStatusPair"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfKeySyncStatusPair">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="KeySyncStatusPair" nillable="true"
+                          type="tns:KeySyncStatusPair"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="KeySyncStatusPair">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ItemID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Key" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Value" type="tns:ESyncStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BidSyncStatusPair">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:KeySyncStatusPair"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArticleSyncStatusPair">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:KeySyncStatusPair"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="SynchronizeAuctionsArchiveResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SynchronizeAuctionsArchiveResult"
+                             type="tns:AuctionsArchiveSyncResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AuctionsArchiveSyncResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AddedAuctions" type="tns:ArrayOfAuction"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UpdatedKeys"
+                          type="tns:ArrayOfKeySyncStatusPair"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SynchronizeClassifiedsArchive">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="classifiedType" type="tns:EFolderType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="offlineArhcivedItems"
+                             type="tns:ArrayOfKeySyncStatusPair"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SynchronizeClassifiedsArchiveResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SynchronizeClassifiedsArchiveResult"
+                             type="tns:ClassifiedArchiveSyncResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ClassifiedArchiveSyncResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AddedClassifieds"
+                          type="tns:ArrayOfClassified"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UpdatedKeys"
+                          type="tns:ArrayOfKeySyncStatusPair"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfClassified">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Classified" nillable="true"
+                          type="tns:Classified"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Classified">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:BaseArticle">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" default="None" name="ConditionsFlags"
+                                type="tns:EConditionsFlags"/>
+                     <s:element minOccurs="0" maxOccurs="1" default="false" name="CantChangeDuration"
+                                type="s:boolean"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="PersonalHomePageURL" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="StartPrice" type="s:decimal"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:simpleType name="EConditionsFlags">
+            <s:list>
+               <s:simpleType>
+                  <s:restriction base="s:string">
+                     <s:enumeration value="None"/>
+                     <s:enumeration value="ShowSellerIdentity"/>
+                     <s:enumeration value="AcceptEmailContact"/>
+                     <s:enumeration value="CantChangeDuration"/>
+                  </s:restriction>
+               </s:simpleType>
+            </s:list>
+         </s:simpleType>
+         <s:element name="UpdateBlacklists">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="blackListData" type="tns:BlacklistData"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="BlacklistData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Blacklist" type="tns:ArrayOfBlacklist"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IgnoreBlacklistedMembers" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ApplyIgnoreOption" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfBlacklist">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Blacklist" nillable="true"
+                          type="tns:Blacklist"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Blacklist">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="OnlineID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MemberAlias" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberRate" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MemberPositiveRate" type="s:float"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Comment" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CreateDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SyncStatus" type="tns:ESyncStatus"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="UpdateBlacklistsResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetBlacklists">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetBlacklistsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetBlacklistsResult" type="tns:BlacklistData"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddClassifieds">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="classifieds" type="tns:ArrayOfClassified"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddClassifiedsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddClassifiedsResult" type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddClassifiedPictures">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ClassifiedNrInList" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ImageList" type="tns:ArrayOfImg"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddClassifiedPicturesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddClassifiedPicturesResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FinalizeClassifiedsAdding">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="FinalizeClassifiedsAddingResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FinalizeClassifiedsAddingResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateClassifieds">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="classifieds" type="tns:ArrayOfClassified"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateClassifiedsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdateClassifiedsResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CloseClassifieds">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="classifieds" type="tns:ArrayOfClassified"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CloseClassifiedsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CloseClassifiedsResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateClassifiedPictures">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ArticleNr" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ImageList" type="tns:ArrayOfImg"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateClassifiedPicturesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdateClassifiedPicturesResult"
+                             type="tns:UploadResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetClassifiedList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="classifiedFolderType" type="tns:EFolderType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="lowerDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetClassifiedListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetClassifiedListResult"
+                             type="tns:ArrayOfClassified"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserCategoryList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserCategoryListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetUserCategoryListResult"
+                             type="tns:CategoryList"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CategoryList">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ConfigVersion">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="List" type="tns:ArrayOfCategory"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ConfigVersion">
+            <s:attribute name="WebMethod" type="tns:WebMethod" use="required"/>
+            <s:attribute name="Version" type="s:dateTime" use="required"/>
+         </s:complexType>
+         <s:simpleType name="WebMethod">
+            <s:restriction base="s:string">
+               <s:enumeration value="Undefined"/>
+               <s:enumeration value="GetCategoryList"/>
+               <s:enumeration value="GetCountryList"/>
+               <s:enumeration value="GetUserCategoryList"/>
+               <s:enumeration value="GetDeliveryList"/>
+               <s:enumeration value="GetIncrementList"/>
+               <s:enumeration value="GetLocaleList"/>
+               <s:enumeration value="GetListingFeeList"/>
+               <s:enumeration value="GetPaymentList"/>
+               <s:enumeration value="GetPaymentMethodList"/>
+               <s:enumeration value="GetPromoFeeList"/>
+               <s:enumeration value="GetStateList"/>
+               <s:enumeration value="GetThemeList"/>
+               <s:enumeration value="GetUserThemeList"/>
+               <s:enumeration value="GetWarrantyList"/>
+               <s:enumeration value="GetAreaList"/>
+               <s:enumeration value="GetMotorLists"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfCategory">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Category" nillable="true"
+                          type="tns:Category"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Category">
+            <s:attribute name="ID" type="s:int" use="required"/>
+            <s:attribute name="ParentID" type="s:int" use="required"/>
+            <s:attribute name="Name" type="s:string"/>
+            <s:attribute name="Type" type="tns:ECategoryType" use="required"/>
+            <s:attribute name="Channels" type="tns:EChannel" use="required"/>
+            <s:attribute name="HasChildren" type="s:boolean" use="required"/>
+            <s:attribute name="SortMask" type="s:string"/>
+            <s:attribute name="Level" type="s:unsignedByte" use="required"/>
+         </s:complexType>
+         <s:element name="GetUserThemeList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CustomerNr" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserThemeListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetUserThemeListResult" type="tns:ThemeList"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ThemeList">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:ConfigVersion">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="List" type="tns:ArrayOfTheme"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfTheme">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Theme" nillable="true"
+                          type="tns:Theme"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Theme">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Key" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BeginCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndCode" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AccountInfo" nillable="true" type="tns:AccountInfo"/>
+         <s:element name="UploadResult" nillable="true" type="tns:UploadResult"/>
+         <s:element name="ArrayOfRatingOpen" nillable="true" type="tns:ArrayOfRatingOpen"/>
+         <s:element name="ArrayOfRating" nillable="true" type="tns:ArrayOfRating"/>
+         <s:element name="ArrayOfSearchOrder" nillable="true" type="tns:ArrayOfSearchOrder"/>
+         <s:element name="ArrayOfBuyerAuction" nillable="true" type="tns:ArrayOfBuyerAuction"/>
+         <s:element name="ArrayOfAuction" nillable="true" type="tns:ArrayOfAuction"/>
+         <s:element name="BlacklistData" nillable="true" type="tns:BlacklistData"/>
+         <s:element name="ArrayOfClassified" nillable="true" type="tns:ArrayOfClassified"/>
+         <s:element name="CategoryList" nillable="true" type="tns:CategoryList"/>
+         <s:element name="ThemeList" nillable="true" type="tns:ThemeList"/>
+         <s:complexType name="Img">
+            <s:attribute name="Number" type="s:int"/>
+            <s:attribute name="FileName" type="s:string"/>
+            <s:attribute name="BufferLength" type="s:int"/>
+            <s:attribute name="ImageBuffer" type="s:base64Binary"/>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="CheckAccountSoapIn">
+      <wsdl:part name="parameters" element="tns:CheckAccount"/>
+  </wsdl:message>
+  <wsdl:message name="CheckAccountSoapOut">
+      <wsdl:part name="parameters" element="tns:CheckAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddAuctionsSoapIn">
+      <wsdl:part name="parameters" element="tns:AddAuctions"/>
+  </wsdl:message>
+  <wsdl:message name="AddAuctionsSoapOut">
+      <wsdl:part name="parameters" element="tns:AddAuctionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddPicturesSoapIn">
+      <wsdl:part name="parameters" element="tns:AddPictures"/>
+  </wsdl:message>
+  <wsdl:message name="AddPicturesSoapOut">
+      <wsdl:part name="parameters" element="tns:AddPicturesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeAuctionsAddingSoapIn">
+      <wsdl:part name="parameters" element="tns:FinalizeAuctionsAdding"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeAuctionsAddingSoapOut">
+      <wsdl:part name="parameters" element="tns:FinalizeAuctionsAddingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetOpenRatingsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetOpenRatings"/>
+  </wsdl:message>
+  <wsdl:message name="GetOpenRatingsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetOpenRatingsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRatingsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetRatings"/>
+  </wsdl:message>
+  <wsdl:message name="GetRatingsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetRatingsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddRatingsSoapIn">
+      <wsdl:part name="parameters" element="tns:AddRatings"/>
+  </wsdl:message>
+  <wsdl:message name="AddRatingsSoapOut">
+      <wsdl:part name="parameters" element="tns:AddRatingsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddRatingAnswersSoapIn">
+      <wsdl:part name="parameters" element="tns:AddRatingAnswers"/>
+  </wsdl:message>
+  <wsdl:message name="AddRatingAnswersSoapOut">
+      <wsdl:part name="parameters" element="tns:AddRatingAnswersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchOrdersSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSearchOrders"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchOrdersSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSearchOrdersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPreferredSellerSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPreferredSeller"/>
+  </wsdl:message>
+  <wsdl:message name="GetPreferredSellerSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPreferredSellerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateSearchOrdersSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateSearchOrders"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateSearchOrdersSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateSearchOrdersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdatePreferredSellersSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdatePreferredSellers"/>
+  </wsdl:message>
+  <wsdl:message name="UpdatePreferredSellersSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdatePreferredSellersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetBuyerAuctionListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetBuyerAuctionList"/>
+  </wsdl:message>
+  <wsdl:message name="GetBuyerAuctionListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetBuyerAuctionListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateObserversSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateObservers"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateObserversSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateObserversResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateAuctionsSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateAuctions"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateAuctionsSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateAuctionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CloseOpenAuctionsSoapIn">
+      <wsdl:part name="parameters" element="tns:CloseOpenAuctions"/>
+  </wsdl:message>
+  <wsdl:message name="CloseOpenAuctionsSoapOut">
+      <wsdl:part name="parameters" element="tns:CloseOpenAuctionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ClosePlannedAuctionsSoapIn">
+      <wsdl:part name="parameters" element="tns:ClosePlannedAuctions"/>
+  </wsdl:message>
+  <wsdl:message name="ClosePlannedAuctionsSoapOut">
+      <wsdl:part name="parameters" element="tns:ClosePlannedAuctionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdatePicturesSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdatePictures"/>
+  </wsdl:message>
+  <wsdl:message name="UpdatePicturesSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdatePicturesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdatePicturesForPlannedAuctionSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdatePicturesForPlannedAuction"/>
+  </wsdl:message>
+  <wsdl:message name="UpdatePicturesForPlannedAuctionSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdatePicturesForPlannedAuctionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSellerAuctionListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSellerAuctionList"/>
+  </wsdl:message>
+  <wsdl:message name="GetSellerAuctionListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSellerAuctionListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SynchronizeAuctionsArchiveSoapIn">
+      <wsdl:part name="parameters" element="tns:SynchronizeAuctionsArchive"/>
+  </wsdl:message>
+  <wsdl:message name="SynchronizeAuctionsArchiveSoapOut">
+      <wsdl:part name="parameters" element="tns:SynchronizeAuctionsArchiveResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SynchronizeClassifiedsArchiveSoapIn">
+      <wsdl:part name="parameters" element="tns:SynchronizeClassifiedsArchive"/>
+  </wsdl:message>
+  <wsdl:message name="SynchronizeClassifiedsArchiveSoapOut">
+      <wsdl:part name="parameters" element="tns:SynchronizeClassifiedsArchiveResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateBlacklistsSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateBlacklists"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateBlacklistsSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateBlacklistsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetBlacklistsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetBlacklists"/>
+  </wsdl:message>
+  <wsdl:message name="GetBlacklistsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetBlacklistsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddClassifiedsSoapIn">
+      <wsdl:part name="parameters" element="tns:AddClassifieds"/>
+  </wsdl:message>
+  <wsdl:message name="AddClassifiedsSoapOut">
+      <wsdl:part name="parameters" element="tns:AddClassifiedsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddClassifiedPicturesSoapIn">
+      <wsdl:part name="parameters" element="tns:AddClassifiedPictures"/>
+  </wsdl:message>
+  <wsdl:message name="AddClassifiedPicturesSoapOut">
+      <wsdl:part name="parameters" element="tns:AddClassifiedPicturesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeClassifiedsAddingSoapIn">
+      <wsdl:part name="parameters" element="tns:FinalizeClassifiedsAdding"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeClassifiedsAddingSoapOut">
+      <wsdl:part name="parameters" element="tns:FinalizeClassifiedsAddingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateClassifiedsSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateClassifieds"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateClassifiedsSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateClassifiedsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CloseClassifiedsSoapIn">
+      <wsdl:part name="parameters" element="tns:CloseClassifieds"/>
+  </wsdl:message>
+  <wsdl:message name="CloseClassifiedsSoapOut">
+      <wsdl:part name="parameters" element="tns:CloseClassifiedsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateClassifiedPicturesSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateClassifiedPictures"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateClassifiedPicturesSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateClassifiedPicturesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetClassifiedListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetClassifiedList"/>
+  </wsdl:message>
+  <wsdl:message name="GetClassifiedListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetClassifiedListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserCategoryListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetUserCategoryList"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserCategoryListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetUserCategoryListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserThemeListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetUserThemeList"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserThemeListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetUserThemeListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CheckAccountHttpGetIn">
+      <wsdl:part name="userNick" type="s:string"/>
+      <wsdl:part name="userPassword" type="s:string"/>
+      <wsdl:part name="userIP" type="s:string"/>
+      <wsdl:part name="userCountryNr" type="s:string"/>
+      <wsdl:part name="identifier" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="CheckAccountHttpGetOut">
+      <wsdl:part name="Body" element="tns:AccountInfo"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeAuctionsAddingHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeAuctionsAddingHttpGetOut">
+      <wsdl:part name="Body" element="tns:UploadResult"/>
+  </wsdl:message>
+  <wsdl:message name="GetOpenRatingsHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetOpenRatingsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfRatingOpen"/>
+  </wsdl:message>
+  <wsdl:message name="GetRatingsHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetRatingsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfRating"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchOrdersHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchOrdersHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfSearchOrder"/>
+  </wsdl:message>
+  <wsdl:message name="GetPreferredSellerHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPreferredSellerHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfSearchOrder"/>
+  </wsdl:message>
+  <wsdl:message name="GetBuyerAuctionListHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+      <wsdl:part name="buyerAuctionType" type="s:string"/>
+      <wsdl:part name="lowerDate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetBuyerAuctionListHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfBuyerAuction"/>
+  </wsdl:message>
+  <wsdl:message name="GetSellerAuctionListHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+      <wsdl:part name="sellerAuctionType" type="s:string"/>
+      <wsdl:part name="lowerDate" type="s:string"/>
+      <wsdl:part name="numberOfLines" type="s:string"/>
+      <wsdl:part name="PageNumber" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSellerAuctionListHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfAuction"/>
+  </wsdl:message>
+  <wsdl:message name="GetBlacklistsHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetBlacklistsHttpGetOut">
+      <wsdl:part name="Body" element="tns:BlacklistData"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeClassifiedsAddingHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeClassifiedsAddingHttpGetOut">
+      <wsdl:part name="Body" element="tns:UploadResult"/>
+  </wsdl:message>
+  <wsdl:message name="GetClassifiedListHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+      <wsdl:part name="classifiedFolderType" type="s:string"/>
+      <wsdl:part name="lowerDate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetClassifiedListHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfClassified"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserCategoryListHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserCategoryListHttpGetOut">
+      <wsdl:part name="Body" element="tns:CategoryList"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserThemeListHttpGetIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserThemeListHttpGetOut">
+      <wsdl:part name="Body" element="tns:ThemeList"/>
+  </wsdl:message>
+  <wsdl:message name="CheckAccountHttpPostIn">
+      <wsdl:part name="userNick" type="s:string"/>
+      <wsdl:part name="userPassword" type="s:string"/>
+      <wsdl:part name="userIP" type="s:string"/>
+      <wsdl:part name="userCountryNr" type="s:string"/>
+      <wsdl:part name="identifier" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="CheckAccountHttpPostOut">
+      <wsdl:part name="Body" element="tns:AccountInfo"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeAuctionsAddingHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeAuctionsAddingHttpPostOut">
+      <wsdl:part name="Body" element="tns:UploadResult"/>
+  </wsdl:message>
+  <wsdl:message name="GetOpenRatingsHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetOpenRatingsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfRatingOpen"/>
+  </wsdl:message>
+  <wsdl:message name="GetRatingsHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetRatingsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfRating"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchOrdersHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSearchOrdersHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfSearchOrder"/>
+  </wsdl:message>
+  <wsdl:message name="GetPreferredSellerHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPreferredSellerHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfSearchOrder"/>
+  </wsdl:message>
+  <wsdl:message name="GetBuyerAuctionListHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+      <wsdl:part name="buyerAuctionType" type="s:string"/>
+      <wsdl:part name="lowerDate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetBuyerAuctionListHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfBuyerAuction"/>
+  </wsdl:message>
+  <wsdl:message name="GetSellerAuctionListHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+      <wsdl:part name="sellerAuctionType" type="s:string"/>
+      <wsdl:part name="lowerDate" type="s:string"/>
+      <wsdl:part name="numberOfLines" type="s:string"/>
+      <wsdl:part name="PageNumber" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSellerAuctionListHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfAuction"/>
+  </wsdl:message>
+  <wsdl:message name="GetBlacklistsHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetBlacklistsHttpPostOut">
+      <wsdl:part name="Body" element="tns:BlacklistData"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeClassifiedsAddingHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="FinalizeClassifiedsAddingHttpPostOut">
+      <wsdl:part name="Body" element="tns:UploadResult"/>
+  </wsdl:message>
+  <wsdl:message name="GetClassifiedListHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+      <wsdl:part name="classifiedFolderType" type="s:string"/>
+      <wsdl:part name="lowerDate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetClassifiedListHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfClassified"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserCategoryListHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserCategoryListHttpPostOut">
+      <wsdl:part name="Body" element="tns:CategoryList"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserThemeListHttpPostIn">
+      <wsdl:part name="CustomerNr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserThemeListHttpPostOut">
+      <wsdl:part name="Body" element="tns:ThemeList"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="AccountServiceSoap" type="tns:AccountServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="CheckAccount">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/CheckAccount"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddAuctions">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/AddAuctions"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddPictures">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/AddPictures"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="FinalizeAuctionsAdding">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/FinalizeAuctionsAdding"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetOpenRatings">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/GetOpenRatings"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRatings">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/GetRatings"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddRatings">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/AddRatings"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddRatingAnswers">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/AddRatingAnswers"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSearchOrders">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/GetSearchOrders"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPreferredSeller">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/GetPreferredSeller"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateSearchOrders">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/UpdateSearchOrders"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdatePreferredSellers">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/UpdatePreferredSellers"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetBuyerAuctionList">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/GetBuyerAuctionList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateObservers">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/UpdateObservers"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateAuctions">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/UpdateAuctions"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CloseOpenAuctions">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/CloseOpenAuctions"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ClosePlannedAuctions">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/ClosePlannedAuctions"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdatePictures">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/UpdatePictures"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdatePicturesForPlannedAuction">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/UpdatePicturesForPlannedAuction"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSellerAuctionList">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/GetSellerAuctionList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SynchronizeAuctionsArchive">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/SynchronizeAuctionsArchive"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SynchronizeClassifiedsArchive">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/SynchronizeClassifiedsArchive"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateBlacklists">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/UpdateBlacklists"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetBlacklists">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/GetBlacklists"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddClassifieds">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/AddClassifieds"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddClassifiedPictures">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/AddClassifiedPictures"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="FinalizeClassifiedsAdding">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/FinalizeClassifiedsAdding"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateClassifieds">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/UpdateClassifieds"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CloseClassifieds">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/CloseClassifieds"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateClassifiedPictures">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/UpdateClassifiedPictures"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetClassifiedList">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/GetClassifiedList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserCategoryList">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/GetUserCategoryList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetUserThemeList">
+         <soap:operation soapAction="http://superlister.aucland.com/QxlRicardoServices/GetUserThemeList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="AccountService">
+      <wsdl:port name="AccountServiceSoap" binding="tns:AccountServiceSoap">
+         <soap:address location="http://ws.soatrader.com/aucland.com/0.1/AccountService"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

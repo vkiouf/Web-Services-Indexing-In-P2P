@@ -1,0 +1,272 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://splices.xignite.com/services/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://splices.xignite.com/services/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://splices.xignite.com/services/">
+         <s:element name="sdubois1_LiborsAndCurrencies">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AsOfDate" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="sdubois1_LiborsAndCurrenciesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="sdubois1_LiborsAndCurrenciesResult"
+                             type="tns:Untitled"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Untitled">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:AbstractReturnObject">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Currencies" type="tns:Currencies"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Libors" type="tns:Libors"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="AbstractReturnObject" abstract="true">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Common"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Common">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Outcome" type="tns:OutcomeTypes"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Identity" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Delay" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="OutcomeTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Success"/>
+               <s:enumeration value="SystemError"/>
+               <s:enumeration value="RequestError"/>
+               <s:enumeration value="RegistrationError"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="Currencies">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Lines" type="tns:ArrayOfLines"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfLines">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Lines" nillable="true"
+                          type="tns:Lines"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Lines">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Rates" type="tns:ArrayOfRates"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfRates">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Rates" nillable="true"
+                          type="tns:Rates"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Rates">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Bid" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Ask" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Libors">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Delay" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AUD" type="tns:AUD"/>
+               <s:element minOccurs="0" maxOccurs="1" name="JPY" type="tns:JPY"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CAD" type="tns:CAD"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CHF" type="tns:CHF"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NZD" type="tns:NZD"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Identity" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Outcome"
+                          type="tns:_Splicesdubois1AllLiborsOutcomeTypes"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DKK" type="tns:DKK"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SEK" type="tns:SEK"/>
+               <s:element minOccurs="0" maxOccurs="1" name="GBP" type="tns:GBP"/>
+               <s:element minOccurs="0" maxOccurs="1" name="USD" type="tns:USD"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EUR" type="tns:EUR"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AUD">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ThreeMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OneMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TwelveMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SixMonthLibor" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="JPY">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Outcome"
+                          type="tns:_Splicesdubois1AllLibors_Splicesdubois1OneThresSixTwelveMonthsLiborsOutcomeTypes"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OneMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SixMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ThreeMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TwelveMonthLibor" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="_Splicesdubois1AllLibors_Splicesdubois1OneThresSixTwelveMonthsLiborsOutcomeTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Success"/>
+               <s:enumeration value="SystemError"/>
+               <s:enumeration value="RequestError"/>
+               <s:enumeration value="RegistrationError"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="CAD">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="OneMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TwelveMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ThreeMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SixMonthLibor" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CHF">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="SixMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TwelveMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ThreeMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OneMonthLibor" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="NZD">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ThreeMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OneMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TwelveMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SixMonthLibor" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="_Splicesdubois1AllLiborsOutcomeTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Success"/>
+               <s:enumeration value="SystemError"/>
+               <s:enumeration value="RequestError"/>
+               <s:enumeration value="RegistrationError"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="DKK">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="SixMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TwelveMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ThreeMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OneMonthLibor" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SEK">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ThreeMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OneMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TwelveMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SixMonthLibor" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="GBP">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="TwelveMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SixMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OneMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ThreeMonthLibor" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="USD">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ThreeMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TwelveMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SixMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OneMonthLibor" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="EUR">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ThreeMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SixMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OneMonthLibor" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TwelveMonthLibor" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Header" type="tns:Header"/>
+         <s:complexType name="Header">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+            </s:sequence>
+            <s:anyAttribute/>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="sdubois1_LiborsAndCurrenciesSoapIn">
+      <wsdl:part name="parameters" element="tns:sdubois1_LiborsAndCurrencies"/>
+  </wsdl:message>
+  <wsdl:message name="sdubois1_LiborsAndCurrenciesSoapOut">
+      <wsdl:part name="parameters" element="tns:sdubois1_LiborsAndCurrenciesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="sdubois1_LiborsAndCurrenciesHeader">
+      <wsdl:part name="Header" element="tns:Header"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="LiborsAndCurrenciesSpliceSoap" type="tns:LiborsAndCurrenciesSpliceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="sdubois1_LiborsAndCurrencies">
+         <soap:operation soapAction="http://splices.xignite.com/services/sdubois1_LiborsAndCurrencies"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:sdubois1_LiborsAndCurrenciesHeader" part="Header" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="LiborsAndCurrenciesSplice">
+      <wsdl:port name="LiborsAndCurrenciesSpliceSoap"
+                 binding="tns:LiborsAndCurrenciesSpliceSoap">
+         <soap:address location="http://ws.soatrader.com/xignite.com/0.1/LiborsAndCurrenciesSplice"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,377 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="gavo:soap:cone"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="gavo:soap:cone"
+                  xmlns:intf="gavo:soap:cone"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns2="http://soap.gavo.org"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="gavo:soap:cone">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="gavo:soap:cone">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="ConeSearchResult">
+            <sequence>
+               <element name="DEC" type="xsd:double"/>
+               <element name="RA" type="xsd:double"/>
+               <element name="SR" type="xsd:double"/>
+               <element name="coneSearchURL" nillable="true" type="xsd:string"/>
+               <element name="numberFound" type="xsd:int"/>
+               <element name="numberReturned" type="xsd:int"/>
+               <element name="asAttachment" type="xsd:boolean"/>
+               <element name="attachmentFormat" nillable="true" type="xsd:string"/>
+               <element name="attachmentMimeType" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="FSCEntry">
+            <complexContent>
+               <extension base="tns2:DataObjectProxy">
+                  <sequence>
+                     <element name="DEC" type="xsd:double"/>
+                     <element name="PError" type="xsd:float"/>
+                     <element name="RA" type="xsd:double"/>
+                     <element name="bgr_cpsa" type="xsd:float"/>
+                     <element name="e" nillable="true" type="xsd:string"/>
+                     <element name="exp" type="xsd:float"/>
+                     <element name="ext" type="xsd:float"/>
+                     <element name="extl" type="xsd:float"/>
+                     <element name="extr" type="xsd:float"/>
+                     <element name="field_id" nillable="true" type="xsd:string"/>
+                     <element name="flags" nillable="true" type="xsd:string"/>
+                     <element name="flg2" nillable="true" type="xsd:string"/>
+                     <element name="hr1" type="xsd:float"/>
+                     <element name="hr1_error" type="xsd:float"/>
+                     <element name="hr2" type="xsd:float"/>
+                     <element name="hr2_error" type="xsd:float"/>
+                     <element name="itb" nillable="true" type="xsd:string"/>
+                     <element name="ite" nillable="true" type="xsd:string"/>
+                     <element name="moddat" nillable="true" type="xsd:string"/>
+                     <element name="num_id" nillable="true" type="xsd:string"/>
+                     <element name="orgdat" nillable="true" type="xsd:string"/>
+                     <element name="priFlg" nillable="true" type="xsd:string"/>
+                     <element name="rct" nillable="true" type="xsd:string"/>
+                     <element name="rl" type="xsd:int"/>
+                     <element name="srcNam" nillable="true" type="xsd:string"/>
+                     <element name="src_cps" type="xsd:float"/>
+                     <element name="src_cps_error" type="xsd:float"/>
+                     <element name="src_number" nillable="true" type="xsd:string"/>
+                     <element name="srcl" type="xsd:float"/>
+                     <element name="vigf" type="xsd:float"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOfFSCEntry">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:FSCEntry[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="FSCConeSearchResult">
+            <complexContent>
+               <extension base="impl:ConeSearchResult">
+                  <sequence>
+                     <element name="data" nillable="true" type="impl:ArrayOfFSCEntry"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="BSCEntry">
+            <complexContent>
+               <extension base="tns2:DataObjectProxy">
+                  <sequence>
+                     <element name="_SASSSourceNumber" nillable="true" type="xsd:string"/>
+                     <element name="backgroundCountRate" type="xsd:double"/>
+                     <element name="createDate" nillable="true" type="xsd:string"/>
+                     <element name="dec" type="xsd:double"/>
+                     <element name="e" nillable="true" type="xsd:string"/>
+                     <element name="exposureTime" type="xsd:double"/>
+                     <element name="extractionRadius" type="xsd:double"/>
+                     <element name="fieldId" nillable="true" type="xsd:string"/>
+                     <element name="hardnessRatio1" type="xsd:double"/>
+                     <element name="hardnessRatio1Error" type="xsd:double"/>
+                     <element name="hardnessRatio2" type="xsd:double"/>
+                     <element name="hardnessRatio2Error" type="xsd:double"/>
+                     <element name="id_num" nillable="true" type="xsd:string"/>
+                     <element name="newDataFlags" nillable="true" type="xsd:string"/>
+                     <element name="positionError" type="xsd:double"/>
+                     <element name="priorityFlags" nillable="true" type="xsd:string"/>
+                     <element name="ra" type="xsd:double"/>
+                     <element name="screeningFlags" nillable="true" type="xsd:string"/>
+                     <element name="sourceCountRate" type="xsd:double"/>
+                     <element name="sourceCountRateError" type="xsd:double"/>
+                     <element name="sourceDetectionLikelihood" type="xsd:double"/>
+                     <element name="sourceExtent" type="xsd:double"/>
+                     <element name="sourceExtentLikelihood" type="xsd:double"/>
+                     <element name="sourceName" nillable="true" type="xsd:string"/>
+                     <element name="updateDate" nillable="true" type="xsd:string"/>
+                     <element name="vignettingFactor" type="xsd:double"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOfBSCEntry">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:BSCEntry[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="BSCConeSearchResult">
+            <complexContent>
+               <extension base="impl:ConeSearchResult">
+                  <sequence>
+                     <element name="data" nillable="true" type="impl:ArrayOfBSCEntry"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="RASSPhoton">
+            <complexContent>
+               <extension base="tns2:DataObjectProxy">
+                  <sequence>
+                     <element name="dec" type="xsd:float"/>
+                     <element name="detectionTime" nillable="true" type="xsd:dateTime"/>
+                     <element name="energyCorrected" type="xsd:float"/>
+                     <element name="energyUncorrected" type="xsd:float"/>
+                     <element name="exposureTime" type="xsd:float"/>
+                     <element name="fieldId" nillable="true" type="xsd:string"/>
+                     <element name="flag" nillable="true" type="xsd:string"/>
+                     <element name="photonId" nillable="true" type="xsd:decimal"/>
+                     <element name="positionError" type="xsd:float"/>
+                     <element name="ra" type="xsd:float"/>
+                     <element name="b2" type="xsd:float"/>
+                     <element name="l2" type="xsd:float"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="ArrayOfRASSPhoton">
+            <complexContent>
+               <restriction base="soapenc:Array">
+                  <attribute ref="soapenc:arrayType" wsdl:arrayType="impl:RASSPhoton[]"/>
+               </restriction>
+            </complexContent>
+         </complexType>
+         <complexType name="RASSPhotonConeSearchResult">
+            <complexContent>
+               <extension base="impl:ConeSearchResult">
+                  <sequence>
+                     <element name="data" nillable="true" type="impl:ArrayOfRASSPhoton"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://soap.gavo.org">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType abstract="true" name="DataObjectProxy">
+            <sequence>
+               <element name="metaDataDescription" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="doRASSPhotonConeSearchRequest">
+
+      <wsdl:part name="in0" type="xsd:double"/>
+
+      <wsdl:part name="in1" type="xsd:double"/>
+
+      <wsdl:part name="in2" type="xsd:double"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="doBSCConeSearchResponse">
+
+      <wsdl:part name="doBSCConeSearchReturn" type="impl:BSCConeSearchResult"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="doBSCConeSearchRequest">
+
+      <wsdl:part name="in0" type="xsd:double"/>
+
+      <wsdl:part name="in1" type="xsd:double"/>
+
+      <wsdl:part name="in2" type="xsd:double"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="doFSCConeSearchRequest">
+
+      <wsdl:part name="in0" type="xsd:double"/>
+
+      <wsdl:part name="in1" type="xsd:double"/>
+
+      <wsdl:part name="in2" type="xsd:double"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="doRASSPhotonConeSearchResponse">
+
+      <wsdl:part name="doRASSPhotonConeSearchReturn" type="impl:RASSPhotonConeSearchResult"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="doFSCConeSearchResponse">
+
+      <wsdl:part name="doFSCConeSearchReturn" type="impl:FSCConeSearchResult"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="RASSConeSearches">
+
+      <wsdl:operation name="doFSCConeSearch" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="impl:doFSCConeSearchRequest" name="doFSCConeSearchRequest"/>
+
+         <wsdl:output message="impl:doFSCConeSearchResponse" name="doFSCConeSearchResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="doBSCConeSearch" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="impl:doBSCConeSearchRequest" name="doBSCConeSearchRequest"/>
+
+         <wsdl:output message="impl:doBSCConeSearchResponse" name="doBSCConeSearchResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="doRASSPhotonConeSearch" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="impl:doRASSPhotonConeSearchRequest"
+                     name="doRASSPhotonConeSearchRequest"/>
+
+         <wsdl:output message="impl:doRASSPhotonConeSearchResponse"
+                      name="doRASSPhotonConeSearchResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="RASSConeSearchesSoapBinding" type="impl:RASSConeSearches">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="doFSCConeSearch">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="doFSCConeSearchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="gavo:soap:cone"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="doFSCConeSearchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="gavo:soap:cone"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="doBSCConeSearch">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="doBSCConeSearchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="gavo:soap:cone"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="doBSCConeSearchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="gavo:soap:cone"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="doRASSPhotonConeSearch">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="doRASSPhotonConeSearchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="gavo:soap:cone"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="doRASSPhotonConeSearchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="gavo:soap:cone"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="RASSConeSearchesService">
+
+      <wsdl:port binding="impl:RASSConeSearchesSoapBinding" name="RASSConeSearches">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/g-vo.org/0.1/RASSConeSearchesService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

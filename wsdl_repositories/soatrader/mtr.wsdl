@@ -1,0 +1,1315 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://producers.mtr.xtee.riik.ee/producer/mtr"
+                  xmlns:xtee="http://x-tee.riik.ee/xsd/xtee.xsd"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:ns="http://www.w3.org/1999/xlink"
+                  xmlns:ns1="http://www.w3.org/2001/XMLSchema"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  targetNamespace="http://producers.mtr.xtee.riik.ee/producer/mtr"
+                  xml:lang="et"
+                  name="mtr">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://producers.mtr.xtee.riik.ee/producer/mtr">
+         <import namespace="http://x-tee.riik.ee/xsd/xtee.xsd"
+                 schemaLocation="http://x-tee.riik.ee/xsd/xtee.xsd"/>
+         <!--BEGIN - registreeringDetailne-->
+      <!--registreeringDetailne sisendparameetrid-->
+      <complexType name="RegistreeringDetailneParing">
+            <all>
+               <element name="tegevusalaKood" type="string" minOccurs="0"/>
+               <element name="kood" type="string" minOccurs="0"/>
+               <element name="tegevused" minOccurs="0">
+                  <complexType>
+                     <sequence>
+                        <element name="tegevusKood" type="integer" maxOccurs="unbounded"/>
+                     </sequence>
+                  </complexType>
+               </element>
+            </all>
+         </complexType>
+         <!--registreeringDetailne vastus-->
+      <complexType name="RegistreeringDetailneVastus">
+            <sequence>
+               <element name="kirjeteArv" type="integer"/>
+               <element name="registreeringud" minOccurs="0">
+                  <complexType>
+                     <sequence>
+                        <element name="registreering" type="tns:registrikanneDetailneTegevusType"
+                                 maxOccurs="unbounded"/>
+                     </sequence>
+                  </complexType>
+               </element>
+            </sequence>
+         </complexType>
+         <!--registrikanneDetailneTegevusType-->
+      <complexType name="registrikanneDetailneTegevusType">
+            <sequence>
+               <element name="ettevotja" type="tns:ettevotjaDetailneType"/>
+               <element name="valdkond" type="tns:valdkondType"/>
+               <element name="tegevusala" type="tns:tegevusalaType"/>
+               <element name="registreeritudKP" type="date"/>
+               <element name="tegevused" minOccurs="0">
+                  <complexType>
+                     <sequence>
+                        <element name="tegevus" type="tns:tegevusType" maxOccurs="unbounded"/>
+                     </sequence>
+                  </complexType>
+               </element>
+            </sequence>
+            <attribute name="regNR" type="string"/>
+         </complexType>
+         <!--muud vajalikud tüübid-->
+      <complexType name="ettevotjaDetailneType">
+            <all>
+               <element name="nimi" type="string"/>
+            </all>
+            <attribute name="kood" type="string"/>
+            <attribute name="isikukood" type="string"/>
+         </complexType>
+         <complexType name="valdkondType">
+            <simpleContent>
+               <extension base="string">
+                  <attribute name="kood" type="integer"/>
+               </extension>
+            </simpleContent>
+         </complexType>
+         <complexType name="tegevusalaType">
+            <simpleContent>
+               <extension base="string">
+                  <attribute name="kood" type="string"/>
+               </extension>
+            </simpleContent>
+         </complexType>
+         <complexType name="tegevusType">
+            <sequence>
+               <element name="nimi" type="string"/>
+               <element name="margeKP" type="date"/>
+            </sequence>
+            <attribute name="kood" type="integer"/>
+            <attribute name="tyyp" type="tns:tegevusTyypType"/>
+         </complexType>
+         <simpleType name="tegevusTyypType">
+            <restriction base="string">
+               <enumeration value="Kaup"/>
+               <enumeration value="Tegevus"/>
+            </restriction>
+         </simpleType>
+         <!--END registreeringDetailne-->
+      <!--Registreeringu otsingu sisend-->
+      <complexType name="RegistreeringParing">
+            <all>
+               <element ref="tns:nimi" minOccurs="0"/>
+               <element ref="tns:kood" minOccurs="0"/>
+               <element ref="tns:isikukood" minOccurs="0"/>
+               <element ref="tns:linnvald" minOccurs="0"/>
+               <element ref="tns:tanav" minOccurs="0"/>
+               <element ref="tns:regnr" minOccurs="0"/>
+               <element ref="tns:regkp" minOccurs="0"/>
+               <element ref="tns:tegevusalanimi" minOccurs="0"/>
+               <element ref="tns:tegevusala" minOccurs="0"/>
+               <element ref="tns:taotluseesitaja" minOccurs="0"/>
+               <element name="seotudisik" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Seotud isiku nimi</xtee:title>
+                        <xtee:notes>Registreeringuga seotud isiku nimi</xtee:notes>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="tegutsemiskohalinnvald" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Tegutsemiskoha linn/vald</xtee:title>
+                        <xtee:notes>Registreeringujärgse tegutsemiskoha linna või valla nimetus</xtee:notes>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="tegutsemiskohanimi" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Tegutsemiskoha nimi</xtee:title>
+                        <xtee:notes>Registreeringujärgse tegutsemiskoha nimetus</xtee:notes>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element ref="tns:kirjetearv"/>
+            </all>
+         </complexType>
+         <!--Tegevusloa otsingu sisend-->
+      <complexType name="TegevuslubaParing">
+            <all>
+               <element ref="tns:nimi" minOccurs="0"/>
+               <element ref="tns:kood" minOccurs="0"/>
+               <element ref="tns:linnvald" minOccurs="0"/>
+               <element ref="tns:tanav" minOccurs="0"/>
+               <element ref="tns:tegevusloaotsusenr" minOccurs="0"/>
+               <element ref="tns:regnr" minOccurs="0"/>
+               <element ref="tns:tegevusalanimi" minOccurs="0"/>
+               <element ref="tns:tegevusala" minOccurs="0"/>
+               <element ref="tns:regkp" minOccurs="0"/>
+               <element ref="tns:taotluseesitaja" minOccurs="0"/>
+               <element ref="tns:kirjetearv"/>
+            </all>
+         </complexType>
+         <!--Registrikande otsingu väljund-->
+      <complexType name="RegistriKanneVastus">
+            <sequence>
+               <element name="kirjed">
+                  <complexType>
+                     <sequence>
+                        <element name="kirje" minOccurs="0" maxOccurs="unbounded">
+                           <annotation>
+                              <appinfo>
+                                 <xtee:title>Registrikande info</xtee:title>
+                              </appinfo>
+                           </annotation>
+                           <complexType>
+                              <sequence>
+                                 <element name="yldinfo" type="tns:yldinfoType"/>
+                                 <element name="registrikanne" type="tns:registrikanneType"/>
+                              </sequence>
+                           </complexType>
+                        </element>
+                     </sequence>
+                  </complexType>
+               </element>
+               <element name="kirjeid" type="tns:kirjetearvType"/>
+            </sequence>
+         </complexType>
+         <!--Ettevõtja otsingu sisend-->
+      <complexType name="EttevotjaParing">
+            <all>
+               <element ref="tns:nimi" minOccurs="0"/>
+               <element ref="tns:kood" minOccurs="0"/>
+               <element ref="tns:isikukood" minOccurs="0"/>
+               <element ref="tns:regnr" minOccurs="0"/>
+               <element ref="tns:tegevusloaotsusenr" minOccurs="0"/>
+               <element ref="tns:tegevusala" minOccurs="0"/>
+               <element name="turuloanumber" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Turuloa number</xtee:title>
+                        <xtee:notes>Tegevusloa aluseks olnud turuloa number</xtee:notes>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element ref="tns:kirjetearv"/>
+            </all>
+         </complexType>
+         <!--Ettevõtja otsingu väljund-->
+      <complexType name="EttevotjaVastus">
+            <sequence>
+               <element name="ettevotjad">
+                  <complexType>
+                     <sequence>
+                        <element name="ettevotja" minOccurs="0" maxOccurs="unbounded">
+                           <annotation>
+                              <appinfo>
+                                 <xtee:title>Ettevõtja info</xtee:title>
+                              </appinfo>
+                           </annotation>
+                           <complexType>
+                              <sequence>
+                                 <element name="yldinfo" type="tns:yldinfoType"/>
+                                 <element name="registrikanded" minOccurs="0">
+                                    <annotation>
+                                       <appinfo>
+                                          <xtee:title>Ettevõtja registrikanded</xtee:title>
+                                       </appinfo>
+                                    </annotation>
+                                    <complexType>
+                                       <sequence>
+                                          <element name="registrikanne" type="tns:registrikanneType" maxOccurs="unbounded"/>
+                                       </sequence>
+                                    </complexType>
+                                 </element>
+                              </sequence>
+                           </complexType>
+                        </element>
+                     </sequence>
+                  </complexType>
+               </element>
+               <element name="kirjeid" type="tns:kirjetearvType"/>
+            </sequence>
+         </complexType>
+         <!--Ettevõtja aktiivsete registrikannete (tegevusload, registreeringud) otsingu sisend-->
+      <complexType name="EttevotjaDetailneParing">
+            <choice>
+          <!--Eesti Vabariigi äriregistri kood-->
+          <element ref="tns:kood"/>
+               <!--Eesti Vabariigi isikukood-->
+          <element ref="tns:isikukood"/>
+            </choice>
+         </complexType>
+         <!--Ettevõtja aktiivsete registrikannete otsingu (tegevusload, registreeringud) otsingu väljund-->
+      <complexType name="EttevotjaDetailneVastus">
+            <sequence>
+               <element name="ettevotja" minOccurs="0" maxOccurs="unbounded">
+                  <complexType>
+                     <sequence>
+                        <element name="yldinfo">
+                           <complexType>
+                              <complexContent>
+                                 <extension base="tns:yldinfoBaseType">
+                                    <sequence>
+                          <!--Ettevõtja aadress-->
+                          <element name="aadress" type="tns:aadressType">
+                                          <annotation>
+                                             <appinfo>
+                                                <xtee:title>Aadress</xtee:title>
+                                             </appinfo>
+                                          </annotation>
+                                       </element>
+                                    </sequence>
+                                 </extension>
+                              </complexContent>
+                           </complexType>
+                        </element>
+                        <!--Ettevõtja aktiivne registrikanne-->
+                <element name="registrikanne" type="tns:registrikanneDetailneType" minOccurs="0"
+                                 maxOccurs="unbounded"/>
+                     </sequence>
+                  </complexType>
+               </element>
+            </sequence>
+         </complexType>
+         <!--MIKO päringu sisend-->
+      <complexType name="RegistreeringMIKOParing">
+            <all>
+               <element name="kuu" minOccurs="1" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Aruande kuu</xtee:title>
+                        <xtee:info>Aruande kuu (1-12)</xtee:info>
+                     </appinfo>
+                  </annotation>
+                  <simpleType>
+                     <restriction base="integer">
+                        <totalDigits value="2"/>
+                     </restriction>
+                  </simpleType>
+               </element>
+               <element name="aasta" minOccurs="1" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Aruande aasta</xtee:title>
+                        <xtee:info>Aruande aasta (1900-2099)</xtee:info>
+                     </appinfo>
+                  </annotation>
+                  <simpleType>
+                     <restriction base="integer">
+                        <totalDigits value="4"/>
+                     </restriction>
+                  </simpleType>
+               </element>
+            </all>
+         </complexType>
+         <!--MIKO päringu väljund-->
+      <complexType name="RegistreeringMIKOVastus">
+            <sequence>
+               <element name="registrikanne" type="tns:registriKanneMIKOType" minOccurs="0"
+                        maxOccurs="unbounded"/>
+               <element name="kirjeid" type="tns:kirjetearvType" minOccurs="1" maxOccurs="1"/>
+            </sequence>
+         </complexType>
+         <!--Päringute üldised tüübid-->
+      <simpleType name="SoovitudKirjeteArv">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Kirjete arv</xtee:title>
+                  <xtee:notes>Maksimaalne soovitud kirjete arv</xtee:notes>
+               </appinfo>
+            </annotation>
+            <restriction base="integer">
+               <enumeration value="10">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>10</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </enumeration>
+               <enumeration value="50">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>50</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </enumeration>
+               <enumeration value="100">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>100</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </enumeration>
+            </restriction>
+         </simpleType>
+         <!--Vastuste üldised tüübid-->
+      <simpleType name="kirjetearvType">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Kirjete arv</xtee:title>
+                  <xtee:notes>Päringu tingimustele vastavate ja tagastatud kirjete arv</xtee:notes>
+               </appinfo>
+            </annotation>
+            <restriction base="integer"/>
+         </simpleType>
+         <element name="kirjetearv" type="tns:SoovitudKirjeteArv" default="10"/>
+         <element name="nimi" type="string">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Ettevõtja nimi</xtee:title>
+                  <xtee:notes>Ettevõtja või FIE nime osa</xtee:notes>
+               </appinfo>
+            </annotation>
+         </element>
+         <element name="kood">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Ettevõtja äriregistri kood</xtee:title>
+               </appinfo>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <minLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="isikukood">
+            <annotation>
+               <appinfo>
+                  <xtee:title>FIE isikukood</xtee:title>
+               </appinfo>
+            </annotation>
+            <simpleType>
+               <restriction base="integer">
+                  <totalDigits value="11"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="regnr">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Registreeringu number</xtee:title>
+               </appinfo>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <length value="9"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="tegevusala">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Tegevusala tähis</xtee:title>
+                  <xtee:notes>MTRi tegevusala 3 täheline lühend</xtee:notes>
+               </appinfo>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <length value="3"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="tegevusloaotsusenr" type="string">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Tegevusloa otsus</xtee:title>
+                  <xtee:notes>Tegevusloa määramise otsuse number</xtee:notes>
+               </appinfo>
+            </annotation>
+         </element>
+         <element name="regkp" type="date">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Registreeringu aeg</xtee:title>
+               </appinfo>
+            </annotation>
+         </element>
+         <element name="tegevusalanimi" type="string">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Tegevusala nimi</xtee:title>
+               </appinfo>
+            </annotation>
+         </element>
+         <element name="taotluseesitaja" type="string">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Taotluse esitaja nimi</xtee:title>
+                  <xtee:notes>Taotluse allkirjastanud kontaktisiku nimi</xtee:notes>
+               </appinfo>
+            </annotation>
+         </element>
+         <element name="tanav" type="string">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Tänav</xtee:title>
+                  <xtee:notes>Tänava nimetus aadressis</xtee:notes>
+               </appinfo>
+            </annotation>
+         </element>
+         <element name="linnvald" type="string">
+            <annotation>
+               <appinfo>
+                  <xtee:title>Linn/vald</xtee:title>
+                  <xtee:notes>Linna või valla nimetus aadressis</xtee:notes>
+               </appinfo>
+            </annotation>
+         </element>
+         <complexType name="yldinfoBaseType">
+            <sequence>
+               <element name="nimi" type="string">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Ettevõtja/FIE nimi</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="kood" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Äriregistri kood</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="tel" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Telefon</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="fax" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Faks</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="email" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>E-mail</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="web" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>WWW</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="mtrlink" type="xtee:url">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Ettevõtja detailandmed</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+            </sequence>
+         </complexType>
+         <complexType name="registrikanneType">
+            <annotation>
+               <appinfo/>
+            </annotation>
+            <sequence>
+          <!--Näitab, kas tegemist on registreeringu või tegevusloaga (registreering, tegevusluba) -->
+          <element name="tyyp" type="string">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Tüüp</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--Registrikande unikaalnde number MTR-is, mis algab 3-kohalise tegevusala lühendiga, millele
+					järgneb 6-kohaline unikaalne (tegevusala piirides) registrikande järjekorranumber-->
+          <element name="regnr" type="string">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Registrikande nr</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--Registrikande valdkonna nimetus-->
+          <element name="valdkond" type="string">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Valdkond</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--Registrikande tegevusala nimetus. Valdkonnad jagunevad tegevusaladeks, registrikanded jagunevad tegevusalade vahel-->
+          <element name="tegevusala" type="string">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Tegevusala</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--Registrikande tegevusala 3-täheline lühend. Sama, mis on registrikande numbri alguses-->
+          <element name="tegevusalakood" type="string">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Tegevusala tähis</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--Registrikande MTR-is registreerimise kuupäev-->
+          <element name="registreerimisekp" type="date">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Registreerimise kuupäev</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--URL registrikande detailsele avalikule infole MTR-is-->
+          <element name="mtrlink" type="xtee:url">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Registrikande detailandmed</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+            </sequence>
+         </complexType>
+         <complexType name="registrikanneDetailneType">
+            <complexContent>
+               <extension base="tns:registrikanneType">
+                  <sequence>
+                     <element name="tegevuskoht" minOccurs="0" maxOccurs="unbounded">
+                        <annotation>
+                           <appinfo>
+                              <xtee:title>Tegevuskoht</xtee:title>
+                           </appinfo>
+                        </annotation>
+                        <complexType>
+                           <complexContent>
+                              <extension base="tns:tegevuskohtType">
+                                 <sequence>
+                                    <element name="müügikoht" type="tns:tegevuskohtType" minOccurs="0" maxOccurs="unbounded">
+                                       <annotation>
+                                          <appinfo>
+                                             <xtee:title>Müügikoht</xtee:title>
+                                          </appinfo>
+                                       </annotation>
+                                    </element>
+                                 </sequence>
+                              </extension>
+                           </complexContent>
+                        </complexType>
+                     </element>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <complexType name="tegevuskohtType">
+            <sequence>
+          <!--Tegevuskoha liik-->
+          <element name="liik" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Liik</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--Tegevuskoha nimetus-->
+          <element name="nimetus" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Nimetus</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--Tegevuskoha aadress-->
+          <element name="aadress" type="tns:aadressType" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Aadress</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--Tegevuskohas tegutsemise alguse kuupäev.
+					Määratud vaid siis, kui tegemist on kaubanduse valdkonna avaliku üritusega.-->
+          <element name="alguskp" type="date" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Algus KP</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--Tegevuskoha tegutsemise lõppkuupäev.
+					Määratud vaid siis, kui tegemist on kaubanduse valdkonna avaliku üritusega,
+					mis kestab rohkem kui 1 päev-->
+          <element name="loppkp" type="date" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Lõpp KP</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+            </sequence>
+         </complexType>
+         <complexType name="aadressType">
+            <sequence>
+          <!--Aadressi riik-->
+          <element name="riik" type="string">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Riik</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--3-kohaline riigi kood Statistikaameti Riikide ja territooriumite klassifikaatori järgi (ISO 3166)-->
+          <element name="riigikood" type="string"/>
+               <!--4-kohaline Eesti haldusala kood Statistikaameti Eesti haldushalade klassifikaatori (EHAK) järgi-->
+          <element name="ehak" type="xtee:ehak" minOccurs="0"/>
+               <element name="maakond" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Maakond</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--Linna või valla nimetus-->
+          <element name="linnvald" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Linn/vald</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <!--Linnaosa, alevi, aleviku, küla nimetus-->
+          <element name="asula" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Asula/linnaosa</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="tänav" type="xtee:tanav" minOccurs="0"/>
+               <element name="majanimi" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Maja nimi</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="majanr" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Maja nr</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="korterinr" type="string" minOccurs="0">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Korteri nr</xtee:title>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="postiindeks" type="xtee:postiindeks" minOccurs="0"/>
+            </sequence>
+         </complexType>
+         <complexType name="yldinfoType">
+            <complexContent>
+               <extension base="tns:yldinfoBaseType">
+                  <sequence>
+                     <element name="aadress" type="string">
+                        <annotation>
+                           <appinfo>
+                              <xtee:title>Aadress</xtee:title>
+                           </appinfo>
+                        </annotation>
+                     </element>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+         <!--ettekirjutuste infoga registrikanne-->
+      <complexType name="registriKanneMIKOType">
+            <annotation>
+               <appinfo/>
+            </annotation>
+            <sequence>
+               <element name="tyyp" type="string" minOccurs="1" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Tüüp</xtee:title>
+                        <xtee:note>Näitab, kas tegemist on registreeringu või tegevusloaga (registreering, tegevusluba)</xtee:note>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="regnr" type="string" minOccurs="1" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Reg. Nr.</xtee:title>
+                        <xtee:note>
+                  Registrikande unikaalnde number MTR-is, mis algab 3-kohalise tegevusala lühendiga, millele
+                  järgneb 6-kohaline unikaalne (tegevusala piirides) registrikande järjekorranumber
+                </xtee:note>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="valdkond" type="string" minOccurs="1" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Valdkond</xtee:title>
+                        <xtee:note>Registrikande valdkonna nimetus</xtee:note>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="tegevusala" type="string" minOccurs="1" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Tegevusala</xtee:title>
+                        <xtee:note>Registrikande tegevusala nimetus. Valdkonnad jagunevad tegevusaladeks, registrikanded jagunevad tegevusalade vahel</xtee:note>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="tegevusalakood" type="string" minOccurs="1" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Tegevusala tähis</xtee:title>
+                        <xtee:note>Registrikande tegevusala 3-täheline lühend. Sama, mis on registrikande numbri alguses</xtee:note>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="registreerimisekp" type="date" minOccurs="1" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Reg. kp.</xtee:title>
+                        <xtee:note>Registrikande MTR-is või eelkäias RETTER-is registreerimise kuupäev</xtee:note>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="peatatudkp" type="date" minOccurs="0" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Peatamise kp.</xtee:title>
+                        <xtee:note>Registrikande MTR-is peatamise kuupäev</xtee:note>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="peatamiseloppkp" type="date" minOccurs="0" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Peatamise lõpu kp.</xtee:title>
+                        <xtee:note>Registrikande MTR-is peatamise lõpu kuupäev</xtee:note>
+                     </appinfo>
+                  </annotation>
+               </element>
+               <element name="ettevotja" minOccurs="1" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Ettevõtja</xtee:title>
+                        <xtee:note>ettevõtja üldandmed</xtee:note>
+                     </appinfo>
+                  </annotation>
+                  <complexType>
+                     <sequence>
+                        <element name="nimi" type="string" minOccurs="1" maxOccurs="1">
+                           <annotation>
+                              <appinfo>
+                                 <xtee:title>Nimi</xtee:title>
+                                 <xtee:note>Ettevõtja MTR-is registreeritud nimi</xtee:note>
+                              </appinfo>
+                           </annotation>
+                        </element>
+                        <element name="kood" type="string" minOccurs="0">
+                           <annotation>
+                              <appinfo>
+                                 <xtee:title>Äriregistri kood</xtee:title>
+                              </appinfo>
+                           </annotation>
+                        </element>
+                        <element name="isikukood" type="string" minOccurs="0">
+                           <annotation>
+                              <appinfo>
+                                 <xtee:title>FIE isikukood</xtee:title>
+                              </appinfo>
+                           </annotation>
+                        </element>
+                     </sequence>
+                  </complexType>
+               </element>
+               <element name="tegevuskoht" minOccurs="0" maxOccurs="unbounded">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Tegevuskoht</xtee:title>
+                        <xtee:note>Ettevõtja tegevuskoha info</xtee:note>
+                     </appinfo>
+                  </annotation>
+                  <complexType>
+                     <complexContent>
+                        <extension base="tns:tegevuskohtType">
+                           <sequence>
+                              <element name="müügikoht" type="tns:tegevuskohtType" minOccurs="0" maxOccurs="unbounded">
+                                 <annotation>
+                                    <appinfo>
+                                       <xtee:title>Müügikoht</xtee:title>
+                                       <xtee:note>Müügikoht</xtee:note>
+                                    </appinfo>
+                                 </annotation>
+                              </element>
+                           </sequence>
+                        </extension>
+                     </complexContent>
+                  </complexType>
+               </element>
+               <element name="ettekirjutus" minOccurs="1" maxOccurs="1">
+                  <annotation>
+                     <appinfo>
+                        <xtee:title>Ettekirjutus</xtee:title>
+                        <xtee:note>Kehtivate MTR-is registreeritud ettekirjutuste andmed</xtee:note>
+                     </appinfo>
+                  </annotation>
+                  <complexType>
+                     <sequence>
+                        <element name="tehtudkp" type="date" minOccurs="1" maxOccurs="1">
+                           <annotation>
+                              <appinfo>
+                                 <xtee:title>Tegemise kp.</xtee:title>
+                                 <xtee:note>Ettekirjutuse tegemise kuupäev</xtee:note>
+                              </appinfo>
+                           </annotation>
+                        </element>
+                        <element name="taitmisekp" type="date" minOccurs="0" maxOccurs="1">
+                           <annotation>
+                              <appinfo>
+                                 <xtee:title>Täitmise tähtaeg</xtee:title>
+                                 <xtee:note>Ettekirjutuse taitmise tähtpaev</xtee:note>
+                              </appinfo>
+                           </annotation>
+                        </element>
+                        <element name="kustutatudkp" type="date" minOccurs="0" maxOccurs="1">
+                           <annotation>
+                              <appinfo>
+                                 <xtee:title>Kustutamise kp.</xtee:title>
+                                 <xtee:note>Ettekirjutuse kustutamise kuupäev</xtee:note>
+                              </appinfo>
+                           </annotation>
+                        </element>
+                        <element name="sisu" type="string" minOccurs="0" maxOccurs="1">
+                           <annotation>
+                              <appinfo>
+                                 <xtee:title>Sisu</xtee:title>
+                                 <xtee:note>Ettekirjutuse sisu andmed</xtee:note>
+                              </appinfo>
+                           </annotation>
+                        </element>
+                     </sequence>
+                  </complexType>
+               </element>
+            </sequence>
+         </complexType>
+      </schema>
+  </wsdl:types>
+
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="registreering">
+      <part name="keha" type="tns:RegistreeringParing"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="registreeringResponse">
+      <part name="paring" type="tns:RegistreeringParing"/>
+      <part name="keha" type="tns:RegistriKanneVastus"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="registreeringDetailne">
+      <part name="keha" type="tns:RegistreeringDetailneParing"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="registreeringDetailneResponse">
+      <part name="paring" type="tns:RegistreeringDetailneParing"/>
+      <part name="keha" type="tns:RegistreeringDetailneVastus"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="tegevusluba">
+      <part name="keha" type="tns:TegevuslubaParing"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="tegevuslubaResponse">
+      <part name="paring" type="tns:TegevuslubaParing"/>
+      <part name="keha" type="tns:RegistriKanneVastus"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="ettevotja">
+      <part name="keha" type="tns:EttevotjaParing"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="ettevotjaResponse">
+      <part name="paring" type="tns:EttevotjaParing"/>
+      <part name="keha" type="tns:EttevotjaVastus"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="ettevotjaDetailne">
+      <part name="keha" type="tns:EttevotjaDetailneParing"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="ettevotjaDetailneResponse">
+      <part name="paring" type="tns:EttevotjaDetailneParing"/>
+      <part name="keha" type="tns:EttevotjaDetailneVastus"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="registreeringMIKO">
+      <part name="keha" type="tns:RegistreeringMIKOParing"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="registreeringMIKOResponse">
+      <part name="paring" type="tns:RegistreeringMIKOParing"/>
+      <part name="keha" type="tns:RegistreeringMIKOVastus"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="legacy">
+      <part name="keha" type="xtee:ArrayOfString"/>
+  </message>
+  <message xmlns="http://schemas.xmlsoap.org/wsdl/" name="legacyResponse">
+      <part name="paring" type="xtee:ArrayOfString"/>
+      <part name="keha" type="xtee:legacy_response"/>
+  </message>
+  
+
+  <portType xmlns="http://schemas.xmlsoap.org/wsdl/" name="xteeport">
+    <!--Päring, mis võimaldab MTR-is registreeritud ettevõtja andmeid otsida.
+		Päring tagastab ettevõtja MTR-is registreeritud info ja MTR-is registreeritud ettevõtja registrikanded (tegevusload, registreeringud)-->
+    <operation name="ettevotjaDetailne">
+         <documentation>
+            <xtee:title>Ettevõtja registrikannete otsing</xtee:title>
+         </documentation>
+         <input message="tns:ettevotjaDetailne"/>
+         <output message="tns:ettevotjaDetailneResponse"/>
+      </operation>
+      <operation name="registreeringDetailne">
+         <input message="tns:registreeringDetailne"/>
+         <output message="tns:registreeringDetailneResponse"/>
+      </operation>
+      <operation name="legacy1">
+         <documentation>
+            <xtee:title>Sisenemine MTR-i</xtee:title>
+         </documentation>
+         <input message="tns:legacy"/>
+         <output message="tns:legacyResponse"/>
+      </operation>
+      <operation name="legacyEttevotja">
+         <documentation>
+            <xtee:title>Sisenemine MTR-i ettevõtja kasutajana</xtee:title>
+         </documentation>
+         <input message="tns:legacy"/>
+         <output message="tns:legacyResponse"/>
+      </operation>
+      <operation name="legacyKodanik">
+         <documentation>
+            <xtee:title>Sisenemine MTR-i eraisikuna</xtee:title>
+         </documentation>
+         <input message="tns:legacy"/>
+         <output message="tns:legacyResponse"/>
+      </operation>
+      <operation name="ettevotja">
+         <documentation>
+            <xtee:title>Ettevõtja otsing</xtee:title>
+         </documentation>
+         <input message="tns:ettevotja"/>
+         <output message="tns:ettevotjaResponse"/>
+      </operation>
+      <operation name="registreering">
+         <documentation>
+            <xtee:title>Registreeringu otsing</xtee:title>
+         </documentation>
+         <input message="tns:registreering"/>
+         <output message="tns:registreeringResponse"/>
+      </operation>
+      <operation name="tegevusluba">
+         <documentation>
+            <xtee:title>Tegevusloa otsing</xtee:title>
+         </documentation>
+         <input message="tns:tegevusluba"/>
+         <output message="tns:tegevuslubaResponse"/>
+      </operation>
+      <operation name="registreeringMIKO">
+         <documentation>
+            <xtee:title>MIKO aruande registreeringute otsing</xtee:title>
+         </documentation>
+         <input message="tns:registreeringMIKO"/>
+         <output message="tns:registreeringMIKOResponse"/>
+      </operation>
+  </portType>
+
+  <binding xmlns="http://schemas.xmlsoap.org/wsdl/" name="xteebinding" type="tns:xteeport">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="ettevotjaDetailne">
+         <xtee:version>v1</xtee:version>
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </output>
+      </operation>
+      <operation name="registreeringDetailne">
+         <xtee:version>v1</xtee:version>
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </output>
+      </operation>
+      <operation name="legacy1">
+         <xtee:version>v1</xtee:version>
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </output>
+      </operation>
+      <operation name="legacyEttevotja">
+         <xtee:version>v1</xtee:version>
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+        
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+        
+         </output>
+      </operation>
+      <operation name="legacyKodanik">
+         <xtee:version>v1</xtee:version>
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </output>
+      </operation>
+      <operation name="ettevotja">
+         <xtee:version>v1</xtee:version>
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </output>
+      </operation>
+      <operation name="registreering">
+         <xtee:version>v1</xtee:version>
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </output>
+      </operation>
+      <operation name="tegevusluba">
+         <xtee:version>v1</xtee:version>
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </output>
+      </operation>
+      <operation name="registreeringMIKO">
+         <xtee:version>v1</xtee:version>
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://producers.mtr.xtee.riik.ee/producer/mtr"/>
+        
+        
+        
+        
+        
+        
+        
+         </output>
+      </operation>
+  </binding>
+  <service xmlns="http://schemas.xmlsoap.org/wsdl/" name="mtr">
+      <port name="xteeport" binding="tns:xteebinding">
+         <soap:address location="http://ws.soatrader.com/riik.ee/0.3/mtr"/>
+         <xtee:address producer="mtr"/>
+         <xtee:title>MTR</xtee:title>
+      </port>
+  </service>
+</wsdl:definitions>

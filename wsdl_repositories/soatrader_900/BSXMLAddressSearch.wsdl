@@ -1,0 +1,172 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://tempuri.org/EACBSXMLNLPGWS/BSXMLAddressSearch"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/EACBSXMLNLPGWS/BSXMLAddressSearch">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://tempuri.org/EACBSXMLNLPGWS/BSXMLAddressSearch">
+         <s:element name="GetAddressAsXML">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UIN" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAddressAsXMLResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAddressAsXMLResult">
+                     <s:complexType mixed="true">
+                        <s:sequence>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchAsXML">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strProperty" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strStreet" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strTown" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strPostcode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchAsXMLResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchAsXMLResult">
+                     <s:complexType mixed="true">
+                        <s:sequence>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAddressAsXMLSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAddressAsXML"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressAsXMLSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAddressAsXMLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchAsXMLSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchAsXML"/>
+  </wsdl:message>
+  <wsdl:message name="SearchAsXMLSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchAsXMLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressAsXMLHttpGetIn">
+      <wsdl:part name="UIN" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressAsXMLHttpGetOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="SearchAsXMLHttpGetIn">
+      <wsdl:part name="strProperty" type="s:string"/>
+      <wsdl:part name="strStreet" type="s:string"/>
+      <wsdl:part name="strTown" type="s:string"/>
+      <wsdl:part name="strPostcode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchAsXMLHttpGetOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressAsXMLHttpPostIn">
+      <wsdl:part name="UIN" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetAddressAsXMLHttpPostOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="SearchAsXMLHttpPostIn">
+      <wsdl:part name="strProperty" type="s:string"/>
+      <wsdl:part name="strStreet" type="s:string"/>
+      <wsdl:part name="strTown" type="s:string"/>
+      <wsdl:part name="strPostcode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchAsXMLHttpPostOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  <wsdl:portType name="BSXMLAddressSearchSoap">
+      <wsdl:operation name="GetAddressAsXML">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns an XML BS document containing one address from the East Ayrshire NLPG database which matches a given UPRN</documentation>
+         <wsdl:input message="tns:GetAddressAsXMLSoapIn"/>
+         <wsdl:output message="tns:GetAddressAsXMLSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SearchAsXML">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Full search which returns an XML BS document of addresses from the East Ayrshire NLPG database which match the given search criteria.</documentation>
+         <wsdl:input message="tns:SearchAsXMLSoapIn"/>
+         <wsdl:output message="tns:SearchAsXMLSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="BSXMLAddressSearchSoap" type="tns:BSXMLAddressSearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetAddressAsXML">
+         <soap:operation soapAction="http://tempuri.org/EACBSXMLNLPGWS/BSXMLAddressSearch/GetAddressAsXML"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchAsXML">
+         <soap:operation soapAction="http://tempuri.org/EACBSXMLNLPGWS/BSXMLAddressSearch/SearchAsXML"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="BSXMLAddressSearch">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/"/>
+      <wsdl:port name="BSXMLAddressSearchSoap" binding="tns:BSXMLAddressSearchSoap">
+         <soap:address location="http://ws.soatrader.com/east-ayrshire.gov.uk/0.1/BSXMLAddressSearch"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

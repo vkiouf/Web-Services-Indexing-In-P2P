@@ -1,0 +1,111 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://api.linktrust.com/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://api.linktrust.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://api.linktrust.com/">
+         <s:element name="GetStats">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="partnerID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="dateFrom" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="dateTo" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStatsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStatsResult"
+                             type="tns:AffiliateStatistics"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AffiliateStatistics">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="DateFrom" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DateTo" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalClicks" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalImpressions" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalReceived" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalApproved" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalRevenue" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Breakout" type="tns:ArrayOfStatInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfStatInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="StatInfo" nillable="true"
+                          type="tns:StatInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="StatInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ClickThruRatio" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Revenue" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Impressions" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Clicks" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Received" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Approved" type="s:long"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetStatsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStats"/>
+  </wsdl:message>
+  <wsdl:message name="GetStatsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStatsResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="AffiliateStatsSoap" type="tns:AffiliateStatsSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetStats">
+         <soap:operation soapAction="http://api.linktrust.com/GetStats" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="AffiliateStats">
+      <wsdl:port name="AffiliateStatsSoap" binding="tns:AffiliateStatsSoap">
+         <soap:address location="http://ws.soatrader.com/linktrust.com/0.1/AffiliateStats"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

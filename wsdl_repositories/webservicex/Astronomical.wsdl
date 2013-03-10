@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.webserviceX.NET/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.webserviceX.NET/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.webserviceX.NET/">
+      <s:element name="ChangeAstronomicalUnit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AstronomicalValue" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromAstronomicalUnit" type="tns:Astronomicals" />
+            <s:element minOccurs="1" maxOccurs="1" name="toAstronomicalUnit" type="tns:Astronomicals" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="Astronomicals">
+        <s:restriction base="s:string">
+          <s:enumeration value="meters" />
+          <s:enumeration value="kilometers" />
+          <s:enumeration value="miles" />
+          <s:enumeration value="AstronmicalunitAU" />
+          <s:enumeration value="lightyear" />
+          <s:enumeration value="parsec" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ChangeAstronomicalUnitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangeAstronomicalUnitResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="double" type="s:double" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ChangeAstronomicalUnitSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeAstronomicalUnit" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAstronomicalUnitSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeAstronomicalUnitResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAstronomicalUnitHttpGetIn">
+    <wsdl:part name="AstronomicalValue" type="s:string" />
+    <wsdl:part name="fromAstronomicalUnit" type="s:string" />
+    <wsdl:part name="toAstronomicalUnit" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAstronomicalUnitHttpGetOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAstronomicalUnitHttpPostIn">
+    <wsdl:part name="AstronomicalValue" type="s:string" />
+    <wsdl:part name="fromAstronomicalUnit" type="s:string" />
+    <wsdl:part name="toAstronomicalUnit" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAstronomicalUnitHttpPostOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:portType name="AstronomicalUnitSoap">
+    <wsdl:operation name="ChangeAstronomicalUnit">
+      <wsdl:input message="tns:ChangeAstronomicalUnitSoapIn" />
+      <wsdl:output message="tns:ChangeAstronomicalUnitSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="AstronomicalUnitHttpGet">
+    <wsdl:operation name="ChangeAstronomicalUnit">
+      <wsdl:input message="tns:ChangeAstronomicalUnitHttpGetIn" />
+      <wsdl:output message="tns:ChangeAstronomicalUnitHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="AstronomicalUnitHttpPost">
+    <wsdl:operation name="ChangeAstronomicalUnit">
+      <wsdl:input message="tns:ChangeAstronomicalUnitHttpPostIn" />
+      <wsdl:output message="tns:ChangeAstronomicalUnitHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AstronomicalUnitSoap" type="tns:AstronomicalUnitSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ChangeAstronomicalUnit">
+      <soap:operation soapAction="http://www.webserviceX.NET/ChangeAstronomicalUnit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AstronomicalUnitSoap12" type="tns:AstronomicalUnitSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ChangeAstronomicalUnit">
+      <soap12:operation soapAction="http://www.webserviceX.NET/ChangeAstronomicalUnit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AstronomicalUnitHttpGet" type="tns:AstronomicalUnitHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="ChangeAstronomicalUnit">
+      <http:operation location="/ChangeAstronomicalUnit" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AstronomicalUnitHttpPost" type="tns:AstronomicalUnitHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="ChangeAstronomicalUnit">
+      <http:operation location="/ChangeAstronomicalUnit" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AstronomicalUnit">
+    <wsdl:port name="AstronomicalUnitSoap" binding="tns:AstronomicalUnitSoap">
+      <soap:address location="http://www.webservicex.net/Astronomical.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AstronomicalUnitSoap12" binding="tns:AstronomicalUnitSoap12">
+      <soap12:address location="http://www.webservicex.net/Astronomical.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AstronomicalUnitHttpGet" binding="tns:AstronomicalUnitHttpGet">
+      <http:address location="http://www.webservicex.net/Astronomical.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AstronomicalUnitHttpPost" binding="tns:AstronomicalUnitHttpPost">
+      <http:address location="http://www.webservicex.net/Astronomical.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

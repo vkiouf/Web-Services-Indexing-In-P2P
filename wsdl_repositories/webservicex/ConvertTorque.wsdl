@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.webserviceX.NET/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.webserviceX.NET/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.webserviceX.NET/">
+      <s:element name="ChangeTorqueUnit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TorqueValue" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromTorqueUnit" type="tns:Torques" />
+            <s:element minOccurs="1" maxOccurs="1" name="toTorqueUnit" type="tns:Torques" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="Torques">
+        <s:restriction base="s:string">
+          <s:enumeration value="DyneCentimeters" />
+          <s:enumeration value="FootPounds" />
+          <s:enumeration value="InchPounds" />
+          <s:enumeration value="KilogramMeter" />
+          <s:enumeration value="MeterNewtons" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="ChangeTorqueUnitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangeTorqueUnitResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="double" type="s:double" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ChangeTorqueUnitSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeTorqueUnit" />
+  </wsdl:message>
+  <wsdl:message name="ChangeTorqueUnitSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeTorqueUnitResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeTorqueUnitHttpGetIn">
+    <wsdl:part name="TorqueValue" type="s:string" />
+    <wsdl:part name="fromTorqueUnit" type="s:string" />
+    <wsdl:part name="toTorqueUnit" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeTorqueUnitHttpGetOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:message name="ChangeTorqueUnitHttpPostIn">
+    <wsdl:part name="TorqueValue" type="s:string" />
+    <wsdl:part name="fromTorqueUnit" type="s:string" />
+    <wsdl:part name="toTorqueUnit" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeTorqueUnitHttpPostOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:portType name="TorqueUnitSoap">
+    <wsdl:operation name="ChangeTorqueUnit">
+      <wsdl:input message="tns:ChangeTorqueUnitSoapIn" />
+      <wsdl:output message="tns:ChangeTorqueUnitSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="TorqueUnitHttpGet">
+    <wsdl:operation name="ChangeTorqueUnit">
+      <wsdl:input message="tns:ChangeTorqueUnitHttpGetIn" />
+      <wsdl:output message="tns:ChangeTorqueUnitHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="TorqueUnitHttpPost">
+    <wsdl:operation name="ChangeTorqueUnit">
+      <wsdl:input message="tns:ChangeTorqueUnitHttpPostIn" />
+      <wsdl:output message="tns:ChangeTorqueUnitHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TorqueUnitSoap" type="tns:TorqueUnitSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ChangeTorqueUnit">
+      <soap:operation soapAction="http://www.webserviceX.NET/ChangeTorqueUnit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TorqueUnitSoap12" type="tns:TorqueUnitSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ChangeTorqueUnit">
+      <soap12:operation soapAction="http://www.webserviceX.NET/ChangeTorqueUnit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TorqueUnitHttpGet" type="tns:TorqueUnitHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="ChangeTorqueUnit">
+      <http:operation location="/ChangeTorqueUnit" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TorqueUnitHttpPost" type="tns:TorqueUnitHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="ChangeTorqueUnit">
+      <http:operation location="/ChangeTorqueUnit" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TorqueUnit">
+    <wsdl:port name="TorqueUnitSoap" binding="tns:TorqueUnitSoap">
+      <soap:address location="http://www.webservicex.net/ConvertTorque.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TorqueUnitSoap12" binding="tns:TorqueUnitSoap12">
+      <soap12:address location="http://www.webservicex.net/ConvertTorque.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TorqueUnitHttpGet" binding="tns:TorqueUnitHttpGet">
+      <http:address location="http://www.webservicex.net/ConvertTorque.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TorqueUnitHttpPost" binding="tns:TorqueUnitHttpPost">
+      <http:address location="http://www.webservicex.net/ConvertTorque.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

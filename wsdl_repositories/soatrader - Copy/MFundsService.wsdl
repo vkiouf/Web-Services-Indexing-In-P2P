@@ -1,0 +1,421 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.spk.gov.tr/webservices/"
+                  xmlns:s1="http://microsoft.com/wsdl/types/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.spk.gov.tr/webservices/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>This web service provides mutual funds portfolio values.&lt;br&gt;Bu web servis Yatırım Fonları Temel Bilgilerini (fon tutarları, pay sayısı, yatırımcı sayısı, portföy değeri, portföy dağılımı, birim fiyat bilgileri) sağlar.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.spk.gov.tr/webservices/">
+         <s:import namespace="http://microsoft.com/wsdl/types/"/>
+         <s:element name="GetFundsCodeName">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="cType" type="s1:char"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundsCodeNameResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetFundsCodeNameResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetYOCodeName">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetYOCodeNameResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetYOCodeNameResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundInfos">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strFonKod" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundInfosResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetFundInfosResult" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetFundsSummaryInfos">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="theDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundsSummaryInfosResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetFundsSummaryInfosResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundPortfolioValues">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strTakasCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strCompanyType" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="dateBegin" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="dateEnd" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundPortfolioValuesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetFundPortfolioValuesResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundsPortfolioValues">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strTakasCodeBegin" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strTakasCodeEnd" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strCompanyType" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="dateBegin" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="dateEnd" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundsPortfolioValuesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetFundsPortfolioValuesResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundPortfolioValuesMonthly">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strFonKod" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="theYear" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="theMonth" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundPortfolioValuesMonthlyResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetFundPortfolioValuesMonthlyResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundsPortfolioValuesDaily">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="theDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFundsPortfolioValuesDailyResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetFundsPortfolioValuesDailyResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetYOPortfolioValues">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="strCompanyCodeBegin" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="strCompanyCodeEnd" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="dateBegin" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="dateEnd" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetYOPortfolioValuesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetYOPortfolioValuesResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://microsoft.com/wsdl/types/">
+         <s:simpleType name="char">
+            <s:restriction base="s:unsignedShort"/>
+         </s:simpleType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetFundsCodeNameSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFundsCodeName"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundsCodeNameSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFundsCodeNameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetYOCodeNameSoapIn">
+      <wsdl:part name="parameters" element="tns:GetYOCodeName"/>
+  </wsdl:message>
+  <wsdl:message name="GetYOCodeNameSoapOut">
+      <wsdl:part name="parameters" element="tns:GetYOCodeNameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundInfosSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFundInfos"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundInfosSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFundInfosResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundsSummaryInfosSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFundsSummaryInfos"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundsSummaryInfosSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFundsSummaryInfosResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundPortfolioValuesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFundPortfolioValues"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundPortfolioValuesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFundPortfolioValuesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundsPortfolioValuesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFundsPortfolioValues"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundsPortfolioValuesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFundsPortfolioValuesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundPortfolioValuesMonthlySoapIn">
+      <wsdl:part name="parameters" element="tns:GetFundPortfolioValuesMonthly"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundPortfolioValuesMonthlySoapOut">
+      <wsdl:part name="parameters" element="tns:GetFundPortfolioValuesMonthlyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundsPortfolioValuesDailySoapIn">
+      <wsdl:part name="parameters" element="tns:GetFundsPortfolioValuesDaily"/>
+  </wsdl:message>
+  <wsdl:message name="GetFundsPortfolioValuesDailySoapOut">
+      <wsdl:part name="parameters" element="tns:GetFundsPortfolioValuesDailyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetYOPortfolioValuesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetYOPortfolioValues"/>
+  </wsdl:message>
+  <wsdl:message name="GetYOPortfolioValuesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetYOPortfolioValuesResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="MFundsServiceSoap" type="tns:MFundsServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetFundsCodeName">
+         <soap:operation soapAction="http://www.spk.gov.tr/webservices/GetFundsCodeName"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetYOCodeName">
+         <soap:operation soapAction="http://www.spk.gov.tr/webservices/GetYOCodeName" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetFundInfos">
+         <soap:operation soapAction="http://www.spk.gov.tr/webservices/GetFundInfos" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetFundsSummaryInfos">
+         <soap:operation soapAction="http://www.spk.gov.tr/webservices/GetFundsSummaryInfos"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetFundPortfolioValues">
+         <soap:operation soapAction="http://www.spk.gov.tr/webservices/GetFundPortfolioValues"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetFundsPortfolioValues">
+         <soap:operation soapAction="http://www.spk.gov.tr/webservices/GetFundsPortfolioValues"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetFundPortfolioValuesMonthly">
+         <soap:operation soapAction="http://www.spk.gov.tr/webservices/GetFundPortfolioValuesMonthly"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetFundsPortfolioValuesDaily">
+         <soap:operation soapAction="http://www.spk.gov.tr/webservices/GetFundsPortfolioValuesDaily"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetYOPortfolioValues">
+         <soap:operation soapAction="http://www.spk.gov.tr/webservices/GetYOPortfolioValues"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="MFundsService">
+      <wsdl:documentation>This web service provides mutual funds portfolio values.&lt;br&gt;Bu web servis Yatırım Fonları Temel Bilgilerini (fon tutarları, pay sayısı, yatırımcı sayısı, portföy değeri, portföy dağılımı, birim fiyat bilgileri) sağlar.</wsdl:documentation>
+      <wsdl:port name="MFundsServiceSoap" binding="tns:MFundsServiceSoap">
+         <soap:address location="http://ws.soatrader.com/spk.gov.tr/0.2/MFundsService"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

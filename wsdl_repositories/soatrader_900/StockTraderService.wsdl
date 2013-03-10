@@ -1,0 +1,206 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:s="http://www.w3.org/2001/XMLSchema"
+             xmlns:s0="http://www.bluestonepartners.com/schemas/StockTrader/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tns="http://www.bluestonepartners.com/schemas/StockTrader"
+             xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             targetNamespace="http://www.bluestonepartners.com/schemas/StockTrader">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.bluestonepartners.com/schemas/StockTrader/">
+         <s:element name="Account" type="s:string"/> 
+         <s:element name="Trades" type="s0:Trades"/> 
+         <s:complexType name="Trades">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Account" type="s:string"/> 
+               <s:element minOccurs="0" maxOccurs="1" name="Bids" type="s0:ArrayOfTrade"/> 
+               <s:element minOccurs="0" maxOccurs="1" name="Asks" type="s0:ArrayOfTrade"/> 
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfTrade">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Trade" nillable="true"
+                          type="s0:Trade"/> 
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Trade">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="TradeID" type="s:string"/> 
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="Shares" type="s:int"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="tradeType" type="s0:TradeType"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="tradeStatus" type="s0:TradeStatus"/> 
+               <s:element minOccurs="0" maxOccurs="1" name="OrderDateTime" type="s:string"/> 
+               <s:element minOccurs="0" maxOccurs="1" name="LastActivityDateTime" type="s:string"/> 
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="TradeType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Bid"/> 
+               <s:enumeration value="Ask"/> 
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="TradeStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="Ordered"/> 
+               <s:enumeration value="Filled"/> 
+               <s:enumeration value="Cancelled"/> 
+               <s:enumeration value="Unfilled"/> 
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="TradeID" type="s:string"/> 
+         <s:element name="Trade" type="s0:Trade"/> 
+         <s:element name="Symbol" type="s:string"/> 
+         <s:element name="Shares" type="s:int"/> 
+         <s:element name="Price" type="s:double"/> 
+         <s:element name="tradeType" type="s0:TradeType"/> 
+         <s:element name="Quote" type="s0:Quote"/> 
+         <s:complexType name="Quote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/> 
+               <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string"/> 
+               <s:element minOccurs="0" maxOccurs="1" name="DateTime" type="s:string"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="High" type="s:double"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="Low" type="s:double"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="Open" type="s:double"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="Last" type="s:double"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="Change" type="s:double"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChange" type="s:double"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="Previous_Close" type="s:double"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="High_52_Week" type="s:double"/> 
+               <s:element minOccurs="1" maxOccurs="1" name="Low_52_Week" type="s:double"/> 
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </types>
+   <message name="RequestAllTradesSummarySoapIn">
+      <part name="Account" element="s0:Account"/> 
+  </message>
+   <message name="RequestAllTradesSummarySoapOut">
+      <part name="RequestAllTradesSummaryResult" element="s0:Trades"/> 
+  </message>
+   <message name="RequestTradeDetailsSoapIn">
+      <part name="Account" element="s0:Account"/> 
+      <part name="TradeID" element="s0:TradeID"/> 
+  </message>
+   <message name="RequestTradeDetailsSoapOut">
+      <part name="RequestTradeDetailsResult" element="s0:Trade"/> 
+  </message>
+   <message name="PlaceTradeSoapIn">
+      <part name="Account" element="s0:Account"/> 
+      <part name="Symbol" element="s0:Symbol"/> 
+      <part name="Shares" element="s0:Shares"/> 
+      <part name="Price" element="s0:Price"/> 
+      <part name="tradeType" element="s0:tradeType"/> 
+  </message>
+   <message name="PlaceTradeSoapOut">
+      <part name="PlaceTradeResult" element="s0:Trade"/> 
+  </message>
+   <message name="RequestQuoteSoapIn">
+      <part name="Symbol" element="s0:Symbol"/> 
+  </message>
+   <message name="RequestQuoteSoapOut">
+      <part name="RequestQuoteResult" element="s0:Quote"/> 
+  </message>
+   <portType name="StockTraderServiceSoap">
+      <operation name="RequestAllTradesSummary">
+         <input message="tns:RequestAllTradesSummarySoapIn"/> 
+         <output message="tns:RequestAllTradesSummarySoapOut"/> 
+      </operation>
+      <operation name="RequestTradeDetails">
+         <input message="tns:RequestTradeDetailsSoapIn"/> 
+         <output message="tns:RequestTradeDetailsSoapOut"/> 
+      </operation>
+      <operation name="PlaceTrade">
+         <input message="tns:PlaceTradeSoapIn"/> 
+         <output message="tns:PlaceTradeSoapOut"/> 
+      </operation>
+      <operation name="RequestQuote">
+         <input message="tns:RequestQuoteSoapIn"/> 
+         <output message="tns:RequestQuoteSoapOut"/> 
+      </operation>
+  </portType>
+   <binding name="StockTraderServiceSoap" type="tns:StockTraderServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/> 
+      <operation name="RequestAllTradesSummary">
+         <soap:operation soapAction="http://www.bluestonepartners.com/schemas/StockTrader/RequestAllTradesSummary"
+                         style="document"/> 
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/> 
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/> 
+         </output>
+      </operation>
+      <operation name="RequestTradeDetails">
+         <soap:operation soapAction="http://www.bluestonepartners.com/schemas/StockTrader/RequestTradeDetails"
+                         style="document"/> 
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/> 
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/> 
+         </output>
+      </operation>
+      <operation name="PlaceTrade">
+         <soap:operation soapAction="http://www.bluestonepartners.com/schemas/StockTrader/PlaceTrade"
+                         style="document"/> 
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/> 
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/> 
+         </output>
+      </operation>
+      <operation name="RequestQuote">
+         <soap:operation soapAction="http://www.bluestonepartners.com/schemas/StockTrader/RequestQuote"
+                         style="document"/> 
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/> 
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/> 
+         </output>
+      </operation>
+  </binding>
+   <service name="StockTraderService">
+      <port name="StockTraderServiceSoap" binding="tns:StockTraderServiceSoap">
+         <soap:address location="http://ws.soatrader.com/bluestonepartners.com/0.1/StockTraderService"/> 
+      </port>
+  </service>
+  </definitions>

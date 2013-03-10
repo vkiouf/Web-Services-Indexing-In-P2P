@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.alpha-beds.com/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.alpha-beds.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Welcome to the Alphabeds affiliate programme, using Travelcentral from Aria Software.  Affiliate.asmx is an XML Webservice that offers room availability to our affiliate partners so that they can show our product range on their website.  Click on a method below to find out more about the operations behind Affiliate.asmx.&lt;h3&gt;General notes&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;There are currently 4 webmethods which fetch availability from our system&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;State is transferred to the Alphabeds site using an encoded cgi string&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Prices are returned at gross rates in GBP, unless a currency is supplied&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Prices on some rooms may be approximate.  This is due to some limitations of legacy systems.  When the user clicks on the valuate link, the price given will be the final price.&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;Technical notes&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Take note of the HTTP headers you must pass with each XML document.  The XML panel in each webmethod description is essentially the HTTP string you should be posting.&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;This is a SOAP implementation of an XML Webservice.  Whilst using a SOAP toolkit isn't strictly necessary, it will help speed up development.&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Some errors will be returned in an &amp;lt;XMLError&amp;gt; tag in each result set (e.g. missing node values).  SOAP Exceptions may be generated (e.g. malformed SOAP request); these will return a server error 500 and a SOAP message.  This is as per the SOAP specification.&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Dates in the TravelCentral system are always processed in the following format:  YYYY-MM-DD&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;As we interact with many different systems, do not assume that a node named "EdiCode" will always be an integer.  Many codes and keys will take a variety of string forms, so it is wise to budget for a reasonable string length in your internal systems (128 will be adequate for most code fields).&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;MasterDestination fields are taken from the Travelcentral master list of destinations.  These are in the form of a GUID and should be given in the format: {ABCD-EFGH-IJKL-MNOP}.  &lt;!--The destinations can be downloaded &lt;a target="_new" href="http://www.alpharooms.com/affiliate/destinations.xls"&gt;here&lt;/a&gt;.  Do not confuse the MasterDestination with any DestinationKey fields - these are different.--&gt;&lt;/li&gt;&lt;/ul&gt;</wsdl:documentation>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.alpha-beds.com/">
+         <s:element name="GetAffiliateAvailability">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AffiliateAuthentication"
+                             type="tns:Authenticaton"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ArrivalDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DepartureDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RoomType" type="tns:Occupancy"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MasterDestination" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Authenticaton">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Code2" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="Occupancy">
+            <s:restriction base="s:string">
+               <s:enumeration value="SingleRoom"/>
+               <s:enumeration value="SingleOneChildRoom"/>
+               <s:enumeration value="SingleTwoChildRoom"/>
+               <s:enumeration value="SingleThreeChildRoom"/>
+               <s:enumeration value="SingleFourChildRoom"/>
+               <s:enumeration value="SingleFiveChildRoom"/>
+               <s:enumeration value="TwinRoom"/>
+               <s:enumeration value="TwinOneChildRoom"/>
+               <s:enumeration value="TwinTwoChildRoom"/>
+               <s:enumeration value="TwinThreeChildRoom"/>
+               <s:enumeration value="TwinFourChildRoom"/>
+               <s:enumeration value="TripleRoom"/>
+               <s:enumeration value="TripleOneChildRoom"/>
+               <s:enumeration value="TripleTwoChildRoom"/>
+               <s:enumeration value="TripleThreeChildRoom"/>
+               <s:enumeration value="QuadRoom"/>
+               <s:enumeration value="QuadOneChildRoom"/>
+               <s:enumeration value="QuadTwoChildRoom"/>
+               <s:enumeration value="QuinRoom"/>
+               <s:enumeration value="QuinOneChildRoom"/>
+               <s:enumeration value="SextRoom"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetAffiliateAvailabilityResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAffiliateAvailabilityResult"
+                             type="tns:ArrayOfAvailableRoom"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAvailableRoom">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AvailableRoom" nillable="true"
+                          type="tns:AvailableRoom"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AvailableRoom">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="XMLError" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SessionID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FromDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ToDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NumberOfRooms" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EdiSource" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EdiCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HotelName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Contract" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="IncomingContract" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MinChildAge" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MaxChildAge" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomAdults" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomChildren" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DestinationKey" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DestinationName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ZoneKey" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ZoneName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CategoryDescription" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BoardCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RoomDescription" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BoardDescription" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EstablishmentKey" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Currency" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalCostAmount" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalSaleAmount" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IsApproxAmount" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IsRequest" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LongDescrption" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Image1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Image2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Image3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Image4" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IsSpecialRate" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalDiscountAmount" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AvailablityType" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetAffiliateAvailabilityWithPF">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AffiliateAuthentication"
+                             type="tns:Authenticaton"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ArrivalDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DepartureDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RoomType" type="tns:Occupancy"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MasterDestination" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="hash" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAffiliateAvailabilityWithPFResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAffiliateAvailabilityWithPFResult"
+                             type="tns:ArrayOfAvailableRoom"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAffiliateAvailabilityWithCurrency">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AffiliateAuthentication"
+                             type="tns:Authenticaton"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ArrivalDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DepartureDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RoomType" type="tns:Occupancy"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MasterDestination" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Currency" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAffiliateAvailabilityWithCurrencyResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetAffiliateAvailabilityWithCurrencyResult"
+                             type="tns:ArrayOfAvailableRoom"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAffiliateAvailabilityByDestinationName">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AffiliateAuthentication"
+                             type="tns:Authenticaton"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ArrivalDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DepartureDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RoomType" type="tns:Occupancy"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MasterDestinationName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAffiliateAvailabilityByDestinationNameResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1"
+                             name="GetAffiliateAvailabilityByDestinationNameResult"
+                             type="tns:ArrayOfAvailableRoom"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAffiliateAvailabilityByDestinationNameAndCurrency">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AffiliateAuthentication"
+                             type="tns:Authenticaton"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ArrivalDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DepartureDate" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="RoomType" type="tns:Occupancy"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MasterDestinationName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Currency" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAffiliateAvailabilityByDestinationNameAndCurrencyResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1"
+                             name="GetAffiliateAvailabilityByDestinationNameAndCurrencyResult"
+                             type="tns:ArrayOfAvailableRoom"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAffiliateAvailabilitySoapIn">
+      <wsdl:part name="parameters" element="tns:GetAffiliateAvailability"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateAvailabilitySoapOut">
+      <wsdl:part name="parameters" element="tns:GetAffiliateAvailabilityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateAvailabilityWithPFSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAffiliateAvailabilityWithPF"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateAvailabilityWithPFSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAffiliateAvailabilityWithPFResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateAvailabilityWithCurrencySoapIn">
+      <wsdl:part name="parameters" element="tns:GetAffiliateAvailabilityWithCurrency"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateAvailabilityWithCurrencySoapOut">
+      <wsdl:part name="parameters" element="tns:GetAffiliateAvailabilityWithCurrencyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateAvailabilityByDestinationNameSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAffiliateAvailabilityByDestinationName"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateAvailabilityByDestinationNameSoapOut">
+      <wsdl:part name="parameters"
+                 element="tns:GetAffiliateAvailabilityByDestinationNameResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateAvailabilityByDestinationNameAndCurrencySoapIn">
+      <wsdl:part name="parameters"
+                 element="tns:GetAffiliateAvailabilityByDestinationNameAndCurrency"/>
+  </wsdl:message>
+  <wsdl:message name="GetAffiliateAvailabilityByDestinationNameAndCurrencySoapOut">
+      <wsdl:part name="parameters"
+                 element="tns:GetAffiliateAvailabilityByDestinationNameAndCurrencyResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="AffiliateSoap" type="tns:AffiliateSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetAvailability">
+         <soap:operation soapAction="http://www.alpha-beds.com/GetAffiliateAvailability"
+                         style="document"/>
+         <wsdl:input name="GetAffiliateAvailability">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="GetAffiliateAvailability">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAvailabilityWithPF">
+         <soap:operation soapAction="http://www.alpha-beds.com/GetAffiliateAvailabilityWithPF"
+                         style="document"/>
+         <wsdl:input name="GetAffiliateAvailabilityWithPF">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="GetAffiliateAvailabilityWithPF">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAvailabilityWithCurrency">
+         <soap:operation soapAction="http://www.alpha-beds.com/GetAffiliateAvailabilityWithCurrency"
+                         style="document"/>
+         <wsdl:input name="GetAffiliateAvailabilityWithCurrency">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="GetAffiliateAvailabilityWithCurrency">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAvailabilityByDestinationName">
+         <soap:operation soapAction="http://www.alpha-beds.com/GetAffiliateAvailabilityByDestinationName"
+                         style="document"/>
+         <wsdl:input name="GetAffiliateAvailabilityByDestinationName">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="GetAffiliateAvailabilityByDestinationName">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAvailabilityByDestinationNameAndCurrency">
+         <soap:operation soapAction="http://www.alpha-beds.com/GetAffiliateAvailabilityByDestinationNameAndCurrency"
+                         style="document"/>
+         <wsdl:input name="GetAffiliateAvailabilityByDestinationNameAndCurrency">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="GetAffiliateAvailabilityByDestinationNameAndCurrency">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="Affiliate">
+      <wsdl:documentation>Welcome to the Alphabeds affiliate programme, using Travelcentral from Aria Software.  Affiliate.asmx is an XML Webservice that offers room availability to our affiliate partners so that they can show our product range on their website.  Click on a method below to find out more about the operations behind Affiliate.asmx.&lt;h3&gt;General notes&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;There are currently 4 webmethods which fetch availability from our system&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;State is transferred to the Alphabeds site using an encoded cgi string&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Prices are returned at gross rates in GBP, unless a currency is supplied&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Prices on some rooms may be approximate.  This is due to some limitations of legacy systems.  When the user clicks on the valuate link, the price given will be the final price.&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;Technical notes&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Take note of the HTTP headers you must pass with each XML document.  The XML panel in each webmethod description is essentially the HTTP string you should be posting.&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;This is a SOAP implementation of an XML Webservice.  Whilst using a SOAP toolkit isn't strictly necessary, it will help speed up development.&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Some errors will be returned in an &amp;lt;XMLError&amp;gt; tag in each result set (e.g. missing node values).  SOAP Exceptions may be generated (e.g. malformed SOAP request); these will return a server error 500 and a SOAP message.  This is as per the SOAP specification.&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;Dates in the TravelCentral system are always processed in the following format:  YYYY-MM-DD&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;As we interact with many different systems, do not assume that a node named "EdiCode" will always be an integer.  Many codes and keys will take a variety of string forms, so it is wise to budget for a reasonable string length in your internal systems (128 will be adequate for most code fields).&lt;/li&gt;&lt;/ul&gt;&lt;ul&gt;&lt;li&gt;MasterDestination fields are taken from the Travelcentral master list of destinations.  These are in the form of a GUID and should be given in the format: {ABCD-EFGH-IJKL-MNOP}.  &lt;!--The destinations can be downloaded &lt;a target="_new" href="http://www.alpharooms.com/affiliate/destinations.xls"&gt;here&lt;/a&gt;.  Do not confuse the MasterDestination with any DestinationKey fields - these are different.--&gt;&lt;/li&gt;&lt;/ul&gt;</wsdl:documentation>
+      <wsdl:port name="AffiliateSoap" binding="tns:AffiliateSoap">
+         <soap:address location="http://ws.soatrader.com/alpharooms.com/0.1/Affiliate"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

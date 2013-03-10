@@ -1,0 +1,907 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="radas.services.soap.sms"
+                  xmlns:dm="http://www.develop.com/web/services/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="radas.services.soap.sms">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="radas.services.soap.sms">
+         <s:element name="CommunicationTest">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CommunicationTestResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="CommunicatorHeader" type="tns:CommunicatorHeader"/>
+         <s:complexType name="CommunicatorHeader">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AccountRef" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SendSMS">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ToNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ContentType" type="tns:MessageType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ExpiryTime" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="MessageType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Text"/>
+               <s:enumeration value="Binary"/>
+               <s:enumeration value="Unicode"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="SendSMSResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SendSMSResult" type="tns:ArrayOfBatchGUIDs"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfBatchGUIDs">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BatchGUIDs" nillable="true"
+                          type="tns:BatchGUIDs"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BatchGUIDs">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="MsgGUID" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AccountOptionSetEmail">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AccountOptionSetEmailResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="AccountOptionInactivateEmail">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AccountOptionInactivateEmailResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="AccountOptionSetSMSForwarding">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ForwardMSISDN" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AccountOptionSetSMSForwardingResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="AccountOptionInactivateSMSForwarding">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AccountOptionInactivateSMSForwardingResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="AccountOptionSetDefaultResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ResponseText" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AccountOptionSetDefaultResponseResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="AccountOptionInactivateDefaultResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AccountOptionInactivateDefaultResponseResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="AccountOptionSetSOAPDelegate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AccountOptionSetSOAPDelegateResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="AccountOptionInactivateSOAPDelegate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AccountOptionInactivateSOAPDelegateResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="InboxMessagesGet">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FromDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ToDate" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CurrentPage" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MessagesPerPage" type="s:unsignedByte"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SenderMSISDN" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InboxMessagesGetResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="InboxMessagesGetResult"
+                             type="tns:InboxMessages"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="InboxMessages">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FromDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ToDate" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CurrentPage" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalRecords" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessagesPerPage" type="s:unsignedByte"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Inbox" type="tns:ArrayOfInboxMessage"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfInboxMessage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="InboxMessage" nillable="true"
+                          type="tns:InboxMessage"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="InboxMessage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="SentAt" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReceivedAt" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MsgGUID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Sender" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ContentType" type="tns:MessageType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Content">
+                  <s:complexType mixed="true">
+                     <s:sequence>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="InboxMessageGet">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MessageGUID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InboxMessageGetResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="InboxMessageGetResult"
+                             type="tns:InboxMessages"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="OutboxMessagesGet">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FromDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ToDate" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CurrentPage" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MessagesPerPage" type="s:unsignedByte"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RecipientMSISDN" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="OutboxMessagesGetResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="OutboxMessagesGetResult"
+                             type="tns:OutboxMessages"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="OutboxMessages">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="FromDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ToDate" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CurrentPage" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalRecords" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessagesPerPage" type="s:unsignedByte"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Outbox" type="tns:ArrayOfOutboxMessage"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfOutboxMessage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="OutboxMessage" nillable="true"
+                          type="tns:OutboxMessage"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="OutboxMessage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Sender" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Created" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MsgStatus" type="tns:MsgStatus"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MsgGUID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Recipient" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ContentType" type="tns:MessageType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Content">
+                  <s:complexType mixed="true">
+                     <s:sequence>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="MsgStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="Sent"/>
+               <s:enumeration value="DeliveredToRecipientMailbox"/>
+               <s:enumeration value="Failed"/>
+               <s:enumeration value="UnrecognisedRecipient"/>
+               <s:enumeration value="ValidityPeriodExpired"/>
+               <s:enumeration value="PendingCredits"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="OutboxMessageGet">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MessageGUID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="OutboxMessageGetResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="OutboxMessageGetResult"
+                             type="tns:OutboxMessages"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InboxMessagesDelete">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MessageGUIDs" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="InboxMessagesDeleteResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="OutboxMessagesDelete">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MSISDN" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MessageGUIDs" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="OutboxMessagesDeleteResponse">
+            <s:complexType/>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="CommunicationTestSoapIn">
+      <wsdl:part name="parameters" element="tns:CommunicationTest"/>
+  </wsdl:message>
+  <wsdl:message name="CommunicationTestSoapOut">
+      <wsdl:part name="parameters" element="tns:CommunicationTestResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CommunicationTestCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="SendSMSSoapIn">
+      <wsdl:part name="parameters" element="tns:SendSMS"/>
+  </wsdl:message>
+  <wsdl:message name="SendSMSSoapOut">
+      <wsdl:part name="parameters" element="tns:SendSMSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendSMSCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetEmailSoapIn">
+      <wsdl:part name="parameters" element="tns:AccountOptionSetEmail"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetEmailSoapOut">
+      <wsdl:part name="parameters" element="tns:AccountOptionSetEmailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetEmailCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateEmailSoapIn">
+      <wsdl:part name="parameters" element="tns:AccountOptionInactivateEmail"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateEmailSoapOut">
+      <wsdl:part name="parameters" element="tns:AccountOptionInactivateEmailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateEmailCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetSMSForwardingSoapIn">
+      <wsdl:part name="parameters" element="tns:AccountOptionSetSMSForwarding"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetSMSForwardingSoapOut">
+      <wsdl:part name="parameters" element="tns:AccountOptionSetSMSForwardingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetSMSForwardingCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateSMSForwardingSoapIn">
+      <wsdl:part name="parameters" element="tns:AccountOptionInactivateSMSForwarding"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateSMSForwardingSoapOut">
+      <wsdl:part name="parameters" element="tns:AccountOptionInactivateSMSForwardingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateSMSForwardingCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetDefaultResponseSoapIn">
+      <wsdl:part name="parameters" element="tns:AccountOptionSetDefaultResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetDefaultResponseSoapOut">
+      <wsdl:part name="parameters" element="tns:AccountOptionSetDefaultResponseResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetDefaultResponseCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateDefaultResponseSoapIn">
+      <wsdl:part name="parameters" element="tns:AccountOptionInactivateDefaultResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateDefaultResponseSoapOut">
+      <wsdl:part name="parameters" element="tns:AccountOptionInactivateDefaultResponseResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateDefaultResponseCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetSOAPDelegateSoapIn">
+      <wsdl:part name="parameters" element="tns:AccountOptionSetSOAPDelegate"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetSOAPDelegateSoapOut">
+      <wsdl:part name="parameters" element="tns:AccountOptionSetSOAPDelegateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionSetSOAPDelegateCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateSOAPDelegateSoapIn">
+      <wsdl:part name="parameters" element="tns:AccountOptionInactivateSOAPDelegate"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateSOAPDelegateSoapOut">
+      <wsdl:part name="parameters" element="tns:AccountOptionInactivateSOAPDelegateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AccountOptionInactivateSOAPDelegateCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="InboxMessagesGetSoapIn">
+      <wsdl:part name="parameters" element="tns:InboxMessagesGet"/>
+  </wsdl:message>
+  <wsdl:message name="InboxMessagesGetSoapOut">
+      <wsdl:part name="parameters" element="tns:InboxMessagesGetResponse"/>
+  </wsdl:message>
+  <wsdl:message name="InboxMessagesGetCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="InboxMessageGetSoapIn">
+      <wsdl:part name="parameters" element="tns:InboxMessageGet"/>
+  </wsdl:message>
+  <wsdl:message name="InboxMessageGetSoapOut">
+      <wsdl:part name="parameters" element="tns:InboxMessageGetResponse"/>
+  </wsdl:message>
+  <wsdl:message name="InboxMessageGetCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="OutboxMessagesGetSoapIn">
+      <wsdl:part name="parameters" element="tns:OutboxMessagesGet"/>
+  </wsdl:message>
+  <wsdl:message name="OutboxMessagesGetSoapOut">
+      <wsdl:part name="parameters" element="tns:OutboxMessagesGetResponse"/>
+  </wsdl:message>
+  <wsdl:message name="OutboxMessagesGetCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="OutboxMessageGetSoapIn">
+      <wsdl:part name="parameters" element="tns:OutboxMessageGet"/>
+  </wsdl:message>
+  <wsdl:message name="OutboxMessageGetSoapOut">
+      <wsdl:part name="parameters" element="tns:OutboxMessageGetResponse"/>
+  </wsdl:message>
+  <wsdl:message name="OutboxMessageGetCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="InboxMessagesDeleteSoapIn">
+      <wsdl:part name="parameters" element="tns:InboxMessagesDelete"/>
+  </wsdl:message>
+  <wsdl:message name="InboxMessagesDeleteSoapOut">
+      <wsdl:part name="parameters" element="tns:InboxMessagesDeleteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="InboxMessagesDeleteCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:message name="OutboxMessagesDeleteSoapIn">
+      <wsdl:part name="parameters" element="tns:OutboxMessagesDelete"/>
+  </wsdl:message>
+  <wsdl:message name="OutboxMessagesDeleteSoapOut">
+      <wsdl:part name="parameters" element="tns:OutboxMessagesDeleteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="OutboxMessagesDeleteCommunicatorHeader">
+      <wsdl:part name="CommunicatorHeader" element="tns:CommunicatorHeader"/>
+  </wsdl:message>
+  <wsdl:portType name="CommunicatorSoap">
+      <wsdl:operation name="CommunicationTest">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Will check connection with web service and that the header information is valid. MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:CommunicationTestSoapIn"/>
+         <wsdl:output message="tns:CommunicationTestSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SendSMS">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Send an SMS from a virtual mobile number attached to your Radas account. Content a maximum of 160 characters. MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:SendSMSSoapIn"/>
+         <wsdl:output message="tns:SendSMSSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionSetEmail">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Setup an email address that will receive a copy of all SMS messages received by this virtual mobile number. MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:AccountOptionSetEmailSoapIn"/>
+         <wsdl:output message="tns:AccountOptionSetEmailSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionInactivateEmail">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Inactivate an email forwarding address i.e. it will no longer receive copies of SMS messages received by this virtual mobile number. MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:AccountOptionInactivateEmailSoapIn"/>
+         <wsdl:output message="tns:AccountOptionInactivateEmailSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionSetSMSForwarding">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Setup a mobile number that will receive a copy of all SMS messages received by this virtual mobile number. Note your virtual number will be used to forward the message and the normal charges will apply. MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:AccountOptionSetSMSForwardingSoapIn"/>
+         <wsdl:output message="tns:AccountOptionSetSMSForwardingSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionInactivateSMSForwarding">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Inactivate an SMS forwarding number i.e. it will no longer receive copies of SMS messages received by this virtual mobile number. MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:AccountOptionInactivateSMSForwardingSoapIn"/>
+         <wsdl:output message="tns:AccountOptionInactivateSMSForwardingSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionSetDefaultResponse">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Setup a response message to all SMS messages received by this virtual mobile number. Note your virtual number will be used to send the response and the normal charges will apply. MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:AccountOptionSetDefaultResponseSoapIn"/>
+         <wsdl:output message="tns:AccountOptionSetDefaultResponseSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionInactivateDefaultResponse">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Inactivate response message to SMS messages received by this virtual mobile number. MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:AccountOptionInactivateDefaultResponseSoapIn"/>
+         <wsdl:output message="tns:AccountOptionInactivateDefaultResponseSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionSetSOAPDelegate">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Setup a Url address to the RadasSMS Handler web service that you have created.  this web service will receive a copy of all SMS messages received by this virtual mobile number. MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:AccountOptionSetSOAPDelegateSoapIn"/>
+         <wsdl:output message="tns:AccountOptionSetSOAPDelegateSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionInactivateSOAPDelegate">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Inactivate Url address i.e message will no longer be forwarded to your web service. MSISDN should be in international format e.g. 447678654999 </documentation>
+         <wsdl:input message="tns:AccountOptionInactivateSOAPDelegateSoapIn"/>
+         <wsdl:output message="tns:AccountOptionInactivateSOAPDelegateSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="InboxMessagesGet">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get inbox messages for date range FromDate (yyyy-mm-dd) / ToDate (yyyy-mm-dd) and optionally the sender's MSISDN. MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:InboxMessagesGetSoapIn"/>
+         <wsdl:output message="tns:InboxMessagesGetSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="InboxMessageGet">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get a single inbox message given a message guid.  MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:InboxMessageGetSoapIn"/>
+         <wsdl:output message="tns:InboxMessageGetSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="OutboxMessagesGet">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get Outbox messages for date range FromDate (yyyy-mm-dd) / ToDate (yyyy-mm-dd) and optionally the recipient's MSISDN.  MSISDN should be in international format e.g. 447678654999.</documentation>
+         <wsdl:input message="tns:OutboxMessagesGetSoapIn"/>
+         <wsdl:output message="tns:OutboxMessagesGetSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="OutboxMessageGet">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Get a single Outbox message given a MessageID.  MSISDN should be in international format e.g. 447678654999</documentation>
+         <wsdl:input message="tns:OutboxMessageGetSoapIn"/>
+         <wsdl:output message="tns:OutboxMessageGetSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="InboxMessagesDelete">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">pass in a collection of message guids for deleteion from your inbox. MSISDN should be in international format e.g. 447678654999.</documentation>
+         <wsdl:input message="tns:InboxMessagesDeleteSoapIn"/>
+         <wsdl:output message="tns:InboxMessagesDeleteSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="OutboxMessagesDelete">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">pass in a collection of message guids for deleteion from your Outbox.  MSISDN should be in international format e.g. 447678654999.</documentation>
+         <wsdl:input message="tns:OutboxMessagesDeleteSoapIn"/>
+         <wsdl:output message="tns:OutboxMessagesDeleteSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CommunicatorSoap" type="tns:CommunicatorSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="CommunicationTest">
+         <soap:operation soapAction="radas.services.soap.sms/CommunicationTest" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:CommunicationTestCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:CommunicationTestCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendSMS">
+         <soap:operation soapAction="radas.services.soap.sms/SendSMS" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SendSMSCommunicatorHeader" part="CommunicatorHeader" use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SendSMSCommunicatorHeader" part="CommunicatorHeader" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionSetEmail">
+         <soap:operation soapAction="radas.services.soap.sms/AccountOptionSetEmail" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionSetEmailCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionSetEmailCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionInactivateEmail">
+         <soap:operation soapAction="radas.services.soap.sms/AccountOptionInactivateEmail"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionInactivateEmailCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionInactivateEmailCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionSetSMSForwarding">
+         <soap:operation soapAction="radas.services.soap.sms/AccountOptionSetSMSForwarding"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionSetSMSForwardingCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionSetSMSForwardingCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionInactivateSMSForwarding">
+         <soap:operation soapAction="radas.services.soap.sms/AccountOptionInactivateSMSForwarding"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionInactivateSMSForwardingCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionInactivateSMSForwardingCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionSetDefaultResponse">
+         <soap:operation soapAction="radas.services.soap.sms/AccountOptionSetDefaultResponse"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionSetDefaultResponseCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionSetDefaultResponseCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionInactivateDefaultResponse">
+         <soap:operation soapAction="radas.services.soap.sms/AccountOptionInactivateDefaultResponse"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionInactivateDefaultResponseCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionInactivateDefaultResponseCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionSetSOAPDelegate">
+         <soap:operation soapAction="radas.services.soap.sms/AccountOptionSetSOAPDelegate"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionSetSOAPDelegateCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionSetSOAPDelegateCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AccountOptionInactivateSOAPDelegate">
+         <soap:operation soapAction="radas.services.soap.sms/AccountOptionInactivateSOAPDelegate"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionInactivateSOAPDelegateCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:AccountOptionInactivateSOAPDelegateCommunicatorHeader"
+                         part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="InboxMessagesGet">
+         <soap:operation soapAction="radas.services.soap.sms/InboxMessagesGet" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:InboxMessagesGetCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:InboxMessagesGetCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="InboxMessageGet">
+         <soap:operation soapAction="radas.services.soap.sms/InboxMessageGet" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:InboxMessageGetCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:InboxMessageGetCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="OutboxMessagesGet">
+         <soap:operation soapAction="radas.services.soap.sms/OutboxMessagesGet" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:OutboxMessagesGetCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:OutboxMessagesGetCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="OutboxMessageGet">
+         <soap:operation soapAction="radas.services.soap.sms/OutboxMessageGet" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:OutboxMessageGetCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:OutboxMessageGetCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="InboxMessagesDelete">
+         <soap:operation soapAction="radas.services.soap.sms/InboxMessagesDelete" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:InboxMessagesDeleteCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:InboxMessagesDeleteCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="OutboxMessagesDelete">
+         <soap:operation soapAction="radas.services.soap.sms/OutboxMessagesDelete" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:OutboxMessagesDeleteCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+            <dm:validation>
+               <dm:assertions/>
+            </dm:validation>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:OutboxMessagesDeleteCommunicatorHeader" part="CommunicatorHeader"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Communicator">
+      <wsdl:port name="CommunicatorSoap" binding="tns:CommunicatorSoap">
+         <soap:address location="http://ws.soatrader.com/radas.co.uk/0.1/Communicator"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

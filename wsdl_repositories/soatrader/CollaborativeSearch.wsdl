@@ -1,0 +1,87 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tns="http://http://129.27.153.140/cpdnet/webservice/service_search"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="http://http://129.27.153.140/cpdnet/webservice/service_search">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema targetNamespace="http://http://129.27.153.140/cpdnet/webservice/service_search">
+         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+         <xsd:complexType name="ArrayOfstring">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="string[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+      </xsd:schema>
+      <xsd:schema targetNamespace="http://http://129.27.153.140/cpdnet/webservice/service_search">
+         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+         <xsd:complexType name="ArrayOfstring">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="string[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+      </xsd:schema>
+   </types>
+   <message name="doSearchRequest">
+      <part name="query" type="xsd:string"/>
+   </message>
+   <message name="doSearchResponse">
+      <part name="res" type="xsd:string"/>
+   </message>
+   <portType name="CollaborativeSearchPortType">
+      <operation name="doSearch">
+         <input message="tns:doSearchRequest"/>
+         <output message="tns:doSearchResponse"/>
+      </operation>
+   </portType>
+   <binding name="CollaborativeSearchBinding" type="tns:CollaborativeSearchPortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="doSearch">
+         <soap:operation soapAction="http://http://129.27.153.140/cpdnet/webservice/service_search"
+                         style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="Array"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="Array"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+   <service name="CollaborativeSearch">
+      <port name="CollaborativeSearchPort" binding="tns:CollaborativeSearchBinding">
+         <soap:address location="http://ws.soatrader.com/tu-graz.ac.at/0.1/CollaborativeSearch"/>
+      </port>
+   </service>
+</definitions>

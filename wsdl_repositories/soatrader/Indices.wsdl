@@ -1,0 +1,80 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://www.sicadi.com.br/mhouse/sicadi/webservices/indices.wsdl"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             name="Indices"
+             targetNamespace="http://www.sicadi.com.br/mhouse/sicadi/webservices/indices.wsdl">
+   <wsdl:types xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>    
+    <message name="IndicesNome">
+        <part name="nome" type="xsd:string"/>
+    </message> 
+    <message name="IndicesValorResponse">
+        <part name="valor" type="xsd:string"/>
+    </message>   
+ 
+    
+    <portType name="IndicesReajustePort">
+        <operation name="getLastValor" parameterOrder="nome">
+            <input message="tns:IndicesNome"/>
+            <output message="tns:IndicesValorResponse"/>
+        </operation>
+        <operation name="getFirstValor" parameterOrder="nome">
+            <input message="tns:IndicesNome"/>
+            <output message="tns:IndicesValorResponse"/>
+        </operation>        
+     
+    </portType>
+    
+    <binding name="IndicesReajusteBinding" type="tns:IndicesReajustePort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getLastValor">
+            <soap:operation soapAction="http://www.sicadi.com.br/getLast" style="rpc"/>
+            <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="getFirstValor">
+            <soap:operation soapAction="http://www.sicadi.com.br/getFirst" style="rpc"/>
+            <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>        
+ 
+    </binding>
+    <service name="Indices">
+        <port name="IndicesReajustePort" binding="tns:IndicesReajusteBinding">
+            <soap:address location="http://ws.soatrader.com/sicadi.com.br/0.1/Indices"/>
+        </port>
+    </service>
+</definitions>

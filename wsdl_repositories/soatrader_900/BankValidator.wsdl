@@ -1,0 +1,629 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="PostcodeAnywhere2"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="PostcodeAnywhere2">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>This web service provides a convenient mechanism to validate bank account information and sort code details. Before using this service, you should register at www.postcodeanywhere.co.uk for an account code and license key. If you have any queries, call us on +44 (0) 800 047 0493 or email on developers@postcodeanywhere.co.uk</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="PostcodeAnywhere2">
+         <s:element name="Browse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Bank" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BrowseResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="BrowseResult" type="tns:InterimResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="InterimResults">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="IsError" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorNumber" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Results" type="tns:ArrayOfInterimResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfInterimResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="InterimResult"
+                          type="tns:InterimResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="InterimResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ByBranch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Bank" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Branch" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ByBranchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ByBranchResult" type="tns:InterimResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ByOutcode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Bank" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Outcode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ByOutcodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ByOutcodeResult" type="tns:InterimResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetBank">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SortCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetBankResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetBankResult" type="tns:BankResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="BankResults">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="IsError" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorNumber" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Result" type="tns:BankResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BankResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SortCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Branch" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address3" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address4" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Town" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="County" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Postcode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Fax" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DirectDebitsAllowed" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BACsCreditsAllowed" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UnpaidChequeClaimsAllowed" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LifeOfficeDebitsAllowed" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BuildingSocietyCreditsAllowed"
+                          type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DividendInterestPaymentsAllowed"
+                          type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DirectDebitInstructionsAllowed"
+                          type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetBankUnlimited">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SortCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MachineId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetBankUnlimitedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetBankUnlimitedResult"
+                             type="tns:BankResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Validate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SortCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ValidateResult" type="tns:ValidationResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ValidationResults">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="IsError" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorNumber" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ValidationStatus"
+                          type="tns:enValidationStatus"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ValidationInformation" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Result" type="tns:BankResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="enValidationStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="enValidationStatusOK"/>
+               <s:enumeration value="enValidationStatusSortCodeNotFound"/>
+               <s:enumeration value="enValidationStatusFailed"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="ValidateUnlimited">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SortCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MachineId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateUnlimitedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ValidateUnlimitedResult"
+                             type="tns:ValidationResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateCreditCard">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateCreditCardResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ValidateCreditCardResult"
+                             type="tns:CardValidationResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CardValidationResults">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="IsError" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ErrorNumber" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ValidationStatus"
+                          type="tns:enCardValidationStatus"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ValidationInformation" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="enCardValidationStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="enValidationStatusOK"/>
+               <s:enumeration value="enValidationStatusFailed"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="ValidateCreditCardUnlimited">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CardType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CardNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MachineId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateCreditCardUnlimitedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ValidateCreditCardUnlimitedResult"
+                             type="tns:CardValidationResults"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="InterimResults" type="tns:InterimResults"/>
+         <s:element name="BankResults" type="tns:BankResults"/>
+         <s:element name="ValidationResults" type="tns:ValidationResults"/>
+         <s:element name="CardValidationResults" type="tns:CardValidationResults"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="BrowseSoapIn">
+      <wsdl:part name="parameters" element="tns:Browse"/>
+  </wsdl:message>
+  <wsdl:message name="BrowseSoapOut">
+      <wsdl:part name="parameters" element="tns:BrowseResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ByBranchSoapIn">
+      <wsdl:part name="parameters" element="tns:ByBranch"/>
+  </wsdl:message>
+  <wsdl:message name="ByBranchSoapOut">
+      <wsdl:part name="parameters" element="tns:ByBranchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeSoapIn">
+      <wsdl:part name="parameters" element="tns:ByOutcode"/>
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeSoapOut">
+      <wsdl:part name="parameters" element="tns:ByOutcodeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankSoapIn">
+      <wsdl:part name="parameters" element="tns:GetBank"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankSoapOut">
+      <wsdl:part name="parameters" element="tns:GetBankResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankUnlimitedSoapIn">
+      <wsdl:part name="parameters" element="tns:GetBankUnlimited"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankUnlimitedSoapOut">
+      <wsdl:part name="parameters" element="tns:GetBankUnlimitedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateSoapIn">
+      <wsdl:part name="parameters" element="tns:Validate"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateSoapOut">
+      <wsdl:part name="parameters" element="tns:ValidateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateUnlimitedSoapIn">
+      <wsdl:part name="parameters" element="tns:ValidateUnlimited"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateUnlimitedSoapOut">
+      <wsdl:part name="parameters" element="tns:ValidateUnlimitedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardSoapIn">
+      <wsdl:part name="parameters" element="tns:ValidateCreditCard"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardSoapOut">
+      <wsdl:part name="parameters" element="tns:ValidateCreditCardResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardUnlimitedSoapIn">
+      <wsdl:part name="parameters" element="tns:ValidateCreditCardUnlimited"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardUnlimitedSoapOut">
+      <wsdl:part name="parameters" element="tns:ValidateCreditCardUnlimitedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BrowseHttpGetIn">
+      <wsdl:part name="Bank" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="BrowseHttpGetOut">
+      <wsdl:part name="Body" element="tns:InterimResults"/>
+  </wsdl:message>
+  <wsdl:message name="ByBranchHttpGetIn">
+      <wsdl:part name="Bank" type="s:string"/>
+      <wsdl:part name="Branch" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ByBranchHttpGetOut">
+      <wsdl:part name="Body" element="tns:InterimResults"/>
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeHttpGetIn">
+      <wsdl:part name="Bank" type="s:string"/>
+      <wsdl:part name="Outcode" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeHttpGetOut">
+      <wsdl:part name="Body" element="tns:InterimResults"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankHttpGetIn">
+      <wsdl:part name="SortCode" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankHttpGetOut">
+      <wsdl:part name="Body" element="tns:BankResults"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankUnlimitedHttpGetIn">
+      <wsdl:part name="SortCode" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+      <wsdl:part name="MachineId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankUnlimitedHttpGetOut">
+      <wsdl:part name="Body" element="tns:BankResults"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateHttpGetIn">
+      <wsdl:part name="SortCode" type="s:string"/>
+      <wsdl:part name="AccountNumber" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateHttpGetOut">
+      <wsdl:part name="Body" element="tns:ValidationResults"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateUnlimitedHttpGetIn">
+      <wsdl:part name="SortCode" type="s:string"/>
+      <wsdl:part name="AccountNumber" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+      <wsdl:part name="MachineId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateUnlimitedHttpGetOut">
+      <wsdl:part name="Body" element="tns:ValidationResults"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardHttpGetIn">
+      <wsdl:part name="CardType" type="s:string"/>
+      <wsdl:part name="CardNumber" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardHttpGetOut">
+      <wsdl:part name="Body" element="tns:CardValidationResults"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardUnlimitedHttpGetIn">
+      <wsdl:part name="CardType" type="s:string"/>
+      <wsdl:part name="CardNumber" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+      <wsdl:part name="MachineId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardUnlimitedHttpGetOut">
+      <wsdl:part name="Body" element="tns:CardValidationResults"/>
+  </wsdl:message>
+  <wsdl:message name="BrowseHttpPostIn">
+      <wsdl:part name="Bank" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="BrowseHttpPostOut">
+      <wsdl:part name="Body" element="tns:InterimResults"/>
+  </wsdl:message>
+  <wsdl:message name="ByBranchHttpPostIn">
+      <wsdl:part name="Bank" type="s:string"/>
+      <wsdl:part name="Branch" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ByBranchHttpPostOut">
+      <wsdl:part name="Body" element="tns:InterimResults"/>
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeHttpPostIn">
+      <wsdl:part name="Bank" type="s:string"/>
+      <wsdl:part name="Outcode" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeHttpPostOut">
+      <wsdl:part name="Body" element="tns:InterimResults"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankHttpPostIn">
+      <wsdl:part name="SortCode" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankHttpPostOut">
+      <wsdl:part name="Body" element="tns:BankResults"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankUnlimitedHttpPostIn">
+      <wsdl:part name="SortCode" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+      <wsdl:part name="MachineId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankUnlimitedHttpPostOut">
+      <wsdl:part name="Body" element="tns:BankResults"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateHttpPostIn">
+      <wsdl:part name="SortCode" type="s:string"/>
+      <wsdl:part name="AccountNumber" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateHttpPostOut">
+      <wsdl:part name="Body" element="tns:ValidationResults"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateUnlimitedHttpPostIn">
+      <wsdl:part name="SortCode" type="s:string"/>
+      <wsdl:part name="AccountNumber" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+      <wsdl:part name="MachineId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateUnlimitedHttpPostOut">
+      <wsdl:part name="Body" element="tns:ValidationResults"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardHttpPostIn">
+      <wsdl:part name="CardType" type="s:string"/>
+      <wsdl:part name="CardNumber" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardHttpPostOut">
+      <wsdl:part name="Body" element="tns:CardValidationResults"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardUnlimitedHttpPostIn">
+      <wsdl:part name="CardType" type="s:string"/>
+      <wsdl:part name="CardNumber" type="s:string"/>
+      <wsdl:part name="AccountCode" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+      <wsdl:part name="MachineId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardUnlimitedHttpPostOut">
+      <wsdl:part name="Body" element="tns:CardValidationResults"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="BankValidatorSoap" type="tns:BankValidatorSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="Browse">
+         <soap:operation soapAction="PostcodeAnywhere2/Browse" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ByBranch">
+         <soap:operation soapAction="PostcodeAnywhere2/ByBranch" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ByOutcode">
+         <soap:operation soapAction="PostcodeAnywhere2/ByOutcode" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetBank">
+         <soap:operation soapAction="PostcodeAnywhere2/GetBank" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetBankUnlimited">
+         <soap:operation soapAction="PostcodeAnywhere2/GetBankUnlimited" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Validate">
+         <soap:operation soapAction="PostcodeAnywhere2/Validate" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ValidateUnlimited">
+         <soap:operation soapAction="PostcodeAnywhere2/ValidateUnlimited" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ValidateCreditCard">
+         <soap:operation soapAction="PostcodeAnywhere2/ValidateCreditCard" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ValidateCreditCardUnlimited">
+         <soap:operation soapAction="PostcodeAnywhere2/ValidateCreditCardUnlimited" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="BankValidator">
+      <wsdl:documentation>This web service provides a convenient mechanism to validate bank account information and sort code details. Before using this service, you should register at www.postcodeanywhere.co.uk for an account code and license key. If you have any queries, call us on +44 (0) 800 047 0493 or email on developers@postcodeanywhere.co.uk</wsdl:documentation>
+      <wsdl:port name="BankValidatorSoap" binding="tns:BankValidatorSoap">
+         <soap:address location="http://ws.soatrader.com/postcodeanywhere.co.uk/0.1/BankValidator"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

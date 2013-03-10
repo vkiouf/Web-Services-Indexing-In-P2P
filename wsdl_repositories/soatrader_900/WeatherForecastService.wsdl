@@ -1,0 +1,183 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:tns="http://www.pathfinder-xml.com/WeatherForecastService.wsdl"
+             xmlns:ns="http://pathfinder-xml/WeatherForecastService.xsd"
+             targetNamespace="http://www.pathfinder-xml.com/WeatherForecastService.wsdl">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema elementFormDefault="qualified"
+                  targetNamespace="http://pathfinder-xml/WeatherForecastService.xsd">
+         <xsd:complexType name="Error">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" name="Message" type="xsd:string"/>
+               <xsd:element maxOccurs="1" name="StackTrace" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="MajorCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MinorCode" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="Estimate">
+            <xsd:attribute name="Date" type="xsd:string" use="required"/>
+            <xsd:attribute name="RainPercentage" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Temperature" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="Login">
+            <xsd:attribute name="AccountId" type="xsd:string" use="required"/>
+            <xsd:attribute name="Guid" type="xsd:string"/>
+            <xsd:attribute name="Password" type="xsd:string" use="required"/>
+            <xsd:attribute name="UserId" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="WeatherCityEstimate">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="Estimate" type="ns:Estimate"/>
+            </xsd:sequence>
+            <xsd:attribute name="City" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="WeatherDayForecast">
+            <xsd:sequence>
+               <xsd:element name="Forecast" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="Day" type="xsd:string" use="required"/>
+            <xsd:attribute name="EndDate" type="xsd:dateTime" use="required"/>
+            <xsd:attribute name="StartDate" type="xsd:dateTime" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="WeatherForecast">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="City" type="xsd:string"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="County" type="xsd:string"/>
+               <xsd:element maxOccurs="unbounded" name="WeatherDayForecast" type="ns:WeatherDayForecast"/>
+               <xsd:element maxOccurs="unbounded" name="WeatherCityEstimate" type="ns:WeatherCityEstimate"/>
+            </xsd:sequence>
+            <xsd:attribute name="Date" type="xsd:dateTime" use="required"/>
+            <xsd:attribute name="General" type="xsd:string" use="required"/>
+            <xsd:attribute name="Header" type="xsd:string" use="required"/>
+            <xsd:attribute name="Zone" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="WeatherForecastZone">
+            <xsd:attribute name="State" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Zone" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:element name="WeatherForecastGetAllForecastZonesRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="WeatherForecastGetAllForecastZonesResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element maxOccurs="unbounded" name="WeatherForecastZone" type="ns:WeatherForecastZone"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="WeatherForecastGetForecastRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+                  <xsd:element name="WeatherForecastZone" type="ns:WeatherForecastZone"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="WeatherForecastGetForecastResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element name="WeatherForecast" type="ns:WeatherForecast"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+  </types>
+  <message name="WeatherForecastGetAllForecastZonesRequest">
+      <part element="ns:WeatherForecastGetAllForecastZonesRequest"
+            name="WeatherForecastGetAllForecastZonesRequest"/>
+  </message>
+  <message name="WeatherForecastGetAllForecastZonesResponse">
+      <part element="ns:WeatherForecastGetAllForecastZonesResponse"
+            name="WeatherForecastGetAllForecastZonesResponse"/>
+  </message>
+  <message name="WeatherForecastGetForecastRequest">
+      <part element="ns:WeatherForecastGetForecastRequest"
+            name="WeatherForecastGetForecastRequest"/>
+  </message>
+  <message name="WeatherForecastGetForecastResponse">
+      <part element="ns:WeatherForecastGetForecastResponse"
+            name="WeatherForecastGetForecastResponse"/>
+  </message>
+  <portType name="WeatherForecastGetAllForecastZonesPort">
+      <operation name="WeatherForecastGetAllForecastZonesOperation">
+         <input message="tns:WeatherForecastGetAllForecastZonesRequest"/>
+         <output message="tns:WeatherForecastGetAllForecastZonesResponse"/>
+      </operation>
+  </portType>
+  <portType name="WeatherForecastGetForecastPort">
+      <operation name="WeatherForecastGetForecastOperation">
+         <input message="tns:WeatherForecastGetForecastRequest"/>
+         <output message="tns:WeatherForecastGetForecastResponse"/>
+      </operation>
+  </portType>
+  <binding name="WeatherForecastGetAllForecastZonesSOAPBinding"
+            type="tns:WeatherForecastGetAllForecastZonesPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="WeatherForecastGetAllForecastZonesOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <binding name="WeatherForecastGetForecastSOAPBinding"
+            type="tns:WeatherForecastGetForecastPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="WeatherForecastGetForecastOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="WeatherForecastService">
+      <port binding="tns:WeatherForecastGetAllForecastZonesSOAPBinding"
+            name="WeatherForecastGetAllForecastZonesService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.1/WeatherForecastService"/>
+      </port>
+      <port binding="tns:WeatherForecastGetForecastSOAPBinding"
+            name="WeatherForecastGetForecastService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.1/WeatherForecastService"/>
+      </port>
+  </service>
+</definitions>

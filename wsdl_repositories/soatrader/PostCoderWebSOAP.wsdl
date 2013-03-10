@@ -1,0 +1,565 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:si="http://soapinterop.org/xsd"
+             xmlns:tns="http://www.postcoderwebsoap.co.uk/websoap"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="http://www.postcoderwebsoap.co.uk/websoap">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema targetNamespace="http://www.postcoderwebsoap.co.uk/websoap">
+         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+         <xsd:complexType name="UpdatedPostCode">
+            <xsd:all>
+               <xsd:element name="newpostcode" type="xsd:string"/>
+               <xsd:element name="recodeddate" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="UpdatedPostCodeArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:UpdatedPostCode[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="UpdatedPostCodeResult">
+            <xsd:all>
+               <xsd:element name="postcode_updated" type="xsd:string"/>
+               <xsd:element name="oldpostcode" type="xsd:string"/>
+               <xsd:element name="postcodeupdates" type="tns:UpdatedPostCodeArray"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="ThrfareAddress">
+            <xsd:all>
+               <xsd:element name="po_box" type="xsd:string"/>
+               <xsd:element name="dependent_street" type="xsd:string"/>
+               <xsd:element name="street" type="xsd:string"/>
+               <xsd:element name="double_dependent_locality" type="xsd:string"/>
+               <xsd:element name="dependent_locality" type="xsd:string"/>
+               <xsd:element name="post_town" type="xsd:string"/>
+               <xsd:element name="county" type="xsd:string"/>
+               <xsd:element name="postcode" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="ThrfareAddressArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:ThrfareAddress[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="ThrfareAddressResult">
+            <xsd:all>
+               <xsd:element name="search_string" type="xsd:string"/>
+               <xsd:element name="retcode" type="xsd:string"/>
+               <xsd:element name="postcode_valid" type="xsd:string"/>
+               <xsd:element name="pcupdate" type="tns:UpdatedPostCodeResult"/>
+               <xsd:element name="number_results" type="xsd:string"/>
+               <xsd:element name="error_code" type="xsd:string"/>
+               <xsd:element name="error_message" type="xsd:string"/>
+               <xsd:element name="time_taken" type="xsd:string"/>
+               <xsd:element name="addresses" type="tns:ThrfareAddressArray"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="PremiseList">
+            <xsd:all>
+               <xsd:element name="organisation" type="xsd:string"/>
+               <xsd:element name="premise" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="PremiseListArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:PremiseList[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="PremiseListAddress">
+            <xsd:all>
+               <xsd:element name="premise" type="tns:PremiseListArray"/>
+               <xsd:element name="dependent_street" type="xsd:string"/>
+               <xsd:element name="street" type="xsd:string"/>
+               <xsd:element name="double_dependent_locality" type="xsd:string"/>
+               <xsd:element name="dependent_locality" type="xsd:string"/>
+               <xsd:element name="post_town" type="xsd:string"/>
+               <xsd:element name="county" type="xsd:string"/>
+               <xsd:element name="postcode" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="PremiseListAddressArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:PremiseListAddress[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="PremiseListResult">
+            <xsd:all>
+               <xsd:element name="search_string" type="xsd:string"/>
+               <xsd:element name="retcode" type="xsd:string"/>
+               <xsd:element name="postcode_valid" type="xsd:string"/>
+               <xsd:element name="pcupdate" type="tns:UpdatedPostCodeResult"/>
+               <xsd:element name="number_results" type="xsd:string"/>
+               <xsd:element name="error_code" type="xsd:string"/>
+               <xsd:element name="error_message" type="xsd:string"/>
+               <xsd:element name="time_taken" type="xsd:string"/>
+               <xsd:element name="addresses" type="tns:PremiseListAddressArray"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="MatchAddress">
+            <xsd:all>
+               <xsd:element name="organisation" type="xsd:string"/>
+               <xsd:element name="premise" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="MatchAddressArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:MatchAddress[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="MatchAddressAddress">
+            <xsd:all>
+               <xsd:element name="premise" type="tns:MatchAddressArray"/>
+               <xsd:element name="dependent_street" type="xsd:string"/>
+               <xsd:element name="street" type="xsd:string"/>
+               <xsd:element name="double_dependent_locality" type="xsd:string"/>
+               <xsd:element name="dependent_locality" type="xsd:string"/>
+               <xsd:element name="post_town" type="xsd:string"/>
+               <xsd:element name="county" type="xsd:string"/>
+               <xsd:element name="postcode" type="xsd:string"/>
+               <xsd:element name="matchvalue" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="MatchAddressAddressArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:MatchAddressAddress[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="MatchAddressResult">
+            <xsd:all>
+               <xsd:element name="search_string" type="xsd:string"/>
+               <xsd:element name="retcode" type="xsd:string"/>
+               <xsd:element name="postcode_valid" type="xsd:string"/>
+               <xsd:element name="pcupdate" type="tns:UpdatedPostCodeResult"/>
+               <xsd:element name="number_results" type="xsd:string"/>
+               <xsd:element name="maximum_matched" type="xsd:string"/>
+               <xsd:element name="error_code" type="xsd:string"/>
+               <xsd:element name="error_message" type="xsd:string"/>
+               <xsd:element name="time_taken" type="xsd:string"/>
+               <xsd:element name="addresses" type="tns:MatchAddressAddressArray"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="GridsResult">
+            <xsd:all>
+               <xsd:element name="search_string" type="xsd:string"/>
+               <xsd:element name="retcode" type="xsd:string"/>
+               <xsd:element name="postcode_valid" type="xsd:string"/>
+               <xsd:element name="pcupdate" type="tns:UpdatedPostCodeResult"/>
+               <xsd:element name="number_results" type="xsd:string"/>
+               <xsd:element name="error_code" type="xsd:string"/>
+               <xsd:element name="error_message" type="xsd:string"/>
+               <xsd:element name="time_taken" type="xsd:string"/>
+               <xsd:element name="postcode" type="xsd:string"/>
+               <xsd:element name="grideast" type="xsd:string"/>
+               <xsd:element name="gridnorth" type="xsd:string"/>
+               <xsd:element name="latitude_osgb36" type="xsd:string"/>
+               <xsd:element name="longitude_osgb36" type="xsd:string"/>
+               <xsd:element name="latitude_etrs89" type="xsd:string"/>
+               <xsd:element name="longitude_etrs89" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="PostzonResult">
+            <xsd:all>
+               <xsd:element name="search_string" type="xsd:string"/>
+               <xsd:element name="retcode" type="xsd:string"/>
+               <xsd:element name="postcode_valid" type="xsd:string"/>
+               <xsd:element name="pcupdate" type="tns:UpdatedPostCodeResult"/>
+               <xsd:element name="number_results" type="xsd:string"/>
+               <xsd:element name="error_code" type="xsd:string"/>
+               <xsd:element name="error_message" type="xsd:string"/>
+               <xsd:element name="time_taken" type="xsd:string"/>
+               <xsd:element name="postcode" type="xsd:string"/>
+               <xsd:element name="grideasting" type="xsd:string"/>
+               <xsd:element name="gridnorthing" type="xsd:string"/>
+               <xsd:element name="grideastingstatus" type="xsd:string"/>
+               <xsd:element name="gridnorthingstatus" type="xsd:string"/>
+               <xsd:element name="localauthoritywardcode" type="xsd:string"/>
+               <xsd:element name="localauthoritywardname" type="xsd:string"/>
+               <xsd:element name="localunitaryauthorityname" type="xsd:string"/>
+               <xsd:element name="nhshealthauthoritycode" type="xsd:string"/>
+               <xsd:element name="nhshealthauthorityname" type="xsd:string"/>
+               <xsd:element name="primarycaretrustcode" type="xsd:string"/>
+               <xsd:element name="primarycaretrustname" type="xsd:string"/>
+               <xsd:element name="primarycaretrustha" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+      </xsd:schema>
+      <xsd:schema targetNamespace="http://www.postcoderwebsoap.co.uk/websoap">
+         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+         <xsd:complexType name="UpdatedPostCode">
+            <xsd:all>
+               <xsd:element name="newpostcode" type="xsd:string"/>
+               <xsd:element name="recodeddate" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="UpdatedPostCodeArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:UpdatedPostCode[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="UpdatedPostCodeResult">
+            <xsd:all>
+               <xsd:element name="postcode_updated" type="xsd:string"/>
+               <xsd:element name="oldpostcode" type="xsd:string"/>
+               <xsd:element name="postcodeupdates" type="tns:UpdatedPostCodeArray"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="ThrfareAddress">
+            <xsd:all>
+               <xsd:element name="po_box" type="xsd:string"/>
+               <xsd:element name="dependent_street" type="xsd:string"/>
+               <xsd:element name="street" type="xsd:string"/>
+               <xsd:element name="double_dependent_locality" type="xsd:string"/>
+               <xsd:element name="dependent_locality" type="xsd:string"/>
+               <xsd:element name="post_town" type="xsd:string"/>
+               <xsd:element name="county" type="xsd:string"/>
+               <xsd:element name="postcode" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="ThrfareAddressArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:ThrfareAddress[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="ThrfareAddressResult">
+            <xsd:all>
+               <xsd:element name="search_string" type="xsd:string"/>
+               <xsd:element name="retcode" type="xsd:string"/>
+               <xsd:element name="postcode_valid" type="xsd:string"/>
+               <xsd:element name="pcupdate" type="tns:UpdatedPostCodeResult"/>
+               <xsd:element name="number_results" type="xsd:string"/>
+               <xsd:element name="error_code" type="xsd:string"/>
+               <xsd:element name="error_message" type="xsd:string"/>
+               <xsd:element name="time_taken" type="xsd:string"/>
+               <xsd:element name="addresses" type="tns:ThrfareAddressArray"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="PremiseList">
+            <xsd:all>
+               <xsd:element name="organisation" type="xsd:string"/>
+               <xsd:element name="premise" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="PremiseListArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:PremiseList[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="PremiseListAddress">
+            <xsd:all>
+               <xsd:element name="premise" type="tns:PremiseListArray"/>
+               <xsd:element name="dependent_street" type="xsd:string"/>
+               <xsd:element name="street" type="xsd:string"/>
+               <xsd:element name="double_dependent_locality" type="xsd:string"/>
+               <xsd:element name="dependent_locality" type="xsd:string"/>
+               <xsd:element name="post_town" type="xsd:string"/>
+               <xsd:element name="county" type="xsd:string"/>
+               <xsd:element name="postcode" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="PremiseListAddressArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:PremiseListAddress[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="PremiseListResult">
+            <xsd:all>
+               <xsd:element name="search_string" type="xsd:string"/>
+               <xsd:element name="retcode" type="xsd:string"/>
+               <xsd:element name="postcode_valid" type="xsd:string"/>
+               <xsd:element name="pcupdate" type="tns:UpdatedPostCodeResult"/>
+               <xsd:element name="number_results" type="xsd:string"/>
+               <xsd:element name="error_code" type="xsd:string"/>
+               <xsd:element name="error_message" type="xsd:string"/>
+               <xsd:element name="time_taken" type="xsd:string"/>
+               <xsd:element name="addresses" type="tns:PremiseListAddressArray"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="MatchAddress">
+            <xsd:all>
+               <xsd:element name="organisation" type="xsd:string"/>
+               <xsd:element name="premise" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="MatchAddressArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:MatchAddress[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="MatchAddressAddress">
+            <xsd:all>
+               <xsd:element name="premise" type="tns:MatchAddressArray"/>
+               <xsd:element name="dependent_street" type="xsd:string"/>
+               <xsd:element name="street" type="xsd:string"/>
+               <xsd:element name="double_dependent_locality" type="xsd:string"/>
+               <xsd:element name="dependent_locality" type="xsd:string"/>
+               <xsd:element name="post_town" type="xsd:string"/>
+               <xsd:element name="county" type="xsd:string"/>
+               <xsd:element name="postcode" type="xsd:string"/>
+               <xsd:element name="matchvalue" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="MatchAddressAddressArray">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:MatchAddressAddress[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="MatchAddressResult">
+            <xsd:all>
+               <xsd:element name="search_string" type="xsd:string"/>
+               <xsd:element name="retcode" type="xsd:string"/>
+               <xsd:element name="postcode_valid" type="xsd:string"/>
+               <xsd:element name="pcupdate" type="tns:UpdatedPostCodeResult"/>
+               <xsd:element name="number_results" type="xsd:string"/>
+               <xsd:element name="maximum_matched" type="xsd:string"/>
+               <xsd:element name="error_code" type="xsd:string"/>
+               <xsd:element name="error_message" type="xsd:string"/>
+               <xsd:element name="time_taken" type="xsd:string"/>
+               <xsd:element name="addresses" type="tns:MatchAddressAddressArray"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="GridsResult">
+            <xsd:all>
+               <xsd:element name="search_string" type="xsd:string"/>
+               <xsd:element name="retcode" type="xsd:string"/>
+               <xsd:element name="postcode_valid" type="xsd:string"/>
+               <xsd:element name="pcupdate" type="tns:UpdatedPostCodeResult"/>
+               <xsd:element name="number_results" type="xsd:string"/>
+               <xsd:element name="error_code" type="xsd:string"/>
+               <xsd:element name="error_message" type="xsd:string"/>
+               <xsd:element name="time_taken" type="xsd:string"/>
+               <xsd:element name="postcode" type="xsd:string"/>
+               <xsd:element name="grideast" type="xsd:string"/>
+               <xsd:element name="gridnorth" type="xsd:string"/>
+               <xsd:element name="latitude_osgb36" type="xsd:string"/>
+               <xsd:element name="longitude_osgb36" type="xsd:string"/>
+               <xsd:element name="latitude_etrs89" type="xsd:string"/>
+               <xsd:element name="longitude_etrs89" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="PostzonResult">
+            <xsd:all>
+               <xsd:element name="search_string" type="xsd:string"/>
+               <xsd:element name="retcode" type="xsd:string"/>
+               <xsd:element name="postcode_valid" type="xsd:string"/>
+               <xsd:element name="pcupdate" type="tns:UpdatedPostCodeResult"/>
+               <xsd:element name="number_results" type="xsd:string"/>
+               <xsd:element name="error_code" type="xsd:string"/>
+               <xsd:element name="error_message" type="xsd:string"/>
+               <xsd:element name="time_taken" type="xsd:string"/>
+               <xsd:element name="postcode" type="xsd:string"/>
+               <xsd:element name="grideasting" type="xsd:string"/>
+               <xsd:element name="gridnorthing" type="xsd:string"/>
+               <xsd:element name="grideastingstatus" type="xsd:string"/>
+               <xsd:element name="gridnorthingstatus" type="xsd:string"/>
+               <xsd:element name="localauthoritywardcode" type="xsd:string"/>
+               <xsd:element name="localauthoritywardname" type="xsd:string"/>
+               <xsd:element name="localunitaryauthorityname" type="xsd:string"/>
+               <xsd:element name="nhshealthauthoritycode" type="xsd:string"/>
+               <xsd:element name="nhshealthauthorityname" type="xsd:string"/>
+               <xsd:element name="primarycaretrustcode" type="xsd:string"/>
+               <xsd:element name="primarycaretrustname" type="xsd:string"/>
+               <xsd:element name="primarycaretrustha" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+      </xsd:schema>
+   </types>
+   <message name="getThrfareAddressesRequest">
+      <part name="postcode" type="xsd:string"/>
+      <part name="identifier" type="xsd:string"/>
+      <part name="username" type="xsd:string"/>
+      <part name="password" type="xsd:string"/>
+   </message>
+   <message name="getThrfareAddressesResponse">
+      <part name="return" type="tns:ThrfareAddressResult"/>
+   </message>
+   <message name="getPremiseListRequest">
+      <part name="postcode" type="xsd:string"/>
+      <part name="identifier" type="xsd:string"/>
+      <part name="username" type="xsd:string"/>
+      <part name="password" type="xsd:string"/>
+   </message>
+   <message name="getPremiseListResponse">
+      <part name="return" type="tns:PremiseListResult"/>
+   </message>
+   <message name="getMatchAddressRequest">
+      <part name="inputString" type="xsd:string"/>
+      <part name="identifier" type="xsd:string"/>
+      <part name="username" type="xsd:string"/>
+      <part name="password" type="xsd:string"/>
+   </message>
+   <message name="getMatchAddressResponse">
+      <part name="return" type="tns:MatchAddressResult"/>
+   </message>
+   <message name="getGridsRequest">
+      <part name="postcode" type="xsd:string"/>
+      <part name="identifier" type="xsd:string"/>
+      <part name="username" type="xsd:string"/>
+      <part name="password" type="xsd:string"/>
+   </message>
+   <message name="getGridsResponse">
+      <part name="return" type="tns:GridsResult"/>
+   </message>
+   <message name="getPostzonRequest">
+      <part name="postcode" type="xsd:string"/>
+      <part name="identifier" type="xsd:string"/>
+      <part name="username" type="xsd:string"/>
+      <part name="password" type="xsd:string"/>
+   </message>
+   <message name="getPostzonResponse">
+      <part name="return" type="tns:PostzonResult"/>
+   </message>
+   <portType name="PostCoderWebSOAPPortType">
+      <operation name="getThrfareAddresses">
+         <input message="tns:getThrfareAddressesRequest"/>
+         <output message="tns:getThrfareAddressesResponse"/>
+      </operation>
+      <operation name="getPremiseList">
+         <input message="tns:getPremiseListRequest"/>
+         <output message="tns:getPremiseListResponse"/>
+      </operation>
+      <operation name="getMatchAddress">
+         <input message="tns:getMatchAddressRequest"/>
+         <output message="tns:getMatchAddressResponse"/>
+      </operation>
+      <operation name="getGrids">
+         <input message="tns:getGridsRequest"/>
+         <output message="tns:getGridsResponse"/>
+      </operation>
+      <operation name="getPostzon">
+         <input message="tns:getPostzonRequest"/>
+         <output message="tns:getPostzonResponse"/>
+      </operation>
+   </portType>
+   <binding name="PostCoderWebSOAPBinding" type="tns:PostCoderWebSOAPPortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="getThrfareAddresses">
+         <soap:operation soapAction="http://www.postcoderwebsoap.co.uk/websoap/websoap.php/getThrfareAddresses"
+                         style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://www.postcoderwebsoap.co.uk/websoap"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://www.postcoderwebsoap.co.uk/websoap"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+      <operation name="getPremiseList">
+         <soap:operation soapAction="http://www.postcoderwebsoap.co.uk/websoap/websoap.php/getPremiseList"
+                         style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://www.postcoderwebsoap.co.uk/websoap"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://www.postcoderwebsoap.co.uk/websoap"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+      <operation name="getMatchAddress">
+         <soap:operation soapAction="http://www.postcoderwebsoap.co.uk/websoap/websoap.php/getMatchAddress"
+                         style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://www.postcoderwebsoap.co.uk/websoap"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://www.postcoderwebsoap.co.uk/websoap"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+      <operation name="getGrids">
+         <soap:operation soapAction="http://www.postcoderwebsoap.co.uk/websoap/websoap.php/getGrids"
+                         style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://www.postcoderwebsoap.co.uk/websoap"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://www.postcoderwebsoap.co.uk/websoap"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+      <operation name="getPostzon">
+         <soap:operation soapAction="http://www.postcoderwebsoap.co.uk/websoap/websoap.php/getPostzon"
+                         style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://www.postcoderwebsoap.co.uk/websoap"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://www.postcoderwebsoap.co.uk/websoap"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+   <service name="PostCoderWebSOAP">
+      <port name="PostCoderWebSOAPPort" binding="tns:PostCoderWebSOAPBinding">
+         <soap:address location="http://ws.soatrader.com/postcoderwebsoap.co.uk/0.1/PostCoderWebSOAP"/>
+      </port>
+   </service>
+</definitions>

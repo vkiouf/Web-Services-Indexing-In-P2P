@@ -1,0 +1,826 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://cineplex.com/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://cineplex.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://cineplex.com/">
+         <s:element name="SearchMoviesAutoComplete">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="prefixText" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchMoviesAutoCompleteResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchMoviesAutoCompleteResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SearchPostalCodesCitiesAutoComplete">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="prefixText" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchPostalCodesCitiesAutoCompleteResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchPostalCodesCitiesAutoCompleteResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="PerformRankingUpdate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ctrlID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="MovieID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="rank" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="PerformRankingUpdateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PerformRankingUpdateResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SaveTheatreFavorite">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="theatreID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="add" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SaveTheatreFavoriteResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SaveTheatreFavoriteResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CheckFavoriteTheatres">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="theatres" type="tns:ArrayOfTheatreLookup"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfTheatreLookup">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="TheatreLookup" nillable="true"
+                          type="tns:TheatreLookup"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="TheatreLookup">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="TheatreID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ControlID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HTML" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="CheckFavoriteTheatresResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckFavoriteTheatresResult"
+                             type="tns:ArrayOfTheatreLookup"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BuildTopSearchUrl">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="movieID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="movieNameIn" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="location" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="BuildTopSearchUrlResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="BuildTopSearchUrlResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchTheatres">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="location" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="distance" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchTheatresResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchTheatresResult" type="tns:ArrayOfFT"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfFT">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="FT" nillable="true" type="tns:FT"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="FT">
+            <s:attribute name="I" type="s:string"/>
+            <s:attribute name="N" type="s:string"/>
+         </s:complexType>
+         <s:element name="SearchEnabledTheatres">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="location" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="distance" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchEnabledTheatresResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchEnabledTheatresResult"
+                             type="tns:ArrayOfFT"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMoviesForTheatreAndDate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="theatreID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMoviesForTheatreAndDateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMoviesForTheatreAndDateResult"
+                             type="tns:ArrayOfDictionaryEntry"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDictionaryEntry">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="DictionaryEntry"
+                          type="tns:DictionaryEntry"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="DictionaryEntry">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Key"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Value"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetShowTimesForMovie">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="theatreID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="movieID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetShowTimesForMovieResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetShowTimesForMovieResult"
+                             type="tns:ArrayOfDictionaryEntry"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMovieRankings">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ids" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="MovieRanking">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Movie_ID" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalVotes" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Ranking" type="s:decimal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfMovieRanking">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="MovieRanking" nillable="true"
+                          type="tns:MovieRanking"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetMovieRankingsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMovieRankingsResult"
+                             type="tns:ArrayOfMovieRanking"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SearchCityPostalCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="location" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SearchCityPostalCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Search_SearchCityPostalCodeResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectMoviesByLocation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="location" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="selMovieID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectMoviesByLocationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Search_SelectMoviesByLocationResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectProvinceList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="Search_SelectProvinceListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Search_SelectProvinceListResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectTheatresByProvince">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="province" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectTheatresByProvinceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Search_SelectTheatresByProvinceResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectTheatresByCity">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectTheatresByCityResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Search_SelectTheatresByCityResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectMovies">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="selMovieID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectMoviesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Search_SelectMoviesResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectTheatresByMovie">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="movieID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectTheatresByMovieResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Search_SelectTheatresByMovieResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Search_SelectCities">
+            <s:complexType/>
+         </s:element>
+         <s:element name="Search_SelectCitiesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Search_SelectCitiesResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Profile_SearchCityPostalCode">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="location" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Profile_SearchCityPostalCodeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Profile_SearchCityPostalCodeResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Profile_SelectTheatresByCity">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Profile_SelectTheatresByCityResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Profile_SelectTheatresByCityResult"
+                             type="tns:ArrayOfTheatreLookup"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Profile_DoesEmailAddressExistInSystem">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="emailAddress" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Profile_DoesEmailAddressExistInSystemResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Profile_DoesEmailAddressExistInSystemResult"
+                             type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchMoviesAutoCompleteSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchMoviesAutoComplete"/>
+  </wsdl:message>
+  <wsdl:message name="SearchMoviesAutoCompleteSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchMoviesAutoCompleteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchPostalCodesCitiesAutoCompleteSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchPostalCodesCitiesAutoComplete"/>
+  </wsdl:message>
+  <wsdl:message name="SearchPostalCodesCitiesAutoCompleteSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchPostalCodesCitiesAutoCompleteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PerformRankingUpdateSoapIn">
+      <wsdl:part name="parameters" element="tns:PerformRankingUpdate"/>
+  </wsdl:message>
+  <wsdl:message name="PerformRankingUpdateSoapOut">
+      <wsdl:part name="parameters" element="tns:PerformRankingUpdateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SaveTheatreFavoriteSoapIn">
+      <wsdl:part name="parameters" element="tns:SaveTheatreFavorite"/>
+  </wsdl:message>
+  <wsdl:message name="SaveTheatreFavoriteSoapOut">
+      <wsdl:part name="parameters" element="tns:SaveTheatreFavoriteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CheckFavoriteTheatresSoapIn">
+      <wsdl:part name="parameters" element="tns:CheckFavoriteTheatres"/>
+  </wsdl:message>
+  <wsdl:message name="CheckFavoriteTheatresSoapOut">
+      <wsdl:part name="parameters" element="tns:CheckFavoriteTheatresResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BuildTopSearchUrlSoapIn">
+      <wsdl:part name="parameters" element="tns:BuildTopSearchUrl"/>
+  </wsdl:message>
+  <wsdl:message name="BuildTopSearchUrlSoapOut">
+      <wsdl:part name="parameters" element="tns:BuildTopSearchUrlResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchTheatresSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchTheatres"/>
+  </wsdl:message>
+  <wsdl:message name="SearchTheatresSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchTheatresResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchEnabledTheatresSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchEnabledTheatres"/>
+  </wsdl:message>
+  <wsdl:message name="SearchEnabledTheatresSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchEnabledTheatresResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMoviesForTheatreAndDateSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMoviesForTheatreAndDate"/>
+  </wsdl:message>
+  <wsdl:message name="GetMoviesForTheatreAndDateSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMoviesForTheatreAndDateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetShowTimesForMovieSoapIn">
+      <wsdl:part name="parameters" element="tns:GetShowTimesForMovie"/>
+  </wsdl:message>
+  <wsdl:message name="GetShowTimesForMovieSoapOut">
+      <wsdl:part name="parameters" element="tns:GetShowTimesForMovieResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMovieRankingsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMovieRankings"/>
+  </wsdl:message>
+  <wsdl:message name="GetMovieRankingsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMovieRankingsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SearchCityPostalCodeSoapIn">
+      <wsdl:part name="parameters" element="tns:Search_SearchCityPostalCode"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SearchCityPostalCodeSoapOut">
+      <wsdl:part name="parameters" element="tns:Search_SearchCityPostalCodeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectMoviesByLocationSoapIn">
+      <wsdl:part name="parameters" element="tns:Search_SelectMoviesByLocation"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectMoviesByLocationSoapOut">
+      <wsdl:part name="parameters" element="tns:Search_SelectMoviesByLocationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectProvinceListSoapIn">
+      <wsdl:part name="parameters" element="tns:Search_SelectProvinceList"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectProvinceListSoapOut">
+      <wsdl:part name="parameters" element="tns:Search_SelectProvinceListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectTheatresByProvinceSoapIn">
+      <wsdl:part name="parameters" element="tns:Search_SelectTheatresByProvince"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectTheatresByProvinceSoapOut">
+      <wsdl:part name="parameters" element="tns:Search_SelectTheatresByProvinceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectTheatresByCitySoapIn">
+      <wsdl:part name="parameters" element="tns:Search_SelectTheatresByCity"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectTheatresByCitySoapOut">
+      <wsdl:part name="parameters" element="tns:Search_SelectTheatresByCityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectMoviesSoapIn">
+      <wsdl:part name="parameters" element="tns:Search_SelectMovies"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectMoviesSoapOut">
+      <wsdl:part name="parameters" element="tns:Search_SelectMoviesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectTheatresByMovieSoapIn">
+      <wsdl:part name="parameters" element="tns:Search_SelectTheatresByMovie"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectTheatresByMovieSoapOut">
+      <wsdl:part name="parameters" element="tns:Search_SelectTheatresByMovieResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectCitiesSoapIn">
+      <wsdl:part name="parameters" element="tns:Search_SelectCities"/>
+  </wsdl:message>
+  <wsdl:message name="Search_SelectCitiesSoapOut">
+      <wsdl:part name="parameters" element="tns:Search_SelectCitiesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Profile_SearchCityPostalCodeSoapIn">
+      <wsdl:part name="parameters" element="tns:Profile_SearchCityPostalCode"/>
+  </wsdl:message>
+  <wsdl:message name="Profile_SearchCityPostalCodeSoapOut">
+      <wsdl:part name="parameters" element="tns:Profile_SearchCityPostalCodeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Profile_SelectTheatresByCitySoapIn">
+      <wsdl:part name="parameters" element="tns:Profile_SelectTheatresByCity"/>
+  </wsdl:message>
+  <wsdl:message name="Profile_SelectTheatresByCitySoapOut">
+      <wsdl:part name="parameters" element="tns:Profile_SelectTheatresByCityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Profile_DoesEmailAddressExistInSystemSoapIn">
+      <wsdl:part name="parameters" element="tns:Profile_DoesEmailAddressExistInSystem"/>
+  </wsdl:message>
+  <wsdl:message name="Profile_DoesEmailAddressExistInSystemSoapOut">
+      <wsdl:part name="parameters" element="tns:Profile_DoesEmailAddressExistInSystemResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="AjaxServicesSoap" type="tns:AjaxServicesSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="SearchMoviesAutoComplete">
+         <soap:operation soapAction="http://cineplex.com/SearchMoviesAutoComplete" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchPostalCodesCitiesAutoComplete">
+         <soap:operation soapAction="http://cineplex.com/SearchPostalCodesCitiesAutoComplete"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="PerformRankingUpdate">
+         <soap:operation soapAction="http://cineplex.com/PerformRankingUpdate" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SaveTheatreFavorite">
+         <soap:operation soapAction="http://cineplex.com/SaveTheatreFavorite" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CheckFavoriteTheatres">
+         <soap:operation soapAction="http://cineplex.com/CheckFavoriteTheatres" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="BuildTopSearchUrl">
+         <soap:operation soapAction="http://cineplex.com/BuildTopSearchUrl" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchTheatres">
+         <soap:operation soapAction="http://cineplex.com/SearchTheatres" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchEnabledTheatres">
+         <soap:operation soapAction="http://cineplex.com/SearchEnabledTheatres" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMoviesForTheatreAndDate">
+         <soap:operation soapAction="http://cineplex.com/GetMoviesForTheatreAndDate" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetShowTimesForMovie">
+         <soap:operation soapAction="http://cineplex.com/GetShowTimesForMovie" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMovieRankings">
+         <soap:operation soapAction="http://cineplex.com/GetMovieRankings" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Search_SearchCityPostalCode">
+         <soap:operation soapAction="http://cineplex.com/Search_SearchCityPostalCode" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Search_SelectMoviesByLocation">
+         <soap:operation soapAction="http://cineplex.com/Search_SelectMoviesByLocation" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Search_SelectProvinceList">
+         <soap:operation soapAction="http://cineplex.com/Search_SelectProvinceList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Search_SelectTheatresByProvince">
+         <soap:operation soapAction="http://cineplex.com/Search_SelectTheatresByProvince"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Search_SelectTheatresByCity">
+         <soap:operation soapAction="http://cineplex.com/Search_SelectTheatresByCity" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Search_SelectMovies">
+         <soap:operation soapAction="http://cineplex.com/Search_SelectMovies" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Search_SelectTheatresByMovie">
+         <soap:operation soapAction="http://cineplex.com/Search_SelectTheatresByMovie" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Search_SelectCities">
+         <soap:operation soapAction="http://cineplex.com/Search_SelectCities" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Profile_SearchCityPostalCode">
+         <soap:operation soapAction="http://cineplex.com/Profile_SearchCityPostalCode" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Profile_SelectTheatresByCity">
+         <soap:operation soapAction="http://cineplex.com/Profile_SelectTheatresByCity" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Profile_DoesEmailAddressExistInSystem">
+         <soap:operation soapAction="http://cineplex.com/Profile_DoesEmailAddressExistInSystem"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="AjaxServices">
+      <wsdl:port name="AjaxServicesSoap" binding="tns:AjaxServicesSoap">
+         <soap:address location="http://ws.soatrader.com/cineplex.com/0.1/AjaxServices"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,212 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://properties.arunestates.redantdev.com/services"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://properties.arunestates.redantdev.com/services">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://properties.arunestates.redantdev.com/services">
+         <s:element name="Search">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Location" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="County" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="WithinRadius" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PropertyType" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MinimumBedrooms" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MinimumPrice" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MaximumPrice" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Furnished" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLettingByID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LettingID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLettingByIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLettingByIDResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLettingsByID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LettingIDs" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLettingsByIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLettingsByIDResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="string" nillable="true" type="s:string"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchSoapIn">
+      <wsdl:part name="parameters" element="tns:Search"/>
+  </wsdl:message>
+  <wsdl:message name="SearchSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingByIDSoapIn">
+      <wsdl:part name="parameters" element="tns:GetLettingByID"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingByIDSoapOut">
+      <wsdl:part name="parameters" element="tns:GetLettingByIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingsByIDSoapIn">
+      <wsdl:part name="parameters" element="tns:GetLettingsByID"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingsByIDSoapOut">
+      <wsdl:part name="parameters" element="tns:GetLettingsByIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpGetIn">
+      <wsdl:part name="Location" type="s:string"/>
+      <wsdl:part name="County" type="s:string"/>
+      <wsdl:part name="WithinRadius" type="s:string"/>
+      <wsdl:part name="PropertyType" type="s:string"/>
+      <wsdl:part name="MinimumBedrooms" type="s:string"/>
+      <wsdl:part name="MinimumPrice" type="s:string"/>
+      <wsdl:part name="MaximumPrice" type="s:string"/>
+      <wsdl:part name="Furnished" type="s:string"/>
+      <wsdl:part name="Keywords" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingByIDHttpGetIn">
+      <wsdl:part name="LettingID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingByIDHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingsByIDHttpGetIn">
+      <wsdl:part name="LettingIDs" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingsByIDHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpPostIn">
+      <wsdl:part name="Location" type="s:string"/>
+      <wsdl:part name="County" type="s:string"/>
+      <wsdl:part name="WithinRadius" type="s:string"/>
+      <wsdl:part name="PropertyType" type="s:string"/>
+      <wsdl:part name="MinimumBedrooms" type="s:string"/>
+      <wsdl:part name="MinimumPrice" type="s:string"/>
+      <wsdl:part name="MaximumPrice" type="s:string"/>
+      <wsdl:part name="Furnished" type="s:string"/>
+      <wsdl:part name="Keywords" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SearchHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingByIDHttpPostIn">
+      <wsdl:part name="LettingID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingByIDHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingsByIDHttpPostIn">
+      <wsdl:part name="LettingIDs" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetLettingsByIDHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="LettingSearchSoap" type="tns:LettingSearchSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="Search">
+         <soap:operation soapAction="http://properties.arunestates.redantdev.com/services/Search"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetLettingByID">
+         <soap:operation soapAction="http://properties.arunestates.redantdev.com/services/GetLettingByID"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetLettingsByID">
+         <soap:operation soapAction="http://properties.arunestates.redantdev.com/services/GetLettingsByID"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="LettingSearch">
+      <wsdl:port name="LettingSearchSoap" binding="tns:LettingSearchSoap">
+         <soap:address location="http://ws.soatrader.com/arunestates.redantdev.com/0.1/LettingSearch"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,447 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://vizier.u-strasbg.fr/xml/VOTable-1.1.xsd"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://skyservice.pha.jhu.edu"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://skyservice.pha.jhu.edu">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://skyservice.pha.jhu.edu">
+         <s:import namespace="http://vizier.u-strasbg.fr/xml/VOTable-1.1.xsd"/>
+         <s:element name="Revisions">
+            <s:complexType/>
+         </s:element>
+         <s:element name="RevisionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RevisionsResult" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ConeSearch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ra" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="dec" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="sr" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ConeSearchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" ref="s1:ConeSearchResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ArrayOfString" nillable="true" type="tns:ArrayOfString"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://vizier.u-strasbg.fr/xml/VOTable-1.1.xsd">
+         <s:element name="ConeSearchResult" type="s1:VOTABLE"/>
+         <s:complexType name="VOTABLE">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="DESCRIPTION" type="s1:anyTEXT"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DEFINITIONS" type="s1:ArrayOfChoice1"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="INFO" type="s1:INFO"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="RESOURCE" type="s1:RESOURCE"/>
+            </s:sequence>
+            <s:attribute name="ID" type="s:ID"/>
+            <s:attribute name="version" type="s1:VOTABLEVersion"/>
+         </s:complexType>
+         <s:complexType name="anyTEXT" mixed="true">
+            <s:sequence>
+               <s:any minOccurs="0" maxOccurs="unbounded"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfChoice1">
+            <s:choice minOccurs="0" maxOccurs="unbounded">
+               <s:element minOccurs="0" maxOccurs="1" name="COOSYS" type="s1:COOSYS"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PARAM" type="s1:PARAM"/>
+            </s:choice>
+         </s:complexType>
+         <s:complexType name="COOSYS" mixed="true">
+            <s:attribute name="ID" type="s:ID"/>
+            <s:attribute name="equinox" type="s:token"/>
+            <s:attribute name="epoch" type="s:token"/>
+            <s:attribute default="eq_FK5" name="system" type="s1:COOSYSSystem"/>
+         </s:complexType>
+         <s:simpleType name="COOSYSSystem">
+            <s:restriction base="s:string">
+               <s:enumeration value="eq_FK4"/>
+               <s:enumeration value="eq_FK5"/>
+               <s:enumeration value="ICRS"/>
+               <s:enumeration value="ecl_FK4"/>
+               <s:enumeration value="ecl_FK5"/>
+               <s:enumeration value="galactic"/>
+               <s:enumeration value="supergalactic"/>
+               <s:enumeration value="xy"/>
+               <s:enumeration value="barycentric"/>
+               <s:enumeration value="geo_app"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="PARAM">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="DESCRIPTION" type="s1:anyTEXT"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VALUES" type="s1:VALUES"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="LINK" type="s1:LINK"/>
+            </s:sequence>
+            <s:attribute name="ID" type="s:ID"/>
+            <s:attribute name="unit" type="s:token"/>
+            <s:attribute name="datatype" type="s1:dataType" use="required"/>
+            <s:attribute name="precision" type="s:token"/>
+            <s:attribute name="width" type="s:positiveInteger"/>
+            <s:attribute name="ref" type="s:IDREF"/>
+            <s:attribute name="name" type="s:token"/>
+            <s:attribute name="ucd" type="s:token"/>
+            <s:attribute name="utype" type="s:string"/>
+            <s:attribute name="value" type="s:string"/>
+            <s:attribute name="arraysize" type="s:token"/>
+         </s:complexType>
+         <s:complexType name="VALUES">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="MIN" type="s1:MIN"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MAX" type="s1:MAX"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="OPTION" type="s1:OPTION"/>
+            </s:sequence>
+            <s:attribute name="ID" type="s:ID"/>
+            <s:attribute default="legal" name="type" type="s1:VALUESType"/>
+            <s:attribute name="null" type="s:token"/>
+            <s:attribute name="ref" type="s:IDREF"/>
+         </s:complexType>
+         <s:complexType name="MIN">
+            <s:attribute name="value" type="s:string"/>
+            <s:attribute default="yes" name="inclusive" type="s1:yesno"/>
+         </s:complexType>
+         <s:simpleType name="yesno">
+            <s:restriction base="s:string">
+               <s:enumeration value="yes"/>
+               <s:enumeration value="no"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="MAX">
+            <s:attribute name="value" type="s:string"/>
+            <s:attribute default="yes" name="inclusive" type="s1:yesno"/>
+         </s:complexType>
+         <s:complexType name="OPTION">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="OPTION" type="s1:OPTION"/>
+            </s:sequence>
+            <s:attribute name="name" type="s:token"/>
+            <s:attribute name="value" type="s:string"/>
+         </s:complexType>
+         <s:simpleType name="VALUESType">
+            <s:restriction base="s:string">
+               <s:enumeration value="legal"/>
+               <s:enumeration value="actual"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="LINK" mixed="true">
+            <s:attribute name="ID" type="s:ID"/>
+            <s:attribute name="content-role" type="s1:LINKContentrole"/>
+            <s:attribute name="content-type" type="s:token"/>
+            <s:attribute name="title" type="s:string"/>
+            <s:attribute name="value" type="s:string"/>
+            <s:attribute name="href" type="s:anyURI"/>
+            <s:attribute name="gref" type="s:token"/>
+            <s:attribute name="action" type="s:anyURI"/>
+         </s:complexType>
+         <s:simpleType name="LINKContentrole">
+            <s:restriction base="s:string">
+               <s:enumeration value="query"/>
+               <s:enumeration value="hints"/>
+               <s:enumeration value="doc"/>
+               <s:enumeration value="location"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="dataType">
+            <s:restriction base="s:string">
+               <s:enumeration value="boolean"/>
+               <s:enumeration value="bit"/>
+               <s:enumeration value="unsignedByte"/>
+               <s:enumeration value="short"/>
+               <s:enumeration value="int"/>
+               <s:enumeration value="long"/>
+               <s:enumeration value="char"/>
+               <s:enumeration value="unicodeChar"/>
+               <s:enumeration value="float"/>
+               <s:enumeration value="double"/>
+               <s:enumeration value="floatComplex"/>
+               <s:enumeration value="doubleComplex"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="INFO" mixed="true">
+            <s:attribute name="ID" type="s:ID"/>
+            <s:attribute name="name" type="s:token"/>
+            <s:attribute name="value" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="RESOURCE">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="DESCRIPTION" type="s1:anyTEXT"/>
+               <s:choice minOccurs="0" maxOccurs="unbounded">
+                  <s:element minOccurs="0" maxOccurs="1" name="COOSYS" type="s1:COOSYS"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="INFO" type="s1:INFO"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PARAM" type="s1:PARAM"/>
+               </s:choice>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="LINK" type="s1:LINK"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="TABLE" type="s1:TABLE"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="RESOURCE" type="s1:RESOURCE"/>
+               <s:any minOccurs="0" maxOccurs="unbounded"/>
+            </s:sequence>
+            <s:attribute name="name" type="s:token"/>
+            <s:attribute name="ID" type="s:ID"/>
+            <s:attribute default="results" name="type" type="s1:RESOURCEType"/>
+            <s:anyAttribute/>
+         </s:complexType>
+         <s:complexType name="TABLE">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="DESCRIPTION" type="s1:anyTEXT"/>
+               <s:choice minOccurs="0" maxOccurs="unbounded">
+                  <s:element minOccurs="0" maxOccurs="1" name="PARAM" type="s1:PARAM"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FIELD" type="s1:FIELD"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GROUP" type="s1:GROUP"/>
+               </s:choice>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="LINK" type="s1:LINK"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DATA" type="s1:DATA"/>
+            </s:sequence>
+            <s:attribute name="ID" type="s:ID"/>
+            <s:attribute name="name" type="s:token"/>
+            <s:attribute name="ref" type="s:IDREF"/>
+         </s:complexType>
+         <s:complexType name="FIELD">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="DESCRIPTION" type="s1:anyTEXT"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VALUES" type="s1:VALUES"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="LINK" type="s1:LINK"/>
+            </s:sequence>
+            <s:attribute name="ID" type="s:ID"/>
+            <s:attribute name="unit" type="s:token"/>
+            <s:attribute name="datatype" type="s1:dataType" use="required"/>
+            <s:attribute name="precision" type="s:token"/>
+            <s:attribute name="width" type="s:positiveInteger"/>
+            <s:attribute name="ref" type="s:IDREF"/>
+            <s:attribute name="name" type="s:token"/>
+            <s:attribute name="ucd" type="s:token"/>
+            <s:attribute name="utype" type="s:string"/>
+            <s:attribute name="arraysize" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="GROUP">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="DESCRIPTION" type="s1:anyTEXT"/>
+               <s:choice minOccurs="0" maxOccurs="unbounded">
+                  <s:element minOccurs="0" maxOccurs="1" name="PARAMref" type="s1:PARAMref"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PARAM" type="s1:PARAM"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FIELDref" type="s1:FIELDref"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FIELD" type="s1:FIELD"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="GROUP" type="s1:GROUP"/>
+               </s:choice>
+            </s:sequence>
+            <s:attribute name="ID" type="s:ID"/>
+            <s:attribute name="name" type="s:token"/>
+            <s:attribute name="ref" type="s:IDREF"/>
+            <s:attribute name="ucd" type="s:token"/>
+            <s:attribute name="utype" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="PARAMref">
+            <s:attribute name="ref" type="s:IDREF"/>
+         </s:complexType>
+         <s:complexType name="FIELDref">
+            <s:attribute name="ref" type="s:IDREF"/>
+         </s:complexType>
+         <s:complexType name="DATA">
+            <s:sequence>
+               <s:choice minOccurs="1" maxOccurs="1">
+                  <s:element minOccurs="0" maxOccurs="1" name="TABLEDATA" type="s1:TABLEDATA"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FITS" type="s1:FITS"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BINARY" type="s1:BINARY"/>
+               </s:choice>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="TABLEDATA">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="TR" type="s1:TR"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="TR">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="TD" type="s1:TD"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="TD" mixed="true">
+            <s:attribute name="encoding" type="s1:encodingType"/>
+         </s:complexType>
+         <s:simpleType name="encodingType">
+            <s:restriction base="s:string">
+               <s:enumeration value="gzip"/>
+               <s:enumeration value="base64"/>
+               <s:enumeration value="dynamic"/>
+               <s:enumeration value="none"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="FITS">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="STREAM" type="s1:STREAM"/>
+            </s:sequence>
+            <s:attribute name="extnum" type="s:positiveInteger"/>
+         </s:complexType>
+         <s:complexType name="STREAM">
+            <s:simpleContent>
+               <s:extension base="s:string">
+                  <s:attribute default="locator" name="type" type="s1:STREAMType"/>
+                  <s:attribute name="href" type="s:anyURI"/>
+                  <s:attribute default="onRequest" name="actuate" type="s1:STREAMActuate"/>
+                  <s:attribute default="none" name="encoding" type="s1:encodingType"/>
+                  <s:attribute name="expires" type="s:dateTime"/>
+                  <s:attribute name="rights" type="s:token"/>
+               </s:extension>
+            </s:simpleContent>
+         </s:complexType>
+         <s:simpleType name="STREAMType">
+            <s:restriction base="s:string">
+               <s:enumeration value="locator"/>
+               <s:enumeration value="other"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="STREAMActuate">
+            <s:restriction base="s:string">
+               <s:enumeration value="onLoad"/>
+               <s:enumeration value="onRequest"/>
+               <s:enumeration value="other"/>
+               <s:enumeration value="none"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="BINARY">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="STREAM" type="s1:STREAM"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="RESOURCEType">
+            <s:restriction base="s:string">
+               <s:enumeration value="results"/>
+               <s:enumeration value="meta"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="VOTABLEVersion">
+            <s:restriction base="s:string">
+               <s:enumeration value="1.1"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="VOTABLE" type="s1:VOTABLE"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RevisionsSoapIn">
+      <wsdl:part name="parameters" element="tns:Revisions"/>
+  </wsdl:message>
+  <wsdl:message name="RevisionsSoapOut">
+      <wsdl:part name="parameters" element="tns:RevisionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ConeSearchSoapIn">
+      <wsdl:part name="parameters" element="tns:ConeSearch"/>
+  </wsdl:message>
+  <wsdl:message name="ConeSearchSoapOut">
+      <wsdl:part name="parameters" element="tns:ConeSearchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RevisionsHttpGetIn"/>
+  <wsdl:message name="RevisionsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  <wsdl:message name="ConeSearchHttpGetIn">
+      <wsdl:part name="ra" type="s:string"/>
+      <wsdl:part name="dec" type="s:string"/>
+      <wsdl:part name="sr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ConeSearchHttpGetOut">
+      <wsdl:part name="Body" element="s1:VOTABLE"/>
+  </wsdl:message>
+  <wsdl:message name="RevisionsHttpPostIn"/>
+  <wsdl:message name="RevisionsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  <wsdl:message name="ConeSearchHttpPostIn">
+      <wsdl:part name="ra" type="s:string"/>
+      <wsdl:part name="dec" type="s:string"/>
+      <wsdl:part name="sr" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ConeSearchHttpPostOut">
+      <wsdl:part name="Body" element="s1:VOTABLE"/>
+  </wsdl:message>
+  <wsdl:portType name="ConeSearchWSSoap">
+      <wsdl:operation name="Revisions">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Return CVS revision numbers</documentation>
+         <wsdl:input message="tns:RevisionsSoapIn"/>
+         <wsdl:output message="tns:RevisionsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="ConeSearch">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">ConeSearch from the Sloan Digital Sky Survey</documentation>
+         <wsdl:input message="tns:ConeSearchSoapIn"/>
+         <wsdl:output message="tns:ConeSearchSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="ConeSearchWSSoap" type="tns:ConeSearchWSSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="Revisions">
+         <soap:operation soapAction="http://skyservice.pha.jhu.edu/Revisions" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ConeSearch">
+         <soap:operation soapAction="http://skyservice.pha.jhu.edu/ConeSearch" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="ConeSearchWS">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This is a &lt;b&gt;XML Web Service&lt;/b&gt; interface to do a Cone Search from the &lt;b&gt;DR1 Sloan Digital Sky Survey &lt;/b&gt; catalog.&lt;br&gt;Send comments to &lt;b&gt;Maria Nieto-Santisteban&lt;/b&gt; -- nieto@pha.jhu.edu</documentation>
+      <wsdl:port name="ConeSearchWSSoap" binding="tns:ConeSearchWSSoap">
+         <soap:address location="http://ws.soatrader.com/sdss.org/0.1/ConeSearchWS"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

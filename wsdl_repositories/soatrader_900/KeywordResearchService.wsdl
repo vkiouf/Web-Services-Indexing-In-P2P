@@ -1,0 +1,679 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"
+                  xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding"
+                  xmlns:tns="http://marketing.ews.yahooapis.com/V1"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/07/secext"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://marketing.ews.yahooapis.com/V1">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+        <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified"
+                  targetNamespace="http://marketing.ews.yahooapis.com/V1">
+            <xsd:element name="accountID">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="license">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="masterAccountID">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="timeTakenMillis">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="remainingQuota">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="commandGroup">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>  
+            <xsd:complexType name="PageRelatedKeywordRequestType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="URL" type="xsd:anyURI"/>
+                    <xsd:element minOccurs="0" name="excludedKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="excludedPhraseFilters" nillable="true"
+                            type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="market" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="maxKeywords" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="negativeKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="positiveKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="requiredPhraseFilters" nillable="true"
+                            type="tns:ArrayOfString"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfString">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="string" nillable="true"
+                            type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getPageRelatedKeywords">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="pageRelatedKeywordRequest" nillable="true"
+                               type="tns:PageRelatedKeywordRequestType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="RelatedKeywordResponseType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="notes" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="relatedKeywords" nillable="true"
+                            type="tns:ArrayOfRelatedKeywordType"/>
+                    <xsd:element minOccurs="0" name="responseStatus" nillable="true"
+                            type="tns:ResponseStatusType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfRelatedKeywordType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="RelatedKeywordType" nillable="true"
+                            type="tns:RelatedKeywordType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="RangeNameType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="Searches"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="RangeValueType">
+                <xsd:sequence>
+                    <xsd:element name="rangeName" nillable="true" type="tns:RangeNameType"/>
+                    <xsd:element name="bucketID" nillable="true" type="xsd:integer"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="RelatedKeywordType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="canonical" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="common" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="rangeValue" nillable="true" type="tns:RangeValueType"/>
+                    <xsd:element minOccurs="0" name="score" nillable="true" type="xsd:double"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ResponseStatusType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="error" nillable="true" type="tns:ArrayOfErrorType"/>
+                    <xsd:element minOccurs="0" name="status" type="tns:ResponseStatusCodeType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="ResponseStatusCodeType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="InternalError"/>
+                    <xsd:enumeration value="Success"/>
+                    <xsd:enumeration value="InputError"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="ArrayOfErrorType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="ErrorType" nillable="true"
+                            type="tns:ErrorType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ErrorType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="key" type="tns:ErrorKeyType"/>
+                    <xsd:element minOccurs="0" name="param" nillable="true" type="tns:ArrayOfString"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="ErrorKeyType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="NoMarketCode"/>
+                    <xsd:enumeration value="NoRangeName"/>
+                    <xsd:enumeration value="NoURLString"/>
+                    <xsd:enumeration value="UnknownMarketCode"/>
+                    <xsd:enumeration value="NoSeedKeywords"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:element name="getPageRelatedKeywordsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true"
+                               type="tns:RelatedKeywordResponseType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="ApiFault">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="code" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="message" nillable="true" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ApiFault" type="tns:ApiFault"/>
+            <xsd:complexType name="RelatedKeywordRequestType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="excludedKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="excludedPhraseFilters" nillable="true"
+                            type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="market" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="maxKeywords" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="negativeKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="positiveKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="requiredPhraseFilters" nillable="true"
+                            type="tns:ArrayOfString"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRelatedKeywords">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="relatedKeywordRequest" nillable="true"
+                               type="tns:RelatedKeywordRequestType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getRelatedKeywordsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true"
+                               type="tns:RelatedKeywordResponseType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="RangeDefinitionRequestType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="market" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="rangeName" nillable="true" type="tns:ArrayOfRangeNameType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfRangeNameType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="RangeNameType"
+                            type="tns:RangeNameType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRangeDefinitions">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="rangeDefinitionRequest" nillable="true"
+                               type="tns:RangeDefinitionRequestType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="RangeDefinitionResponseType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="rangeDefinition" nillable="true"
+                            type="tns:ArrayOfRangeDefinitionType"/>
+                    <xsd:element minOccurs="0" name="responseStatus" nillable="true"
+                            type="tns:ResponseStatusType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfRangeDefinitionType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="RangeDefinitionType" nillable="true"
+                            type="tns:RangeDefinitionType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="RangeDefinitionType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="bucket" nillable="true" type="tns:ArrayOfBucketType"/>
+                    <xsd:element minOccurs="0" name="market" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="rangeName" type="tns:RangeNameType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfBucketType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="BucketType" nillable="true"
+                            type="tns:BucketType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="BucketType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="bucketID" nillable="true" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="max" nillable="true" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="min" nillable="true" type="xsd:int"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRangeDefinitionsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true"
+                               type="tns:RangeDefinitionResponseType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+      <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified"
+                  targetNamespace="http://marketing.ews.yahooapis.com/V1">
+            <xsd:element name="accountID">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="license">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="masterAccountID">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="timeTakenMillis">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="remainingQuota">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="commandGroup">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>  
+            <xsd:complexType name="PageRelatedKeywordRequestType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="URL" type="xsd:anyURI"/>
+                    <xsd:element minOccurs="0" name="excludedKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="excludedPhraseFilters" nillable="true"
+                            type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="market" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="maxKeywords" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="negativeKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="positiveKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="requiredPhraseFilters" nillable="true"
+                            type="tns:ArrayOfString"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfString">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="string" nillable="true"
+                            type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getPageRelatedKeywords">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="pageRelatedKeywordRequest" nillable="true"
+                               type="tns:PageRelatedKeywordRequestType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="RelatedKeywordResponseType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="notes" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="relatedKeywords" nillable="true"
+                            type="tns:ArrayOfRelatedKeywordType"/>
+                    <xsd:element minOccurs="0" name="responseStatus" nillable="true"
+                            type="tns:ResponseStatusType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfRelatedKeywordType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="RelatedKeywordType" nillable="true"
+                            type="tns:RelatedKeywordType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="RangeNameType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="Searches"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="RangeValueType">
+                <xsd:sequence>
+                    <xsd:element name="rangeName" nillable="true" type="tns:RangeNameType"/>
+                    <xsd:element name="bucketID" nillable="true" type="xsd:integer"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="RelatedKeywordType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="canonical" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="common" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="rangeValue" nillable="true" type="tns:RangeValueType"/>
+                    <xsd:element minOccurs="0" name="score" nillable="true" type="xsd:double"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ResponseStatusType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="error" nillable="true" type="tns:ArrayOfErrorType"/>
+                    <xsd:element minOccurs="0" name="status" type="tns:ResponseStatusCodeType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="ResponseStatusCodeType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="InternalError"/>
+                    <xsd:enumeration value="Success"/>
+                    <xsd:enumeration value="InputError"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="ArrayOfErrorType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="ErrorType" nillable="true"
+                            type="tns:ErrorType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ErrorType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="key" type="tns:ErrorKeyType"/>
+                    <xsd:element minOccurs="0" name="param" nillable="true" type="tns:ArrayOfString"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="ErrorKeyType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="NoMarketCode"/>
+                    <xsd:enumeration value="NoRangeName"/>
+                    <xsd:enumeration value="NoURLString"/>
+                    <xsd:enumeration value="UnknownMarketCode"/>
+                    <xsd:enumeration value="NoSeedKeywords"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:element name="getPageRelatedKeywordsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true"
+                               type="tns:RelatedKeywordResponseType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="ApiFault">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="code" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="message" nillable="true" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ApiFault" type="tns:ApiFault"/>
+            <xsd:complexType name="RelatedKeywordRequestType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="excludedKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="excludedPhraseFilters" nillable="true"
+                            type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="market" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="maxKeywords" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="negativeKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="positiveKeywords" nillable="true" type="tns:ArrayOfString"/>
+                    <xsd:element minOccurs="0" name="requiredPhraseFilters" nillable="true"
+                            type="tns:ArrayOfString"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRelatedKeywords">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="relatedKeywordRequest" nillable="true"
+                               type="tns:RelatedKeywordRequestType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getRelatedKeywordsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true"
+                               type="tns:RelatedKeywordResponseType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="RangeDefinitionRequestType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="market" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="rangeName" nillable="true" type="tns:ArrayOfRangeNameType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfRangeNameType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="RangeNameType"
+                            type="tns:RangeNameType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRangeDefinitions">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="rangeDefinitionRequest" nillable="true"
+                               type="tns:RangeDefinitionRequestType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="RangeDefinitionResponseType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="rangeDefinition" nillable="true"
+                            type="tns:ArrayOfRangeDefinitionType"/>
+                    <xsd:element minOccurs="0" name="responseStatus" nillable="true"
+                            type="tns:ResponseStatusType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfRangeDefinitionType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="RangeDefinitionType" nillable="true"
+                            type="tns:RangeDefinitionType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="RangeDefinitionType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="bucket" nillable="true" type="tns:ArrayOfBucketType"/>
+                    <xsd:element minOccurs="0" name="market" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="rangeName" type="tns:RangeNameType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ArrayOfBucketType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="BucketType" nillable="true"
+                            type="tns:BucketType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="BucketType">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="bucketID" nillable="true" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="max" nillable="true" type="xsd:int"/>
+                    <xsd:element minOccurs="0" name="min" nillable="true" type="xsd:int"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRangeDefinitionsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true"
+                               type="tns:RangeDefinitionResponseType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://schemas.xmlsoap.org/ws/2002/07/secext">
+            <element name="Security" type="wsse:Security"/>
+            <complexType name="Security">
+                <sequence>
+                    <element name="UsernameToken" type="wsse:UsernameToken"/>
+                </sequence>
+            </complexType>
+            <complexType name="UsernameToken">
+                <sequence>
+                    <element name="Username" type="xsd:string"/>
+                    <element name="Password" type="xsd:string"/>
+                </sequence>
+            </complexType>
+        </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://schemas.xmlsoap.org/ws/2002/07/secext">
+            <element name="Security" type="wsse:Security"/>
+            <complexType name="Security">
+                <sequence>
+                    <element name="UsernameToken" type="wsse:UsernameToken"/>
+                </sequence>
+            </complexType>
+            <complexType name="UsernameToken">
+                <sequence>
+                    <element name="Username" type="xsd:string"/>
+                    <element name="Password" type="xsd:string"/>
+                </sequence>
+            </complexType>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="license">
+        <wsdl:part element="tns:license" name="license"/>
+    </wsdl:message>
+    <wsdl:message name="Security">
+        <wsdl:part element="wsse:Security" name="Security"/>
+    </wsdl:message>
+    <wsdl:message name="ApiFault">
+        <wsdl:part element="tns:ApiFault" name="ApiFault"/>
+    </wsdl:message>
+    <wsdl:message name="getRangeDefinitionsResponse">
+        <wsdl:part element="tns:getRangeDefinitionsResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getRangeDefinitionsRequest">
+        <wsdl:part element="tns:getRangeDefinitions" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getPageRelatedKeywordsResponse">
+        <wsdl:part element="tns:getPageRelatedKeywordsResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="getRelatedKeywordsRequest">
+        <wsdl:part element="tns:getRelatedKeywords" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="commandGroup">
+        <wsdl:part element="tns:commandGroup" name="commandGroup"/>
+    </wsdl:message>
+    <wsdl:message name="remainingQuota">
+        <wsdl:part element="tns:remainingQuota" name="remainingQuota"/>
+    </wsdl:message>
+    <wsdl:message name="getRelatedKeywordsResponse">
+        <wsdl:part element="tns:getRelatedKeywordsResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="timeTakenMillis">
+        <wsdl:part element="tns:timeTakenMillis" name="timeTakenMillis"/>
+    </wsdl:message>
+    <wsdl:message name="masterAccountID">
+        <wsdl:part element="tns:masterAccountID" name="masterAccountID"/>
+    </wsdl:message>
+    <wsdl:message name="accountID">
+        <wsdl:part element="tns:accountID" name="accountID"/>
+    </wsdl:message>
+    <wsdl:message name="getPageRelatedKeywordsRequest">
+        <wsdl:part element="tns:getPageRelatedKeywords" name="parameters"/>
+    </wsdl:message>
+    <wsdl:portType name="KeywordResearchService">
+        <wsdl:operation name="getPageRelatedKeywords">
+            <wsdl:input message="tns:getPageRelatedKeywordsRequest"
+                     name="getPageRelatedKeywordsRequest"/>
+            <wsdl:output message="tns:getPageRelatedKeywordsResponse"
+                      name="getPageRelatedKeywordsResponse"/>
+            <wsdl:fault message="tns:ApiFault" name="ApiFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="getRelatedKeywords">
+            <wsdl:input message="tns:getRelatedKeywordsRequest" name="getRelatedKeywordsRequest"/>
+            <wsdl:output message="tns:getRelatedKeywordsResponse" name="getRelatedKeywordsResponse"/>
+            <wsdl:fault message="tns:ApiFault" name="ApiFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="getRangeDefinitions">
+            <wsdl:input message="tns:getRangeDefinitionsRequest" name="getRangeDefinitionsRequest"/>
+            <wsdl:output message="tns:getRangeDefinitionsResponse" name="getRangeDefinitionsResponse"/>
+            <wsdl:fault message="tns:ApiFault" name="ApiFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="KeywordResearchServiceHttpBinding" type="tns:KeywordResearchService">
+        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getPageRelatedKeywords">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="getPageRelatedKeywordsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+                <wsdlsoap:body use="literal"/>
+                <wsdlsoap:header message="tns:masterAccountID" part="masterAccountID" use="literal"/>
+                <wsdlsoap:header message="tns:license" part="license" use="literal"/>
+                <wsdlsoap:header message="tns:accountID" part="accountID" use="literal"/>
+                <wsdlsoap:header message="tns:Security" part="Security" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getPageRelatedKeywordsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <wsdlsoap:body use="literal"/>
+                <wsdlsoap:header message="tns:commandGroup" part="commandGroup" use="literal"/>
+                <wsdlsoap:header message="tns:remainingQuota" part="remainingQuota" use="literal"/>
+                <wsdlsoap:header message="tns:timeTakenMillis" part="timeTakenMillis" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ApiFault">
+                <wsdlsoap:fault name="ApiFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRelatedKeywords">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="getRelatedKeywordsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+                <wsdlsoap:body use="literal"/>
+                <wsdlsoap:header message="tns:masterAccountID" part="masterAccountID" use="literal"/>
+                <wsdlsoap:header message="tns:license" part="license" use="literal"/>
+                <wsdlsoap:header message="tns:accountID" part="accountID" use="literal"/>
+                <wsdlsoap:header message="tns:Security" part="Security" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getRelatedKeywordsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <wsdlsoap:body use="literal"/>
+                <wsdlsoap:header message="tns:commandGroup" part="commandGroup" use="literal"/>
+                <wsdlsoap:header message="tns:remainingQuota" part="remainingQuota" use="literal"/>
+                <wsdlsoap:header message="tns:timeTakenMillis" part="timeTakenMillis" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ApiFault">
+                <wsdlsoap:fault name="ApiFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRangeDefinitions">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="getRangeDefinitionsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+                <wsdlsoap:body use="literal"/>
+                <wsdlsoap:header message="tns:masterAccountID" part="masterAccountID" use="literal"/>
+                <wsdlsoap:header message="tns:license" part="license" use="literal"/>
+                <wsdlsoap:header message="tns:accountID" part="accountID" use="literal"/>
+                <wsdlsoap:header message="tns:Security" part="Security" use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getRangeDefinitionsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <wsdlsoap:body use="literal"/>
+                <wsdlsoap:header message="tns:commandGroup" part="commandGroup" use="literal"/>
+                <wsdlsoap:header message="tns:remainingQuota" part="remainingQuota" use="literal"/>
+                <wsdlsoap:header message="tns:timeTakenMillis" part="timeTakenMillis" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ApiFault">
+                <wsdlsoap:fault name="ApiFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="KeywordResearchService">
+        <wsdl:port binding="tns:KeywordResearchServiceHttpBinding"
+                 name="ExternalKeywordResearchService">
+            <wsdlsoap:address location="http://ws.soatrader.com/rubyforge.org/0.1/KeywordResearchService"/> 
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

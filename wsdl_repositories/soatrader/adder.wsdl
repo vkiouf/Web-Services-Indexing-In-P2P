@@ -1,0 +1,66 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://soap.4s4c.com/demo/adder/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://soap.4s4c.com/demo/adder/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+  <wsdl:message name="addSoapIn">
+      <wsdl:part name="number1" type="s:int"/>
+      <wsdl:part name="number2" type="s:int"/>
+  </wsdl:message>
+  <wsdl:message name="addSoapOut">
+      <wsdl:part name="addResult" type="s:int"/>
+  </wsdl:message>
+  <wsdl:portType name="adderSoap">
+      <wsdl:operation name="add">
+         <wsdl:input message="tns:addSoapIn"/>
+         <wsdl:output message="tns:addSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="adderSoap" type="tns:adderSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="add">
+         <soap:operation soapAction="http://soap.4s4c.com/demo/adder/add" style="rpc"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="http://soap.4s4c.com/demo/adder/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="http://soap.4s4c.com/demo/adder/"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="adder">
+      <wsdl:port name="adderSoap" binding="tns:adderSoap">
+         <soap:address location="http://ws.soatrader.com/4s4c.com/0.1/adder"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

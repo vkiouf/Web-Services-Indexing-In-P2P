@@ -1,0 +1,124 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.ssw.com.au/PostcodeWebservice">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns:soat="http://ws.soatrader.com/" xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="xs:string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="xs:decimal" name="HitsMade"/>
+               <element type="xs:decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                xmlns:tns="http://www.ssw.com.au/PostcodeWebservice"
+                xmlns:s="http://www.w3.org/2001/XMLSchema"
+                xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                elementFormDefault="qualified"
+                targetNamespace="http://www.ssw.com.au/PostcodeWebservice">
+         <s:element name="GetPostcodeAndSuburbForAustralia">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="txtSuburb" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="txtState" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="txtPostCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPostcodeAndSuburbForAustraliaResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPostcodeAndSuburbForAustraliaResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DataSet" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:element ref="s:schema"/>
+                  <s:any/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetPostcodeAndSuburbForAustraliaSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPostcodeAndSuburbForAustralia"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostcodeAndSuburbForAustraliaSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPostcodeAndSuburbForAustraliaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostcodeAndSuburbForAustraliaHttpGetIn">
+      <wsdl:part name="txtSuburb" type="s:string"/>
+      <wsdl:part name="txtState" type="s:string"/>
+      <wsdl:part name="txtPostCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostcodeAndSuburbForAustraliaHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostcodeAndSuburbForAustraliaHttpPostIn">
+      <wsdl:part name="txtSuburb" type="s:string"/>
+      <wsdl:part name="txtState" type="s:string"/>
+      <wsdl:part name="txtPostCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetPostcodeAndSuburbForAustraliaHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="PostcodeServiceSoap" type="tns:PostcodeServiceSoap">
+      <soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                    transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetPostcodeAndSuburbForAustralia">
+         <soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         soapAction="http://www.ssw.com.au/PostcodeWebservice/GetPostcodeAndSuburbForAustralia"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="PostcodeService">
+      <wsdl:port name="PostcodeServiceSoap" binding="tns:PostcodeServiceSoap">
+         <soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                       location="http://ws.soatrader.com/ssw.com.au/0.1/PostcodeService"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

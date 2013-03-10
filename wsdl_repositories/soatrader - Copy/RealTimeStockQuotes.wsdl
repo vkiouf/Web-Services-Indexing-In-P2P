@@ -1,0 +1,1319 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://www.strikeiron.com"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:si="http://www.strikeiron.com"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.strikeiron.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.strikeiron.com">
+         <s:element name="GetRealQuote">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="IncludeBidAsk" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="SIECNTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Island"/>
+               <s:enumeration value="INET"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetRealQuoteResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRealQuoteResult" type="si:SIRealTimeQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SIRealTimeQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CUSIP" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CIK" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Last" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromPrevious" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromPrevious" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Open" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromOpen" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromOpen" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Bid" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Ask" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Spread" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BidQuantity" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AskQuantity" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Volume" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ECNVolume" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Highest" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Lowest" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Rank" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ResponseInfo" type="si:ResponseInfo"/>
+         <s:complexType name="ResponseInfo">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ResponseCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Response" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetExtendedRealQuote">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetExtendedRealQuoteResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetExtendedRealQuoteResult"
+                             type="si:SIExtendedRealTimeQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SIExtendedRealTimeQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CUSIP" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CIK" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastPrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastQuantity" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastTradeType" type="si:SIOrderTypes"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastTradeDirection"
+                          type="si:SIDirectionTypes"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Volume" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ECNVolume" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastMarketClosePrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromLastMarketClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromLastMarketClose"
+                          type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastClosePrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromLastClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromLastClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OpenPrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromOpen" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromOpen" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MarketOpenPrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromMarketOpen" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromMarketOpen" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MarketClosePrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromMarketClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromMarketClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PreviousTradePrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromPreviousTrade" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromPreviousTrade"
+                          type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BidPrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BidQuantity" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BidTime" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Bids" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BidVolume" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AverageBid" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AskPrice" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AskQuantity" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AskTime" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Asks" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AverageAsk" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AskVolume" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Spread" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Highest" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HighestTime" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Lowest" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LowestTime" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalOrders" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalCancellations" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalExecutions" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalQuantityOrdered" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalQuantityExecuted" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalQuantityCancelled" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AverageOrderSize" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AverageExecutionSize" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SharesOutstanding" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MarketCap" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="SIOrderTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Buy"/>
+               <s:enumeration value="Sell"/>
+               <s:enumeration value="None"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="SIDirectionTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Same"/>
+               <s:enumeration value="Up"/>
+               <s:enumeration value="Down"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetRealQuotes">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbols" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="IncludeBidAsk" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetRealQuotesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRealQuotesResult"
+                             type="si:ArrayOfSIRealTimeQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfSIRealTimeQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIRealTimeQuote" nillable="true"
+                          type="si:SIRealTimeQuote"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetExtendedRealQuotes">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbols" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetExtendedRealQuotesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetExtendedRealQuotesResult"
+                             type="si:ArrayOfSIExtendedRealTimeQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfSIExtendedRealTimeQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIExtendedRealTimeQuote"
+                          nillable="true"
+                          type="si:SIExtendedRealTimeQuote"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetRealQuotesTicker">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbols" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetRealQuotesTickerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRealQuotesTickerResult"
+                             type="si:SITickerTape"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SITickerTape">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Tape" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetTick">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Time" type="si:SITime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SITime">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Hour" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Minute" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AMPMType" type="si:AMPMTypes"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="AMPMTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="AM"/>
+               <s:enumeration value="PM"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetTickResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetTickResult" type="si:SISingleTick"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SISingleTick">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetTicks">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="si:SITime"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="si:SITime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TickPrecision" type="si:SITickPeriod"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TickPeriods" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="SITickPeriod">
+            <s:restriction base="s:string">
+               <s:enumeration value="Tick"/>
+               <s:enumeration value="Millisecond"/>
+               <s:enumeration value="Second"/>
+               <s:enumeration value="Minute"/>
+               <s:enumeration value="Hour"/>
+               <s:enumeration value="Day"/>
+               <s:enumeration value="Week"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetTicksResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetTicksResult" type="si:SITicks"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SITicks">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Ticks1" type="si:ArrayOfSITick"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSITick">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SITick" nillable="true"
+                          type="si:SITick"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SITick">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Change" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChange" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="High" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Low" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetHistoricalTicks">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="HistoricalPeriod"
+                             type="si:SIHistoricalPeriods"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="si:SITime"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndTime" type="si:SITime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TickPrecision" type="si:SITickPeriod"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TickPeriods" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="SIHistoricalPeriods">
+            <s:restriction base="s:string">
+               <s:enumeration value="PreviousDay"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetHistoricalTicksResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetHistoricalTicksResult" type="si:SITicks"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="IsTraded">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="IsTradedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="IsTradedResult" type="si:SIBooleanResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SIBooleanResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetBook">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MaximumOrders" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetBookResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetBookResult" type="si:SIBook"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SIBook">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Bids" type="si:ArrayOfSIOrderSummary"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Asks" type="si:ArrayOfSIOrderSummary"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSIOrderSummary">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIOrderSummary" nillable="true"
+                          type="si:SIOrderSummary"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SIOrderSummary">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Ordered" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Filled" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Cancelled" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Unfilled" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Rank" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetBookDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MaximumOrders" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetBookDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetBookDetailsResult"
+                             type="si:SIDetailedBook"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SIDetailedBook">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Bids" type="si:ArrayOfSIOrder"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Asks" type="si:ArrayOfSIOrder"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSIOrder">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIOrder" nillable="true"
+                          type="si:SIOrder"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SIOrder">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Ordered" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Filled" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Cancelled" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Unfilled" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Rank" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetRealTopMovers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetRealTopMoversResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRealTopMoversResult" type="si:SITop"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SITop">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Type" type="si:SITopTypes"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Quotes" type="si:ArrayOfSIRealTimeQuote"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="SITopTypes">
+            <s:restriction base="s:string">
+               <s:enumeration value="Movers"/>
+               <s:enumeration value="Gainers"/>
+               <s:enumeration value="Losers"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetRealTopGainers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetRealTopGainersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRealTopGainersResult" type="si:SITop"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetRealTopLosers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetRealTopLosersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRealTopLosersResult" type="si:SITop"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchByMarketCap">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PercentChange" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MinimumMarketCap" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MaximumMarketCap" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SearchByMarketCapResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchByMarketCapResult"
+                             type="si:ArrayOfSISearchResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfSISearchResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SISearchResult" nillable="true"
+                          type="si:SISearchResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SISearchResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Change" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Quote" type="si:SIRealTimeQuote"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Security" type="si:SISecurity"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SharesOutstanding" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MarketCap" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Last" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChange" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastYearClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="YTDPercentChange" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OneYearClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OneYearPercentChange" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SISecurity">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CIK" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Cusip" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Market" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CategoryOrIndustry" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetRealTop">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Exchange" type="si:SIECNTypes"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetRealTopResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetRealTopResult" type="si:ArrayOfSITop"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfSITop">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SITop" nillable="true"
+                          type="si:SITop"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <xs:schema xmlns:tns1="http://ws.strikeiron.com" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 attributeFormDefault="unqualified"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetRealQuoteSoapIn">
+      <wsdl:part name="parameters" element="si:GetRealQuote"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealQuoteSoapOut">
+      <wsdl:part name="parameters" element="si:GetRealQuoteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealQuoteResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetExtendedRealQuoteSoapIn">
+      <wsdl:part name="parameters" element="si:GetExtendedRealQuote"/>
+  </wsdl:message>
+  <wsdl:message name="GetExtendedRealQuoteSoapOut">
+      <wsdl:part name="parameters" element="si:GetExtendedRealQuoteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetExtendedRealQuoteResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealQuotesSoapIn">
+      <wsdl:part name="parameters" element="si:GetRealQuotes"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealQuotesSoapOut">
+      <wsdl:part name="parameters" element="si:GetRealQuotesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealQuotesResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetExtendedRealQuotesSoapIn">
+      <wsdl:part name="parameters" element="si:GetExtendedRealQuotes"/>
+  </wsdl:message>
+  <wsdl:message name="GetExtendedRealQuotesSoapOut">
+      <wsdl:part name="parameters" element="si:GetExtendedRealQuotesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetExtendedRealQuotesResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealQuotesTickerSoapIn">
+      <wsdl:part name="parameters" element="si:GetRealQuotesTicker"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealQuotesTickerSoapOut">
+      <wsdl:part name="parameters" element="si:GetRealQuotesTickerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealQuotesTickerResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetTickSoapIn">
+      <wsdl:part name="parameters" element="si:GetTick"/>
+  </wsdl:message>
+  <wsdl:message name="GetTickSoapOut">
+      <wsdl:part name="parameters" element="si:GetTickResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTickResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetTicksSoapIn">
+      <wsdl:part name="parameters" element="si:GetTicks"/>
+  </wsdl:message>
+  <wsdl:message name="GetTicksSoapOut">
+      <wsdl:part name="parameters" element="si:GetTicksResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTicksResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalTicksSoapIn">
+      <wsdl:part name="parameters" element="si:GetHistoricalTicks"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalTicksSoapOut">
+      <wsdl:part name="parameters" element="si:GetHistoricalTicksResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetHistoricalTicksResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="IsTradedSoapIn">
+      <wsdl:part name="parameters" element="si:IsTraded"/>
+  </wsdl:message>
+  <wsdl:message name="IsTradedSoapOut">
+      <wsdl:part name="parameters" element="si:IsTradedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IsTradedResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetBookSoapIn">
+      <wsdl:part name="parameters" element="si:GetBook"/>
+  </wsdl:message>
+  <wsdl:message name="GetBookSoapOut">
+      <wsdl:part name="parameters" element="si:GetBookResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetBookResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetBookDetailsSoapIn">
+      <wsdl:part name="parameters" element="si:GetBookDetails"/>
+  </wsdl:message>
+  <wsdl:message name="GetBookDetailsSoapOut">
+      <wsdl:part name="parameters" element="si:GetBookDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetBookDetailsResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopMoversSoapIn">
+      <wsdl:part name="parameters" element="si:GetRealTopMovers"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopMoversSoapOut">
+      <wsdl:part name="parameters" element="si:GetRealTopMoversResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopMoversResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopGainersSoapIn">
+      <wsdl:part name="parameters" element="si:GetRealTopGainers"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopGainersSoapOut">
+      <wsdl:part name="parameters" element="si:GetRealTopGainersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopGainersResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopLosersSoapIn">
+      <wsdl:part name="parameters" element="si:GetRealTopLosers"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopLosersSoapOut">
+      <wsdl:part name="parameters" element="si:GetRealTopLosersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopLosersResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByMarketCapSoapIn">
+      <wsdl:part name="parameters" element="si:SearchByMarketCap"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByMarketCapSoapOut">
+      <wsdl:part name="parameters" element="si:SearchByMarketCapResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SearchByMarketCapResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopSoapIn">
+      <wsdl:part name="parameters" element="si:GetRealTop"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopSoapOut">
+      <wsdl:part name="parameters" element="si:GetRealTopResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRealTopResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="q1:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="q2:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseInfoMessage">
+      <wsdl:part name="LicenseInfo" element="q3:LicenseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SubscriptionInfoMessage">
+      <wsdl:part name="SubscriptionInfo" element="q4:SubscriptionInfo"/>
+  </wsdl:message>
+  <wsdl:portType name="RealTimeStockQuotesSoap">
+      <wsdl:operation name="GetRealQuote">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a real-time quote for a security based on the last trade execution on INET.</documentation>
+         <wsdl:input message="si:GetRealQuoteSoapIn"/>
+         <wsdl:output message="si:GetRealQuoteSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetExtendedRealQuote">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns an extended real-time quote for a security based on the last trade execution on INET.</documentation>
+         <wsdl:input message="si:GetExtendedRealQuoteSoapIn"/>
+         <wsdl:output message="si:GetExtendedRealQuoteSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealQuotes">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a set of real-time quotes for multiple securities.</documentation>
+         <wsdl:input message="si:GetRealQuotesSoapIn"/>
+         <wsdl:output message="si:GetRealQuotesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetExtendedRealQuotes">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a set of extended real-time quotes for multiple securities.</documentation>
+         <wsdl:input message="si:GetExtendedRealQuotesSoapIn"/>
+         <wsdl:output message="si:GetExtendedRealQuotesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealQuotesTicker">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a set of real-time quotes for multiple securities formatted as a ticker tape for display in a scrolling ticker</documentation>
+         <wsdl:input message="si:GetRealQuotesTickerSoapIn"/>
+         <wsdl:output message="si:GetRealQuotesTickerSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetTick">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a single tick for a specific time. If no trades were executed with 2 minutes after this time, no results are returned</documentation>
+         <wsdl:input message="si:GetTickSoapIn"/>
+         <wsdl:output message="si:GetTickSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetTicks">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a set of tick-by-tick quotes for a time range during the trading day</documentation>
+         <wsdl:input message="si:GetTicksSoapIn"/>
+         <wsdl:output message="si:GetTicksSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetHistoricalTicks">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns a set of tick-by-tick quotes for a historical time range</documentation>
+         <wsdl:input message="si:GetHistoricalTicksSoapIn"/>
+         <wsdl:output message="si:GetHistoricalTicksSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="IsTraded">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This operation validates whether a security is traded on an exchange</documentation>
+         <wsdl:input message="si:IsTradedSoapIn"/>
+         <wsdl:output message="si:IsTradedSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetBook">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns the current book of orders for a security with orders summarized by price</documentation>
+         <wsdl:input message="si:GetBookSoapIn"/>
+         <wsdl:output message="si:GetBookSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetBookDetails">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns the current book of orders for a security with each order listed</documentation>
+         <wsdl:input message="si:GetBookDetailsSoapIn"/>
+         <wsdl:output message="si:GetBookDetailsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealTopMovers">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns the top moving securities traded on the exchange</documentation>
+         <wsdl:input message="si:GetRealTopMoversSoapIn"/>
+         <wsdl:output message="si:GetRealTopMoversSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealTopGainers">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns the top moving securities traded on the exchange</documentation>
+         <wsdl:input message="si:GetRealTopGainersSoapIn"/>
+         <wsdl:output message="si:GetRealTopGainersSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealTopLosers">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns the top gaining securities traded on the exchange</documentation>
+         <wsdl:input message="si:GetRealTopLosersSoapIn"/>
+         <wsdl:output message="si:GetRealTopLosersSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="SearchByMarketCap">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Search stocks based on percentage change in price and a range of market capitalization.</documentation>
+         <wsdl:input message="si:SearchByMarketCapSoapIn"/>
+         <wsdl:output message="si:SearchByMarketCapSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealTop">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This operation returns quote information about the top gaining, loosing, and moving equities from NYSE, NASDAQ and AMEX</documentation>
+         <wsdl:input message="si:GetRealTopSoapIn"/>
+         <wsdl:output message="si:GetRealTopSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <wsdl:input message="si:GetRemainingHitsSoapIn"/>
+         <wsdl:output message="si:GetRemainingHitsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RealTimeStockQuotesSoap" type="si:RealTimeStockQuotesSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetRealQuote">
+         <soap:operation soapAction="http://www.strikeiron.com/GetRealQuote" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:IncludeBidAsk) &gt; 0</tns:expression>
+                     <tns:description>IncludeBidAsk is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Symbol) &gt; 0</tns:expression>
+                     <tns:description>Symbol is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetRealQuoteResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetExtendedRealQuote">
+         <soap:operation soapAction="http://www.strikeiron.com/GetExtendedRealQuote" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Symbol) &gt; 0</tns:expression>
+                     <tns:description>Symbol is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetExtendedRealQuoteResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealQuotes">
+         <soap:operation soapAction="http://www.strikeiron.com/GetRealQuotes" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Symbols) &gt; 0</tns:expression>
+                     <tns:description>Symbols is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:IncludeBidAsk) &gt; 0</tns:expression>
+                     <tns:description>IncludeBidAsk is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetRealQuotesResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetExtendedRealQuotes">
+         <soap:operation soapAction="http://www.strikeiron.com/GetExtendedRealQuotes" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Symbols) &gt; 0</tns:expression>
+                     <tns:description>Symbols is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetExtendedRealQuotesResponseInfo" part="ResponseInfo"
+                         use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealQuotesTicker">
+         <soap:operation soapAction="http://www.strikeiron.com/GetRealQuotesTicker" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Symbols) &gt; 0</tns:expression>
+                     <tns:description>Symbols is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetRealQuotesTickerResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetTick">
+         <soap:operation soapAction="http://www.strikeiron.com/GetTick" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Symbol) &gt; 0</tns:expression>
+                     <tns:description>Symbol is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetTickResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetTicks">
+         <soap:operation soapAction="http://www.strikeiron.com/GetTicks" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Symbol) &gt; 0</tns:expression>
+                     <tns:description>Symbol is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetTicksResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetHistoricalTicks">
+         <soap:operation soapAction="http://www.strikeiron.com/GetHistoricalTicks" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Symbol) &gt; 0</tns:expression>
+                     <tns:description>Symbol is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetHistoricalTicksResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="IsTraded">
+         <soap:operation soapAction="http://www.strikeiron.com/IsTraded" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Symbol) &gt; 0</tns:expression>
+                     <tns:description>Symbol is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:IsTradedResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetBook">
+         <soap:operation soapAction="http://www.strikeiron.com/GetBook" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Symbol) &gt; 0</tns:expression>
+                     <tns:description>Symbol is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetBookResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetBookDetails">
+         <soap:operation soapAction="http://www.strikeiron.com/GetBookDetails" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Symbol) &gt; 0</tns:expression>
+                     <tns:description>Symbol is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetBookDetailsResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealTopMovers">
+         <soap:operation soapAction="http://www.strikeiron.com/GetRealTopMovers" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetRealTopMoversResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealTopGainers">
+         <soap:operation soapAction="http://www.strikeiron.com/GetRealTopGainers" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetRealTopGainersResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealTopLosers">
+         <soap:operation soapAction="http://www.strikeiron.com/GetRealTopLosers" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetRealTopLosersResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SearchByMarketCap">
+         <soap:operation soapAction="http://www.strikeiron.com/SearchByMarketCap" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SearchByMarketCapResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRealTop">
+         <soap:operation soapAction="http://www.strikeiron.com/GetRealTop" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:Exchange) &gt; 0</tns:expression>
+                     <tns:description>Exchange is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetRealTopResponseInfo" part="ResponseInfo" use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation soapAction="http://ws.strikeiron.com/StrikeIron/RealTimeStockQuotes/GetRemainingHits"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RealTimeStockQuotes">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Retrieves the real-time quote information for the stocks that are traded on the Island ECN marketplace and searches for stocks based on percent change in price and market capitalization.</documentation>
+      <wsdl:port name="RealTimeStockQuotesSoap" binding="si:RealTimeStockQuotesSoap">
+         <soap:address location="http://ws.soatrader.com/strikeiron.com/0.1/RealTimeStockQuotes"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,273 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://roomsearch.search.tiscover.com"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://roomsearch.search.tiscover.com"
+                  xmlns:intf="http://roomsearch.search.tiscover.com"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://roomsearch.search.tiscover.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://roomsearch.search.tiscover.com">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="WSAccommodationType">
+            <sequence>
+               <element name="category" nillable="true" type="xsd:string"/>
+               <element name="classification" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="WSAccommodationTypeArray">
+            <sequence>
+               <element name="values" minOccurs="0" maxOccurs="unbounded"
+                        type="impl:WSAccommodationType"/>
+            </sequence>
+         </complexType>
+         <complexType name="IntArray">
+            <sequence>
+               <element name="values" minOccurs="0" maxOccurs="unbounded" type="xsd:int"/>
+            </sequence>
+         </complexType>
+         <complexType name="StringArray">
+            <sequence>
+               <element name="values" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="WSRoomSearchInput">
+            <sequence>
+               <element name="accommodationId" nillable="true" type="xsd:string"/>
+               <element name="accommodationName" nillable="true" type="xsd:string"/>
+               <element name="accommodationType" nillable="true" type="impl:WSAccommodationTypeArray"/>
+               <element name="ageOfChildren" nillable="true" type="impl:IntArray"/>
+               <element name="boardId" nillable="true" type="xsd:string"/>
+               <element name="currencyId" nillable="true" type="xsd:string"/>
+               <element name="duration" type="xsd:int"/>
+               <element name="facilities" nillable="true" type="impl:StringArray"/>
+               <element name="language" nillable="true" type="xsd:string"/>
+               <element name="layoutId" nillable="true" type="xsd:string"/>
+               <element name="marketingAssociationId" nillable="true" type="xsd:string"/>
+               <element name="numberOfAdults" type="xsd:int"/>
+               <element name="numberOfChildren" type="xsd:int"/>
+               <element name="numberOfResults" type="xsd:int"/>
+               <element name="numberOfRooms" type="xsd:int"/>
+               <element name="priceBorder" type="xsd:int"/>
+               <element name="roomLinkType" type="xsd:int"/>
+               <element name="region" nillable="true" type="xsd:string"/>
+               <element name="regionId" nillable="true" type="xsd:string"/>
+               <element name="regionType" nillable="true" type="xsd:string"/>
+               <element name="searchFromDate" nillable="true" type="xsd:string"/>
+               <element name="seasonId" nillable="true" type="xsd:string"/>
+               <element name="sellingChannelId" nillable="true" type="xsd:string"/>
+               <element name="productType" nillable="true" type="xsd:string"/>
+               <element name="findVacantProduct" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="WSRoomSearchResultItem">
+            <sequence>
+               <element name="accommodationName" nillable="true" type="xsd:string"/>
+               <element name="category" nillable="true" type="xsd:string"/>
+               <element name="classification" nillable="true" type="xsd:string"/>
+               <element name="facilities" nillable="true" type="impl:StringArray"/>
+               <element name="fromPrice" nillable="true" type="xsd:double"/>
+               <element name="fromPricePerDay" nillable="true" type="xsd:double"/>
+               <element name="imageLink" nillable="true" type="xsd:string"/>
+               <element name="location" nillable="true" type="impl:StringArray"/>
+               <element name="locationMapLink" nillable="true" type="xsd:string"/>
+               <element name="minPricePerProduct" type="xsd:boolean"/>
+               <element name="objectId" nillable="true" type="xsd:string"/>
+               <element name="rating" nillable="true" type="xsd:string"/>
+               <element name="regionname" nillable="true" type="xsd:string"/>
+               <element name="roomLinks" nillable="true" type="impl:StringArray"/>
+            </sequence>
+         </complexType>
+         <complexType name="WSRoomSearchResultItemArray">
+            <sequence>
+               <element name="values" minOccurs="0" maxOccurs="unbounded"
+                        type="impl:WSRoomSearchResultItem"/>
+            </sequence>
+         </complexType>
+         <complexType name="WSRoomSearchResult">
+            <sequence>
+               <element name="errorCode" nillable="true" type="xsd:string"/>
+               <element name="errorMessage" nillable="true" type="xsd:string"/>
+               <element name="resultItems" nillable="true" type="impl:WSRoomSearchResultItemArray"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://roomsearch.search.tiscover.com">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <complexType name="WSAccommodationType">
+            <sequence>
+               <element name="category" nillable="true" type="xsd:string"/>
+               <element name="classification" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="WSAccommodationTypeArray">
+            <sequence>
+               <element name="values" minOccurs="0" maxOccurs="unbounded"
+                        type="impl:WSAccommodationType"/>
+            </sequence>
+         </complexType>
+         <complexType name="IntArray">
+            <sequence>
+               <element name="values" minOccurs="0" maxOccurs="unbounded" type="xsd:int"/>
+            </sequence>
+         </complexType>
+         <complexType name="StringArray">
+            <sequence>
+               <element name="values" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="WSRoomSearchInput">
+            <sequence>
+               <element name="accommodationId" nillable="true" type="xsd:string"/>
+               <element name="accommodationName" nillable="true" type="xsd:string"/>
+               <element name="accommodationType" nillable="true" type="impl:WSAccommodationTypeArray"/>
+               <element name="ageOfChildren" nillable="true" type="impl:IntArray"/>
+               <element name="boardId" nillable="true" type="xsd:string"/>
+               <element name="currencyId" nillable="true" type="xsd:string"/>
+               <element name="duration" type="xsd:int"/>
+               <element name="facilities" nillable="true" type="impl:StringArray"/>
+               <element name="language" nillable="true" type="xsd:string"/>
+               <element name="layoutId" nillable="true" type="xsd:string"/>
+               <element name="marketingAssociationId" nillable="true" type="xsd:string"/>
+               <element name="numberOfAdults" type="xsd:int"/>
+               <element name="numberOfChildren" type="xsd:int"/>
+               <element name="numberOfResults" type="xsd:int"/>
+               <element name="numberOfRooms" type="xsd:int"/>
+               <element name="priceBorder" type="xsd:int"/>
+               <element name="roomLinkType" type="xsd:int"/>
+               <element name="region" nillable="true" type="xsd:string"/>
+               <element name="regionId" nillable="true" type="xsd:string"/>
+               <element name="regionType" nillable="true" type="xsd:string"/>
+               <element name="searchFromDate" nillable="true" type="xsd:string"/>
+               <element name="seasonId" nillable="true" type="xsd:string"/>
+               <element name="sellingChannelId" nillable="true" type="xsd:string"/>
+               <element name="productType" nillable="true" type="xsd:string"/>
+               <element name="findVacantProduct" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <complexType name="WSRoomSearchResultItem">
+            <sequence>
+               <element name="accommodationName" nillable="true" type="xsd:string"/>
+               <element name="category" nillable="true" type="xsd:string"/>
+               <element name="classification" nillable="true" type="xsd:string"/>
+               <element name="facilities" nillable="true" type="impl:StringArray"/>
+               <element name="fromPrice" nillable="true" type="xsd:double"/>
+               <element name="fromPricePerDay" nillable="true" type="xsd:double"/>
+               <element name="imageLink" nillable="true" type="xsd:string"/>
+               <element name="location" nillable="true" type="impl:StringArray"/>
+               <element name="locationMapLink" nillable="true" type="xsd:string"/>
+               <element name="minPricePerProduct" type="xsd:boolean"/>
+               <element name="objectId" nillable="true" type="xsd:string"/>
+               <element name="rating" nillable="true" type="xsd:string"/>
+               <element name="regionname" nillable="true" type="xsd:string"/>
+               <element name="roomLinks" nillable="true" type="impl:StringArray"/>
+            </sequence>
+         </complexType>
+         <complexType name="WSRoomSearchResultItemArray">
+            <sequence>
+               <element name="values" minOccurs="0" maxOccurs="unbounded"
+                        type="impl:WSRoomSearchResultItem"/>
+            </sequence>
+         </complexType>
+         <complexType name="WSRoomSearchResult">
+            <sequence>
+               <element name="errorCode" nillable="true" type="xsd:string"/>
+               <element name="errorMessage" nillable="true" type="xsd:string"/>
+               <element name="resultItems" nillable="true" type="impl:WSRoomSearchResultItemArray"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="searchRequest">
+
+      <wsdl:part name="in0" type="impl:WSRoomSearchInput"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchResponse">
+
+      <wsdl:part name="searchReturn" type="impl:WSRoomSearchResult"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="WSRoomSearch">
+
+      <wsdl:operation name="search" parameterOrder="in0">
+
+         <wsdl:input message="impl:searchRequest" name="searchRequest"/>
+
+         <wsdl:output message="impl:searchResponse" name="searchResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="TiscoverWSRoomSearchSoapBinding" type="impl:WSRoomSearch">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="search">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://roomsearch.search.tiscover.com"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://roomsearch.search.tiscover.com"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="WSRoomSearchService">
+
+      <wsdl:port binding="impl:TiscoverWSRoomSearchSoapBinding" name="TiscoverWSRoomSearch">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/tiscover.com/0.1/WSRoomSearchService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

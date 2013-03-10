@@ -1,0 +1,537 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://www.interfax.net"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.interfax.net">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.interfax.net">
+         <s:element name="ResendInboundToEmail">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RequestedUserID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TransactionID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="OnlyToFailed" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ResendInboundToEmailResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ResendInboundToEmailResult"
+                             type="tns:ResendResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ResendResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="EmailsSent" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetInboundLogEmails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="RequestedUserID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TransactionID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetInboundLogEmailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetInboundLogEmailsResult"
+                             type="tns:InboundEmailsResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="InboundEmailsResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="InboundEmails"
+                          type="tns:ArrayOfInboundLogEmail"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfInboundLogEmail">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="InboundLogEmail"
+                          type="tns:InboundLogEmail"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="InboundLogEmail">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageStatus" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CompletionTime" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="LType" type="tns:ListType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MaxItems" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="objMessageItem" type="tns:ArrayOfMessageItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="ListType">
+            <s:restriction base="s:string">
+               <s:enumeration value="AllMessages"/>
+               <s:enumeration value="NewMessages"/>
+               <s:enumeration value="AccountAllMessages"/>
+               <s:enumeration value="AccountNewMessages"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfMessageItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="MessageItem" type="tns:MessageItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MessageItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RemoteCSID" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageStatus" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Pages" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageSize" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageType" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ReceiveTime" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CallerID" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageRecordingDuration" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetListResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="objMessageItem" type="tns:ArrayOfMessageItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetList2">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="QueryForm" type="tns:QueryForm"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="QueryControl" type="tns:QueryControl"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="QueryForm">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="TransactionID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OnlyNewMessages" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RecieveTime" type="tns:QueryCondition"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="QueryCondition">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Verb" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VerbData" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="QueryControl">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxChunkSize" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="FromRecordNumber" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetList2Response">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetList2Result" type="tns:FaxQueryResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="FaxQueryResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="MessageItems" type="tns:ArrayOfMessageItem2"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TotalTransactionsNum" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfMessageItem2">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="MessageItem2" type="tns:MessageItem2"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="MessageItem2">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RemoteCSID" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageStatus" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Pages" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageSize" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageType" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ReceiveTime" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CallerID" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MessageRecordingDuration" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ImageStatus" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NumOfEmails" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NumOfFailedEmails" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetImageChunkEx2">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MessageID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MarkAsRead" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ChunkSize" type="s:long"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="From" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetImageChunkEx2Response">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetImageChunkEx2Result"
+                             type="tns:ImageChunkResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ImageChunkResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="buffer" type="s:base64Binary"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ResultCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SourceFileType" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetImageChunk">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MessageID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MarkAsRead" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ChunkSize" type="s:long"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="From" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetImageChunkResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetImageChunkResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="MarkMessage">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Read" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="MessageID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="MarkMessageResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="MarkMessageResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ResendResult" type="tns:ResendResult"/>
+         <s:element name="InboundEmailsResult" type="tns:InboundEmailsResult"/>
+         <s:element name="ImageChunkResult" type="tns:ImageChunkResult"/>
+         <s:element name="int" type="s:int"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ResendInboundToEmailSoapIn">
+      <wsdl:part name="parameters" element="tns:ResendInboundToEmail"/>
+  </wsdl:message>
+  <wsdl:message name="ResendInboundToEmailSoapOut">
+      <wsdl:part name="parameters" element="tns:ResendInboundToEmailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetInboundLogEmailsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetInboundLogEmails"/>
+  </wsdl:message>
+  <wsdl:message name="GetInboundLogEmailsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetInboundLogEmailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetList"/>
+  </wsdl:message>
+  <wsdl:message name="GetListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetList2SoapIn">
+      <wsdl:part name="parameters" element="tns:GetList2"/>
+  </wsdl:message>
+  <wsdl:message name="GetList2SoapOut">
+      <wsdl:part name="parameters" element="tns:GetList2Response"/>
+  </wsdl:message>
+  <wsdl:message name="GetImageChunkEx2SoapIn">
+      <wsdl:part name="parameters" element="tns:GetImageChunkEx2"/>
+  </wsdl:message>
+  <wsdl:message name="GetImageChunkEx2SoapOut">
+      <wsdl:part name="parameters" element="tns:GetImageChunkEx2Response"/>
+  </wsdl:message>
+  <wsdl:message name="GetImageChunkSoapIn">
+      <wsdl:part name="parameters" element="tns:GetImageChunk"/>
+  </wsdl:message>
+  <wsdl:message name="GetImageChunkSoapOut">
+      <wsdl:part name="parameters" element="tns:GetImageChunkResponse"/>
+  </wsdl:message>
+  <wsdl:message name="MarkMessageSoapIn">
+      <wsdl:part name="parameters" element="tns:MarkMessage"/>
+  </wsdl:message>
+  <wsdl:message name="MarkMessageSoapOut">
+      <wsdl:part name="parameters" element="tns:MarkMessageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ResendInboundToEmailHttpGetIn">
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="RequestedUserID" type="s:string"/>
+      <wsdl:part name="TransactionID" type="s:string"/>
+      <wsdl:part name="OnlyToFailed" type="s:string"/>
+      <wsdl:part name="EmailAddress" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ResendInboundToEmailHttpGetOut">
+      <wsdl:part name="Body" element="tns:ResendResult"/>
+  </wsdl:message>
+  <wsdl:message name="GetInboundLogEmailsHttpGetIn">
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="RequestedUserID" type="s:string"/>
+      <wsdl:part name="TransactionID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetInboundLogEmailsHttpGetOut">
+      <wsdl:part name="Body" element="tns:InboundEmailsResult"/>
+  </wsdl:message>
+  <wsdl:message name="GetImageChunkEx2HttpGetIn">
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="MessageID" type="s:string"/>
+      <wsdl:part name="MarkAsRead" type="s:string"/>
+      <wsdl:part name="ChunkSize" type="s:string"/>
+      <wsdl:part name="From" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetImageChunkEx2HttpGetOut">
+      <wsdl:part name="Body" element="tns:ImageChunkResult"/>
+  </wsdl:message>
+  <wsdl:message name="MarkMessageHttpGetIn">
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="Read" type="s:string"/>
+      <wsdl:part name="MessageID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="MarkMessageHttpGetOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="ResendInboundToEmailHttpPostIn">
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="RequestedUserID" type="s:string"/>
+      <wsdl:part name="TransactionID" type="s:string"/>
+      <wsdl:part name="OnlyToFailed" type="s:string"/>
+      <wsdl:part name="EmailAddress" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ResendInboundToEmailHttpPostOut">
+      <wsdl:part name="Body" element="tns:ResendResult"/>
+  </wsdl:message>
+  <wsdl:message name="GetInboundLogEmailsHttpPostIn">
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="RequestedUserID" type="s:string"/>
+      <wsdl:part name="TransactionID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetInboundLogEmailsHttpPostOut">
+      <wsdl:part name="Body" element="tns:InboundEmailsResult"/>
+  </wsdl:message>
+  <wsdl:message name="GetImageChunkEx2HttpPostIn">
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="MessageID" type="s:string"/>
+      <wsdl:part name="MarkAsRead" type="s:string"/>
+      <wsdl:part name="ChunkSize" type="s:string"/>
+      <wsdl:part name="From" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetImageChunkEx2HttpPostOut">
+      <wsdl:part name="Body" element="tns:ImageChunkResult"/>
+  </wsdl:message>
+  <wsdl:message name="MarkMessageHttpPostIn">
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="Read" type="s:string"/>
+      <wsdl:part name="MessageID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="MarkMessageHttpPostOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:portType name="InboundSoap">
+      <wsdl:operation name="ResendInboundToEmail">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Resend an inbound message to a specific email address</documentation>
+         <wsdl:input message="tns:ResendInboundToEmailSoapIn"/>
+         <wsdl:output message="tns:ResendInboundToEmailSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetInboundLogEmails">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns list of all inboundlog emails which belongs to a specific transactionid</documentation>
+         <wsdl:input message="tns:GetInboundLogEmailsSoapIn"/>
+         <wsdl:output message="tns:GetInboundLogEmailsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetList">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns list of fax details up to 100 faxes.</documentation>
+         <wsdl:input message="tns:GetListSoapIn"/>
+         <wsdl:output message="tns:GetListSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetList2">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns list of inbound fax details.</documentation>
+         <wsdl:input message="tns:GetList2SoapIn"/>
+         <wsdl:output message="tns:GetList2SoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetImageChunkEx2">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Extended function of GetImageChunk.returns a structure containing image chunk,result code and type of source file</documentation>
+         <wsdl:input message="tns:GetImageChunkEx2SoapIn"/>
+         <wsdl:output message="tns:GetImageChunkEx2SoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetImageChunk">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns chunk of TIFF file according to message ID size of ChunkSize from start point parameter ('FROM').</documentation>
+         <wsdl:input message="tns:GetImageChunkSoapIn"/>
+         <wsdl:output message="tns:GetImageChunkSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="MarkMessage">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Mark message as READ/UNREAD (true/false).</documentation>
+         <wsdl:input message="tns:MarkMessageSoapIn"/>
+         <wsdl:output message="tns:MarkMessageSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="InboundSoap" type="tns:InboundSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="ResendInboundToEmail">
+         <soap:operation soapAction="http://www.interfax.net/ResendInboundToEmail" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetInboundLogEmails">
+         <soap:operation soapAction="http://www.interfax.net/GetInboundLogEmails" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetList">
+         <soap:operation soapAction="http://www.interfax.net/GetList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetList2">
+         <soap:operation soapAction="http://www.interfax.net/GetList2" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetImageChunkEx2">
+         <soap:operation soapAction="http://www.interfax.net/GetImageChunkEx2" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetImageChunk">
+         <soap:operation soapAction="http://www.interfax.net/GetImageChunk" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="MarkMessage">
+         <soap:operation soapAction="http://www.interfax.net/MarkMessage" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="Inbound">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">The InterFAX Inbound Web Service allows developers to Gain access to fax messages received by InterFAX inbound service from any environment, including VB, .NET, Java, C# and SOAP. Build 2008-04-06</documentation>
+      <wsdl:port name="InboundSoap" binding="tns:InboundSoap">
+         <soap:address location="http://ws.soatrader.com/interfax.net/0.1/Inbound"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

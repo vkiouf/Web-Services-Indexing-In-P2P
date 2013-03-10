@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservices" xmlns:impl="http://webservices" xmlns:intf="http://webservices" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns1="http://rpc.xml.coldfusion" xmlns:soat="http://ws.soatrader.com/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <wsdl:types>
+    <schema targetNamespace="http://xml.apache.org/xml-soap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://rpc.xml.coldfusion"/>
+   <import namespace="http://webservices"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="mapItem">
+    <sequence>
+     <element name="key" nillable="true" type="xsd:anyType"/>
+     <element name="value" nillable="true" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+   <complexType name="Map">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="apachesoap:mapItem"/>
+    </sequence>
+   </complexType>
+  </schema>
+    <schema targetNamespace="http://rpc.xml.coldfusion" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="http://webservices"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="CFCInvocationException">
+    <sequence/>
+   </complexType>
+   <complexType name="QueryBean">
+    <sequence>
+     <element name="columnList" nillable="true" type="impl:ArrayOf_xsd_string"/>
+     <element name="data" nillable="true" type="impl:ArrayOfArrayOf_xsd_anyType"/>
+    </sequence>
+   </complexType>
+  </schema>
+    <schema targetNamespace="http://webservices" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://rpc.xml.coldfusion"/>
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ArrayOf_xsd_string">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOfArrayOf_xsd_anyType">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:anyType[][]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+  </schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ws.soatrader.com/" xmlns:soat="http://ws.soatrader.com/"><xs:element name="SOATraderLicense" type="xs:string"/><xs:element name="SOATraderUsageStatistics" type="soat:SOATraderUsageStatistics"/><xs:complexType name="SOATraderUsageStatistics"><xs:sequence><xs:element name="HitsMade" type="xs:decimal"/><xs:element name="HitsLeft" type="xs:decimal"/></xs:sequence></xs:complexType></xs:schema>
+  </wsdl:types>
+  <wsdl:message name="generateCaptchaRequest">
+    <wsdl:part name="height" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="width" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="font" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="fontColor" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="fontSize" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="fontOpacity" type="xsd:double">
+    </wsdl:part>
+    <wsdl:part name="bgcolor1" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="bgcolor2" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="quality" type="xsd:double">
+    </wsdl:part>
+    <wsdl:part name="distortionMethod" type="xsd:double">
+    </wsdl:part>
+    <wsdl:part name="XPos" type="xsd:double">
+    </wsdl:part>
+    <wsdl:part name="YPos" type="xsd:double">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CFCInvocationException">
+    <wsdl:part name="fault" type="tns1:CFCInvocationException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderUsageStatistics">
+    <wsdl:part name="SOATraderUsageStatistics" element="soat:SOATraderUsageStatistics">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateCaptchaResponse">
+    <wsdl:part name="generateCaptchaReturn" type="apachesoap:Map">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SOATraderLicense">
+    <wsdl:part name="SOATraderLicense" element="soat:SOATraderLicense">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="captcha">
+    <wsdl:operation name="generateCaptcha" parameterOrder="height width font fontColor fontSize fontOpacity bgcolor1 bgcolor2 quality distortionMethod XPos YPos">
+      <wsdl:input name="generateCaptchaRequest" message="impl:generateCaptchaRequest">
+    </wsdl:input>
+      <wsdl:output name="generateCaptchaResponse" message="impl:generateCaptchaResponse">
+    </wsdl:output>
+      <wsdl:fault name="CFCInvocationException" message="impl:CFCInvocationException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="captcha.cfcSoapBinding" type="impl:captcha">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="generateCaptcha">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="generateCaptchaRequest">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservices"/>
+        <wsdlsoap:header message="impl:SOATraderLicense" part="SOATraderLicense" use="literal">
+        </wsdlsoap:header>
+      </wsdl:input>
+      <wsdl:output name="generateCaptchaResponse">
+        <wsdlsoap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservices"/>
+        <wsdlsoap:header message="impl:SOATraderUsageStatistics" part="SOATraderUsageStatistics" use="literal">
+        </wsdlsoap:header>
+      </wsdl:output>
+      <wsdl:fault name="CFCInvocationException">
+        <wsdlsoap:fault name="CFCInvocationException" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://webservices"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="captchaService">
+<wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+This will create all captcha requests  </wsdl:documentation>
+    <wsdl:port name="captcha.cfc" binding="impl:captcha.cfcSoapBinding">
+      <wsdlsoap:address location="http://ws.soatrader.com/easycfm.com/1.0/Captcha"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,217 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="urn:OHRwurm"
+             xmlns:typens="urn:OHRwurm"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="OHRwurm"
+             targetNamespace="urn:OHRwurm">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+  <!-- Types for search - result elements, directory categories -->
+
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:OHRwurm">
+            
+         <xsd:complexType name="OHRwurmSearchResult">
+            <xsd:all>
+               <xsd:element name="documentFiltering" type="xsd:boolean"/>
+               <xsd:element name="searchComments" type="xsd:string"/>
+               <xsd:element name="estimatedTotalResultsCount" type="xsd:int"/>
+               <xsd:element name="estimateIsExact" type="xsd:boolean"/>
+               <xsd:element name="resultElements" type="typens:ResultElementArray"/>
+               <xsd:element name="searchQuery" type="xsd:string"/>
+               <xsd:element name="startIndex" type="xsd:int"/>
+               <xsd:element name="endIndex" type="xsd:int"/>
+               <xsd:element name="searchTips" type="xsd:string"/>
+               <xsd:element name="searchTime" type="xsd:double"/>
+            </xsd:all>
+         </xsd:complexType>
+
+         <xsd:complexType name="ResultElement">
+            <xsd:all>
+               <xsd:element name="summary" type="xsd:string"/>
+               <xsd:element name="date" type="xsd:string"/>
+               <xsd:element name="URL" type="xsd:string"/>
+               <xsd:element name="companyName" type="xsd:string"/>
+               <xsd:element name="jobLocation" type="xsd:string"/>
+               <xsd:element name="jobType" type="xsd:string"/>
+               <xsd:element name="jobId" type="xsd:int"/>
+               <xsd:element name="jobLanguage" type="xsd:string"/>
+               <xsd:element name="jobProfession" type="xsd:string"/>
+               <xsd:element name="jobIndustry" type="xsd:string"/>
+               <xsd:element name="title" type="xsd:string"/>
+               <xsd:element name="cachedSize" type="xsd:string"/>
+               <xsd:element name="relatedInformationPresent" type="xsd:boolean"/>
+               <xsd:element name="hostName" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+  
+         <xsd:complexType name="ResultElementArray">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ResultElement[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+      </xsd:schema>
+  </types> 
+
+  <!-- Messages for OHRwurm Web APIs - cached page, search, spelling. -->
+             
+  <message name="doGetCachedPage">
+      <part name="key" type="xsd:string"/>
+      <part name="url" type="xsd:string"/>
+  </message>
+
+  <message name="doGetCachedPageResponse">
+      <part name="return" type="xsd:base64Binary"/>
+  </message>
+
+  <message name="doSpellingSuggestion">
+      <part name="key" type="xsd:string"/>
+      <part name="phrase" type="xsd:string"/>
+  </message>
+
+  <message name="doSpellingSuggestionResponse">
+      <part name="return" type="xsd:string"/>
+  </message>
+
+  <message name="doOHRwurmSearch">
+      <part name="key" type="xsd:string"/>
+      <part name="q" type="xsd:string"/>
+      <part name="start" type="xsd:int"/>
+      <part name="maxResults" type="xsd:int"/>
+  </message>
+
+  <message name="setFilter">
+      <part name="key" type="xsd:string"/>
+      <part name="name" type="xsd:string"/>
+      <part name="value" type="xsd:string"/>
+  </message>
+
+  <message name="setFilterResponse">
+      <part name="return" type="xsd:string"/>
+  </message>
+
+  <message name="doOHRwurmSearchResponse">
+      <part name="return" type="typens:OHRwurmSearchResult"/>           
+  </message>
+
+  <!-- Port for OHRwurm Web APIs, "OHRwurmSearch" -->
+
+  <portType name="OHRwurmSearchPort">
+
+      <operation name="doGetCachedPage">
+         <input message="typens:doGetCachedPage"/>
+         <output message="typens:doGetCachedPageResponse"/>
+      </operation>
+
+      <operation name="doSpellingSuggestion">
+         <input message="typens:doSpellingSuggestion"/>
+         <output message="typens:doSpellingSuggestionResponse"/>
+      </operation>
+
+      <operation name="doOHRwurmSearch">
+         <input message="typens:doOHRwurmSearch"/>
+         <output message="typens:doOHRwurmSearchResponse"/>
+      </operation>
+
+      <operation name="setFilter">
+         <input message="typens:setFilter"/>
+         <output message="typens:setFilterResponse"/>
+      </operation>
+
+  </portType>
+
+  <!-- Binding for OHRwurm Web APIs - RPC, SOAP over HTTP -->
+
+  <binding name="OHRwurmSearchBinding" type="typens:OHRwurmSearchPort">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <operation name="doGetCachedPage">
+         <soap:operation soapAction="urn:OHRwurmSearchAction"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:OHRwurmSearch"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:OHRwurmSearch"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+
+      <operation name="doSpellingSuggestion">
+         <soap:operation soapAction="urn:OHRwurmSearchAction"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:OHRwurmSearch"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:OHRwurmSearch"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+
+      <operation name="doOHRwurmSearch">
+         <soap:operation soapAction="urn:OHRwurmSearchAction"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:OHRwurmSearch"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:OHRwurmSearch"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+
+      <operation name="setFilter">
+         <soap:operation soapAction="urn:OHRwurmSearchAction"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:OHRwurmSearch"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:OHRwurmSearch"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+  </binding>
+
+  <!-- Endpoint for OHRwurm Web APIs -->
+  <service name="OHRwurmSearchService">
+      <port name="OHRwurmSearchPort" binding="typens:OHRwurmSearchBinding">
+         <soap:address location="http://ws.soatrader.com/ohrwurm.net/0.1/OHRwurmSearchService"/>
+      </port>
+  </service>
+</definitions>

@@ -1,0 +1,619 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.siemens-hearing.com/webservices/eOPSWebSvc"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.siemens-hearing.com/webservices/eOPSWebSvc">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>eOrdering Patch Engine WebService.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.siemens-hearing.com/webservices/eOPSWebSvc">
+         <s:element name="Login">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RegistrationNo" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LoginResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SessionHandle" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PassKey" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="HaveNewAccountInfo" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCapabilities">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNo" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Capabilities"
+                             type="tns:ArrayOfCapabilityInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCapabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CapabilityInfo" nillable="true"
+                          type="tns:CapabilityInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CapabilityInfo">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Capable" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Service" type="tns:CapabilityServices"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="CapabilityServices">
+            <s:restriction base="s:string">
+               <s:enumeration value="AccountExistence"/>
+               <s:enumeration value="StockInformation"/>
+               <s:enumeration value="ConsignmentOrdering"/>
+               <s:enumeration value="AdditionalWaranty"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetCapabilitiesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FilledCapabilities"
+                             type="tns:ArrayOfCapabilityInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LoginStock">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RegistrationNo" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LoginStockResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SessionHandle" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Logout">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SessionHandle" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LogoutResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="BytesReturned" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LogoutStock">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SessionHandle" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LogoutStockResponse">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetAccountInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SessionHandle" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAccountInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TEOPSWSAccountInfoRecArray"
+                             type="tns:ArrayOfAccountInfoRec"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAccountInfoRec">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="TEOPSWSAccountInfoRec"
+                          type="tns:AccountInfoRec"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AccountInfoRec">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="BillTo" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ShipTo" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CustName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StateProvince" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalZipCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Phone1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Phone2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Fax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EMail" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LocationName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DefaultWarranty" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AccountTypes" type="tns:ArrayOfString"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SalesConsultants"
+                          type="tns:ArrayOfSalesConsultantType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PrivateLabels"
+                          type="tns:ArrayOfPrivateLabelType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AccountType" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSalesConsultantType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SalesConsultant"
+                          type="tns:SalesConsultantType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SalesConsultantType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ConsultantID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ConsultantFirstName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ConsultantLastName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ConsultantPhone" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfPrivateLabelType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PrivateLabel"
+                          type="tns:PrivateLabelType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PrivateLabelType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IsPrimary" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetAccountInfo31">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SessionHandle" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAccountInfo31Response">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TEOPSWSAccountInfoRecArray"
+                             type="tns:ArrayOfAccountInfoRec"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SalesConsultantInfo"
+                             type="tns:ArrayOfBillToTypeArray"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfBillToTypeArray">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BillTo" type="tns:BillToTypeArray"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BillToTypeArray">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:SalesConsultantTypeArray">
+                  <s:attribute name="BillToValue" type="s:string"/>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="SalesConsultantTypeArray">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SalesConsultant"
+                          type="tns:SalesConsultantType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Catalog">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SessionHandle" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Query" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CatalogResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TEOPSWSCatalogRecArray"
+                             type="tns:ArrayOfCatalogRec"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCatalogRec">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="TEOPSWSCatalogRec"
+                          type="tns:CatalogRec"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CatalogRec">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="PkgID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PkgName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PkgSize" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DisplayName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="IsMandatory" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReqPkgsVersions" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PkgFlags" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="Download">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SessionHandle" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PkgID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Offset" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ChunkSize" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DownloadResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="DownloadResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FileData" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DownloadEx">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="machineID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="PkgID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Offset" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ChunkSize" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DownloadExResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="DownloadExResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FileData" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DownloadNews">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SessionHandle" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="LanguageCode" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DownloadNewsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="NewsData" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStockInformation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SessionHandle" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ItemNo" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ItemType" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStockInformationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ItemAvailableInFulfillmentCenter"
+                             type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Stock" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RegisterAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RegistrationRequest" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RegisterAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="RegistrationInfo" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoginSoapIn">
+      <wsdl:part name="parameters" element="tns:Login"/>
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+      <wsdl:part name="parameters" element="tns:LoginResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCapabilitiesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCapabilities"/>
+  </wsdl:message>
+  <wsdl:message name="GetCapabilitiesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCapabilitiesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LoginStockSoapIn">
+      <wsdl:part name="parameters" element="tns:LoginStock"/>
+  </wsdl:message>
+  <wsdl:message name="LoginStockSoapOut">
+      <wsdl:part name="parameters" element="tns:LoginStockResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapIn">
+      <wsdl:part name="parameters" element="tns:Logout"/>
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapOut">
+      <wsdl:part name="parameters" element="tns:LogoutResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LogoutStockSoapIn">
+      <wsdl:part name="parameters" element="tns:LogoutStock"/>
+  </wsdl:message>
+  <wsdl:message name="LogoutStockSoapOut">
+      <wsdl:part name="parameters" element="tns:LogoutStockResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAccountInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAccountInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetAccountInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAccountInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAccountInfo31SoapIn">
+      <wsdl:part name="parameters" element="tns:GetAccountInfo31"/>
+  </wsdl:message>
+  <wsdl:message name="GetAccountInfo31SoapOut">
+      <wsdl:part name="parameters" element="tns:GetAccountInfo31Response"/>
+  </wsdl:message>
+  <wsdl:message name="CatalogSoapIn">
+      <wsdl:part name="parameters" element="tns:Catalog"/>
+  </wsdl:message>
+  <wsdl:message name="CatalogSoapOut">
+      <wsdl:part name="parameters" element="tns:CatalogResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DownloadSoapIn">
+      <wsdl:part name="parameters" element="tns:Download"/>
+  </wsdl:message>
+  <wsdl:message name="DownloadSoapOut">
+      <wsdl:part name="parameters" element="tns:DownloadResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DownloadExSoapIn">
+      <wsdl:part name="parameters" element="tns:DownloadEx"/>
+  </wsdl:message>
+  <wsdl:message name="DownloadExSoapOut">
+      <wsdl:part name="parameters" element="tns:DownloadExResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DownloadNewsSoapIn">
+      <wsdl:part name="parameters" element="tns:DownloadNews"/>
+  </wsdl:message>
+  <wsdl:message name="DownloadNewsSoapOut">
+      <wsdl:part name="parameters" element="tns:DownloadNewsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockInformationSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStockInformation"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockInformationSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStockInformationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RegisterAccountSoapIn">
+      <wsdl:part name="parameters" element="tns:RegisterAccount"/>
+  </wsdl:message>
+  <wsdl:message name="RegisterAccountSoapOut">
+      <wsdl:part name="parameters" element="tns:RegisterAccountResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="eOPSWebServiceSoap" type="tns:eOPSWebServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="Login">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/Login"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCapabilities">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/GetCapabilities"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LoginStock">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/LoginStock"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Logout">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/Logout"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LogoutStock">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/LogoutStock"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAccountInfo">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/GetAccountInfo"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAccountInfo31">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/GetAccountInfo31"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Catalog">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/Catalog"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Download">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/Download"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DownloadEx">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/DownloadEx"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DownloadNews">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/DownloadNews"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStockInformation">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/GetStockInformation"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RegisterAccount">
+         <soap:operation soapAction="http://www.siemens-hearing.com/webservices/eOPSWebSvc/RegisterAccount"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="eOPSWebService">
+      <wsdl:documentation>eOrdering Patch Engine WebService.</wsdl:documentation>
+      <wsdl:port name="eOPSWebServiceSoap" binding="tns:eOPSWebServiceSoap">
+         <soap:address location="http://ws.soatrader.com/siemens-hearing.com.au/0.1/eOPSWebService"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

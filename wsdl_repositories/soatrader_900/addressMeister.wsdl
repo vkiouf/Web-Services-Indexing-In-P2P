@@ -1,0 +1,98 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" name="addressMeister.com"
+             targetNamespace="urn:addressMeister.com">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types>
+      <schema xmlns:soat="http://ws.soatrader.com/" xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="xs:string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="xs:decimal" name="HitsMade"/>
+               <element type="xs:decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+              xmlns:tns="urn:addressMeister.com"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+              targetNamespace="urn:addressMeister.com">
+         <complexType name="AddressResult">
+            <all>
+               <element name="status" type="xsd:int"/>
+               <element name="errorCode" type="xsd:string"/>
+               <element name="address" type="xsd:string"/>
+               <element name="address2" type="xsd:string"/>
+               <element name="city" type="xsd:string"/>
+               <element name="state" type="xsd:string"/>
+               <element name="zip" type="xsd:string"/>
+               <element name="zip4" type="xsd:string"/>
+               <element name="phoneAreaCode" type="xsd:string"/>
+               <element name="countyName" type="xsd:string"/>
+               <element name="latitude" type="xsd:string"/>
+               <element name="longitude" type="xsd:string"/>
+               <element name="timeZone" type="xsd:string"/>
+            </all>
+         </complexType>
+      </schema>
+   </types>
+   <portType name="addressMeister.comPort">
+      <operation name="validateAddress">
+         <input message="tns:validateAddressRequest"/>
+         <output message="tns:validateAddressResponse"/>
+      </operation>
+   </portType>
+   <binding name="addressMeister.comBinding" type="tns:addressMeister.comPort">
+      <soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" style="rpc"
+                    transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="validateAddress">
+         <soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         soapAction="urn:addressMeister.com#soap_addressvalidator#validateAddress"/>
+         <input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded"
+                       namespace="urn:addressMeister.com"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded"
+                       namespace="urn:addressMeister.com"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+   <service name="addressMeister.comService">
+      <documentation/>
+      <port name="addressMeister.comPort" binding="tns:addressMeister.comBinding">
+         <soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                       location="http://ws.soatrader.com/bizware.com/0.2/addressMeister.comService"/>
+      </port>
+   </service>
+   <message name="validateAddressRequest">
+      <part name="auth_key" type="xsd:string"/>
+      <part name="address" type="xsd:string"/>
+      <part name="address2" type="xsd:string"/>
+      <part name="city" type="xsd:string"/>
+      <part name="state" type="xsd:string"/>
+      <part name="zip" type="xsd:string"/>
+      <part name="zip4" type="xsd:string"/>
+   </message>
+   <message name="validateAddressResponse">
+      <part name="return" type="tns:AddressResult"/>
+   </message>
+</definitions>

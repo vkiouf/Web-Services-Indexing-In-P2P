@@ -1,0 +1,140 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://www.codeweavers.net/webservices"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.codeweavers.net/webservices">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.codeweavers.net/webservices">
+         <s:element name="TransferProposal">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="organisation" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="xmlInputData" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="TransferProposalResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TransferProposalResult">
+                     <s:complexType mixed="true">
+                        <s:sequence>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.codeweavers.net/webservices">
+         <s:element name="TransferProposal">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="organisation" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="xmlInputData" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="TransferProposalResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TransferProposalResult">
+                     <s:complexType mixed="true">
+                        <s:sequence>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="TransferProposalSoapIn">
+      <wsdl:part name="parameters" element="tns:TransferProposal"/>
+  </wsdl:message>
+  <wsdl:message name="TransferProposalSoapOut">
+      <wsdl:part name="parameters" element="tns:TransferProposalResponse"/>
+  </wsdl:message>
+  <wsdl:message name="TransferProposalHttpGetIn">
+      <wsdl:part name="organisation" type="s:string"/>
+      <wsdl:part name="username" type="s:string"/>
+      <wsdl:part name="password" type="s:string"/>
+      <wsdl:part name="xmlInputData" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="TransferProposalHttpGetOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="TransferProposalHttpPostIn">
+      <wsdl:part name="organisation" type="s:string"/>
+      <wsdl:part name="username" type="s:string"/>
+      <wsdl:part name="password" type="s:string"/>
+      <wsdl:part name="xmlInputData" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="TransferProposalHttpPostOut">
+      <wsdl:part name="Body"/>
+  </wsdl:message>
+  <wsdl:portType name="ProposalForwardingSoap">
+      <wsdl:operation name="TransferProposal">
+         <wsdl:input message="tns:TransferProposalSoapIn"/>
+         <wsdl:output message="tns:TransferProposalSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="ProposalForwardingSoap" type="tns:ProposalForwardingSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="TransferProposal">
+         <soap:operation soapAction="http://www.codeweavers.net/webservices/TransferProposal"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="ProposalForwarding">
+      <wsdl:port name="ProposalForwardingSoap" binding="tns:ProposalForwardingSoap">
+         <soap:address location="http://ws.soatrader.com/jigsawfinance.com/0.1/ProposalForwarding"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

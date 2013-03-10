@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://www.openuri.org/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:conv="http://www.openuri.org/2002/04/soap/conversation/"
+             xmlns:cw="http://www.openuri.org/2002/04/wsdl/conversation/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:jms="http://www.openuri.org/2002/04/wsdl/jms/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:s="http://www.w3.org/2001/XMLSchema"
+             xmlns:s0="http://www.openuri.org/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             targetNamespace="http://www.openuri.org/">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema xmlns:ope="http://www.openuri.org/" elementFormDefault="qualified"
+                targetNamespace="http://www.openuri.org/">
+         <s:element name="getAccountSummary">
+            <s:complexType>
+               <s:sequence>
+                  <s:element name="username" type="s:string" minOccurs="0"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getAccountSummaryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element name="getAccountSummaryResult" type="ope:AccountInformation" minOccurs="0"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AccountInformation" nillable="true" type="ope:AccountInformation"/>
+         <s:complexType name="AccountInformation">
+            <s:sequence>
+               <s:element name="Name" type="s:string" minOccurs="0"/>
+               <s:element name="Plan" type="s:string" minOccurs="0"/>
+               <s:element name="Phone" type="s:string" minOccurs="0"/>
+               <s:element name="MinutesUsed" type="s:int"/>
+               <s:element name="MinutesRemaining" type="s:int"/>
+               <s:element name="TotalMinutes" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+
+  </types>
+  <message name="getAccountSummarySoapIn">
+      <part name="parameters" element="s0:getAccountSummary"/>
+  </message>
+  <message name="getAccountSummarySoapOut">
+      <part name="parameters" element="s0:getAccountSummaryResponse"/>
+  </message>
+  <message name="getAccountSummaryHttpGetIn">
+      <part name="username" type="s:string"/>
+  </message>
+  <message name="getAccountSummaryHttpGetOut">
+      <part name="Body" element="s0:AccountInformation"/>
+  </message>
+  <message name="getAccountSummaryHttpPostIn">
+      <part name="username" type="s:string"/>
+  </message>
+  <message name="getAccountSummaryHttpPostOut">
+      <part name="Body" element="s0:AccountInformation"/>
+  </message>
+  <portType name="AccountManagerTestSoap">
+      <operation name="getAccountSummary">
+         <input message="s0:getAccountSummarySoapIn"/>
+         <output message="s0:getAccountSummarySoapOut"/>
+      </operation>
+  </portType>
+  
+  
+  <binding name="AccountManagerTestSoap" type="s0:AccountManagerTestSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <operation name="getAccountSummary">
+         <soap:operation soapAction="http://www.openuri.org/getAccountSummary" style="document"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  
+  
+  <service name="AccountManagerTest">
+      <port name="AccountManagerTestSoap" binding="s0:AccountManagerTestSoap">
+         <soap:address location="http://ws.soatrader.com/enterpulse.com/0.1/AccountManagerTest"/>
+      </port>
+      <port name="AccountManagerTestHttpGet" binding="s0:AccountManagerTestHttpGet">
+         <http:address location="http://enterconnect.enterpulse.com/WorksiteIntegrationPortal/WebServices/AccountManagerTest.jws"/>
+      </port>
+      <port name="AccountManagerTestHttpPost" binding="s0:AccountManagerTestHttpPost">
+         <http:address location="http://enterconnect.enterpulse.com/WorksiteIntegrationPortal/WebServices/AccountManagerTest.jws"/>
+      </port>
+  </service>
+</definitions>

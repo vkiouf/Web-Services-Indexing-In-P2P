@@ -1,0 +1,2115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://ws.cdyne.com/NotifyWS/"
+                  xmlns:s1="http://ws.cdyne.com/NotifyWS/AbstractTypes"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://ws.cdyne.com/NotifyWS/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>This service is FREE to test.  The system will attempt to call a number 1 time until it is answered (Can be modified with the TryCount property).&lt;br&gt;We now accept Extension numbers by using an 'x' in the phone number (ex:555-555-1000x3025).&lt;br&gt;&lt;br&gt;A reminder about abuse:  &lt;b&gt;Threats and illegal activity can be shared with the authorities.&lt;/b&gt;&lt;p&gt;To get a quick License Key for 9 cents a transaction go to : &lt;a href="https://secure.cdyne.com/QuickNotifySignup"&gt;https://secure.cdyne.com/QuickNotifySignup&lt;/a&gt;&lt;/p&gt;&lt;p&gt; For Advanced TextToSay Commands Visit: &lt;a href="http://wiki.cdyne.com/index.php/Notify_TextToSay_Commands"&gt;http://wiki.cdyne.com/index.php/Notify_TextToSay_Commands&lt;/a&gt;&lt;/p&gt;</wsdl:documentation>
+  <wsdl:types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://ws.cdyne.com/NotifyWS/">
+         <s:element name="GetVersion">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetVersionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetVersionResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ReturnSoundFileIDs">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ReturnSoundFileIDsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ReturnSoundFileIDsResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="RemoveSoundFile">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SoundFileID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RemoveSoundFileResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="RemoveSoundFileResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UploadSoundFile">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FileBinary" type="s:base64Binary"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SoundFileID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UploadSoundFileResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UploadSoundFileResult"
+                             type="tns:UploadFileResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="UploadFileResponse">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="UploadSuccessful" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorResponse" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetSoundFile">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SoundFileID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSoundFileResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSoundFileResult" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetTTSInULAW">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TextToSay" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="VoiceID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TTSrate" type="s:unsignedByte"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TTSvolume" type="s:unsignedByte"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetTTSInULAWResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetTTSInULAWResult" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetTTSInMP3">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TextToSay" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="VoiceID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="BitRate" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TTSrate" type="s:unsignedByte"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="TTSvolume" type="s:unsignedByte"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetTTSInMP3Response">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetTTSInMP3Result" type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSoundFileInMP3">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SoundFileID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="BitRate" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSoundFileInMP3Response">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSoundFileInMP3Result"
+                             type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSoundFileURL">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SoundFileID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSoundFileURLResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSoundFileURLResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSoundFileInUlaw">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SoundFileID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetSoundFileInUlawResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSoundFileInUlawResult"
+                             type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RecordSoundViaPhoneCall">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumberToDial" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SoundFileID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RecordSoundViaPhoneCallResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="RecordSoundViaPhoneCallResult"
+                             type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetQueueIDStatus">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="QueueID" type="s:long"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetQueueIDStatusResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetQueueIDStatusResult"
+                             type="tns:NotifyReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="NotifyReturn">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ResponseCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ResponseText" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CallAnswered" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="QueueID" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TryCount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Demo" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DigitsPressed" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MachineDetection" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Duration" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StartTime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="EndTime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MinuteRate" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Country" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CallComplete" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TextToSay" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VariableArray" type="tns:ArrayOfVariable"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfVariable">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Variable" nillable="true"
+                          type="tns:Variable"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Variable">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="VariableName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VariableValue" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetQueueIDStatusesByPhoneNumber">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetQueueIDStatusesByPhoneNumberResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetQueueIDStatusesByPhoneNumberResult"
+                             type="tns:ArrayOfNotifyReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfNotifyReturn">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="NotifyReturn" nillable="true"
+                          type="tns:NotifyReturn"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetQueueIDStatusWithAdvancedInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="QueueID" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetQueueIDStatusWithAdvancedInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetQueueIDStatusWithAdvancedInfoResult"
+                             type="tns:NotifyReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyPhoneEnglishBasic">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumberToDial" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TextToSay" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyPhoneEnglishBasicResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="NotifyPhoneEnglishBasicResult"
+                             type="tns:NotifyReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyPhoneBasicWithTransfer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumberToDial" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TransferNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TextToSay" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerIDname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="VoiceID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyPhoneBasicWithTransferResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="NotifyPhoneBasicWithTransferResult"
+                             type="tns:NotifyReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMultipleQueueIdStatus">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="QueueIDs" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetMultipleQueueIdStatusResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetMultipleQueueIdStatusResult"
+                             type="tns:ArrayOfNotifyReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyPhoneBasic">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumberToDial" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TextToSay" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerIDname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="VoiceID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyPhoneBasicResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="NotifyPhoneBasicResult"
+                             type="tns:NotifyReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyPhoneBasicWithTryCount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="TryCount" type="s:short"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumberToDial" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TextToSay" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerIDname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="VoiceID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyPhoneBasicWithTryCountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="NotifyPhoneBasicWithTryCountResult"
+                             type="tns:NotifyReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyPhoneAdvanced">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="anr" type="tns:AdvancedNotifyRequest"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AdvancedNotifyRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="PhoneNumberToDial" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TransferNumber" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VoiceID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CallerIDNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CallerIDName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TextToSay" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TryCount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NextTryInSeconds" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UTCScheduledDateTime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TTSrate" type="s:unsignedByte"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TTSvolume" type="s:unsignedByte"/>
+               <s:element minOccurs="1" maxOccurs="1" name="MaxCallLength" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusChangePostUrl" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="NotifyPhoneAdvancedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="NotifyPhoneAdvancedResult"
+                             type="tns:NotifyReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyMultiplePhoneBasic">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumbersToDial" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TextToSay" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerIDname" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="VoiceID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyMultiplePhoneBasicResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="NotifyMultiplePhoneBasicResult"
+                             type="tns:ArrayOfNotifyReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NotifyMultiplePhoneAdvanced">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="MultipleANR"
+                             type="tns:ArrayOfAdvancedNotifyRequest"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAdvancedNotifyRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AdvancedNotifyRequest"
+                          nillable="true"
+                          type="tns:AdvancedNotifyRequest"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="NotifyMultiplePhoneAdvancedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="NotifyMultiplePhoneAdvancedResult"
+                             type="tns:ArrayOfNotifyReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CancelNotify">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="QueueID" type="s:long"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CancelNotifyResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="CancelNotifyResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScriptList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="IncludeGlobalScripts" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScriptListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ScriptListResult" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScriptSave">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ScriptName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ScriptText" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScriptSaveResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ScriptSaveResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScriptDelete">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ScriptName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScriptDeleteResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ScriptDeleteResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScriptLoad">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ScriptName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ScriptLoadResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ScriptLoadResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LicenseKeyVariableLoad">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="VariableName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LicenseKeyVariableLoadResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKeyVariableLoadResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LicenseKeyVariableSave">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="VariableName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="VariableValue" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LicenseKeyVariableSaveResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LicenseKeyVariableSaveResult"
+                             type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LM_DialList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ListID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DialRecursiveLists" type="s:boolean"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CallerIDName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="VoiceID" type="s:unsignedByte"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TextToSay" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LM_DialListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LM_DialListResult" type="tns:LM_DialReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="LM_DialReturn">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Success" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BatchID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ResponseCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorText" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="LM_DialListAdvanced">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="lmFunctions" type="tns:LM_Functions"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="LM_Functions">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CallerID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CallerIDName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VoiceID" type="s:unsignedByte"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TextToSay" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TryCount" type="s:unsignedByte"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Licensekey" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Extension" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TransferNumber" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NextTryInSeconds" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TTSRate" type="s:unsignedByte"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TTSVolume" type="s:unsignedByte"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ScheduledUTCDatetime" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ListID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DialRecursiveLists" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="LM_DialListAdvancedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LM_DialListAdvancedResult"
+                             type="tns:LM_DialReturn"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LM_AddNewList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ListName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ParentListID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LM_AddNewListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LM_AddNewListResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LM_AddListMember">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ListID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LM_AddListMemberResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LM_AddListMemberResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LM_DeleteList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ListID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LM_DeleteListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LM_DeleteListResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LM_DeleteListMember">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ListMemberID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="LM_DeleteListMemberResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="LM_DeleteListMemberResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetResponseCodes">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetResponseCodesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetResponseCodesResult"
+                             type="tns:ArrayOfResponse"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfResponse">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Response" nillable="true"
+                          type="tns:Response"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Response">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ResponseCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ResponseText" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="getVoices">
+            <s:complexType/>
+         </s:element>
+         <s:element name="getVoicesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getVoicesResult" type="tns:ArrayOfVoice"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfVoice">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Voice" nillable="true"
+                          type="tns:Voice"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Voice">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="VoiceID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VoiceName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VoiceGender" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VoiceAge" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VoiceLanguage" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VoiceSummary" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SetIncomingCallScript">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Script" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SetIncomingCallScriptResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="SetIncomingCallScriptResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetIncomingCallScript">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetIncomingCallScriptResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetIncomingCallScriptResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="string" nillable="true" type="s:string"/>
+         <s:element name="ArrayOfString" nillable="true" type="tns:ArrayOfString"/>
+         <s:element name="boolean" type="s:boolean"/>
+         <s:element name="UploadFileResponse" nillable="true" type="tns:UploadFileResponse"/>
+         <s:element name="base64Binary" nillable="true" type="s:base64Binary"/>
+         <s:element name="NotifyReturn" nillable="true" type="tns:NotifyReturn"/>
+         <s:element name="ArrayOfNotifyReturn" nillable="true" type="tns:ArrayOfNotifyReturn"/>
+         <s:element name="LM_DialReturn" type="tns:LM_DialReturn"/>
+         <s:element name="int" type="s:int"/>
+         <s:element name="ArrayOfResponse" nillable="true" type="tns:ArrayOfResponse"/>
+         <s:element name="ArrayOfVoice" nillable="true" type="tns:ArrayOfVoice"/>
+      </s:schema>
+      <s:schema targetNamespace="http://ws.cdyne.com/NotifyWS/AbstractTypes">
+         <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <s:complexType name="StringArray">
+            <s:complexContent mixed="false">
+               <s:restriction base="soapenc:Array">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string"/>
+                  </s:sequence>
+               </s:restriction>
+            </s:complexContent>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetVersionSoapIn">
+      <wsdl:part name="parameters" element="tns:GetVersion"/>
+  </wsdl:message>
+  <wsdl:message name="GetVersionSoapOut">
+      <wsdl:part name="parameters" element="tns:GetVersionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ReturnSoundFileIDsSoapIn">
+      <wsdl:part name="parameters" element="tns:ReturnSoundFileIDs"/>
+  </wsdl:message>
+  <wsdl:message name="ReturnSoundFileIDsSoapOut">
+      <wsdl:part name="parameters" element="tns:ReturnSoundFileIDsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveSoundFileSoapIn">
+      <wsdl:part name="parameters" element="tns:RemoveSoundFile"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveSoundFileSoapOut">
+      <wsdl:part name="parameters" element="tns:RemoveSoundFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UploadSoundFileSoapIn">
+      <wsdl:part name="parameters" element="tns:UploadSoundFile"/>
+  </wsdl:message>
+  <wsdl:message name="UploadSoundFileSoapOut">
+      <wsdl:part name="parameters" element="tns:UploadSoundFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSoundFile"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSoundFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInULAWSoapIn">
+      <wsdl:part name="parameters" element="tns:GetTTSInULAW"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInULAWSoapOut">
+      <wsdl:part name="parameters" element="tns:GetTTSInULAWResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInMP3SoapIn">
+      <wsdl:part name="parameters" element="tns:GetTTSInMP3"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInMP3SoapOut">
+      <wsdl:part name="parameters" element="tns:GetTTSInMP3Response"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInMP3SoapIn">
+      <wsdl:part name="parameters" element="tns:GetSoundFileInMP3"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInMP3SoapOut">
+      <wsdl:part name="parameters" element="tns:GetSoundFileInMP3Response"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileURLSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSoundFileURL"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileURLSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSoundFileURLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInUlawSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSoundFileInUlaw"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInUlawSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSoundFileInUlawResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RecordSoundViaPhoneCallSoapIn">
+      <wsdl:part name="parameters" element="tns:RecordSoundViaPhoneCall"/>
+  </wsdl:message>
+  <wsdl:message name="RecordSoundViaPhoneCallSoapOut">
+      <wsdl:part name="parameters" element="tns:RecordSoundViaPhoneCallResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusSoapIn">
+      <wsdl:part name="parameters" element="tns:GetQueueIDStatus"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusSoapOut">
+      <wsdl:part name="parameters" element="tns:GetQueueIDStatusResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusesByPhoneNumberSoapIn">
+      <wsdl:part name="parameters" element="tns:GetQueueIDStatusesByPhoneNumber"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusesByPhoneNumberSoapOut">
+      <wsdl:part name="parameters" element="tns:GetQueueIDStatusesByPhoneNumberResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusWithAdvancedInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:GetQueueIDStatusWithAdvancedInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusWithAdvancedInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:GetQueueIDStatusWithAdvancedInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneEnglishBasicSoapIn">
+      <wsdl:part name="parameters" element="tns:NotifyPhoneEnglishBasic"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneEnglishBasicSoapOut">
+      <wsdl:part name="parameters" element="tns:NotifyPhoneEnglishBasicResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTransferSoapIn">
+      <wsdl:part name="parameters" element="tns:NotifyPhoneBasicWithTransfer"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTransferSoapOut">
+      <wsdl:part name="parameters" element="tns:NotifyPhoneBasicWithTransferResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetMultipleQueueIdStatusSoapIn">
+      <wsdl:part name="parameters" element="tns:GetMultipleQueueIdStatus"/>
+  </wsdl:message>
+  <wsdl:message name="GetMultipleQueueIdStatusSoapOut">
+      <wsdl:part name="parameters" element="tns:GetMultipleQueueIdStatusResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicSoapIn">
+      <wsdl:part name="parameters" element="tns:NotifyPhoneBasic"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicSoapOut">
+      <wsdl:part name="parameters" element="tns:NotifyPhoneBasicResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTryCountSoapIn">
+      <wsdl:part name="parameters" element="tns:NotifyPhoneBasicWithTryCount"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTryCountSoapOut">
+      <wsdl:part name="parameters" element="tns:NotifyPhoneBasicWithTryCountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneAdvancedSoapIn">
+      <wsdl:part name="parameters" element="tns:NotifyPhoneAdvanced"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneAdvancedSoapOut">
+      <wsdl:part name="parameters" element="tns:NotifyPhoneAdvancedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyMultiplePhoneBasicSoapIn">
+      <wsdl:part name="parameters" element="tns:NotifyMultiplePhoneBasic"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyMultiplePhoneBasicSoapOut">
+      <wsdl:part name="parameters" element="tns:NotifyMultiplePhoneBasicResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyMultiplePhoneAdvancedSoapIn">
+      <wsdl:part name="parameters" element="tns:NotifyMultiplePhoneAdvanced"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyMultiplePhoneAdvancedSoapOut">
+      <wsdl:part name="parameters" element="tns:NotifyMultiplePhoneAdvancedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CancelNotifySoapIn">
+      <wsdl:part name="parameters" element="tns:CancelNotify"/>
+  </wsdl:message>
+  <wsdl:message name="CancelNotifySoapOut">
+      <wsdl:part name="parameters" element="tns:CancelNotifyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptListSoapIn">
+      <wsdl:part name="parameters" element="tns:ScriptList"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptListSoapOut">
+      <wsdl:part name="parameters" element="tns:ScriptListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptSaveSoapIn">
+      <wsdl:part name="parameters" element="tns:ScriptSave"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptSaveSoapOut">
+      <wsdl:part name="parameters" element="tns:ScriptSaveResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptDeleteSoapIn">
+      <wsdl:part name="parameters" element="tns:ScriptDelete"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptDeleteSoapOut">
+      <wsdl:part name="parameters" element="tns:ScriptDeleteResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptLoadSoapIn">
+      <wsdl:part name="parameters" element="tns:ScriptLoad"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptLoadSoapOut">
+      <wsdl:part name="parameters" element="tns:ScriptLoadResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableLoadSoapIn">
+      <wsdl:part name="parameters" element="tns:LicenseKeyVariableLoad"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableLoadSoapOut">
+      <wsdl:part name="parameters" element="tns:LicenseKeyVariableLoadResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableSaveSoapIn">
+      <wsdl:part name="parameters" element="tns:LicenseKeyVariableSave"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableSaveSoapOut">
+      <wsdl:part name="parameters" element="tns:LicenseKeyVariableSaveResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DialListSoapIn">
+      <wsdl:part name="parameters" element="tns:LM_DialList"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DialListSoapOut">
+      <wsdl:part name="parameters" element="tns:LM_DialListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DialListAdvancedSoapIn">
+      <wsdl:part name="parameters" element="tns:LM_DialListAdvanced"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DialListAdvancedSoapOut">
+      <wsdl:part name="parameters" element="tns:LM_DialListAdvancedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddNewListSoapIn">
+      <wsdl:part name="parameters" element="tns:LM_AddNewList"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddNewListSoapOut">
+      <wsdl:part name="parameters" element="tns:LM_AddNewListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddListMemberSoapIn">
+      <wsdl:part name="parameters" element="tns:LM_AddListMember"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddListMemberSoapOut">
+      <wsdl:part name="parameters" element="tns:LM_AddListMemberResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListSoapIn">
+      <wsdl:part name="parameters" element="tns:LM_DeleteList"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListSoapOut">
+      <wsdl:part name="parameters" element="tns:LM_DeleteListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListMemberSoapIn">
+      <wsdl:part name="parameters" element="tns:LM_DeleteListMember"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListMemberSoapOut">
+      <wsdl:part name="parameters" element="tns:LM_DeleteListMemberResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetResponseCodesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetResponseCodes"/>
+  </wsdl:message>
+  <wsdl:message name="GetResponseCodesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetResponseCodesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getVoicesSoapIn">
+      <wsdl:part name="parameters" element="tns:getVoices"/>
+  </wsdl:message>
+  <wsdl:message name="getVoicesSoapOut">
+      <wsdl:part name="parameters" element="tns:getVoicesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SetIncomingCallScriptSoapIn">
+      <wsdl:part name="parameters" element="tns:SetIncomingCallScript"/>
+  </wsdl:message>
+  <wsdl:message name="SetIncomingCallScriptSoapOut">
+      <wsdl:part name="parameters" element="tns:SetIncomingCallScriptResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetIncomingCallScriptSoapIn">
+      <wsdl:part name="parameters" element="tns:GetIncomingCallScript"/>
+  </wsdl:message>
+  <wsdl:message name="GetIncomingCallScriptSoapOut">
+      <wsdl:part name="parameters" element="tns:GetIncomingCallScriptResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVersionHttpGetIn"/>
+  <wsdl:message name="GetVersionHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ReturnSoundFileIDsHttpGetIn">
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ReturnSoundFileIDsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveSoundFileHttpGetIn">
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveSoundFileHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="UploadSoundFileHttpGetIn">
+      <wsdl:part name="FileBinary" type="s1:StringArray"/>
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="UploadSoundFileHttpGetOut">
+      <wsdl:part name="Body" element="tns:UploadFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileHttpGetIn">
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileHttpGetOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInULAWHttpGetIn">
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="TTSrate" type="s:string"/>
+      <wsdl:part name="TTSvolume" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInULAWHttpGetOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInMP3HttpGetIn">
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="BitRate" type="s:string"/>
+      <wsdl:part name="TTSrate" type="s:string"/>
+      <wsdl:part name="TTSvolume" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInMP3HttpGetOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInMP3HttpGetIn">
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="BitRate" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInMP3HttpGetOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileURLHttpGetIn">
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileURLHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInUlawHttpGetIn">
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInUlawHttpGetOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="RecordSoundViaPhoneCallHttpGetIn">
+      <wsdl:part name="PhoneNumberToDial" type="s:string"/>
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="RecordSoundViaPhoneCallHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusHttpGetIn">
+      <wsdl:part name="QueueID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusHttpGetOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusesByPhoneNumberHttpGetIn">
+      <wsdl:part name="PhoneNumber" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusesByPhoneNumberHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfNotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusWithAdvancedInfoHttpGetIn">
+      <wsdl:part name="QueueID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusWithAdvancedInfoHttpGetOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneEnglishBasicHttpGetIn">
+      <wsdl:part name="PhoneNumberToDial" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneEnglishBasicHttpGetOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTransferHttpGetIn">
+      <wsdl:part name="PhoneNumberToDial" type="s:string"/>
+      <wsdl:part name="TransferNumber" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CallerIDname" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTransferHttpGetOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="GetMultipleQueueIdStatusHttpGetIn">
+      <wsdl:part name="QueueIDs" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetMultipleQueueIdStatusHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfNotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicHttpGetIn">
+      <wsdl:part name="PhoneNumberToDial" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CallerIDname" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicHttpGetOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTryCountHttpGetIn">
+      <wsdl:part name="TryCount" type="s:string"/>
+      <wsdl:part name="PhoneNumberToDial" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CallerIDname" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTryCountHttpGetOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyMultiplePhoneBasicHttpGetIn">
+      <wsdl:part name="PhoneNumbersToDial" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CallerIDname" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyMultiplePhoneBasicHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfNotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="CancelNotifyHttpGetIn">
+      <wsdl:part name="QueueID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="CancelNotifyHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptListHttpGetIn">
+      <wsdl:part name="IncludeGlobalScripts" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptListHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptSaveHttpGetIn">
+      <wsdl:part name="ScriptName" type="s:string"/>
+      <wsdl:part name="ScriptText" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptSaveHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptDeleteHttpGetIn">
+      <wsdl:part name="ScriptName" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptDeleteHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptLoadHttpGetIn">
+      <wsdl:part name="ScriptName" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptLoadHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableLoadHttpGetIn">
+      <wsdl:part name="VariableName" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableLoadHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableSaveHttpGetIn">
+      <wsdl:part name="VariableName" type="s:string"/>
+      <wsdl:part name="VariableValue" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableSaveHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DialListHttpGetIn">
+      <wsdl:part name="ListID" type="s:string"/>
+      <wsdl:part name="DialRecursiveLists" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CallerIDName" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DialListHttpGetOut">
+      <wsdl:part name="Body" element="tns:LM_DialReturn"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddNewListHttpGetIn">
+      <wsdl:part name="ListName" type="s:string"/>
+      <wsdl:part name="ParentListID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddNewListHttpGetOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddListMemberHttpGetIn">
+      <wsdl:part name="ListID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+      <wsdl:part name="PhoneNumber" type="s:string"/>
+      <wsdl:part name="ClientID" type="s:string"/>
+      <wsdl:part name="FirstName" type="s:string"/>
+      <wsdl:part name="LastName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddListMemberHttpGetOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListHttpGetIn">
+      <wsdl:part name="ListID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListMemberHttpGetIn">
+      <wsdl:part name="ListMemberID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListMemberHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="GetResponseCodesHttpGetIn"/>
+  <wsdl:message name="GetResponseCodesHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getVoicesHttpGetIn"/>
+  <wsdl:message name="getVoicesHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfVoice"/>
+  </wsdl:message>
+  <wsdl:message name="SetIncomingCallScriptHttpGetIn">
+      <wsdl:part name="PhoneNumber" type="s:string"/>
+      <wsdl:part name="Script" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SetIncomingCallScriptHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="GetIncomingCallScriptHttpGetIn">
+      <wsdl:part name="PhoneNumber" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetIncomingCallScriptHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVersionHttpPostIn"/>
+  <wsdl:message name="GetVersionHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="ReturnSoundFileIDsHttpPostIn">
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ReturnSoundFileIDsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveSoundFileHttpPostIn">
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="RemoveSoundFileHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="UploadSoundFileHttpPostIn">
+      <wsdl:part name="FileBinary" type="s1:StringArray"/>
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="UploadSoundFileHttpPostOut">
+      <wsdl:part name="Body" element="tns:UploadFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileHttpPostIn">
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileHttpPostOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInULAWHttpPostIn">
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="TTSrate" type="s:string"/>
+      <wsdl:part name="TTSvolume" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInULAWHttpPostOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInMP3HttpPostIn">
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="BitRate" type="s:string"/>
+      <wsdl:part name="TTSrate" type="s:string"/>
+      <wsdl:part name="TTSvolume" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetTTSInMP3HttpPostOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInMP3HttpPostIn">
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="BitRate" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInMP3HttpPostOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileURLHttpPostIn">
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileURLHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInUlawHttpPostIn">
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSoundFileInUlawHttpPostOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="RecordSoundViaPhoneCallHttpPostIn">
+      <wsdl:part name="PhoneNumberToDial" type="s:string"/>
+      <wsdl:part name="SoundFileID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="RecordSoundViaPhoneCallHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusHttpPostIn">
+      <wsdl:part name="QueueID" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusHttpPostOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusesByPhoneNumberHttpPostIn">
+      <wsdl:part name="PhoneNumber" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusesByPhoneNumberHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfNotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusWithAdvancedInfoHttpPostIn">
+      <wsdl:part name="QueueID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetQueueIDStatusWithAdvancedInfoHttpPostOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneEnglishBasicHttpPostIn">
+      <wsdl:part name="PhoneNumberToDial" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneEnglishBasicHttpPostOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTransferHttpPostIn">
+      <wsdl:part name="PhoneNumberToDial" type="s:string"/>
+      <wsdl:part name="TransferNumber" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CallerIDname" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTransferHttpPostOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="GetMultipleQueueIdStatusHttpPostIn">
+      <wsdl:part name="QueueIDs" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetMultipleQueueIdStatusHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfNotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicHttpPostIn">
+      <wsdl:part name="PhoneNumberToDial" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CallerIDname" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicHttpPostOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTryCountHttpPostIn">
+      <wsdl:part name="TryCount" type="s:string"/>
+      <wsdl:part name="PhoneNumberToDial" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CallerIDname" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyPhoneBasicWithTryCountHttpPostOut">
+      <wsdl:part name="Body" element="tns:NotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyMultiplePhoneBasicHttpPostIn">
+      <wsdl:part name="PhoneNumbersToDial" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CallerIDname" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="NotifyMultiplePhoneBasicHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfNotifyReturn"/>
+  </wsdl:message>
+  <wsdl:message name="CancelNotifyHttpPostIn">
+      <wsdl:part name="QueueID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="CancelNotifyHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptListHttpPostIn">
+      <wsdl:part name="IncludeGlobalScripts" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptListHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptSaveHttpPostIn">
+      <wsdl:part name="ScriptName" type="s:string"/>
+      <wsdl:part name="ScriptText" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptSaveHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptDeleteHttpPostIn">
+      <wsdl:part name="ScriptName" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptDeleteHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptLoadHttpPostIn">
+      <wsdl:part name="ScriptName" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ScriptLoadHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableLoadHttpPostIn">
+      <wsdl:part name="VariableName" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableLoadHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableSaveHttpPostIn">
+      <wsdl:part name="VariableName" type="s:string"/>
+      <wsdl:part name="VariableValue" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseKeyVariableSaveHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DialListHttpPostIn">
+      <wsdl:part name="ListID" type="s:string"/>
+      <wsdl:part name="DialRecursiveLists" type="s:string"/>
+      <wsdl:part name="CallerID" type="s:string"/>
+      <wsdl:part name="CallerIDName" type="s:string"/>
+      <wsdl:part name="VoiceID" type="s:string"/>
+      <wsdl:part name="TextToSay" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DialListHttpPostOut">
+      <wsdl:part name="Body" element="tns:LM_DialReturn"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddNewListHttpPostIn">
+      <wsdl:part name="ListName" type="s:string"/>
+      <wsdl:part name="ParentListID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddNewListHttpPostOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddListMemberHttpPostIn">
+      <wsdl:part name="ListID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+      <wsdl:part name="PhoneNumber" type="s:string"/>
+      <wsdl:part name="ClientID" type="s:string"/>
+      <wsdl:part name="FirstName" type="s:string"/>
+      <wsdl:part name="LastName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LM_AddListMemberHttpPostOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListHttpPostIn">
+      <wsdl:part name="ListID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListMemberHttpPostIn">
+      <wsdl:part name="ListMemberID" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="LM_DeleteListMemberHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="GetResponseCodesHttpPostIn"/>
+  <wsdl:message name="GetResponseCodesHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getVoicesHttpPostIn"/>
+  <wsdl:message name="getVoicesHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfVoice"/>
+  </wsdl:message>
+  <wsdl:message name="SetIncomingCallScriptHttpPostIn">
+      <wsdl:part name="PhoneNumber" type="s:string"/>
+      <wsdl:part name="Script" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="SetIncomingCallScriptHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="GetIncomingCallScriptHttpPostIn">
+      <wsdl:part name="PhoneNumber" type="s:string"/>
+      <wsdl:part name="LicenseKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetIncomingCallScriptHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="PhoneNotifySoap" type="tns:PhoneNotifySoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetVersion">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetVersion" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ReturnSoundFileIDs">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/ReturnSoundFileIDs" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RemoveSoundFile">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/RemoveSoundFile" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UploadSoundFile">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/UploadSoundFile" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSoundFile">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetSoundFile" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetTTSInULAW">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetTTSInULAW" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetTTSInMP3">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetTTSInMP3" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSoundFileInMP3">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetSoundFileInMP3" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSoundFileURL">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetSoundFileURL" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSoundFileInUlaw">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetSoundFileInUlaw" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RecordSoundViaPhoneCall">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/RecordSoundViaPhoneCall"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetQueueIDStatus">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetQueueIDStatus" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetQueueIDStatusesByPhoneNumber">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetQueueIDStatusesByPhoneNumber"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetQueueIDStatusWithAdvancedInfo">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetQueueIDStatusWithAdvancedInfo"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="NotifyPhoneEnglishBasic">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/NotifyPhoneEnglishBasic"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="NotifyPhoneBasicWithTransfer">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/NotifyPhoneBasicWithTransfer"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetMultipleQueueIdStatus">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetMultipleQueueIdStatus"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="NotifyPhoneBasic">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/NotifyPhoneBasic" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="NotifyPhoneBasicWithTryCount">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/NotifyPhoneBasicWithTryCount"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="NotifyPhoneAdvanced">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/NotifyPhoneAdvanced" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="NotifyMultiplePhoneBasic">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/NotifyMultiplePhoneBasic"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="NotifyMultiplePhoneAdvanced">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/NotifyMultiplePhoneAdvanced"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CancelNotify">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/CancelNotify" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ScriptList">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/ScriptList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ScriptSave">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/ScriptSave" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ScriptDelete">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/ScriptDelete" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ScriptLoad">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/ScriptLoad" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LicenseKeyVariableLoad">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/LicenseKeyVariableLoad"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LicenseKeyVariableSave">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/LicenseKeyVariableSave"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LM_DialList">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/LM_DialList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LM_DialListAdvanced">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/LM_DialListAdvanced" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LM_AddNewList">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/LM_AddNewList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LM_AddListMember">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/LM_AddListMember" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LM_DeleteList">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/LM_DeleteList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="LM_DeleteListMember">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/LM_DeleteListMember" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetResponseCodes">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetResponseCodes" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getVoices">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/getVoices" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SetIncomingCallScript">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/SetIncomingCallScript"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetIncomingCallScript">
+         <soap:operation soapAction="http://ws.cdyne.com/NotifyWS/GetIncomingCallScript"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="PhoneNotify">
+      <wsdl:documentation>This service is FREE to test.  The system will attempt to call a number 1 time until it is answered (Can be modified with the TryCount property).&lt;br&gt;We now accept Extension numbers by using an 'x' in the phone number (ex:555-555-1000x3025).&lt;br&gt;&lt;br&gt;A reminder about abuse:  &lt;b&gt;Threats and illegal activity can be shared with the authorities.&lt;/b&gt;&lt;p&gt;To get a quick License Key for 9 cents a transaction go to : &lt;a href="https://secure.cdyne.com/QuickNotifySignup"&gt;https://secure.cdyne.com/QuickNotifySignup&lt;/a&gt;&lt;/p&gt;&lt;p&gt; For Advanced TextToSay Commands Visit: &lt;a href="http://wiki.cdyne.com/index.php/Notify_TextToSay_Commands"&gt;http://wiki.cdyne.com/index.php/Notify_TextToSay_Commands&lt;/a&gt;&lt;/p&gt;</wsdl:documentation>
+      <wsdl:port name="PhoneNotifySoap" binding="tns:PhoneNotifySoap">
+         <soap:address location="http://ws.soatrader.com/cdyne.com/0.1/PhoneNotify"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

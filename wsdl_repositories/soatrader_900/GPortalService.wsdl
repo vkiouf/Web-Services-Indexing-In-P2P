@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="urn:GPortal"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:s="http://www.w3.org/2001/XMLSchema"
+             xmlns:s0="urn:GPortal"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             targetNamespace="urn:GPortal"
+             name="GPortal">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <s:schema targetNamespace="urn:GPortal">
+         <s:complexType name="GPortalLink">
+            <s:all>
+	              <s:element name="lid" type="s:string"/>
+               <s:element name="title" type="s:string"/>
+               <s:element name="url" type="s:string"/>
+               <s:element name="description" type="s:string"/>
+            </s:all>
+         </s:complexType> 
+         <s:complexType name="GPortalResult">
+            <s:complexContent mixed="false">
+               <s:restriction base="soapenc:Array">
+                  <s:attribute xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" d7p1:arrayType="s0:GPortalLink[]"
+                               ref="soapenc:arrayType"/>
+               </s:restriction>
+            </s:complexContent>
+         </s:complexType>     
+      </s:schema>
+  </types>
+  <message name="findLinksRequest">
+      <part name="type" type="s:string"/>
+  </message>
+  <message name="findLinksResponse">
+      <part name="result" type="s0:GPortalResult"/>
+  </message>
+  <message name="getNewLinksRequest">
+      <part name="date" type="s:string"/>
+  </message>
+  <message name="getNewLinksResponse">
+      <part name="result" type="s0:GPortalResult"/>
+  </message>
+  <portType name="GPortalPort">
+      <operation name="findLinks">
+         <input message="s0:findLinksRequest"/>
+         <output message="s0:findLinksResponse"/>
+      </operation>
+      <operation name="getNewLinks">
+         <input message="s0:getNewLinksRequest"/>
+         <output message="s0:getNewLinksResponse"/>
+      </operation>
+  </portType>
+  <binding name="GPortalBinding" type="s0:GPortalPort">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+      <operation name="findLinks">
+         <soap:operation soapAction="urn:GPortalAction"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:GPortal"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:GPortal"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+      <operation name="getNewLinks">
+         <soap:operation soapAction="urn:GPortalAction"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:GPortal"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:GPortal"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="GPortalService">
+      <port name="GPortalPort" binding="s0:GPortalBinding">
+         <soap:address location="http://ws.soatrader.com/vsb.cz/0.1/GPortalService"/>
+      </port>
+  </service>
+</definitions>

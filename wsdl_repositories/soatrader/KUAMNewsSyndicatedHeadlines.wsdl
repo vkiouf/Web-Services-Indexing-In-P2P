@@ -1,0 +1,117 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://kuam.com/WS/ns"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://kuam.com/WS/ns">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://kuam.com/WS/ns">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:element name="GetKUAMNewsHeadlines">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="numberOfHeadlines" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetKUAMNewsHeadlinesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetKUAMNewsHeadlinesResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DataSet" nillable="true">
+            <s:complexType>
+               <s:sequence>
+                  <s:element ref="s:schema"/>
+                  <s:any/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetKUAMNewsHeadlinesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetKUAMNewsHeadlines"/>
+  </wsdl:message>
+  <wsdl:message name="GetKUAMNewsHeadlinesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetKUAMNewsHeadlinesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetKUAMNewsHeadlinesHttpGetIn">
+      <wsdl:part name="numberOfHeadlines" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetKUAMNewsHeadlinesHttpGetOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:message name="GetKUAMNewsHeadlinesHttpPostIn">
+      <wsdl:part name="numberOfHeadlines" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetKUAMNewsHeadlinesHttpPostOut">
+      <wsdl:part name="Body" element="tns:DataSet"/>
+  </wsdl:message>
+  <wsdl:portType name="KUAMNewsSyndicatedHeadlinesSoap">
+      <wsdl:operation name="GetKUAMNewsHeadlines">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This Web-callable method generates the last 2 days' worth of news headlines.  You can specify how many headlines you'd like to recieve daily.</documentation>
+         <wsdl:input message="tns:GetKUAMNewsHeadlinesSoapIn"/>
+         <wsdl:output message="tns:GetKUAMNewsHeadlinesSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="KUAMNewsSyndicatedHeadlinesSoap"
+                 type="tns:KUAMNewsSyndicatedHeadlinesSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetKUAMNewsHeadlines">
+         <soap:operation soapAction="http://kuam.com/WS/ns/GetKUAMNewsHeadlines" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="KUAMNewsSyndicatedHeadlines">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This XML Web service generates Guam news headlines from KUAM.COM</documentation>
+      <wsdl:port name="KUAMNewsSyndicatedHeadlinesSoap"
+                 binding="tns:KUAMNewsSyndicatedHeadlinesSoap">
+         <soap:address location="http://ws.soatrader.com/kuam.com/0.1/KUAMNewsSyndicatedHeadlines"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

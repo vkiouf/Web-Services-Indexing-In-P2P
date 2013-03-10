@@ -1,0 +1,287 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://www.strikeiron.com"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:si="http://www.strikeiron.com"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.strikeiron.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.strikeiron.com">
+         <s:element name="GetQuotesForStocksForOneDate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TickerSymbolList" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Date" type="si:SIDate"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SIDate">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Month" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Day" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Year" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetQuotesForStocksForOneDateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetQuotesForStocksForOneDateResult"
+                             type="si:ArrayOfSIHistoricalQuote"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfSIHistoricalQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SIHistoricalQuote" nillable="true"
+                          type="si:SIHistoricalQuote"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SIHistoricalQuote">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Security" type="si:SISecurity"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Last" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Open" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="High" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Low" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromOpen" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromOpen" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromLastClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PercentChangeFromLastClose" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Volume" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SplitRatio" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastAdjusted" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="OpenAdjusted" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LastCloseAdjusted" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="HighAdjusted" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="LowAdjusted" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromOpenAdjusted" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangeFromLastCloseAdjusted" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VolumeAdjusted" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="NotTraded" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SISecurity">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="CIK" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Cusip" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Market" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CategoryOrIndustry" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ResponseInfo" type="si:ResponseInfo"/>
+         <s:complexType name="ResponseInfo">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ResponseCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Response" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetQuotesForOneStockOverDateRange">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="TickerSymbol" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FromDate" type="si:SIDate"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ToDate" type="si:SIDate"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetQuotesForOneStockOverDateRangeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetQuotesForOneStockOverDateRangeResult"
+                             type="si:SIHistoricalQuotes"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SIHistoricalQuotes">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Security" type="si:SISecurity"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Quotes" type="si:ArrayOfSIHistoricalQuote"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <xs:schema xmlns:tns1="http://ws.strikeiron.com" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 attributeFormDefault="unqualified"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetQuotesForStocksForOneDateSoapIn">
+      <wsdl:part name="parameters" element="si:GetQuotesForStocksForOneDate"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuotesForStocksForOneDateSoapOut">
+      <wsdl:part name="parameters" element="si:GetQuotesForStocksForOneDateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuotesForStocksForOneDateResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuotesForOneStockOverDateRangeSoapIn">
+      <wsdl:part name="parameters" element="si:GetQuotesForOneStockOverDateRange"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuotesForOneStockOverDateRangeSoapOut">
+      <wsdl:part name="parameters" element="si:GetQuotesForOneStockOverDateRangeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetQuotesForOneStockOverDateRangeResponseInfo">
+      <wsdl:part name="ResponseInfo" element="si:ResponseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="q1:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="q2:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseInfoMessage">
+      <wsdl:part name="LicenseInfo" element="q3:LicenseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SubscriptionInfoMessage">
+      <wsdl:part name="SubscriptionInfo" element="q4:SubscriptionInfo"/>
+  </wsdl:message>
+  <wsdl:portType name="HistoricalStockQuotesSoap">
+      <wsdl:operation name="GetQuotesForStocksForOneDate">
+         <wsdl:input message="si:GetQuotesForStocksForOneDateSoapIn"/>
+         <wsdl:output message="si:GetQuotesForStocksForOneDateSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetQuotesForOneStockOverDateRange">
+         <wsdl:input message="si:GetQuotesForOneStockOverDateRangeSoapIn"/>
+         <wsdl:output message="si:GetQuotesForOneStockOverDateRangeSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <wsdl:input message="si:GetRemainingHitsSoapIn"/>
+         <wsdl:output message="si:GetRemainingHitsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HistoricalStockQuotesSoap" type="si:HistoricalStockQuotesSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetQuotesForStocksForOneDate">
+         <soap:operation soapAction="http://www.strikeiron.com/GetQuotesForStocksForOneDate"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:TickerSymbolList) &gt; 0</tns:expression>
+                     <tns:description>TickerSymbolList is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetQuotesForStocksForOneDateResponseInfo" part="ResponseInfo"
+                         use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetQuotesForOneStockOverDateRange">
+         <soap:operation soapAction="http://www.strikeiron.com/GetQuotesForOneStockOverDateRange"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <tns:validation>
+               <tns:assertions>
+                  <tns:assertion>
+                     <tns:expression>string-length(//tns:TickerSymbol) &gt; 0</tns:expression>
+                     <tns:description>TickerSymbol is required</tns:description>
+                  </tns:assertion>
+               </tns:assertions>
+            </tns:validation>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:GetQuotesForOneStockOverDateRangeResponseInfo" part="ResponseInfo"
+                         use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation soapAction="http://ws.strikeiron.com/StrikeIron/HistoricalStockQuotes/GetRemainingHits"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="si:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HistoricalStockQuotes">
+      <wsdl:port name="HistoricalStockQuotesSoap" binding="si:HistoricalStockQuotesSoap">
+         <soap:address location="http://ws.soatrader.com/strikeiron.com/0.1/HistoricalStockQuotes"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

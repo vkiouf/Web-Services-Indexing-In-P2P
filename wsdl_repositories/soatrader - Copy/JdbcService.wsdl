@@ -1,0 +1,339 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="urn:jdbc"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="urn:jdbc"
+                  xmlns:intf="urn:jdbc"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="urn:jdbc">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+   <wsdl:message name="aboutOperationsRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="sqlQuery5Response">
+
+      <wsdl:part name="sqlQuery5Return" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="sqlQuery5Request">
+
+      <wsdl:part name="in0" type="xsd:string"/>
+
+      <wsdl:part name="in1" type="xsd:string"/>
+
+      <wsdl:part name="in2" type="xsd:string"/>
+
+      <wsdl:part name="in3" type="xsd:string"/>
+
+      <wsdl:part name="in4" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getJDBCDriversResponse">
+
+      <wsdl:part name="getJDBCDriversReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="aboutServiceRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="sqlQuery1Request">
+
+      <wsdl:part name="in0" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="aboutOperationsResponse">
+
+      <wsdl:part name="aboutOperationsReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="sqlQuery1Response">
+
+      <wsdl:part name="sqlQuery1Return" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="aboutServiceResponse">
+
+      <wsdl:part name="aboutServiceReturn" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="sqlQuery3Response">
+
+      <wsdl:part name="sqlQuery3Return" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="sqlQuery3Request">
+
+      <wsdl:part name="in0" type="xsd:string"/>
+
+      <wsdl:part name="in1" type="xsd:string"/>
+
+      <wsdl:part name="in2" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getJDBCDriversRequest">
+
+   </wsdl:message>
+
+   <wsdl:portType name="Jdbc">
+
+      <wsdl:operation name="getJDBCDrivers">
+
+         <wsdl:input message="impl:getJDBCDriversRequest" name="getJDBCDriversRequest"/>
+
+         <wsdl:output message="impl:getJDBCDriversResponse" name="getJDBCDriversResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sqlQuery5" parameterOrder="in0 in1 in2 in3 in4">
+
+         <wsdl:input message="impl:sqlQuery5Request" name="sqlQuery5Request"/>
+
+         <wsdl:output message="impl:sqlQuery5Response" name="sqlQuery5Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sqlQuery3" parameterOrder="in0 in1 in2">
+
+         <wsdl:input message="impl:sqlQuery3Request" name="sqlQuery3Request"/>
+
+         <wsdl:output message="impl:sqlQuery3Response" name="sqlQuery3Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sqlQuery1" parameterOrder="in0">
+
+         <wsdl:input message="impl:sqlQuery1Request" name="sqlQuery1Request"/>
+
+         <wsdl:output message="impl:sqlQuery1Response" name="sqlQuery1Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="aboutService">
+
+         <wsdl:input message="impl:aboutServiceRequest" name="aboutServiceRequest"/>
+
+         <wsdl:output message="impl:aboutServiceResponse" name="aboutServiceResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="aboutOperations">
+
+         <wsdl:input message="impl:aboutOperationsRequest" name="aboutOperationsRequest"/>
+
+         <wsdl:output message="impl:aboutOperationsResponse" name="aboutOperationsResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="jdbcSoapBinding" type="impl:Jdbc">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getJDBCDrivers">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getJDBCDriversRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getJDBCDriversResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sqlQuery5">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="sqlQuery5Request">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="sqlQuery5Response">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sqlQuery3">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="sqlQuery3Request">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="sqlQuery3Response">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sqlQuery1">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="sqlQuery1Request">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="sqlQuery1Response">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="aboutService">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="aboutServiceRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="aboutServiceResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="aboutOperations">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="aboutOperationsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="aboutOperationsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:jdbc"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="JdbcService">
+
+      <wsdl:port binding="impl:jdbcSoapBinding" name="jdbc">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/vbi.vt.edu/0.3/JdbcService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

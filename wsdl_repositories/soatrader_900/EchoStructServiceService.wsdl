@@ -1,0 +1,173 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://linbox3:8080/axis/services/echo-complex-doc"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://linbox3:8080/axis/services/echo-complex-doc"
+                  xmlns:intf="http://linbox3:8080/axis/services/echo-complex-doc"
+                  xmlns:tns1="http://beans.echo"
+                  xmlns:tns2="http://echo"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://linbox3:8080/axis/services/echo-complex-doc">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.2.1
+Built on Jun 14, 2005 (09:15:57 EDT)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://beans.echo">
+         <complexType name="EchoStruct">
+            <sequence>
+               <element name="val1" nillable="true" type="xsd:string"/>
+               <element name="value2" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="ComplexEchoStruct">
+            <sequence>
+               <element name="struct" nillable="true" type="tns1:EchoStruct"/>
+               <element name="val1" nillable="true" type="xsd:string"/>
+               <element name="value2" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://echo">
+         <import namespace="http://beans.echo"/>
+         <element name="in0" type="tns1:EchoStruct"/>
+         <element name="in1" type="tns1:ComplexEchoStruct"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://linbox3:8080/axis/services/echo-complex-doc">
+         <import namespace="http://beans.echo"/>
+         <element name="echoStructReturn" type="tns1:EchoStruct"/>
+         <element name="echoComplexStructReturn" type="tns1:ComplexEchoStruct"/>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="echoStructRequest">
+
+      <wsdl:part element="tns2:in0" name="in0"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoStructResponse">
+
+      <wsdl:part element="impl:echoStructReturn" name="echoStructReturn"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoComplexStructResponse">
+
+      <wsdl:part element="impl:echoComplexStructReturn" name="echoComplexStructReturn"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoComplexStructRequest">
+
+      <wsdl:part element="tns2:in1" name="in1"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="EchoStructService">
+
+      <wsdl:operation name="echoStruct" parameterOrder="in0">
+
+         <wsdl:input message="impl:echoStructRequest" name="echoStructRequest"/>
+
+         <wsdl:output message="impl:echoStructResponse" name="echoStructResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoComplexStruct" parameterOrder="in1">
+
+         <wsdl:input message="impl:echoComplexStructRequest" name="echoComplexStructRequest"/>
+
+         <wsdl:output message="impl:echoComplexStructResponse" name="echoComplexStructResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="echo-complex-docSoapBinding" type="impl:EchoStructService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="echoStruct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoStructRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoStructResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoComplexStruct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoComplexStructRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoComplexStructResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="EchoStructServiceService">
+
+      <wsdl:port binding="impl:echo-complex-docSoapBinding" name="echo-complex-doc">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/ebi.ac.uk/0.1/EchoStructServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

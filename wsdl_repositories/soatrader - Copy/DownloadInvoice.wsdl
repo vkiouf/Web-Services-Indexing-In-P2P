@@ -1,0 +1,353 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.yellowworld.ch"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.yellowworld.ch">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>WebService for handle download of invoices</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.yellowworld.ch">
+         <s:element name="GetInvoiceListWithIDs">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="eBillAccountID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="ArchiveData" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetInvoiceListWithIDsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetInvoiceListWithIDsResult"
+                             type="tns:ArrayOfInvoiceReportWithID"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfInvoiceReportWithID">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="InvoiceReportWithID"
+                          type="tns:InvoiceReportWithID"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="InvoiceReportWithID">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="BillerID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TransactionID" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DeliveryDate" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FileType" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetOpenList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="eBillAccountID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetOpenListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetOpenListResult" type="tns:ArrayOfReport"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfReport">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Report" type="tns:Report"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Report">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="DeliveryDate" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FileType" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetInvoiceByID">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="eBillAccountID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BillerID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TransactionID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FileType" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetInvoiceByIDResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetInvoiceByIDResult" type="tns:DownloadFile"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="DownloadFile">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Data" type="s:base64Binary"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Filename" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetInvoices">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="eBillAccountID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DeliveryDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetInvoicesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetInvoicesResult"
+                             type="tns:ArrayOfDownloadFile"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfDownloadFile">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="DownloadFile" type="tns:DownloadFile"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetPDF">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="eBillAccountID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DeliveryDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPDFResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPDFResult" type="tns:ArrayOfDownloadFile"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetArchiveList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="eBillAccountID" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetArchiveListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetArchiveListResult"
+                             type="tns:ArrayOfReport"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetInvoicesArchive">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="eBillAccountID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DeliveryDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetInvoicesArchiveResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetInvoicesArchiveResult"
+                             type="tns:ArrayOfDownloadFile"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPDFArchive">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="eBillAccountID" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DeliveryDate" type="s:dateTime"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetPDFArchiveResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPDFArchiveResult"
+                             type="tns:ArrayOfDownloadFile"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetInvoiceListWithIDsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetInvoiceListWithIDs"/>
+  </wsdl:message>
+  <wsdl:message name="GetInvoiceListWithIDsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetInvoiceListWithIDsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetOpenListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetOpenList"/>
+  </wsdl:message>
+  <wsdl:message name="GetOpenListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetOpenListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetInvoiceByIDSoapIn">
+      <wsdl:part name="parameters" element="tns:GetInvoiceByID"/>
+  </wsdl:message>
+  <wsdl:message name="GetInvoiceByIDSoapOut">
+      <wsdl:part name="parameters" element="tns:GetInvoiceByIDResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetInvoicesSoapIn">
+      <wsdl:part name="parameters" element="tns:GetInvoices"/>
+  </wsdl:message>
+  <wsdl:message name="GetInvoicesSoapOut">
+      <wsdl:part name="parameters" element="tns:GetInvoicesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPDFSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPDF"/>
+  </wsdl:message>
+  <wsdl:message name="GetPDFSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPDFResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetArchiveListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetArchiveList"/>
+  </wsdl:message>
+  <wsdl:message name="GetArchiveListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetArchiveListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetInvoicesArchiveSoapIn">
+      <wsdl:part name="parameters" element="tns:GetInvoicesArchive"/>
+  </wsdl:message>
+  <wsdl:message name="GetInvoicesArchiveSoapOut">
+      <wsdl:part name="parameters" element="tns:GetInvoicesArchiveResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPDFArchiveSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPDFArchive"/>
+  </wsdl:message>
+  <wsdl:message name="GetPDFArchiveSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPDFArchiveResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="DownloadInvoiceSoap" type="tns:DownloadInvoiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetInvoiceListWithIDs">
+         <soap:operation soapAction="http://www.yellowworld.ch/GetInvoiceListWithIDs" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetOpenList">
+         <soap:operation soapAction="http://www.yellowworld.ch/GetOpenList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetInvoiceByID">
+         <soap:operation soapAction="http://www.yellowworld.ch/GetInvoiceByID" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetInvoices">
+         <soap:operation soapAction="http://www.yellowworld.ch/GetInvoices" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPDF">
+         <soap:operation soapAction="http://www.yellowworld.ch/GetPDF" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetArchiveList">
+         <soap:operation soapAction="http://www.yellowworld.ch/GetArchiveList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetInvoicesArchive">
+         <soap:operation soapAction="http://www.yellowworld.ch/GetInvoicesArchive" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPDFArchive">
+         <soap:operation soapAction="http://www.yellowworld.ch/GetPDFArchive" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="DownloadInvoice">
+      <wsdl:documentation>WebService for handle download of invoices</wsdl:documentation>
+      <wsdl:port name="DownloadInvoiceSoap" binding="tns:DownloadInvoiceSoap">
+         <soap:address location="http://ws.soatrader.com/yellowworld.ch/0.1/DownloadInvoice"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

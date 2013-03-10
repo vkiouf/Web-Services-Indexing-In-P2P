@@ -1,0 +1,105 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:element name="AddImageOverlay">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="href" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="width" type="s:double"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="height" type="s:double"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="point0" type="tns:ImagePoint"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="point1" type="tns:ImagePoint"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="point2" type="tns:ImagePoint"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="doAction" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ImagePoint">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="left" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="top" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="lat" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="lon" type="s:double"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddImageOverlayResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddImageOverlayResult"
+                             type="tns:ImageOverlay"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ImageOverlay">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="href" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="minX" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="minY" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="maxX" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="maxY" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="arc" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="viewZoom" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AddImageOverlaySoapIn">
+      <wsdl:part name="parameters" element="tns:AddImageOverlay"/>
+  </wsdl:message>
+  <wsdl:message name="AddImageOverlaySoapOut">
+      <wsdl:part name="parameters" element="tns:AddImageOverlayResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="AddOverlaySoap" type="tns:AddOverlaySoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="AddImageOverlay">
+         <soap:operation soapAction="" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="AddOverlay">
+      <wsdl:port name="AddOverlaySoap" binding="tns:AddOverlaySoap">
+         <soap:address location="http://ws.soatrader.com/step1.cn/0.2/AddOverlay"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

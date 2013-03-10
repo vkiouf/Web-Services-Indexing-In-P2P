@@ -1,0 +1,773 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:s1="http://microsoft.com/wsdl/types/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:import namespace="http://microsoft.com/wsdl/types/"/>
+         <s:element name="ProcessMessage">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="request" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ProcessMessageResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ProcessMessageResult" type="tns:Response"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Response">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="User" type="tns:User"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Account" type="tns:Account"/>
+               <s:element minOccurs="0" maxOccurs="1" name="QueryManagerData" type="tns:QueryManagerData"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LinkManagerData" type="tns:LinkManagerData"/>
+               <s:element minOccurs="0" maxOccurs="1" name="WebsiteManagerData"
+                          type="tns:WebsiteManagerData"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UserManagerData" type="tns:UserManagerData"/>
+               <s:element minOccurs="0" maxOccurs="1" name="WebsitePages" type="tns:ArrayOfWebsitePage"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Accounts" type="tns:ArrayOfAccount"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DataUpdates" type="tns:ArrayOfDataUpdate"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Messages" type="tns:ArrayOfMessage"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Errors" type="tns:ArrayOfError"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Request" type="tns:Request"/>
+            </s:sequence>
+            <s:attribute name="status" type="s:string"/>
+            <s:attribute name="message" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="User">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:CoreEntity">
+                  <s:sequence>
+                     <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="firstName" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="lastName" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="userType" type="tns:UserType"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="PanelSettings" type="tns:ArrayOfPanelSetting"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="Accounts" type="tns:ArrayOfAccount"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="CoreEntity" abstract="true"/>
+         <s:simpleType name="UserType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Client"/>
+               <s:enumeration value="AgencySuper"/>
+               <s:enumeration value="VTStaff"/>
+               <s:enumeration value="VTSales"/>
+               <s:enumeration value="VTSuper"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfPanelSetting">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PanelSetting" nillable="true"
+                          type="tns:PanelSetting"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PanelSetting">
+            <s:attribute name="interfacefilename" type="s:string"/>
+            <s:attribute name="width" type="s:int" use="required"/>
+            <s:attribute name="xcoord" type="s:int" use="required"/>
+            <s:attribute name="ycoord" type="s:int" use="required"/>
+            <s:attribute name="title" type="s:string"/>
+            <s:attribute name="id" type="s1:guid" use="required"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfAccount">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Account" nillable="true"
+                          type="tns:Account"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Account">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="AccountInfos" type="tns:ArrayOfAccountInfo"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AggregateSummaryData"
+                          type="tns:ArrayOfAggregateSummary"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchTermSummaryData"
+                          type="tns:ArrayOfSearchTermSummary"/>
+               <s:element minOccurs="0" maxOccurs="1" name="searchTermSummaryDataMaxCount"
+                          type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="caseStudyId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="accountStatus" type="tns:AccountStatus"/>
+               <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="accountType" type="tns:AccountType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="description" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchResultsReportGraph"
+                          type="tns:SearchResultsReportGraph"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AggregateTrendData"
+                          type="tns:ArrayOfSearchResultAggTrendData"/>
+               <s:element minOccurs="0" maxOccurs="1" name="aggregateTrendDataMaxCount" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchResultsForScoring"
+                          type="tns:SearchResultsForScoring"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Users" type="tns:ArrayOfUser"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Websites" type="tns:ArrayOfWebsite"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LinkDestinations"
+                          type="tns:ArrayOfLinkDestination"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchTerms" type="tns:ArrayOfSearchTerm"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfAccountInfo">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AccountInfo" nillable="true"
+                          type="tns:AccountInfo"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AccountInfo">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid"/>
+               <s:element minOccurs="0" maxOccurs="1" name="data">
+                  <s:complexType mixed="true">
+                     <s:sequence>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+               <s:element minOccurs="1" maxOccurs="1" name="type" type="tns:AccountInfoType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="status" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="label" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="AccountInfoType">
+            <s:restriction base="s:string">
+               <s:enumeration value="None"/>
+               <s:enumeration value="ClientBasicInfo"/>
+               <s:enumeration value="ClientCurrentProfessional"/>
+               <s:enumeration value="ClientImageGoals"/>
+               <s:enumeration value="ClientPeople"/>
+               <s:enumeration value="ClientPersonalInvolvement"/>
+               <s:enumeration value="ClientProfessionalHistory"/>
+               <s:enumeration value="ClientTargetQuestions"/>
+               <s:enumeration value="CompanyBasicInfo"/>
+               <s:enumeration value="CompanyCurrentWebview"/>
+               <s:enumeration value="CompanyExpectations"/>
+               <s:enumeration value="CompanyImageGoals"/>
+               <s:enumeration value="CompanyInvolvement"/>
+               <s:enumeration value="CompanyPeople"/>
+               <s:enumeration value="CompanyTargetQuestions"/>
+               <s:enumeration value="Documents"/>
+               <s:enumeration value="Notes"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfAggregateSummary">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AggregateSummary" nillable="true"
+                          type="tns:AggregateSummary"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AggregateSummary">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="dateString" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="numberOfSearchTerms" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="numberOfPositions" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SummaryDetails"
+                          type="tns:ArrayOfAggregateSummaryDetail"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfAggregateSummaryDetail">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AggregateSummaryDetail"
+                          nillable="true"
+                          type="tns:AggregateSummaryDetail"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AggregateSummaryDetail">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="score" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="destination" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchTermSummary">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchTermSummary" nillable="true"
+                          type="tns:SearchTermSummary"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchTermSummary">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchTermSummaryDetail"
+                          type="tns:SearchTermSummaryDetail"/>
+               <s:element minOccurs="1" maxOccurs="1" name="searchResultCount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="dateString" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchTermSummaryDetail">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="positiveCount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="negativeCount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="unScoredCount" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="AccountStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="Pending"/>
+               <s:enumeration value="Sold"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="AccountType">
+            <s:restriction base="s:string">
+               <s:enumeration value="None"/>
+               <s:enumeration value="Company"/>
+               <s:enumeration value="Client"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="SearchResultsReportGraph">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchResults" type="tns:ArrayOfSearchResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchResult">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchResult" nillable="true"
+                          type="tns:SearchResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchResult">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid"/>
+               <s:element minOccurs="0" maxOccurs="1" name="searchLogId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="frequency" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="frequencyTitle" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="frequencyOffset" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="searchURL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="articleURL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="articleTitle" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="baselineArticleURL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="baselineArticleTitle" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="baselinePageIndex" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="baselineScore" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="baselinePagePositionIndex" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="baselinePosition" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="articleDescription" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="pageIndex" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="pagePositionIndex" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="position" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="score" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="change" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchResultAggTrendData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchResultAggTrendData"
+                          nillable="true"
+                          type="tns:SearchResultAggTrendData"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchResultAggTrendData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchResultAggTrendDataDetail"
+                          type="tns:SearchResultAggTrendDataDetail"/>
+               <s:element minOccurs="1" maxOccurs="1" name="positionCount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="dateString" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchResultAggTrendDataDetail">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="nonVTCount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="linkCount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="websiteCount" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchResultsForScoring">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="searchResultScoringCount" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchResults" type="tns:ArrayOfSearchResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfUser">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfWebsite">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Website" nillable="true"
+                          type="tns:Website"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Website">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="accountId" type="s1:guid"/>
+               <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="hostingCost" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="dnsCost" type="s:decimal"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ftpUrl" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ftpUserName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ftpPassword" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="accountCustomerNo" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="accountUserId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="accountPassword" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="accountSecretWord" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="techPhone" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="techEmail" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="techURL" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="status" type="tns:WebsiteStatus"/>
+               <s:element minOccurs="1" maxOccurs="1" name="payStatus" type="tns:PayStatus"/>
+               <s:element minOccurs="0" maxOccurs="1" name="strategyGoals" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="topicSubject" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="dns" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="dnsManagerURL" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="dnsManagerUserName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="dnsManagerPassword" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="startDateString" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="sitePresentationType"
+                          type="tns:WebsitePresentationType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="buildType" type="tns:WebsiteBuildType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="templateStyle" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="websitePageStatus"
+                          type="tns:WebsitePageStatus"/>
+               <s:element minOccurs="1" maxOccurs="1" name="websitePageCount" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="WebsiteStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="Preview"/>
+               <s:enumeration value="Live"/>
+               <s:enumeration value="Inactive"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="PayStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="NotPaying"/>
+               <s:enumeration value="Paying"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="WebsitePresentationType">
+            <s:restriction base="s:string">
+               <s:enumeration value="None"/>
+               <s:enumeration value="Blog"/>
+               <s:enumeration value="ContentSite"/>
+               <s:enumeration value="Article"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="WebsiteBuildType">
+            <s:restriction base="s:string">
+               <s:enumeration value="None"/>
+               <s:enumeration value="Custom"/>
+               <s:enumeration value="Managed"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="WebsitePageStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="Build"/>
+               <s:enumeration value="Draft"/>
+               <s:enumeration value="Edit"/>
+               <s:enumeration value="Final"/>
+               <s:enumeration value="SignOff"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfLinkDestination">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="LinkDestination" nillable="true"
+                          type="tns:LinkDestination"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="LinkDestination">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="accountUId" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="status" type="tns:LinkDestinationStatus"/>
+               <s:element minOccurs="0" maxOccurs="1" name="url" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="costPerMonth" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="totalCost" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="numLinks" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="totalNumberOfMonths" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="businessFunction" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="themeType" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="startDateString" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="endDateString" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="linkLocationIdentity" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchTerm" type="tns:SearchTerm"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="LinkDestinationStatus">
+            <s:restriction base="s:string">
+               <s:enumeration value="Planned"/>
+               <s:enumeration value="Live"/>
+               <s:enumeration value="InActive"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="SearchTerm">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="frequencyType"
+                          type="tns:SearchTermFrequencyType"/>
+               <s:element minOccurs="1" maxOccurs="1" name="accountId" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="searchTermType" type="tns:SearchTermType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="searchTermValue" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="startDateString" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="endDateString" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="frequency" type="tns:SearchTermFrequency"/>
+               <s:element minOccurs="0" maxOccurs="1" name="frequencyValue" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="lastRun" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="lastRunString" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="nextRun" type="s:dateTime"/>
+               <s:element minOccurs="0" maxOccurs="1" name="nextRunString" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="active" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Searches" type="tns:ArrayOfSearch"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchDestinations"
+                          type="tns:ArrayOfSearchDestination"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="SearchTermFrequencyType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Recurring"/>
+               <s:enumeration value="OneTime"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="SearchTermType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Person"/>
+               <s:enumeration value="Company"/>
+               <s:enumeration value="Product"/>
+               <s:enumeration value="Itinerary"/>
+               <s:enumeration value="PriceTracker"/>
+               <s:enumeration value="Sales"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="SearchTermFrequency">
+            <s:restriction base="s:string">
+               <s:enumeration value="Manual"/>
+               <s:enumeration value="OneMinute"/>
+               <s:enumeration value="FiveMinute"/>
+               <s:enumeration value="TenMinute"/>
+               <s:enumeration value="FifteenMinute"/>
+               <s:enumeration value="ThirtyMinute"/>
+               <s:enumeration value="FortyFiveMinute"/>
+               <s:enumeration value="Hourly"/>
+               <s:enumeration value="Daily"/>
+               <s:enumeration value="Weekly"/>
+               <s:enumeration value="Monthly"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfSearch">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Search" nillable="true"
+                          type="tns:Search"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Search">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="createdDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="searchLogDate" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="baselineFlag" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchDestination"
+                          type="tns:SearchDestination"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SearchDestination">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid"/>
+               <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchResults" type="tns:ArrayOfSearchResult"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchDestination">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchDestination" nillable="true"
+                          type="tns:SearchDestination"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfSearchTerm">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SearchTerm" nillable="true"
+                          type="tns:SearchTerm"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="QueryManagerData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchTerms" type="tns:ArrayOfSearchTerm"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AvailableSearchDestinations"
+                          type="tns:ArrayOfSearchDestination"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="LinkManagerData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="LinkManagerRollupData"
+                          type="tns:LinkManagerRollupData"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LinkDestinations"
+                          type="tns:ArrayOfLinkDestination"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SearchTerms" type="tns:ArrayOfSearchTerm"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LinkLocations" type="tns:ArrayOfLinkLocation"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="LinkManagerRollupData">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="linkDestinationTotalCostPerMonth"
+                          type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="linkDestinationTotalCost" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="linkLocationTotalCostPerMonth"
+                          type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="linkLocationTotalCost" type="s:decimal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfLinkLocation">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="LinkLocation" nillable="true"
+                          type="tns:LinkLocation"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="LinkLocation">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid"/>
+               <s:element minOccurs="0" maxOccurs="1" name="theme" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="location" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="company" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="costPerMonth" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="totalCostPerMonth" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="numberOfLinksAtThisLocation" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="contactPerson" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ContactEmail" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="contactPhone" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="pageRank" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ipAddress" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="linkLocationIdentity" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WebsiteManagerData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="RollupData"
+                          type="tns:WebsiteManagerRollupData"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Websites" type="tns:ArrayOfWebsite"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WebsiteManagerRollupData">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="dnsCostTotal" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="hostingCostTotal" type="s:decimal"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="UserManagerData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Users" type="tns:ArrayOfUser"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfWebsitePage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="WebsitePage" nillable="true"
+                          type="tns:WebsitePage"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="WebsitePage">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="id" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="websiteId" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="websitePageStatus"
+                          type="tns:WebsitePageStatus"/>
+               <s:element minOccurs="0" maxOccurs="1" name="fileName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="previewUrl" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="accountTitle" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="websiteUrl" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfDataUpdate">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="DataUpdate" nillable="true"
+                          type="tns:DataUpdate"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="DataUpdate">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Value"/>
+            </s:sequence>
+            <s:attribute name="field" type="s:string"/>
+            <s:attribute name="id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfMessage">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Message" nillable="true"
+                          type="tns:Message"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Message">
+            <s:attribute name="label" type="s:string"/>
+            <s:attribute name="field" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfError">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Error" nillable="true"
+                          type="tns:Error"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Error">
+            <s:attribute name="label" type="s:string"/>
+            <s:attribute name="field" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="Request">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="SecurityContext" type="tns:SecurityContext"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Actions" type="tns:ArrayOfAction"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SecurityContext">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="userId" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="userType" type="tns:UserType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfAction">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Action" nillable="true"
+                          type="tns:Action"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Action">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Inputs" type="tns:ArrayOfInput"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnData" type="tns:ReturnData"/>
+            </s:sequence>
+            <s:attribute name="value" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfInput">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Input" nillable="true"
+                          type="tns:Input"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Input">
+            <s:attribute name="key" type="s:string"/>
+            <s:attribute name="value" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ReturnData">
+            <s:attribute name="object" type="s:string"/>
+            <s:attribute name="loadflags" type="s:string"/>
+         </s:complexType>
+         <s:element name="ProcessMessageRequest">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="request" type="tns:Request"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ProcessMessageRequestResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ProcessMessageRequestResult"
+                             type="tns:Response"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Response" nillable="true" type="tns:Response"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://microsoft.com/wsdl/types/">
+         <s:simpleType name="guid">
+            <s:restriction base="s:string">
+               <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+            </s:restriction>
+         </s:simpleType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ProcessMessageSoapIn">
+      <wsdl:part name="parameters" element="tns:ProcessMessage"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageSoapOut">
+      <wsdl:part name="parameters" element="tns:ProcessMessageResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageRequestSoapIn">
+      <wsdl:part name="parameters" element="tns:ProcessMessageRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageRequestSoapOut">
+      <wsdl:part name="parameters" element="tns:ProcessMessageRequestResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageHttpGetIn">
+      <wsdl:part name="request" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageHttpGetOut">
+      <wsdl:part name="Body" element="tns:Response"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageHttpPostIn">
+      <wsdl:part name="request" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessMessageHttpPostOut">
+      <wsdl:part name="Body" element="tns:Response"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="MessageReceiverSoap" type="tns:MessageReceiverSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="ProcessMessage">
+         <soap:operation soapAction="http://tempuri.org/ProcessMessage" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ProcessMessageRequest">
+         <soap:operation soapAction="http://tempuri.org/ProcessMessageRequest" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="MessageReceiver">
+      <wsdl:port name="MessageReceiverSoap" binding="tns:MessageReceiverSoap">
+         <soap:address location="http://ws.soatrader.com/visibletower.com/0.1/MessageReceiver"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

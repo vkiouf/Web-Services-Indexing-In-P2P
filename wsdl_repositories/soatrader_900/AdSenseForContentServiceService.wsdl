@@ -1,0 +1,1184 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://www.google.com/api/adsense/v2"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://www.google.com/api/adsense/v2"
+                  xmlns:intf="http://www.google.com/api/adsense/v2"
+                  xmlns:tns1="http://www.w3.org/1999/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://www.google.com/api/adsense/v2">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.2RC1
+Built on Mar 18, 2005 (05:36:43 PST)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://www.google.com/api/adsense/v2">
+         <complexType name="AdSenseApiException">
+            <sequence>
+               <element name="code" type="xsd:int"/>
+               <element name="internal" type="xsd:boolean"/>
+               <element name="message" nillable="true" type="xsd:string"/>
+               <element name="trigger" nillable="true" type="xsd:string"/>
+               <element name="triggerDetails" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <simpleType name="ChannelService_Type">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <simpleType name="AdLayout">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <complexType name="AdStyle">
+            <sequence>
+               <element name="backgroundColor" nillable="true" type="xsd:string"/>
+               <element name="borderColor" nillable="true" type="xsd:string"/>
+               <element name="name" nillable="true" type="xsd:string"/>
+               <element name="textColor" nillable="true" type="xsd:string"/>
+               <element name="titleColor" nillable="true" type="xsd:string"/>
+               <element name="urlColor" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <simpleType name="ChannelService_Status">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <complexType name="ChannelService_Data">
+            <sequence>
+               <element name="id" type="xsd:long"/>
+               <element name="name" nillable="true" type="xsd:string"/>
+               <element name="status" nillable="true" type="impl:ChannelService_Status"/>
+               <element name="synServiceId" nillable="true" type="xsd:string"/>
+               <element name="type" nillable="true" type="impl:ChannelService_Type"/>
+            </sequence>
+         </complexType>
+         <simpleType name="AdUnitType">
+            <restriction base="xsd:string"/>
+         </simpleType>
+         <element name="getBuiltinAdStyles">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getBuiltinAdStylesResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getBuiltinAdStylesReturn" type="impl:AdStyle"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="fault" type="impl:AdSenseApiException"/>
+         <element name="generateAdCode">
+            <complexType>
+               <sequence>
+                  <element name="synServiceId" type="xsd:string"/>
+                  <element name="adStyle" type="impl:AdStyle"/>
+                  <element name="adUnitType" type="impl:AdUnitType"/>
+                  <element name="layout" type="impl:AdLayout"/>
+                  <element name="alternate" type="xsd:string"/>
+                  <element name="isFramedPage" type="xsd:boolean"/>
+                  <element name="channelName" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="generateAdCodeResponse">
+            <complexType>
+               <sequence>
+                  <element name="generateAdCodeReturn" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAllAdLayouts">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAllAdLayoutsResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getAllAdLayoutsReturn" type="impl:AdLayout"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAdLayouts">
+            <complexType>
+               <sequence>
+                  <element name="adUnitType" type="impl:AdUnitType"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAdLayoutsResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getAdLayoutsReturn" type="impl:AdLayout"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAllAdUnitTypes">
+            <complexType>
+               <sequence>
+                  <element name="dummy" type="xsd:int"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAllAdUnitTypesResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getAllAdUnitTypesReturn" type="impl:AdUnitType"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAdUnitTypes">
+            <complexType>
+               <sequence>
+                  <element name="adLayout" type="impl:AdLayout"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAdUnitTypesResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getAdUnitTypesReturn" type="impl:AdUnitType"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAdStyles">
+            <complexType>
+               <sequence>
+                  <element name="synServiceId" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAdStylesResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getAdStylesReturn" type="impl:AdStyle"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="saveAdStyle">
+            <complexType>
+               <sequence>
+                  <element name="synServiceId" type="xsd:string"/>
+                  <element name="adStyle" type="impl:AdStyle"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="saveAdStyleResponse">
+            <complexType/>
+         </element>
+         <element name="saveAdStyles">
+            <complexType>
+               <sequence>
+                  <element name="synServiceId" type="xsd:string"/>
+                  <element maxOccurs="unbounded" name="adStyles" type="impl:AdStyle"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="saveAdStylesResponse">
+            <complexType/>
+         </element>
+         <element name="deleteAdStyle">
+            <complexType>
+               <sequence>
+                  <element name="synServiceId" type="xsd:string"/>
+                  <element name="name" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="deleteAdStyleResponse">
+            <complexType/>
+         </element>
+         <element name="deleteAdStyles">
+            <complexType>
+               <sequence>
+                  <element name="synServiceId" type="xsd:string"/>
+                  <element maxOccurs="unbounded" name="names" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="deleteAdStylesResponse">
+            <complexType/>
+         </element>
+         <element name="getChannels">
+            <complexType>
+               <sequence>
+                  <element name="synServiceId" type="xsd:string"/>
+                  <element name="type" type="impl:ChannelService_Type"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getChannelsResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getChannelsReturn" type="impl:ChannelService_Data"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getActiveChannels">
+            <complexType>
+               <sequence>
+                  <element name="synServiceId" type="xsd:string"/>
+                  <element name="type" type="impl:ChannelService_Type"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getActiveChannelsResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getActiveChannelsReturn"
+                           type="impl:ChannelService_Data"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getInactiveChannels">
+            <complexType>
+               <sequence>
+                  <element name="synServiceId" type="xsd:string"/>
+                  <element name="type" type="impl:ChannelService_Type"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getInactiveChannelsResponse">
+            <complexType>
+               <sequence>
+                  <element maxOccurs="unbounded" name="getInactiveChannelsReturn"
+                           type="impl:ChannelService_Data"/>
+               </sequence>
+            </complexType>
+         </element>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="getBuiltinAdStylesRequest">
+
+      <wsdl:part element="impl:getBuiltinAdStyles" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getChannelsResponse">
+
+      <wsdl:part element="impl:getChannelsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAdLayoutsRequest">
+
+      <wsdl:part element="impl:getAdLayouts" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="AdSenseApiException">
+
+      <wsdl:part element="impl:fault" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="generateAdCodeResponse">
+
+      <wsdl:part element="impl:generateAdCodeResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveAdStylesRequest">
+
+      <wsdl:part element="impl:saveAdStyles" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAdLayoutsResponse">
+
+      <wsdl:part element="impl:getAdLayoutsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllAdLayoutsResponse">
+
+      <wsdl:part element="impl:getAllAdLayoutsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getActiveChannelsResponse">
+
+      <wsdl:part element="impl:getActiveChannelsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getActiveChannelsRequest">
+
+      <wsdl:part element="impl:getActiveChannels" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getInactiveChannelsRequest">
+
+      <wsdl:part element="impl:getInactiveChannels" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveAdStyleRequest">
+
+      <wsdl:part element="impl:saveAdStyle" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="generateAdCodeRequest">
+
+      <wsdl:part element="impl:generateAdCode" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAdUnitTypesRequest">
+
+      <wsdl:part element="impl:getAdUnitTypes" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveAdStylesResponse">
+
+      <wsdl:part element="impl:saveAdStylesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveAdStyleResponse">
+
+      <wsdl:part element="impl:saveAdStyleResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteAdStylesResponse">
+
+      <wsdl:part element="impl:deleteAdStylesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllAdUnitTypesResponse">
+
+      <wsdl:part element="impl:getAllAdUnitTypesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAdStylesResponse">
+
+      <wsdl:part element="impl:getAdStylesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteAdStylesRequest">
+
+      <wsdl:part element="impl:deleteAdStyles" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAdStylesRequest">
+
+      <wsdl:part element="impl:getAdStyles" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllAdUnitTypesRequest">
+
+      <wsdl:part element="impl:getAllAdUnitTypes" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllAdLayoutsRequest">
+
+      <wsdl:part element="impl:getAllAdLayouts" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteAdStyleResponse">
+
+      <wsdl:part element="impl:deleteAdStyleResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteAdStyleRequest">
+
+      <wsdl:part element="impl:deleteAdStyle" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getChannelsRequest">
+
+      <wsdl:part element="impl:getChannels" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getInactiveChannelsResponse">
+
+      <wsdl:part element="impl:getInactiveChannelsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAdUnitTypesResponse">
+
+      <wsdl:part element="impl:getAdUnitTypesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getBuiltinAdStylesResponse">
+
+      <wsdl:part element="impl:getBuiltinAdStylesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="AdSenseForContentService">
+
+      <wsdl:operation name="getBuiltinAdStyles">
+
+         <wsdl:input message="impl:getBuiltinAdStylesRequest" name="getBuiltinAdStylesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getBuiltinAdStylesResponse" name="getBuiltinAdStylesResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="generateAdCode">
+
+         <wsdl:input message="impl:generateAdCodeRequest" name="generateAdCodeRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:generateAdCodeResponse" name="generateAdCodeResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllAdLayouts">
+
+         <wsdl:input message="impl:getAllAdLayoutsRequest" name="getAllAdLayoutsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllAdLayoutsResponse" name="getAllAdLayoutsResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAdLayouts">
+
+         <wsdl:input message="impl:getAdLayoutsRequest" name="getAdLayoutsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAdLayoutsResponse" name="getAdLayoutsResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllAdUnitTypes">
+
+         <wsdl:input message="impl:getAllAdUnitTypesRequest" name="getAllAdUnitTypesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllAdUnitTypesResponse" name="getAllAdUnitTypesResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAdUnitTypes">
+
+         <wsdl:input message="impl:getAdUnitTypesRequest" name="getAdUnitTypesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAdUnitTypesResponse" name="getAdUnitTypesResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAdStyles">
+
+         <wsdl:input message="impl:getAdStylesRequest" name="getAdStylesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAdStylesResponse" name="getAdStylesResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveAdStyle">
+
+         <wsdl:input message="impl:saveAdStyleRequest" name="saveAdStyleRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:saveAdStyleResponse" name="saveAdStyleResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveAdStyles">
+
+         <wsdl:input message="impl:saveAdStylesRequest" name="saveAdStylesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:saveAdStylesResponse" name="saveAdStylesResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteAdStyle">
+
+         <wsdl:input message="impl:deleteAdStyleRequest" name="deleteAdStyleRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteAdStyleResponse" name="deleteAdStyleResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteAdStyles">
+
+         <wsdl:input message="impl:deleteAdStylesRequest" name="deleteAdStylesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteAdStylesResponse" name="deleteAdStylesResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getChannels">
+
+         <wsdl:input message="impl:getChannelsRequest" name="getChannelsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getChannelsResponse" name="getChannelsResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getActiveChannels">
+
+         <wsdl:input message="impl:getActiveChannelsRequest" name="getActiveChannelsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getActiveChannelsResponse" name="getActiveChannelsResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getInactiveChannels">
+
+         <wsdl:input message="impl:getInactiveChannelsRequest" name="getInactiveChannelsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getInactiveChannelsResponse" name="getInactiveChannelsResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:AdSenseApiException" name="AdSenseApiException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="AdSenseForContentServiceSoapBinding" type="impl:AdSenseForContentService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getBuiltinAdStyles">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getBuiltinAdStylesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getBuiltinAdStylesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="generateAdCode">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="generateAdCodeRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="generateAdCodeResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllAdLayouts">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllAdLayoutsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllAdLayoutsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAdLayouts">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAdLayoutsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAdLayoutsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllAdUnitTypes">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllAdUnitTypesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllAdUnitTypesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAdUnitTypes">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAdUnitTypesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAdUnitTypesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAdStyles">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAdStylesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAdStylesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveAdStyle">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveAdStyleRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveAdStyleResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveAdStyles">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveAdStylesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveAdStylesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteAdStyle">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteAdStyleRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteAdStyleResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteAdStyles">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteAdStylesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteAdStylesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getChannels">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getChannelsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getChannelsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getActiveChannels">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getActiveChannelsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getActiveChannelsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getInactiveChannels">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getInactiveChannelsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getInactiveChannelsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AdSenseApiException">
+
+            <wsdlsoap:fault name="AdSenseApiException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="AdSenseForContentServiceService">
+
+      <wsdl:port binding="impl:AdSenseForContentServiceSoapBinding"
+                 name="AdSenseForContentService">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/google.com/0.1/AdSenseForContentServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

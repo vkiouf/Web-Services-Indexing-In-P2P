@@ -1,0 +1,72 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://www.ebi.ac.uk/XEMBL"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             name="XEMBL"
+             targetNamespace="http://www.ebi.ac.uk/XEMBL">
+   <wsdl:types xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <documentation>Documentation of this Web Service, together with a sample client and links to Bsml (Labbook, Inc.) and AGAVE (DoubleTwist, Inc.) can be found at the European Bioinformatics Institute http://www.ebi.ac.uk/xembl/
+	</documentation>
+	  <message name="getNucSeqRequest">
+		    <part name="format" type="xsd:string">
+			      <documentation>Input parameter that indicates the result format that should be returned. Legit values: Bsml or sciobj. Defaults to Bsml if format not recognised.</documentation>
+		    </part>
+  		  <part name="ids" type="xsd:string">
+			      <documentation>A space delimited list of international Nucleotide Sequence accession numbers (IDs). For example: "HSERPG U83300 AC000057". Minimum number of IDs is 1.</documentation>
+		    </part>
+   </message>
+   <message name="getNucSeqResponse">
+   	  <part name="result" type="xsd:string">
+			      <documentation>An XML formatted result in either Bsml or AGAVE format.</documentation>
+		    </part>
+   </message>
+   <portType name="XEMBLPortType">
+   	  <operation name="getNucSeq">
+   		    <input message="tns:getNucSeqRequest" name="getNucSeqRequest"/>
+   		    <output message="tns:getNucSeqResponse" name="getNucSeqResponse"/>
+   	  </operation>
+   </portType>
+	  <binding name="XEMBLServiceBinding" type="tns:XEMBLPortType">
+   	  <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+   	  <operation name="getNucSeq">
+			      <soap:operation soapAction="http://www.ebi.ac.uk/XEMBL#getNucSeq"/>
+   		    <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+   			      <soap:body use="encoded" namespace="http://www.ebi.ac.uk/XEMBL"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+   		    </input>
+   		    <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+   			      <soap:body use="encoded" namespace="http://www.ebi.ac.uk/XEMBL"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+   		    </output>
+   	  </operation>
+   </binding>
+	  <service name="XEMBLService">
+   	  <documentation>Returns full information on EMBL Nucleotide Sequences formatted as Bsml XML or Agave XML. I.e. returns sequence itself, cross-references, taxonomy, literature, full feature information, etc.</documentation>
+   	  <port name="XEMBLPort" binding="tns:XEMBLServiceBinding">
+   		    <soap:address location="http://ws.soatrader.com/ebi.ac.uk/0.1/XEMBLService"/>
+   	  </port>
+  </service>
+</definitions>

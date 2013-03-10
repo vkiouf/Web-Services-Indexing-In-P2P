@@ -1,0 +1,185 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:element name="GetDropDownContents">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="knownCategoryValues" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="category" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="searchtype" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="departuredate" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetDropDownContentsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetDropDownContentsResult"
+                             type="tns:ArrayOfCascadingDropDownNameValue"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCascadingDropDownNameValue">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CascadingDropDownNameValue"
+                          nillable="true"
+                          type="tns:CascadingDropDownNameValue"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CascadingDropDownNameValue">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="value" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="isDefaultValue" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetCompletionList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="prefixText" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="count" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="searchtype" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="departuredate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="departure" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCompletionListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCompletionListResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ArrayOfCascadingDropDownNameValue" nillable="true"
+                    type="tns:ArrayOfCascadingDropDownNameValue"/>
+         <s:element name="ArrayOfString" nillable="true" type="tns:ArrayOfString"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetDropDownContentsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetDropDownContents"/>
+  </wsdl:message>
+  <wsdl:message name="GetDropDownContentsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetDropDownContentsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompletionListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCompletionList"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompletionListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCompletionListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetDropDownContentsHttpGetIn">
+      <wsdl:part name="knownCategoryValues" type="s:string"/>
+      <wsdl:part name="category" type="s:string"/>
+      <wsdl:part name="searchtype" type="s:string"/>
+      <wsdl:part name="departuredate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetDropDownContentsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfCascadingDropDownNameValue"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompletionListHttpGetIn">
+      <wsdl:part name="prefixText" type="s:string"/>
+      <wsdl:part name="count" type="s:string"/>
+      <wsdl:part name="searchtype" type="s:string"/>
+      <wsdl:part name="departuredate" type="s:string"/>
+      <wsdl:part name="departure" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompletionListHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  <wsdl:message name="GetDropDownContentsHttpPostIn">
+      <wsdl:part name="knownCategoryValues" type="s:string"/>
+      <wsdl:part name="category" type="s:string"/>
+      <wsdl:part name="searchtype" type="s:string"/>
+      <wsdl:part name="departuredate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetDropDownContentsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfCascadingDropDownNameValue"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompletionListHttpPostIn">
+      <wsdl:part name="prefixText" type="s:string"/>
+      <wsdl:part name="count" type="s:string"/>
+      <wsdl:part name="searchtype" type="s:string"/>
+      <wsdl:part name="departuredate" type="s:string"/>
+      <wsdl:part name="departure" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCompletionListHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfString"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="IntelligentDestinationSoap" type="tns:IntelligentDestinationSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetDropDownContents">
+         <soap:operation soapAction="http://tempuri.org/GetDropDownContents" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCompletionList">
+         <soap:operation soapAction="http://tempuri.org/GetCompletionList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="IntelligentDestination">
+      <wsdl:port name="IntelligentDestinationSoap" binding="tns:IntelligentDestinationSoap">
+         <soap:address location="http://ws.soatrader.com/teletextholidays.co.uk/0.1/IntelligentDestination"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

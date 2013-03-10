@@ -1,0 +1,192 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://tempuri.org/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://tempuri.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+         <s:element name="AddCurrencyTrans">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="data" type="tns:ArrayOfCurrencyTransData"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCurrencyTransData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CurrencyTransData"
+                          type="tns:CurrencyTransData"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CurrencyTransData">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="transactionID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="currencyPair" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="status" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ticket" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="received" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="traded" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="returned" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AddCurrencyTransResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="AddCurrencyTransResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetTickets">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetTicketsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetTicketsResult"
+                             type="tns:ArrayOfTicketData"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfTicketData">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="TicketData" type="tns:TicketData"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="TicketData">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="transactionID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ticket" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="traded" type="s:dateTime"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="RequestCCTransaction">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="transactionId" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="merchantId" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="currencyPair" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RequestCCTransactionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="RequestCCTransactionResult"
+                             type="tns:CCTransaction"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CCTransaction">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="transactionID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ticket" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="authorisationID" type="s:long"/>
+               <s:element minOccurs="1" maxOccurs="1" name="errorCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="errorMessage" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AddCurrencyTransSoapIn">
+      <wsdl:part name="parameters" element="tns:AddCurrencyTrans"/>
+  </wsdl:message>
+  <wsdl:message name="AddCurrencyTransSoapOut">
+      <wsdl:part name="parameters" element="tns:AddCurrencyTransResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTicketsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetTickets"/>
+  </wsdl:message>
+  <wsdl:message name="GetTicketsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetTicketsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RequestCCTransactionSoapIn">
+      <wsdl:part name="parameters" element="tns:RequestCCTransaction"/>
+  </wsdl:message>
+  <wsdl:message name="RequestCCTransactionSoapOut">
+      <wsdl:part name="parameters" element="tns:RequestCCTransactionResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="CurrencyTransSoap">
+      <wsdl:operation name="AddCurrencyTrans">
+         <wsdl:input message="tns:AddCurrencyTransSoapIn"/>
+         <wsdl:output message="tns:AddCurrencyTransSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetTickets">
+         <wsdl:input message="tns:GetTicketsSoapIn"/>
+         <wsdl:output message="tns:GetTicketsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="RequestCCTransaction">
+         <wsdl:input message="tns:RequestCCTransactionSoapIn"/>
+         <wsdl:output message="tns:RequestCCTransactionSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CurrencyTransSoap" type="tns:CurrencyTransSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="AddCurrencyTrans">
+         <soap:operation soapAction="http://tempuri.org/AddCurrencyTrans" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetTickets">
+         <soap:operation soapAction="http://tempuri.org/GetTickets" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RequestCCTransaction">
+         <soap:operation soapAction="http://tempuri.org/RequestCCTransaction" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CurrencyTrans">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/"/>
+      <wsdl:port name="CurrencyTransSoap" binding="tns:CurrencyTransSoap">
+         <soap:address location="http://ws.soatrader.com/kiev.ua/0.1/CurrencyTrans"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

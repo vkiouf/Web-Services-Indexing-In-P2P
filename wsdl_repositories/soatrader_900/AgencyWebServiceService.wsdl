@@ -1,0 +1,282 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://webservice.au.gov.wa.tenders"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://webservice.au.gov.wa.tenders"
+                  xmlns:intf="http://webservice.au.gov.wa.tenders"
+                  xmlns:tns1="http://response.webservice.au.gov.wa.tenders"
+                  xmlns:tns2="http://pojo.au.gov.wa.tenders"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://webservice.au.gov.wa.tenders">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://webservice.au.gov.wa.tenders">
+         <import namespace="http://response.webservice.au.gov.wa.tenders"/>
+         <import namespace="http://pojo.au.gov.wa.tenders"/>
+         <element name="getAllAgencies">
+            <complexType/>
+         </element>
+         <element name="getAllAgenciesResponse">
+            <complexType>
+               <sequence>
+                  <element name="getAllAgenciesReturn" type="tns1:AgencyWebServiceResponse"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="ArrayOf_xsd_string">
+            <sequence>
+               <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="ArrayOf_tns2_Agency">
+            <sequence>
+               <element maxOccurs="unbounded" minOccurs="0" name="item" type="tns2:Agency"/>
+            </sequence>
+         </complexType>
+         <element name="getChildAgencies">
+            <complexType>
+               <sequence>
+                  <element name="parentId" type="xsd:long"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getChildAgenciesResponse">
+            <complexType>
+               <sequence>
+                  <element name="getChildAgenciesReturn" type="tns1:AgencyWebServiceResponse"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAgency">
+            <complexType>
+               <sequence>
+                  <element name="agencyId" type="xsd:long"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getAgencyResponse">
+            <complexType>
+               <sequence>
+                  <element name="getAgencyReturn" type="tns1:AgencyWebServiceResponse"/>
+               </sequence>
+            </complexType>
+         </element>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://response.webservice.au.gov.wa.tenders">
+         <import namespace="http://pojo.au.gov.wa.tenders"/>
+         <import namespace="http://webservice.au.gov.wa.tenders"/>
+         <complexType name="WebServiceResponse">
+            <sequence>
+               <element name="exceptionMessage" nillable="true" type="xsd:string"/>
+               <element name="invalid" type="xsd:boolean"/>
+               <element name="methodName" nillable="true" type="xsd:string"/>
+               <element name="numberOfRecords" type="xsd:int"/>
+               <element name="serviceName" nillable="true" type="xsd:string"/>
+               <element name="validationErrors" nillable="true" type="impl:ArrayOf_xsd_string"/>
+            </sequence>
+         </complexType>
+         <complexType name="AgencyWebServiceResponse">
+            <complexContent>
+               <extension base="tns1:WebServiceResponse">
+                  <sequence>
+                     <element name="agencies" nillable="true" type="impl:ArrayOf_tns2_Agency"/>
+                  </sequence>
+               </extension>
+            </complexContent>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://pojo.au.gov.wa.tenders">
+         <import namespace="http://response.webservice.au.gov.wa.tenders"/>
+         <import namespace="http://webservice.au.gov.wa.tenders"/>
+         <complexType name="Agency">
+            <sequence>
+               <element name="abbrev" nillable="true" type="xsd:string"/>
+               <element name="abn" nillable="true" type="xsd:string"/>
+               <element name="agencyId" nillable="true" type="xsd:long"/>
+               <element name="name" nillable="true" type="xsd:string"/>
+               <element name="parentId" nillable="true" type="xsd:long"/>
+               <element name="type" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+
+   <wsdl:message name="getAgencyResponse">
+
+      <wsdl:part element="impl:getAgencyResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllAgenciesRequest">
+
+      <wsdl:part element="impl:getAllAgencies" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getChildAgenciesRequest">
+
+      <wsdl:part element="impl:getChildAgencies" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAgencyRequest">
+
+      <wsdl:part element="impl:getAgency" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllAgenciesResponse">
+
+      <wsdl:part element="impl:getAllAgenciesResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getChildAgenciesResponse">
+
+      <wsdl:part element="impl:getChildAgenciesResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="AgencyWebService">
+
+      <wsdl:operation name="getAllAgencies">
+
+         <wsdl:input message="impl:getAllAgenciesRequest" name="getAllAgenciesRequest"/>
+
+         <wsdl:output message="impl:getAllAgenciesResponse" name="getAllAgenciesResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getChildAgencies">
+
+         <wsdl:input message="impl:getChildAgenciesRequest" name="getChildAgenciesRequest"/>
+
+         <wsdl:output message="impl:getChildAgenciesResponse" name="getChildAgenciesResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgency">
+
+         <wsdl:input message="impl:getAgencyRequest" name="getAgencyRequest"/>
+
+         <wsdl:output message="impl:getAgencyResponse" name="getAgencyResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="AgencyWebServiceSoapBinding" type="impl:AgencyWebService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getAllAgencies">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllAgenciesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllAgenciesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getChildAgencies">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getChildAgenciesRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getChildAgenciesResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAgency">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAgencyRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAgencyResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="AgencyWebServiceService">
+
+      <wsdl:port binding="impl:AgencyWebServiceSoapBinding" name="AgencyWebService">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/intecgroup.com.au/0.1/AgencyWebServiceService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

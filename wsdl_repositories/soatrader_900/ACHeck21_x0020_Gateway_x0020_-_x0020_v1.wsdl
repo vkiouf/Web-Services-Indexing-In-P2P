@@ -1,0 +1,1202 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="https://gateway.acheck21.com/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="https://gateway.acheck21.com/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>This system provides a number of SOAP Web Methods used exclusively to provide ACH service functionality to remote applications.  Please review the individual Method descriptions for more details.</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="https://gateway.acheck21.com/">
+         <s:element name="CreateAccessKey">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FrontEndID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CreateAccessKeyResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccessKeyResults" nillable="true"
+                             type="tns:AccessKeyResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AccessKeyResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Result">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Data" type="s:string"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Result" abstract="true">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Code" type="tns:ResultCode"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:simpleType name="ResultCode">
+            <s:restriction base="s:string">
+               <s:enumeration value="OK"/>
+               <s:enumeration value="FAILED"/>
+               <s:enumeration value="ERROR"/>
+               <s:enumeration value="CHANGEPASSWORD"/>
+               <s:enumeration value="INACTIVE"/>
+               <s:enumeration value="NOTAUTHORIZED"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetClientInfo">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetClientInfoResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ClientResults" nillable="true"
+                             type="tns:ClientResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ClientResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Result">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:Client"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="Client">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ClientId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:short"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Zip" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ClientName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ContactEmail" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ContactPerson" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Phone1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Phone2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Fax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Website" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FrontEndId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AchCompanyName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangePassword" type="s:short"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="DeleteClientUser">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="DeleteUsername" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteClientUserResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="VoidResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Result"/>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="GetClientUsers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetClientUsersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="UserResults" nillable="true"
+                             type="tns:UserResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="UserResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Result">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Users" type="tns:ArrayOfUser"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfUser">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="User">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ClientId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Admin" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Zip" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ClientName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ContactEmail" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ContactPerson" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Phone1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Phone2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Fax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Website" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FrontEndId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="AchCompanyName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ChangePassword" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="EditTrans" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DeleteTrans" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Represent" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ExportData" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ImportData" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ViewReports" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="UserAccountAdmin" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ViewBankInfo" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DeleteBatch" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ApproveBatch" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CreateECheck" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="EditECheck" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DeleteECheck" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetClientUser">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetClientUserResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="SingleUserResult" nillable="true"
+                             type="tns:SingleUserResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="SingleUserResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Result">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="User" type="tns:User"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="NewClientUser">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NewUsername" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NewPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Administrator" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanEditTransactions" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanDeleteTransactions" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanRepresentTransactions" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanImportData" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanExportData" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanViewReports" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanAddEditAccounts" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanViewAccountInfo" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanDeleteBatch" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanApproveBatch" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CreateWebInitiatedPayments" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DeleteWebInitiatedPayments" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EditWebInitiatedPayments" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NewClientUserResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="EditClientUser">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdatedPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdatedEmail" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdatedFirstName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdatedLastName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Administrator" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanEditTransactions" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanDeleteTransactions" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanRepresentTransactions" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanImportData" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanExportData" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanViewReports" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanAddEditAccounts" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanViewAccountInfo" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanDeleteBatch" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CanApproveBatch" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="CreateWebInitiatedPayments" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="DeleteWebInitiatedPayments" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EditWebInitiatedPayments" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="EditClientUserResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetBatchListing">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartRow" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Status" type="tns:Status"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BatchNbr" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="Status">
+            <s:restriction base="s:string">
+               <s:enumeration value="All"/>
+               <s:enumeration value="Pending"/>
+               <s:enumeration value="Rejected"/>
+               <s:enumeration value="Approved"/>
+               <s:enumeration value="Deleted"/>
+               <s:enumeration value="NotUploadBatch"/>
+               <s:enumeration value="Calculating"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="GetBatchListingResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="BatchListResults" nillable="true"
+                             type="tns:BatchListResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="BatchListResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Result">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ArrayOfBatch"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="SearchCount" type="s:string"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfBatch">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Batch" nillable="true"
+                          type="tns:Batch"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Batch">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="BatchNbr" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SeqNbr" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Filename" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AcceptedCount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RejectedCount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DuplicateCount" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="AcceptedAmount" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UploadDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ApprovedDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ApprovedBy" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeletedDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeletedBy" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BatchStatus" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="BatchTypeDescription" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PendingDisbursment" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DisburseDate" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Returns" type="tns:ReturnsSummary"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ReturnsSummary">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Total" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetBatchDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BatchNbr" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientTag" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartRow" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetBatchDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="BatchDetailsResult" nillable="true"
+                             type="tns:BatchDetailsResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="BatchDetailsResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Result">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="BatchInfo" type="tns:Batch"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="AchTransactions"
+                                type="tns:ArrayOfAchTransaction"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="C21Transactions"
+                                type="tns:ArrayOfC21Transaction"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="AchTransactionCount" type="s:string"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="C21TransactionCount" type="s:string"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfAchTransaction">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AchTransaction" nillable="true"
+                          type="tns:AchTransaction"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AchTransaction">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UploadDate" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SeqNbr" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BatchNbr" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ClientTag" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TransitNbr" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DDANbr" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CheckNumber" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CheckAmount" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="IndividualName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CompanyEntryDesc" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DocumentId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MoDocNbr" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StatusId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorMsg" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EditedBy" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EditedDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeletedBy" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeletedDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FrontImageFilename" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RearImageFilename" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EntryClassCd" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TransactionCd" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="WebTransaction" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfC21Transaction">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="C21Transaction" nillable="true"
+                          type="tns:C21Transaction"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="C21Transaction">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UploadDate" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SeqNbr" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="BatchNbr" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ClientTag" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EntryClassCd" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="TransactionCd" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TransitNbr" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DDANbr" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CheckNumber" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CheckAmount" type="s:double"/>
+               <s:element minOccurs="0" maxOccurs="1" name="IndividualName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CompanyEntryDesc" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DocumentId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MoDocNbr" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StatusId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ErrorMsg" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EditedBy" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="EditedDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeletedBy" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="DeletedDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FrontImageFilename" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RearImageFilename" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ApproveBatch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BatchNbr" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ApproveBatchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteBatch">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BatchNbr" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteBatchResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAchTransactionDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BatchNbr" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientTag" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetAchTransactionDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="AchTransactionDetailsResult" nillable="true"
+                             type="tns:AchTransactionDetailsResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AchTransactionDetailsResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Result">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:AchTransaction"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="UpdateTransaction">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BatchNbr" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientTag" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckAmount" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TransitNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateTransactionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteTransaction">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BatchNbr" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientTag" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteTransactionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetReturnListing">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartRow" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AchReturnCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BatchNbr" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="SeqNbr" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetReturnListingResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="ReturnListResults" nillable="true"
+                             type="tns:ReturnListResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ReturnListResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Result">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="AchReturns" type="tns:ArrayOfAchReturn"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="AchSearchCount" type="s:short"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="C21Returns" type="tns:ArrayOfC21Return"/>
+                     <s:element minOccurs="1" maxOccurs="1" name="C21SearchCount" type="s:short"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:complexType name="ArrayOfAchReturn">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="AchReturn" nillable="true"
+                          type="tns:AchReturn"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="AchReturn">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RepresentStatus" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="RepresentCount" type="s:short"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ReturnRatio" type="s:short"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Transaction" type="tns:AchTransaction"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfC21Return">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="C21Return" nillable="true"
+                          type="tns:C21Return"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="C21Return">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="RepresentTransaction">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="BatchNbr" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientTag" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TransitNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="RepresentTransactionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendBatchFile">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Base64EncodedBatch" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Filename" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="SendBatchFileResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CreateECheck">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="IndividualName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TransitNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccountType" type="tns:DDAType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckAmount" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="DDAType">
+            <s:restriction base="s:string">
+               <s:enumeration value="Checking"/>
+               <s:enumeration value="Savings"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="CreateECheckResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CreateACHTransaction">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="IndividualName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="TransitNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccountType" type="tns:DDAType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="CheckAmount" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="EntryClass" type="tns:Type"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="Type">
+            <s:restriction base="s:string">
+               <s:enumeration value="TEL"/>
+               <s:enumeration value="PPD"/>
+               <s:enumeration value="ARC"/>
+               <s:enumeration value="RCK"/>
+               <s:enumeration value="CCD"/>
+               <s:enumeration value="WEB"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="CreateACHTransactionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetWebInitiatedTransactions">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetWebInitiatedTransactionsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="PendingTransactionResults" nillable="true"
+                             type="tns:PendingTransactionResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="PendingTransactionResult">
+            <s:complexContent mixed="false">
+               <s:extension base="tns:Result">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ArrayOfAchTransaction"/>
+                     <s:element minOccurs="0" maxOccurs="1" name="SearchCount" type="s:string"/>
+                  </s:sequence>
+               </s:extension>
+            </s:complexContent>
+         </s:complexType>
+         <s:element name="DeleteWebInitiated">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SecurityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ClientTag" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DeleteWebInitiatedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Results" nillable="true"
+                             type="tns:VoidResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateAccessKey">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AccessKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="ValidateAccessKeyResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="AccessKeyResults" nillable="true"
+                             type="tns:AccessKeyResult"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="CreateAccessKeySoapIn">
+      <wsdl:part name="parameters" element="tns:CreateAccessKey"/>
+  </wsdl:message>
+  <wsdl:message name="CreateAccessKeySoapOut">
+      <wsdl:part name="parameters" element="tns:CreateAccessKeyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetClientInfoSoapIn">
+      <wsdl:part name="parameters" element="tns:GetClientInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetClientInfoSoapOut">
+      <wsdl:part name="parameters" element="tns:GetClientInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteClientUserSoapIn">
+      <wsdl:part name="parameters" element="tns:DeleteClientUser"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteClientUserSoapOut">
+      <wsdl:part name="parameters" element="tns:DeleteClientUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetClientUsersSoapIn">
+      <wsdl:part name="parameters" element="tns:GetClientUsers"/>
+  </wsdl:message>
+  <wsdl:message name="GetClientUsersSoapOut">
+      <wsdl:part name="parameters" element="tns:GetClientUsersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetClientUserSoapIn">
+      <wsdl:part name="parameters" element="tns:GetClientUser"/>
+  </wsdl:message>
+  <wsdl:message name="GetClientUserSoapOut">
+      <wsdl:part name="parameters" element="tns:GetClientUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NewClientUserSoapIn">
+      <wsdl:part name="parameters" element="tns:NewClientUser"/>
+  </wsdl:message>
+  <wsdl:message name="NewClientUserSoapOut">
+      <wsdl:part name="parameters" element="tns:NewClientUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="EditClientUserSoapIn">
+      <wsdl:part name="parameters" element="tns:EditClientUser"/>
+  </wsdl:message>
+  <wsdl:message name="EditClientUserSoapOut">
+      <wsdl:part name="parameters" element="tns:EditClientUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetBatchListingSoapIn">
+      <wsdl:part name="parameters" element="tns:GetBatchListing"/>
+  </wsdl:message>
+  <wsdl:message name="GetBatchListingSoapOut">
+      <wsdl:part name="parameters" element="tns:GetBatchListingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetBatchDetailsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetBatchDetails"/>
+  </wsdl:message>
+  <wsdl:message name="GetBatchDetailsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetBatchDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ApproveBatchSoapIn">
+      <wsdl:part name="parameters" element="tns:ApproveBatch"/>
+  </wsdl:message>
+  <wsdl:message name="ApproveBatchSoapOut">
+      <wsdl:part name="parameters" element="tns:ApproveBatchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteBatchSoapIn">
+      <wsdl:part name="parameters" element="tns:DeleteBatch"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteBatchSoapOut">
+      <wsdl:part name="parameters" element="tns:DeleteBatchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetAchTransactionDetailsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetAchTransactionDetails"/>
+  </wsdl:message>
+  <wsdl:message name="GetAchTransactionDetailsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetAchTransactionDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateTransactionSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateTransaction"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateTransactionSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateTransactionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteTransactionSoapIn">
+      <wsdl:part name="parameters" element="tns:DeleteTransaction"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteTransactionSoapOut">
+      <wsdl:part name="parameters" element="tns:DeleteTransactionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetReturnListingSoapIn">
+      <wsdl:part name="parameters" element="tns:GetReturnListing"/>
+  </wsdl:message>
+  <wsdl:message name="GetReturnListingSoapOut">
+      <wsdl:part name="parameters" element="tns:GetReturnListingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RepresentTransactionSoapIn">
+      <wsdl:part name="parameters" element="tns:RepresentTransaction"/>
+  </wsdl:message>
+  <wsdl:message name="RepresentTransactionSoapOut">
+      <wsdl:part name="parameters" element="tns:RepresentTransactionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SendBatchFileSoapIn">
+      <wsdl:part name="parameters" element="tns:SendBatchFile"/>
+  </wsdl:message>
+  <wsdl:message name="SendBatchFileSoapOut">
+      <wsdl:part name="parameters" element="tns:SendBatchFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CreateECheckSoapIn">
+      <wsdl:part name="parameters" element="tns:CreateECheck"/>
+  </wsdl:message>
+  <wsdl:message name="CreateECheckSoapOut">
+      <wsdl:part name="parameters" element="tns:CreateECheckResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CreateACHTransactionSoapIn">
+      <wsdl:part name="parameters" element="tns:CreateACHTransaction"/>
+  </wsdl:message>
+  <wsdl:message name="CreateACHTransactionSoapOut">
+      <wsdl:part name="parameters" element="tns:CreateACHTransactionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetWebInitiatedTransactionsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetWebInitiatedTransactions"/>
+  </wsdl:message>
+  <wsdl:message name="GetWebInitiatedTransactionsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetWebInitiatedTransactionsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteWebInitiatedSoapIn">
+      <wsdl:part name="parameters" element="tns:DeleteWebInitiated"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteWebInitiatedSoapOut">
+      <wsdl:part name="parameters" element="tns:DeleteWebInitiatedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateAccessKeySoapIn">
+      <wsdl:part name="parameters" element="tns:ValidateAccessKey"/>
+  </wsdl:message>
+  <wsdl:message name="ValidateAccessKeySoapOut">
+      <wsdl:part name="parameters" element="tns:ValidateAccessKeyResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="ACHeck21_x0020_Gateway_x0020_-_x0020_v1.0Soap"
+                 type="tns:ACHeck21_x0020_Gateway_x0020_-_x0020_v1.0Soap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="CreateAccessKey">
+         <soap:operation soapAction="https://gateway.acheck21.com/CreateAccessKey" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetClientInfo">
+         <soap:operation soapAction="https://gateway.acheck21.com/GetClientInfo" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteClientUser">
+         <soap:operation soapAction="https://gateway.acheck21.com/DeleteClientUser" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetClientUsers">
+         <soap:operation soapAction="https://gateway.acheck21.com/GetClientUsers" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetClientUser">
+         <soap:operation soapAction="https://gateway.acheck21.com/GetClientUser" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="NewClientUser">
+         <soap:operation soapAction="https://gateway.acheck21.com/NewClientUser" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="EditClientUser">
+         <soap:operation soapAction="https://gateway.acheck21.com/EditClientUser" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetBatchListing">
+         <soap:operation soapAction="https://gateway.acheck21.com/GetBatchListing" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetBatchDetails">
+         <soap:operation soapAction="https://gateway.acheck21.com/GetBatchDetails" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ApproveBatch">
+         <soap:operation soapAction="https://gateway.acheck21.com/ApproveBatch" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteBatch">
+         <soap:operation soapAction="https://gateway.acheck21.com/DeleteBatch" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAchTransactionDetails">
+         <soap:operation soapAction="https://gateway.acheck21.com/GetAchTransactionDetails"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateTransaction">
+         <soap:operation soapAction="https://gateway.acheck21.com/UpdateTransaction" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteTransaction">
+         <soap:operation soapAction="https://gateway.acheck21.com/DeleteTransaction" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetReturnListing">
+         <soap:operation soapAction="https://gateway.acheck21.com/GetReturnListing" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="RepresentTransaction">
+         <soap:operation soapAction="https://gateway.acheck21.com/RepresentTransaction" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="SendBatchFile">
+         <soap:operation soapAction="https://gateway.acheck21.com/SendBatchFile" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CreateECheck">
+         <soap:operation soapAction="https://gateway.acheck21.com/CreateECheck" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CreateACHTransaction">
+         <soap:operation soapAction="https://gateway.acheck21.com/CreateACHTransaction" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetWebInitiatedTransactions">
+         <soap:operation soapAction="https://gateway.acheck21.com/GetWebInitiatedTransactions"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="DeleteWebInitiated">
+         <soap:operation soapAction="https://gateway.acheck21.com/DeleteWebInitiated" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ValidateAccessKey">
+         <soap:operation soapAction="https://gateway.acheck21.com/ValidateAccessKey" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="ACHeck21_x0020_Gateway_x0020_-_x0020_v1.0">
+      <wsdl:documentation>This system provides a number of SOAP Web Methods used exclusively to provide ACH service functionality to remote applications.  Please review the individual Method descriptions for more details.</wsdl:documentation>
+      <wsdl:port name="ACHeck21_x0020_Gateway_x0020_-_x0020_v1.0Soap"
+                 binding="tns:ACHeck21_x0020_Gateway_x0020_-_x0020_v1.0Soap">
+         <soap:address location="http://ws.soatrader.com/acheck21.com/0.1/ACHeck21_x0020_Gateway_x0020_-_x0020_v1.0"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

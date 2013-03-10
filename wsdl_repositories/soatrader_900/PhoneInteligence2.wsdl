@@ -1,0 +1,193 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.desertsoft.com"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.desertsoft.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.desertsoft.com">
+         <s:element name="PHONEintel">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="PHONEintelResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PHONEintelResult" type="tns:AppendedInfo"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AppendedInfo">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="StatusCode" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="OrigPhone" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Zip" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FullName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NamePrefix" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="NameSuffix" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Province" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CellPhone" type="s:boolean"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DoNotCallList" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="AppendedInfo" nillable="true" type="tns:AppendedInfo"/>
+      </s:schema>
+      <xs:schema xmlns:tns1="http://ws.strikeiron.com" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 attributeFormDefault="unqualified"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="PHONEintelSoapIn">
+      <wsdl:part name="parameters" element="tns:PHONEintel"/>
+  </wsdl:message>
+  <wsdl:message name="PHONEintelSoapOut">
+      <wsdl:part name="parameters" element="tns:PHONEintelResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PHONEintelHttpGetIn">
+      <wsdl:part name="PhoneNumber" type="s:string"/>
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="Version" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="PHONEintelHttpGetOut">
+      <wsdl:part name="Body" element="tns:AppendedInfo"/>
+  </wsdl:message>
+  <wsdl:message name="PHONEintelHttpPostIn">
+      <wsdl:part name="PhoneNumber" type="s:string"/>
+      <wsdl:part name="Username" type="s:string"/>
+      <wsdl:part name="Password" type="s:string"/>
+      <wsdl:part name="Version" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="PHONEintelHttpPostOut">
+      <wsdl:part name="Body" element="tns:AppendedInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="q1:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="q2:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseInfoMessage">
+      <wsdl:part name="LicenseInfo" element="q3:LicenseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SubscriptionInfoMessage">
+      <wsdl:part name="SubscriptionInfo" element="q4:SubscriptionInfo"/>
+  </wsdl:message>
+  <wsdl:portType name="PhoneInteligence2Soap">
+      <wsdl:operation name="PHONEintel">
+         <wsdl:input message="tns:PHONEintelSoapIn"/>
+         <wsdl:output message="tns:PHONEintelSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <wsdl:input message="tns:GetRemainingHitsSoapIn"/>
+         <wsdl:output message="tns:GetRemainingHitsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PhoneInteligence2Soap" type="tns:PhoneInteligence2Soap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="PHONEintel">
+         <soap:operation soapAction="http://www.desertsoft.com/PHONEintel" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation soapAction="http://ws.strikeiron.com/DesertSoft/phoneintel/PhoneInteligence2/GetRemainingHits"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:LicenseInfoMessage" part="LicenseInfo" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:SubscriptionInfoMessage" part="SubscriptionInfo" use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PhoneInteligence2">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Appends address and other information to a phone number.</documentation>
+      <wsdl:port name="PhoneInteligence2Soap" binding="tns:PhoneInteligence2Soap">
+         <soap:address location="http://ws.soatrader.com/strikeiron.com/0.1/PhoneInteligence2"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

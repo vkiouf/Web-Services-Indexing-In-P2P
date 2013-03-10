@@ -1,0 +1,558 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://www.dkfz-heidelberg.de/menu/tomcat/as/display.lindna"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:apachesoap="http://xml.apache.org/xml-soap"
+                  xmlns:impl="http://www.dkfz-heidelberg.de/menu/tomcat/as/display.lindna"
+                  xmlns:intf="http://www.dkfz-heidelberg.de/menu/tomcat/as/display.lindna"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://www.dkfz-heidelberg.de/menu/tomcat/as/display.lindna">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+              targetNamespace="http://www.dkfz-heidelberg.de/menu/tomcat/as/display.lindna">
+         <xsd:annotation>
+            <xsd:documentation>Draws linear maps of DNA constructs</xsd:documentation>
+         </xsd:annotation>
+         <element name="runAndWaitFor">
+            <complexType>
+               <sequence>
+                  <element name="lindna" type="impl:Tlindna"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="TlindnaInfile">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="infile_direct_data" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="infile_url" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <complexType name="TlindnaBlocktype">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="blocktype_Open" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Open blocks</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Open blocks</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="blocktype_Filled" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Filled blocks</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Filled blocks</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="blocktype_Outline" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Black border</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Black border</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+            </sequence>
+         </complexType>
+         <simpleType name="TlindnaGraph_format">
+            <restriction base="xsd:string">
+               <enumeration value="png"/>
+               <enumeration value="postscript"/>
+               <enumeration value="colourps"/>
+               <enumeration value="hpgl"/>
+            </restriction>
+         </simpleType>
+         <complexType name="TlindnaIntersymbol">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="intersymbol_1" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Straight</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Straight</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="intersymbol_2" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Up</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Up</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="intersymbol_3" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Down</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Down</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="intersymbol_4" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>No</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>No</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+            </sequence>
+         </complexType>
+         <complexType name="Tlindna">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="infile" type="impl:TlindnaInfile">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Input file containing mapping data</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Input file containing mapping data</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="ruler" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Draw a ruler</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Draw a ruler</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="blocktype" type="impl:TlindnaBlocktype">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Type of blocks</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Type of blocks</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="graph_format" type="impl:TlindnaGraph_format">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Format of the graphical output</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Format of the graphical output</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="maxgroups" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Maximum number of groups</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Maximum number of groups</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="maxlabels" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Maximum number of labels</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Maximum number of labels</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="intersymbol" type="impl:TlindnaIntersymbol">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Type of junctions between blocks</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Type of junctions between blocks</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="intercolour" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Colour of junctions between blocks (enter a
+                colour number)</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Colour of junctions between blocks (enter a
+                colour number)</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="interticks" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Horizontal junctions between ticks</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Horizontal junctions between ticks</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="gapsize" type="xsd:long">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Interval between ticks in the ruler</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Interval between ticks in the ruler</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="ticklines" type="xsd:boolean">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Vertical lines at the ruler's
+                ticks</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Vertical lines at the ruler's
+                ticks</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="textheight" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Height of text multiplier</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Height of text. Enter a number &lt;1.0 or &gt;1.0 to decrease or
+         increase the size, respectively</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="textlength" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Length of text multiplier</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Length of text. Enter a number &lt;1.0 or &gt;1.0 to decrease or
+         increase the size, respectively</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="margin" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Width of left margin multiplier</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Width of left margin. This is the region left to the groups
+         where the names of the groups are displayed. Enter a number
+         &lt;1.0 or &gt;1.0 to decrease or increase the size, respectively</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="tickheight" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Height of ticks multiplier</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Height of ticks. Enter a number &lt;1.0 or &gt;1.0 to decrease or
+         increase the size, respectively</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="blockheight" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Height of blocks multilpier</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Height of blocks. Enter a number &lt;1.0 or &gt;1.0 to decrease or
+         increase the size, respectively</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="rangeheight" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Height of range ends multiplier</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Height of range ends. Enter a number &lt;1.0 or &gt;1.0 to decrease or
+         increase the size, respectively</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="gapgroup" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Space between groups mutliplier</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Space between groups. Enter a number &lt;1.0 or &gt;1.0 to decrease or
+         increase the size, respectively</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+               <element maxOccurs="1" minOccurs="0" name="postext" type="xsd:float">
+                  <xsd:annotation>
+                     <xsd:appinfo xmlns:emboss="http://emboss.sourceforge.net/schema/prompt">
+                        <emboss:prompt>Space between text and ticks, blocks, and
+                ranges multiplier</emboss:prompt>
+                     </xsd:appinfo>
+                     <xsd:documentation>Space between text and ticks, blocks, and ranges. Enter a
+         number &lt;1.0 or &gt;1.0 to decrease or increase the size, respectively</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+            </sequence>
+         </complexType>
+         <element name="runAndWaitForResponse">
+            <complexType>
+               <sequence>
+                  <element name="lindnaResult" type="impl:TlindnaResult"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="TlindnaResultGraphics_container">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="Graphics" type="xsd:base64Binary"/>
+               <element maxOccurs="1" minOccurs="0" name="Graphics_in_Postscript" type="xsd:string"/>
+               <element maxOccurs="unbounded" minOccurs="0" name="Graphics_in_PNG"
+                        type="xsd:base64Binary"/>
+            </sequence>
+         </complexType>
+         <complexType name="TlindnaResult">
+            <sequence>
+               <element maxOccurs="1" minOccurs="0" name="report" type="xsd:string"/>
+               <element maxOccurs="1" minOccurs="0" name="detailed_status" type="xsd:long"/>
+               <element maxOccurs="1" minOccurs="0" name="Graphics_container"
+                        type="impl:TlindnaResultGraphics_container">
+                  <xsd:annotation>
+                     <xsd:documentation>graphics output data</xsd:documentation>
+                  </xsd:annotation>
+               </element>
+            </sequence>
+         </complexType>
+         <complexType name="TSoaplabException">
+            <sequence/>
+         </complexType>
+         <element name="fault" type="impl:TSoaplabException"/>
+         <element name="createAndRun">
+            <complexType>
+               <sequence>
+                  <element name="lindna" type="impl:Tlindna"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="createAndRunResponse">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="waitFor">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="waitForResponse">
+            <complexType/>
+         </element>
+         <element name="getStatus">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getStatusResponse">
+            <complexType>
+               <sequence>
+                  <element name="status" type="impl:Tstatus"/>
+               </sequence>
+            </complexType>
+         </element>
+         <complexType name="Tstatus">
+            <sequence>
+               <element name="inProgress" type="xsd:boolean"/>
+               <element name="detailed" type="xsd:string"/>
+               <element name="erroneous" type="xsd:boolean"/>
+               <element name="description" type="xsd:string"/>
+               <element name="completed" type="xsd:boolean"/>
+               <element name="asString" type="xsd:string"/>
+               <element name="successful" type="xsd:boolean"/>
+            </sequence>
+         </complexType>
+         <element name="getResults">
+            <complexType>
+               <sequence>
+                  <element name="jobid" type="xsd:string"/>
+               </sequence>
+            </complexType>
+         </element>
+         <element name="getResultsResponse">
+            <complexType>
+               <sequence>
+                  <element name="lindnaResult" type="impl:TlindnaResult"/>
+               </sequence>
+            </complexType>
+         </element>
+      </schema>
+  </wsdl:types>
+  <wsdl:message name="createAndRunResponse">
+      <wsdl:part element="impl:createAndRunResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="createAndRunRequest">
+      <wsdl:part element="impl:createAndRun" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="runAndWaitForResponse">
+      <wsdl:part element="impl:runAndWaitForResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getStatusRequest">
+      <wsdl:part element="impl:getStatus" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="waitForRequest">
+      <wsdl:part element="impl:waitFor" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="waitForResponse">
+      <wsdl:part element="impl:waitForResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getResultsRequest">
+      <wsdl:part element="impl:getResults" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="SoaplabException">
+      <wsdl:part element="impl:fault" name="fault"/>
+  </wsdl:message>
+  <wsdl:message name="runAndWaitForRequest">
+      <wsdl:part element="impl:runAndWaitFor" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getStatusResponse">
+      <wsdl:part element="impl:getStatusResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getResultsResponse">
+      <wsdl:part element="impl:getResultsResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="display__lindna">
+      <wsdl:operation name="runAndWaitFor">
+         <wsdl:documentation>Start the web service and receive the result. Blocks until job is finished.</wsdl:documentation>
+         <wsdl:input message="impl:runAndWaitForRequest" name="runAndWaitForRequest"/>
+         <wsdl:output message="impl:runAndWaitForResponse" name="runAndWaitForResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="createAndRun">
+         <wsdl:documentation>Start the web service and receive a job-id. Returns immediately.</wsdl:documentation>
+         <wsdl:input message="impl:createAndRunRequest" name="createAndRunRequest"/>
+         <wsdl:output message="impl:createAndRunResponse" name="createAndRunResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="waitFor">
+         <wsdl:documentation>Wait until a job (by job-id) has finished. Blocks until job is finished.</wsdl:documentation>
+         <wsdl:input message="impl:waitForRequest" name="waitForRequest"/>
+         <wsdl:output message="impl:waitForResponse" name="waitForResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="getStatus">
+         <wsdl:documentation>Get status information about a running job. Returns immediately.</wsdl:documentation>
+         <wsdl:input message="impl:getStatusRequest" name="getStatusRequest"/>
+         <wsdl:output message="impl:getStatusResponse" name="getStatusResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+      <wsdl:operation name="getResults">
+         <wsdl:documentation>Get the results of a job (by job-id)</wsdl:documentation>
+         <wsdl:input message="impl:getResultsRequest" name="getResultsRequest"/>
+         <wsdl:output message="impl:getResultsResponse" name="getResultsResponse"/>
+         <wsdl:fault message="impl:SoaplabException" name="SoaplabException"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="display.lindna.derivedSoapBinding" type="impl:display__lindna">
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="runAndWaitFor">
+         <wsdl:documentation>Start the web service and receive the result. Blocks until job is finished.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="runAndWaitForRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="runAndWaitForResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="createAndRun">
+         <wsdl:documentation>Start the web service and receive a job-id. Returns immediately.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="createAndRunRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="createAndRunResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="waitFor">
+         <wsdl:documentation>Wait until a job (by job-id) has finished. Blocks until job is finished.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="waitForRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="waitForResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="getStatus">
+         <wsdl:documentation>Get status information about a running job. Returns immediately.</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getStatusRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getStatusResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="getResults">
+         <wsdl:documentation>Get the results of a job (by job-id)</wsdl:documentation>
+         <wsdlsoap:operation soapAction=""/>
+         <wsdl:input name="getResultsRequest">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="getResultsResponse">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <wsdlsoap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="SoaplabException">
+            <wsdlsoap:fault name="SoaplabException" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="lindnaService">
+      <wsdl:port binding="impl:display.lindna.derivedSoapBinding" name="display.lindna.derived">
+         <wsdlsoap:address location="http://ws.soatrader.com/dkfz-heidelberg.de/0.1/lindnaService"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

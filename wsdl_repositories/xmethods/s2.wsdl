@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:ChnEmergency" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:ChnEmergency">
+<types>
+<xsd:schema targetNamespace="urn:ChnEmergency"
+>
+ <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+ <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+</xsd:schema>
+</types>
+<message name="policeRequest">
+  <part name="lat" type="xsd:float" />
+  <part name="lon" type="xsd:float" /></message>
+<message name="policeResponse">
+  <part name="return" type="xsd:string" /></message>
+<message name="fireRequest">
+  <part name="lat" type="xsd:float" />
+  <part name="lon" type="xsd:float" /></message>
+<message name="fireResponse">
+  <part name="return" type="xsd:string" /></message>
+<message name="hospitalRequest">
+  <part name="lat" type="xsd:float" />
+  <part name="lon" type="xsd:float" /></message>
+<message name="hospitalResponse">
+  <part name="return" type="xsd:string" /></message>
+<portType name="ChnEmergencyPortType">
+  <operation name="police">
+    <documentation>Police Services</documentation>
+    <input message="tns:policeRequest"/>
+    <output message="tns:policeResponse"/>
+  </operation>
+  <operation name="fire">
+    <documentation>Fire Services</documentation>
+    <input message="tns:fireRequest"/>
+    <output message="tns:fireResponse"/>
+  </operation>
+  <operation name="hospital">
+    <documentation>Hospital Services</documentation>
+    <input message="tns:hospitalRequest"/>
+    <output message="tns:hospitalResponse"/>
+  </operation>
+</portType>
+<binding name="ChnEmergencyBinding" type="tns:ChnEmergencyPortType">
+  <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="police">
+    <soap:operation soapAction="urn:ChnEmergency#police" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:ChnEmergency" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:ChnEmergency" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="fire">
+    <soap:operation soapAction="urn:ChnEmergency#fire" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:ChnEmergency" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:ChnEmergency" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="hospital">
+    <soap:operation soapAction="urn:ChnEmergency#hospital" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:ChnEmergency" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:ChnEmergency" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+</binding>
+<service name="ChnEmergency">
+  <port name="ChnEmergencyPort" binding="tns:ChnEmergencyBinding">
+    <soap:address location="http://chennaiemergency.co.in/sree/s2.php"/>
+  </port>
+</service>
+</definitions>

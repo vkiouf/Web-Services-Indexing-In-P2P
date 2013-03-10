@@ -1,0 +1,75 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="NVPCyberSourceTransactionWS"
+                  targetNamespace="urn:schemas-cybersource-com:transaction-data:TransactionProcessor">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <wsdl:types>
+      <schema xmlns:soat="http://ws.soatrader.com/" xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="xs:string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="xs:decimal" name="HitsMade"/>
+               <element type="xs:decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="urn:schemas-cybersource-com:transaction-data:TransactionProcessor"
+                  xmlns:intf="urn:schemas-cybersource-com:transaction-data:TransactionProcessor"
+                  xmlns:data="urn:schemas-cybersource-com:transaction-data-1.17">
+         <xsd:import namespace="urn:schemas-cybersource-com:transaction-data-1.17"
+                     schemaLocation="CyberSourceTransaction_1.17.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="nvpMessageIn">
+      <wsdl:part name="input" element="data:nvpRequest"/>
+   </wsdl:message>
+   <wsdl:message name="nvpMessageOut">
+      <wsdl:part name="result" element="data:nvpReply"/>
+   </wsdl:message>
+   <wsdl:portType name="INVPTransactionProcessor">
+      <wsdl:operation name="runTransaction">
+         <wsdl:input name="inputNVPMessageIn" message="tns:nvpMessageIn"/>
+         <wsdl:output name="outputNVPMessageOut" message="tns:nvpMessageOut"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="INVPTransactionProcessor" type="intf:INVPTransactionProcessor">
+      <soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" style="document"
+                    transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="runTransaction">
+         <soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="runTransaction"
+                         style="document"/>
+         <wsdl:input name="inputNVPMessageIn">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"
+                       namespace="urn:schemas-cybersource-com:transaction-data-1.17"/>
+         </wsdl:input>
+         <wsdl:output name="outputNVPMessageOut">
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"
+                       namespace="urn:schemas-cybersource-com:transaction-data-1.17"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="NVPTransactionProcessor">
+      <wsdl:documentation>CyberSource Web Service</wsdl:documentation>
+      <wsdl:port name="portNVP" binding="tns:INVPTransactionProcessor">
+         <soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                       location="http://ws.soatrader.com/ic3.com/0.2/NVPTransactionProcessor"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

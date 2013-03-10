@@ -1,0 +1,139 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:si="http://soapinterop.org/xsd"
+             xmlns:tns="http://devel.responsivesolutions.net/wmg/base/ws_pull_shipping_info.wsdl"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="http://devel.responsivesolutions.net/wmg/base/ws_pull_shipping_info.wsdl">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://devel.responsivesolutions.net/wmg/base/ws_pull_shipping_info.wsdl">
+         <xsd:complexType name="order_shipping_info">
+            <xsd:all>
+               <element name="order_number" type="string"/>
+               <element name="ref_id" type="string"/>
+               <element name="packages" type="tns:packages"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="package">
+            <xsd:all>
+               <element name="order_number" type="xsd:string"/>
+               <element name="ref_id" type="xsd:string"/>
+               <element name="ship_date" type="xsd:string"/>
+               <element name="tracking_number" type="xsd:string"/>
+               <element name="shipping_charge" type="xsd:decimal"/>
+               <element name="package_weight" type="xsd:decimal"/>
+               <element name="ship_method" type="xsd:string"/>
+               <element name="notes" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+         <xsd:complexType name="company_order_shipping_info">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:order_shipping_info[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="packages">
+            <xsd:complexContent>
+               <xsd:restriction base="SOAP-ENC:Array">
+                  <attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:package[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="company_order_shipping_request">
+            <xsd:all>
+               <element name="company_id" type="xsd:string"/>
+               <element name="start_date" type="xsd:string"/>
+               <element name="end_date" type="xsd:string"/>
+               <element name="retrieve_only_non_reported" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+      </xsd:schema>
+   </types>
+   <message name="retrieve_shipping_order_numberRequest">
+      <part name="order_number" type="xsd:string"/>
+   </message>
+   <message name="retrieve_shipping_order_numberResponse">
+      <part name="return" type="tns:packages"/>
+   </message>
+   <message name="pull_shipped_company_ordersRequest">
+      <part name="company_order_shipping_request" type="tns:company_order_shipping_request"/>
+   </message>
+   <message name="pull_shipped_company_ordersResponse">
+      <part name="return" type="tns:packages"/>
+   </message>
+   <portType name="PullShippingPortType">
+      <operation name="retrieve_shipping_order_number">
+         <input message="tns:retrieve_shipping_order_numberRequest"/>
+         <output message="tns:retrieve_shipping_order_numberResponse"/>
+      </operation>
+      <operation name="pull_shipped_company_orders">
+         <input message="tns:pull_shipped_company_ordersRequest"/>
+         <output message="tns:pull_shipped_company_ordersResponse"/>
+      </operation>
+   </portType>
+   <binding name="PullShippingBinding" type="tns:PullShippingPortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="retrieve_shipping_order_number">
+         <soap:operation soapAction="http://integration.responsivesolutions.net/wmg/main/ws_pull_shipping_info.php"
+                         style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded"
+                       namespace="http://devel.responsivesolutions.net/wmg/base/ws_pull_shipping_info.wsdl"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded"
+                       namespace="http://devel.responsivesolutions.net/wmg/base/ws_pull_shipping_info.wsdl"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+      <operation name="pull_shipped_company_orders">
+         <soap:operation soapAction="http://integration.responsivesolutions.net/wmg/main/ws_pull_shipping_info.php"
+                         style="rpc"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded"
+                       namespace="http://devel.responsivesolutions.net/wmg/base/ws_pull_shipping_info.wsdl"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded"
+                       namespace="http://devel.responsivesolutions.net/wmg/base/ws_pull_shipping_info.wsdl"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+   <service name="PullShipping">
+      <port name="PullShippingPort" binding="tns:PullShippingBinding">
+         <soap:address location="http://ws.soatrader.com/responsivesolutions.net/0.1/PullShipping"/>
+      </port>
+   </service>
+</definitions>

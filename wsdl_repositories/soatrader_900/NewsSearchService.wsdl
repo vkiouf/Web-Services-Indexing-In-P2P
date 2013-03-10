@@ -1,0 +1,119 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="urn:NewsSearch"
+             xmlns:typens="urn:NewsSearch"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="urn:NewsSearch"
+             targetNamespace="urn:NewsSearch">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+  <!-- Results expected for News Search.. -->
+
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:NewsSearch">
+            
+         <xsd:complexType name="NewsSearchResult">
+            <xsd:all>
+			            <xsd:element name="newsElements" type="typens:NewsElementArray"/> 
+            </xsd:all>
+         </xsd:complexType>
+      
+         <xsd:complexType name="NewsElement">
+            <xsd:all>
+               <xsd:element name="URL" type="xsd:string"/>
+               <xsd:element name="title" type="xsd:string"/>
+               <xsd:element name="source" type="xsd:string"/>
+               <xsd:element name="date" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+      
+         <xsd:complexType name="NewsElementArray">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:NewsElement[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+
+      </xsd:schema>
+  </types> 
+
+
+
+  <!-- Messages for News Search - doNewsSearch. -->
+
+  <message name="doNewsSearch">
+      <part name="username" type="xsd:string"/>
+      <part name="password" type="xsd:string"/>
+      <part name="query" type="xsd:string"/>
+  </message>
+
+  <message name="doNewsSearchResponse">
+      <part name="return" type="typens:NewsSearchResult"/>           
+  </message>
+
+
+
+  <!-- Port for News Search -->
+
+  <portType name="NewsSearchPort">
+
+      <operation name="doNewsSearch">
+         <input message="typens:doNewsSearch"/>
+         <output message="typens:doNewsSearchResponse"/>
+      </operation>
+
+  </portType>
+
+
+
+
+  <!-- Binding for News Search -->
+
+  <binding name="NewsSearchBinding" type="typens:NewsSearchPort">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <operation name="doNewsSearch">
+         <soap:operation soapAction="urn:NewsSearchAction"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:NewsSearch"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:NewsSearch"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+  </binding>
+
+  <!-- Endpoint for News Search -->
+  <service name="NewsSearchService">
+      <documentation>The news search service by flash-db returns an array of 10 recent news articles matching your query.</documentation> 
+      <port name="NewsSearchPort" binding="typens:NewsSearchBinding">
+         <soap:address location="http://ws.soatrader.com/flash-db.com/0.1/NewsSearchService"/>
+      </port>
+  </service>
+
+</definitions>

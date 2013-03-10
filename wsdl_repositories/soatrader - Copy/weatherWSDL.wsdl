@@ -1,0 +1,85 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="urn:fatbobWeatherService"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="weatherData"
+             targetNamespace="urn:fatbobWeatherService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+   <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="urn:fatbobWeatherService">
+         <xsd:complexType name="weatherData">
+            <xsd:all>
+               <xsd:element name="zip" type="xsd:string"/>
+               <xsd:element name="temp" type="xsd:string"/>
+               <xsd:element name="skyCondition" type="xsd:string"/>
+               <xsd:element name="humidity" type="xsd:string"/>
+               <xsd:element name="pressure" type="xsd:string"/>
+               <xsd:element name="dewPoint" type="xsd:string"/>
+	              <xsd:element name="windSpeedDirection" type="xsd:string"/>
+               <xsd:element name="visibility" type="xsd:string"/>
+               <xsd:element name="uvIndex" type="xsd:string"/>      
+               <xsd:element name="observationTime" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+      </xsd:schema>
+   </types>
+
+   <message name="getWeatherRequest">
+      <part name="cityzip" type="xsd:string"/>
+   </message>
+   <message name="getWeatherResponse">
+      <part name="Result" type="tns:weatherData"/>
+   </message>
+
+   <portType name="WeatherPortType">
+      <operation name="getWeather">
+         <input message="tns:getWeatherRequest"/>
+         <output message="tns:getWeatherResponse"/>
+      </operation>
+   </portType>
+
+   <binding name="WeatherBinding" type="tns:WeatherPortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="getWeather">
+         <soap:operation soapAction="urn:xmethods-delayed-quotes#getWeather"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes"
+                       encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+         </output>
+      </operation>
+   </binding>
+
+   <service name="weatherWSDL">
+      <port name="WeatherPort" binding="WeatherBinding">
+         <soap:address location="http://ws.soatrader.com/byu.edu/0.1/weatherWSDL"/>
+      </port>
+   </service>
+</definitions>

@@ -1,0 +1,880 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:i1="http://www.tempuri.org/dsLocalFaxNumbers.xsd"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:i0="http://www.tempuri.org/dsTollFreeNumbers.xsd"
+                  xmlns:tns="SRFaxWebSvc"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="SRFaxWebSvc">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:import namespace="http://www.tempuri.org/dsTollFreeNumbers.xsd"
+                location="http://www.srfax.com/srfaxwebsvc/srfaxwebsvc.asmx?schema=dsTollFreeNumbers"/>
+  <wsdl:import namespace="http://www.tempuri.org/dsLocalFaxNumbers.xsd"
+                location="http://www.srfax.com/srfaxwebsvc/srfaxwebsvc.asmx?schema=dsLocalFaxNumbers"/>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="SRFaxWebSvc">
+         <s:import namespace="http://www.w3.org/2001/XMLSchema"/>
+         <s:import namespace="http://www.tempuri.org/dsTollFreeNumbers.xsd"/>
+         <s:import namespace="http://www.tempuri.org/dsLocalFaxNumbers.xsd"/>
+         <s:element name="GetCDRS">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szBillingCycles" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iLastCDRID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCDRSResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCDRSResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:element ref="s:schema"/>
+                           <s:any/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUser">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iClientID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szPrimaryEmail" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="fReturnCCDetails" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="fReturnServices" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetUserResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetUserResult" type="tns:clsUser"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="clsUser">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="oCust" type="tns:clsCustomer"/>
+               <s:element minOccurs="0" maxOccurs="1" name="oCredCard" type="tns:clsCustomerCreditCard"/>
+               <s:element minOccurs="0" maxOccurs="1" name="oPackage" type="tns:clsPackage"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szServices" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="clsCustomer">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="iID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szCompany" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szContact" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szStreet1" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szStreet2" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szProvince" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szPostalCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szCountry" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szTelephone" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szFax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szMobile" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szEmail" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szPassword" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iReferredByID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szMothersMaidenName" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iPmtFrequency" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szSRFaxNumber" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iStatus" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iHeadOfficeID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="cuBalance" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iNumInboundFaxes" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iNumInboundPages" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iNumOutboundFaxes" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iNumOutboundPages" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szBillingCycle" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="clsCustomerCreditCard">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="iClientID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szCCType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szCCName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szCCNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szCCExpiry" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="szCCCVC" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="clsPackage">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="iID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iPlanID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="dtStart" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iClientID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="dtEnd" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="iQuantity" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="chStatus" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="cuServiceFee" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="cuSetupFee" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="cuOverageCharge" type="s:decimal"/>
+               <s:element minOccurs="1" maxOccurs="1" name="fConsolidated" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetClientIDFromService">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetClientIDFromServiceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetClientIDFromServiceResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetTollFreeNumbers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetTollFreeNumbersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetTollFreeNumbersResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="http://www.tempuri.org/dsTollFreeNumbers.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLocalFaxNumbers">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCountry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szProvince" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetLocalFaxNumbersResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetLocalFaxNumbersResult">
+                     <s:complexType>
+                        <s:sequence>
+                           <s:any namespace="http://www.tempuri.org/dsLocalFaxNumbers.xsd"/>
+                        </s:sequence>
+                     </s:complexType>
+                  </s:element>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCustomer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="lID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCustomerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCustomerResult" type="tns:clsCustomer"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddCustomer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="oCust" type="tns:clsCustomer"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddCustomerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddCustomerResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NewCustomer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCompany" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szContact" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szStreet1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szStreet2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCity" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szProvince" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szPostalCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCountry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szTelephone" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szFax" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szMobile" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szPassword" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iReferredByID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szMothersMaidenName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCExpiry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCCVC" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iPlanID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iPmtFrequency" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szSRFaxNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szSRFaxBillingNumber" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iHeadOfficeID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szBillingCycle" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="NewCustomerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="NewCustomerResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateCustomer">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="iClientID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCompany" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szContact" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szStreet1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szStreet2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCity" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szProvince" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szPostalCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCountry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szTelephone" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szFax" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szMobile" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szPassword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szMothersMaidenName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szSRFaxNumber" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iHeadOfficeID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateCustomerResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdateCustomerResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCreditCardDetails">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iClientID" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetCreditCardDetailsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCreditCardDetailsResult"
+                             type="tns:clsCustomerCreditCard"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddCreditCard">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iClientID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCExpiry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCCVC" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="AddCreditCardResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="AddCreditCardResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateCreditCard">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iClientID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCExpiry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCCCVC" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateCreditCardResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdateCreditCardResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateServices">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iClientID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iPackageID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail1" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail2" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail3" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail4" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail5" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail6" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail7" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail8" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail9" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateServicesResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdateServicesResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateServices2">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iClientID" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iPackageID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szEmail" type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="UpdateServices2Response">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="UpdateServices2Result" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="WriteCDR">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iClientID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAuthcode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szConnectionDate" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iDuration" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szOriginatingNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szOriginatingCity" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szOriginatingProvince" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szOriginatingCountry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szTerminatingNumber" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szTerminatingCity" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szTerminatingProvince" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szTerminatingCountry" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szUsageGroup" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szTollType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szJurisdiction" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szUsageType" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCarrierCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAcntCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="fTollFree" type="s:boolean"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iLineNumber" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iCallDuration" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szBillingNumber" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="WriteCDRResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="WriteCDRResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="WritePayment">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iClientID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szTxDate" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="cuAmount" type="s:decimal"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="WritePaymentResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="WritePaymentResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CancelSubAccount">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessID" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szAccessPwd" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="iClientID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="szCancelDate" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="CancelSubAccountResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CancelSubAccountResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCDRSSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCDRS"/>
+  </wsdl:message>
+  <wsdl:message name="GetCDRSSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCDRSResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserSoapIn">
+      <wsdl:part name="parameters" element="tns:GetUser"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserSoapOut">
+      <wsdl:part name="parameters" element="tns:GetUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetClientIDFromServiceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetClientIDFromService"/>
+  </wsdl:message>
+  <wsdl:message name="GetClientIDFromServiceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetClientIDFromServiceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTollFreeNumbersSoapIn">
+      <wsdl:part name="parameters" element="tns:GetTollFreeNumbers"/>
+  </wsdl:message>
+  <wsdl:message name="GetTollFreeNumbersSoapOut">
+      <wsdl:part name="parameters" element="tns:GetTollFreeNumbersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocalFaxNumbersSoapIn">
+      <wsdl:part name="parameters" element="tns:GetLocalFaxNumbers"/>
+  </wsdl:message>
+  <wsdl:message name="GetLocalFaxNumbersSoapOut">
+      <wsdl:part name="parameters" element="tns:GetLocalFaxNumbersResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCustomer"/>
+  </wsdl:message>
+  <wsdl:message name="GetCustomerSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCustomerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddCustomerSoapIn">
+      <wsdl:part name="parameters" element="tns:AddCustomer"/>
+  </wsdl:message>
+  <wsdl:message name="AddCustomerSoapOut">
+      <wsdl:part name="parameters" element="tns:AddCustomerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NewCustomerSoapIn">
+      <wsdl:part name="parameters" element="tns:NewCustomer"/>
+  </wsdl:message>
+  <wsdl:message name="NewCustomerSoapOut">
+      <wsdl:part name="parameters" element="tns:NewCustomerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateCustomerSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateCustomer"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateCustomerSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateCustomerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCreditCardDetailsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCreditCardDetails"/>
+  </wsdl:message>
+  <wsdl:message name="GetCreditCardDetailsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCreditCardDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="AddCreditCardSoapIn">
+      <wsdl:part name="parameters" element="tns:AddCreditCard"/>
+  </wsdl:message>
+  <wsdl:message name="AddCreditCardSoapOut">
+      <wsdl:part name="parameters" element="tns:AddCreditCardResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateCreditCardSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateCreditCard"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateCreditCardSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateCreditCardResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateServicesSoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateServices"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateServicesSoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateServicesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateServices2SoapIn">
+      <wsdl:part name="parameters" element="tns:UpdateServices2"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateServices2SoapOut">
+      <wsdl:part name="parameters" element="tns:UpdateServices2Response"/>
+  </wsdl:message>
+  <wsdl:message name="WriteCDRSoapIn">
+      <wsdl:part name="parameters" element="tns:WriteCDR"/>
+  </wsdl:message>
+  <wsdl:message name="WriteCDRSoapOut">
+      <wsdl:part name="parameters" element="tns:WriteCDRResponse"/>
+  </wsdl:message>
+  <wsdl:message name="WritePaymentSoapIn">
+      <wsdl:part name="parameters" element="tns:WritePayment"/>
+  </wsdl:message>
+  <wsdl:message name="WritePaymentSoapOut">
+      <wsdl:part name="parameters" element="tns:WritePaymentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CancelSubAccountSoapIn">
+      <wsdl:part name="parameters" element="tns:CancelSubAccount"/>
+  </wsdl:message>
+  <wsdl:message name="CancelSubAccountSoapOut">
+      <wsdl:part name="parameters" element="tns:CancelSubAccountResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="SRFaxWSSoap">
+      <wsdl:operation name="GetCDRS">
+         <wsdl:input message="tns:GetCDRSSoapIn"/>
+         <wsdl:output message="tns:GetCDRSSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetUser">
+         <wsdl:input message="tns:GetUserSoapIn"/>
+         <wsdl:output message="tns:GetUserSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetClientIDFromService">
+         <wsdl:input message="tns:GetClientIDFromServiceSoapIn"/>
+         <wsdl:output message="tns:GetClientIDFromServiceSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetTollFreeNumbers">
+         <wsdl:input message="tns:GetTollFreeNumbersSoapIn"/>
+         <wsdl:output message="tns:GetTollFreeNumbersSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetLocalFaxNumbers">
+         <wsdl:input message="tns:GetLocalFaxNumbersSoapIn"/>
+         <wsdl:output message="tns:GetLocalFaxNumbersSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCustomer">
+         <wsdl:input message="tns:GetCustomerSoapIn"/>
+         <wsdl:output message="tns:GetCustomerSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AddCustomer">
+         <wsdl:input message="tns:AddCustomerSoapIn"/>
+         <wsdl:output message="tns:AddCustomerSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="NewCustomer">
+         <wsdl:input message="tns:NewCustomerSoapIn"/>
+         <wsdl:output message="tns:NewCustomerSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateCustomer">
+         <wsdl:input message="tns:UpdateCustomerSoapIn"/>
+         <wsdl:output message="tns:UpdateCustomerSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetCreditCardDetails">
+         <wsdl:input message="tns:GetCreditCardDetailsSoapIn"/>
+         <wsdl:output message="tns:GetCreditCardDetailsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="AddCreditCard">
+         <wsdl:input message="tns:AddCreditCardSoapIn"/>
+         <wsdl:output message="tns:AddCreditCardSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateCreditCard">
+         <wsdl:input message="tns:UpdateCreditCardSoapIn"/>
+         <wsdl:output message="tns:UpdateCreditCardSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateServices">
+         <wsdl:input message="tns:UpdateServicesSoapIn"/>
+         <wsdl:output message="tns:UpdateServicesSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateServices2">
+         <wsdl:input message="tns:UpdateServices2SoapIn"/>
+         <wsdl:output message="tns:UpdateServices2SoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="WriteCDR">
+         <wsdl:input message="tns:WriteCDRSoapIn"/>
+         <wsdl:output message="tns:WriteCDRSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="WritePayment">
+         <wsdl:input message="tns:WritePaymentSoapIn"/>
+         <wsdl:output message="tns:WritePaymentSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="CancelSubAccount">
+         <wsdl:input message="tns:CancelSubAccountSoapIn"/>
+         <wsdl:output message="tns:CancelSubAccountSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SRFaxWSSoap" type="tns:SRFaxWSSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetCDRS">
+         <soap:operation soapAction="SRFaxWebSvc/GetCDRS" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetUser">
+         <soap:operation soapAction="SRFaxWebSvc/GetUser" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetClientIDFromService">
+         <soap:operation soapAction="SRFaxWebSvc/GetClientIDFromService" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetTollFreeNumbers">
+         <soap:operation soapAction="SRFaxWebSvc/GetTollFreeNumbers" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetLocalFaxNumbers">
+         <soap:operation soapAction="SRFaxWebSvc/GetLocalFaxNumbers" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCustomer">
+         <soap:operation soapAction="SRFaxWebSvc/GetCustomer" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddCustomer">
+         <soap:operation soapAction="SRFaxWebSvc/AddCustomer" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="NewCustomer">
+         <soap:operation soapAction="SRFaxWebSvc/NewCustomer" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateCustomer">
+         <soap:operation soapAction="SRFaxWebSvc/UpdateCustomer" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCreditCardDetails">
+         <soap:operation soapAction="SRFaxWebSvc/GetCreditCardDetails" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddCreditCard">
+         <soap:operation soapAction="SRFaxWebSvc/AddCreditCard" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateCreditCard">
+         <soap:operation soapAction="SRFaxWebSvc/UpdateCreditCard" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateServices">
+         <soap:operation soapAction="SRFaxWebSvc/UpdateServices" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="UpdateServices2">
+         <soap:operation soapAction="SRFaxWebSvc/UpdateServices2" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="WriteCDR">
+         <soap:operation soapAction="SRFaxWebSvc/WriteCDR" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="WritePayment">
+         <soap:operation soapAction="SRFaxWebSvc/WritePayment" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="CancelSubAccount">
+         <soap:operation soapAction="SRFaxWebSvc/CancelSubAccount" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SRFaxWS">
+      <wsdl:port name="SRFaxWSSoap" binding="tns:SRFaxWSSoap">
+         <soap:address location="http://ws.soatrader.com/srfax.com/0.1/SRFaxWS"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

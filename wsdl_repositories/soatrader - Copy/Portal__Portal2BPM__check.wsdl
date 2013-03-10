@@ -1,0 +1,72 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://web.services.gggggg.a1.com/checkImpl"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  name="Untitled"
+                  targetNamespace="http://web.services.gggggg.a1.com/checkImpl">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+   </wsdl:types>
+	  <wsdl:message name="check">
+		    <wsdl:part name="check" type="xs:string"/>
+	  </wsdl:message>
+	  <wsdl:message name="checkResult">
+		    <wsdl:part name="checkResult" type="xs:string"/>
+	  </wsdl:message>
+	  <wsdl:message name="GenericException">
+		    <wsdl:part name="errormsg" type="xs:string"/>
+	  </wsdl:message>
+	  <wsdl:message name="Header">
+		    <wsdl:part name="header" type="xs:string"/>
+	  </wsdl:message>
+	  <wsdl:portType name="PortType">
+		    <wsdl:operation name="check">
+			      <wsdl:input message="tns:check"/>
+			      <wsdl:output message="tns:checkResult"/>
+			      <wsdl:fault name="GenericException" message="tns:GenericException"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+	  <wsdl:binding name="bindingName" type="tns:PortType">
+		    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <wsdl:operation name="check">
+			      <wsdl:documentation>The operation has no documentation</wsdl:documentation>
+			      <soap:operation style="rpc" soapAction="Portal_Portal2BPM_check"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal" namespace="http://InputMessageNamespace" parts="check"/>
+				        <soap:header use="literal" message="tns:Header" part="header"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal" namespace="http://OutputMessageNamespace" parts="checkResult"/>
+			      </wsdl:output>
+			      <wsdl:fault name="GenericException">
+				        <soap:fault use="literal" namespace="http://FaultMessageNamespace" name="GenericException"/>
+			      </wsdl:fault>
+		    </wsdl:operation>
+	  </wsdl:binding>
+	  <wsdl:service name="Portal__Portal2BPM__check">
+		    <wsdl:port name="Portal__Portal2BPM__checkHttpPort" binding="tns:bindingName">
+			      <soap:address location="http://ws.soatrader.com/codehaus.org/0.1/Portal__Portal2BPM__check"/>
+		    </wsdl:port>
+	  </wsdl:service>
+</wsdl:definitions>

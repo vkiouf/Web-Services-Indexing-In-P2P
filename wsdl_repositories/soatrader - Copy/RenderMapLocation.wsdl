@@ -1,0 +1,596 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://datafed.net/xs/RenderMapLocation"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:mi="http://datafed.net/xs/MapImageLatLon"
+             xmlns:mp="http://datafed.net/xs/MapPoint"
+             xmlns:rmp="http://datafed.net/xs/RenderMapPoint"
+             xmlns:rml="http://datafed.net/xs/RenderMapLocation"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             targetNamespace="http://datafed.net/xs/RenderMapLocation">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+    <documentation>Renders a lat,lon,loc_code table into a georeferenced image.</documentation>
+    <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+        <xs:schema xmlns="http://datafed.net/xs/ImagePrimitives" elementFormDefault="qualified"
+                 targetNamespace="http://datafed.net/xs/ImagePrimitives">
+            <xs:simpleType name="BrushStyleType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="solid"/>
+                    <xs:enumeration value="backwarddiagonal"/>
+                    <xs:enumeration value="diagonalcross"/>
+                    <xs:enumeration value="forwarddiagonal"/>
+                    <xs:enumeration value="horizontal"/>
+                    <xs:enumeration value="vertical"/>
+                    <xs:enumeration value="zigzag"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="BrushType">
+                <xs:sequence>
+                    <xs:element name="style" type="BrushStyleType" default="solid"/>
+                    <xs:element name="color" type="ColorType" default="white"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="ColorType">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="0x[0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f]"/>
+                    <xs:pattern value="rgb\([0-9]+\,[0-9]+\,[0-9]+\)"/>
+                    <xs:pattern value="RGB\([0-9]+\,[0-9]+\,[0-9]+\)"/>
+                    <xs:pattern value="rainbow"/>
+                    <xs:pattern value="aliceblue"/>
+                    <xs:pattern value="antiquewhite"/>
+                    <xs:pattern value="aqua"/>
+                    <xs:pattern value="aquamarine"/>
+                    <xs:pattern value="azure"/>
+                    <xs:pattern value="beige"/>
+                    <xs:pattern value="bisque"/>
+                    <xs:pattern value="black"/>
+                    <xs:pattern value="blanchedalmond"/>
+                    <xs:pattern value="blue"/>
+                    <xs:pattern value="blueviolet"/>
+                    <xs:pattern value="brown"/>
+                    <xs:pattern value="burlywood"/>
+                    <xs:pattern value="cadetblue"/>
+                    <xs:pattern value="chartreuse"/>
+                    <xs:pattern value="chocolate"/>
+                    <xs:pattern value="coral"/>
+                    <xs:pattern value="cornflowerblue"/>
+                    <xs:pattern value="cornsilk"/>
+                    <xs:pattern value="crimson"/>
+                    <xs:pattern value="cyan"/>
+                    <xs:pattern value="darkblue"/>
+                    <xs:pattern value="darkcyan"/>
+                    <xs:pattern value="darkgoldenrod"/>
+                    <xs:pattern value="darkgray"/>
+                    <xs:pattern value="darkgreen"/>
+                    <xs:pattern value="darkgrey"/>
+                    <xs:pattern value="darkkhaki"/>
+                    <xs:pattern value="darkmagenta"/>
+                    <xs:pattern value="darkolivegreen"/>
+                    <xs:pattern value="darkorange"/>
+                    <xs:pattern value="darkorchid"/>
+                    <xs:pattern value="darkred"/>
+                    <xs:pattern value="darksalmon"/>
+                    <xs:pattern value="darkseagreen"/>
+                    <xs:pattern value="darkslateblue"/>
+                    <xs:pattern value="darkslategray"/>
+                    <xs:pattern value="darkslategrey"/>
+                    <xs:pattern value="darkturquoise"/>
+                    <xs:pattern value="darkviolet"/>
+                    <xs:pattern value="deeppink"/>
+                    <xs:pattern value="deepskyblue"/>
+                    <xs:pattern value="dimgray"/>
+                    <xs:pattern value="dimgrey"/>
+                    <xs:pattern value="dodgerblue"/>
+                    <xs:pattern value="firebrick"/>
+                    <xs:pattern value="floralwhite"/>
+                    <xs:pattern value="forestgreen"/>
+                    <xs:pattern value="fuchsia"/>
+                    <xs:pattern value="gainsboro"/>
+                    <xs:pattern value="ghostwhite"/>
+                    <xs:pattern value="gold"/>
+                    <xs:pattern value="goldenrod"/>
+                    <xs:pattern value="gray"/>
+                    <xs:pattern value="grey"/>
+                    <xs:pattern value="green"/>
+                    <xs:pattern value="greenyellow"/>
+                    <xs:pattern value="honeydew"/>
+                    <xs:pattern value="hotpink"/>
+                    <xs:pattern value="indianred"/>
+                    <xs:pattern value="indigo"/>
+                    <xs:pattern value="ivory"/>
+                    <xs:pattern value="khaki"/>
+                    <xs:pattern value="lavender"/>
+                    <xs:pattern value="lavenderblush"/>
+                    <xs:pattern value="lawngreen"/>
+                    <xs:pattern value="lemonchiffon"/>
+                    <xs:pattern value="lightblue"/>
+                    <xs:pattern value="lightcoral"/>
+                    <xs:pattern value="lightcyan"/>
+                    <xs:pattern value="lightgoldenrodyellow"/>
+                    <xs:pattern value="lightgray"/>
+                    <xs:pattern value="lightgreen"/>
+                    <xs:pattern value="lightgrey"/>
+                    <xs:pattern value="lightpink"/>
+                    <xs:pattern value="lightsalmon"/>
+                    <xs:pattern value="lightseagreen"/>
+                    <xs:pattern value="lightskyblue"/>
+                    <xs:pattern value="lightslategray"/>
+                    <xs:pattern value="lightslategrey"/>
+                    <xs:pattern value="lightsteelblue"/>
+                    <xs:pattern value="lightyellow"/>
+                    <xs:pattern value="lime"/>
+                    <xs:pattern value="limegreen"/>
+                    <xs:pattern value="linen"/>
+                    <xs:pattern value="magenta"/>
+                    <xs:pattern value="maroon"/>
+                    <xs:pattern value="mediumaquamarine"/>
+                    <xs:pattern value="mediumblue"/>
+                    <xs:pattern value="mediumorchid"/>
+                    <xs:pattern value="mediumpurple"/>
+                    <xs:pattern value="mediumseagreen"/>
+                    <xs:pattern value="mediumslateblue"/>
+                    <xs:pattern value="mediumspringgreen"/>
+                    <xs:pattern value="mediumturquoise"/>
+                    <xs:pattern value="mediumvioletred"/>
+                    <xs:pattern value="midnightblue"/>
+                    <xs:pattern value="mintcream"/>
+                    <xs:pattern value="mistyrose"/>
+                    <xs:pattern value="moccasin"/>
+                    <xs:pattern value="navajowhite"/>
+                    <xs:pattern value="navy"/>
+                    <xs:pattern value="oldlace"/>
+                    <xs:pattern value="olive"/>
+                    <xs:pattern value="olivedrab"/>
+                    <xs:pattern value="orange"/>
+                    <xs:pattern value="orangered"/>
+                    <xs:pattern value="orchid"/>
+                    <xs:pattern value="palegoldenrod"/>
+                    <xs:pattern value="palegreen"/>
+                    <xs:pattern value="paleturquoise"/>
+                    <xs:pattern value="palevioletred"/>
+                    <xs:pattern value="papayawhip"/>
+                    <xs:pattern value="peachpuff"/>
+                    <xs:pattern value="peru"/>
+                    <xs:pattern value="pink"/>
+                    <xs:pattern value="plum"/>
+                    <xs:pattern value="powderblue"/>
+                    <xs:pattern value="purple"/>
+                    <xs:pattern value="red"/>
+                    <xs:pattern value="rosybrown"/>
+                    <xs:pattern value="royalblue"/>
+                    <xs:pattern value="saddlebrown"/>
+                    <xs:pattern value="salmon"/>
+                    <xs:pattern value="sandybrown"/>
+                    <xs:pattern value="seagreen"/>
+                    <xs:pattern value="seashell"/>
+                    <xs:pattern value="sienna"/>
+                    <xs:pattern value="silver"/>
+                    <xs:pattern value="skyblue"/>
+                    <xs:pattern value="slateblue"/>
+                    <xs:pattern value="slategray"/>
+                    <xs:pattern value="slategrey"/>
+                    <xs:pattern value="snow"/>
+                    <xs:pattern value="springgreen"/>
+                    <xs:pattern value="steelblue"/>
+                    <xs:pattern value="tan"/>
+                    <xs:pattern value="teal"/>
+                    <xs:pattern value="thistle"/>
+                    <xs:pattern value="tomato"/>
+                    <xs:pattern value="turquoise"/>
+                    <xs:pattern value="violet"/>
+                    <xs:pattern value="wheat"/>
+                    <xs:pattern value="white"/>
+                    <xs:pattern value="whitesmoke"/>
+                    <xs:pattern value="yellow"/>
+                    <xs:pattern value="yellowgreen"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="FontStyleType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="regular"/>
+                    <xs:enumeration value="bold"/>
+                    <xs:enumeration value="italic"/>
+                    <xs:enumeration value="bold_italic"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="FontType">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string" default="arial"/>
+                    <xs:element name="style" type="FontStyleType" default="regular"/>
+                    <xs:element name="size" type="xs:int" default="8"/>
+                    <xs:element name="color" type="ColorType" default="black"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="ImageFormatType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="image/png"/>
+                    <xs:enumeration value="image/gif"/>
+                    <xs:enumeration value="image/jpeg"/>
+                    <xs:enumeration value="image/svg+xml"/>
+                    <xs:enumeration value="image/tiff"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="ImageFrameReferenceType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="whole_image"/>
+                    <xs:enumeration value="data_area_only"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="ImageSizeType">
+                <xs:sequence>
+                    <xs:element name="image_width" type="xs:int"/>
+                    <xs:element name="image_height" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="PenStyleType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="solid"/>
+                    <xs:enumeration value="dot"/>
+                    <xs:enumeration value="dash"/>
+                    <xs:enumeration value="dashdot"/>
+                    <xs:enumeration value="dashdotdot"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="PenType">
+                <xs:sequence>
+                    <xs:element name="width" type="xs:float" default="1"/>
+                    <xs:element name="style" type="PenStyleType" default="solid"/>
+                    <xs:element name="color" type="ColorType" default="black"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ScaleType">
+                <xs:sequence>
+                    <xs:element name="min" type="xs:float"/>
+                    <xs:element name="max" type="xs:float"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="SymbolShapeType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="circle"/>
+                    <xs:enumeration value="polygon"/>
+                    <xs:enumeration value="bar"/>
+                    <xs:enumeration value="text"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="SymbolType">
+                <xs:sequence>
+                    <xs:element name="width" type="xs:float" default="20"/>
+                    <xs:element name="height" type="xs:float" default="20"/>
+                    <xs:element name="offset_x" type="xs:float" default="0"/>
+                    <xs:element name="offset_y" type="xs:float" default="0"/>
+                    <xs:element name="shape" type="SymbolShapeType" default="circle"/>
+                    <xs:element name="num_of_sides" type="xs:int" default="4"/>
+                    <xs:element name="baseline" type="xs:boolean" default="true"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="UseFactorType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="linear"/>
+                    <xs:enumeration value="sqrt"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="VectorRenderType">
+                <xs:sequence>
+                    <xs:element name="scale" type="ScaleType"/>
+                    <xs:element name="width" type="xs:float" default="2"/>
+                    <xs:element name="proportional_width" type="xs:boolean" default="false"/>
+                    <xs:element name="width_min" type="xs:float" default="0.5"/>
+                    <xs:element name="length" type="xs:float" default="40"/>
+                    <xs:element name="proportional_length" type="xs:boolean" default="true"/>
+                    <xs:element name="head_length_factor" type="xs:float" default="5"/>
+                    <xs:element name="head_length_min" type="xs:float" default="4"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="XPositionType">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="left"/>
+                    <xs:pattern value="center"/>
+                    <xs:pattern value="right"/>
+                    <xs:pattern value="[0-9]*"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="YPositionType">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="top"/>
+                    <xs:pattern value="center"/>
+                    <xs:pattern value="bottom"/>
+                    <xs:pattern value="[0-9]*"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+        <xs:schema xmlns="http://datafed.net/xs/Lineage" elementFormDefault="qualified"
+                 targetNamespace="http://datafed.net/xs/Lineage">
+            <xs:element name="LineageList" type="LineageListType"/>
+            <xs:complexType name="LineageListType">
+                <xs:sequence>
+                    <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="LineageComment" type="LineageCommentType"/>
+            <xs:complexType name="LineageCommentType">
+                <xs:sequence>
+                    <xs:element name="subject" type="xs:string"/>
+                    <xs:element name="body" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Statistics" type="StatisticsType"/>
+            <xs:complexType name="StatisticsType">
+                <xs:sequence>
+                    <xs:element name="sum" type="xs:float"/>
+                    <xs:element name="avg" type="xs:float"/>
+                    <xs:element name="min" type="xs:float"/>
+                    <xs:element name="max" type="xs:float"/>
+                    <xs:element name="null_count" type="xs:int"/>
+                    <xs:element name="total_count" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns="http://datafed.net/xs/DataPrimitives" elementFormDefault="qualified"
+                 targetNamespace="http://datafed.net/xs/DataPrimitives">
+            <xs:simpleType name="CSVTextType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType name="DatasetAbbrType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType name="DateTimeType">
+                <xs:union memberTypes="xs:dateTime xs:date"/>
+            </xs:simpleType>
+            <xs:simpleType name="DateTimeListType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType name="DateTimeMaxType">
+                <xs:union memberTypes="xs:string xs:dateTime xs:date"/>
+            </xs:simpleType>
+            <xs:complexType name="DateTimeRangeType">
+                <xs:sequence>
+                    <xs:element name="time_min" type="DateTimeType" default="1970-01-01T00:00:00"/>
+                    <xs:element name="time_max" type="DateTimeMaxType" default="now"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="TimeUnitType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="year"/>
+                    <xs:enumeration value="month"/>
+                    <xs:enumeration value="week"/>
+                    <xs:enumeration value="day"/>
+                    <xs:enumeration value="hour"/>
+                    <xs:enumeration value="minute"/>
+                    <xs:enumeration value="second"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:complexType name="LatLonType">
+                <xs:sequence>
+                    <xs:element name="lat" type="xs:float" default="40"/>
+                    <xs:element name="lon" type="xs:float" default="-90"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="LatLonRangeType">
+                <xs:sequence>
+                    <xs:element name="lat_min" type="xs:float" default="-90"/>
+                    <xs:element name="lat_max" type="xs:float" default="90"/>
+                    <xs:element name="lon_min" type="xs:float" default="-180"/>
+                    <xs:element name="lon_max" type="xs:float" default="180"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RangeType">
+                <xs:sequence>
+                    <xs:element name="min" type="xs:float" default="0"/>
+                    <xs:element name="max" type="xs:float" default="1"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="LocCodesType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType name="LocCodeType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:complexType name="MonthsType">
+                <xs:sequence>
+                    <xs:element name="Jan" type="xs:boolean" default="true"/>
+                    <xs:element name="Feb" type="xs:boolean" default="true"/>
+                    <xs:element name="Mar" type="xs:boolean" default="true"/>
+                    <xs:element name="Apr" type="xs:boolean" default="true"/>
+                    <xs:element name="May" type="xs:boolean" default="true"/>
+                    <xs:element name="Jun" type="xs:boolean" default="true"/>
+                    <xs:element name="Jul" type="xs:boolean" default="true"/>
+                    <xs:element name="Aug" type="xs:boolean" default="true"/>
+                    <xs:element name="Sep" type="xs:boolean" default="true"/>
+                    <xs:element name="Oct" type="xs:boolean" default="true"/>
+                    <xs:element name="Nov" type="xs:boolean" default="true"/>
+                    <xs:element name="Dec" type="xs:boolean" default="true"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="NumberListType">
+                <!-- should be <xs:list itemType="xs:string" /> but list are not implemented in views -->
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType name="ParamAbbrType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType name="ParamAbbrsType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType name="PositiveFloatType">
+                <xs:restriction base="xs:float">
+                    <xs:minExclusive value="0"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="mlstring">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:complexType name="SizeFType">
+                <xs:sequence>
+                    <xs:element name="width" type="xs:float"/>
+                    <xs:element name="height" type="xs:float"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SizeIType">
+                <xs:sequence>
+                    <xs:element name="width" type="xs:int"/>
+                    <xs:element name="height" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="ZeroToOneType">
+                <xs:restriction base="xs:float">
+                    <xs:minInclusive value="0"/>
+                    <xs:maxInclusive value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+        <xs:schema xmlns:lin="http://datafed.net/xs/Lineage"
+                 xmlns:ip="http://datafed.net/xs/ImagePrimitives"
+                 xmlns="http://datafed.net/xs/MapImageLatLon"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://datafed.net/xs/MapImageLatLon">
+            <xs:import namespace="http://datafed.net/xs/Lineage" schemaLocation="Lineage.xsd"/>
+            <xs:import namespace="http://datafed.net/xs/ImagePrimitives"
+                    schemaLocation="ImagePrimitives.xsd"/>
+            <xs:complexType name="MapImageLatLonType">
+                <xs:sequence>
+                    <xs:element name="image_data" type="MapImageLatLonDataType"/>
+                    <xs:element ref="lin:LineageList"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="MapImageLatLonDataType">
+                <xs:sequence>
+                    <xs:element name="image_url" type="xs:anyURI"/>
+                    <xs:element name="transp_colors" type="xs:string" default=""/>
+                    <xs:element name="image_desc" type="MapImageLatLonDescriptionType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="MapImageLatLonDescriptionType">
+                <xs:sequence>
+                    <xs:element name="zoom" type="MapImageLatLonZoomType"/>
+                    <xs:element name="bgcolor" type="ip:ColorType" default="lightgreen"/>
+                    <xs:element name="image_format" type="ip:ImageFormatType" default="image/png"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="MapImageLatLonZoomType">
+                <xs:sequence>
+                    <xs:element name="image_width" type="xs:int"/>
+                    <xs:element name="image_height" type="xs:int"/>
+                    <xs:element name="lat_min" type="xs:float"/>
+                    <xs:element name="lat_max" type="xs:float"/>
+                    <xs:element name="lon_min" type="xs:float"/>
+                    <xs:element name="lon_max" type="xs:float"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:dp="http://datafed.net/xs/DataPrimitives"
+                 xmlns:ip="http://datafed.net/xs/ImagePrimitives"
+                 xmlns:tbl="http://datafed.net/xs/Table"
+                 xmlns="http://datafed.net/xs/RenderMapLocation"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://datafed.net/xs/RenderMapLocation">
+            <xs:import namespace="http://datafed.net/xs/DataPrimitives"
+                    schemaLocation="DataPrimitives.xsd"/>
+            <xs:import namespace="http://datafed.net/xs/ImagePrimitives"
+                    schemaLocation="ImagePrimitives.xsd"/>
+            <xs:import namespace="http://datafed.net/xs/Table" schemaLocation="Table.xsd"/>
+            <xs:import namespace="http://datafed.net/xs/MapImageLatLon"
+                    schemaLocation="MapImageLatLon.xsd"/>
+            <xs:element name="Render">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="tbl:Table"/>
+                        <xs:element name="Settings" type="SettingsType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="SettingsType">
+                <xs:sequence>
+                    <xs:element name="image_desc" type="mi:MapImageLatLonDescriptionType"/>
+                    <xs:element name="cursor_color" type="xs:string" default="red"/>
+                    <xs:element name="cursor_size" type="xs:float" default="10"/>
+                    <xs:element name="locsymbol" type="LocationSymbolType"/>
+                    <xs:element name="script" type="dp:mlstring" default=""/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="LocationSymbolType">
+                <xs:sequence>
+                    <xs:element name="pen" type="ip:PenType"/>
+                    <xs:element name="brush" type="ip:BrushType"/>
+                    <xs:element name="symbol" type="ip:SymbolType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="RenderResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="MapImageLatLon" type="mi:MapImageLatLonType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns:lin="http://datafed.net/xs/Lineage" xmlns="http://datafed.net/xs/Table"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://datafed.net/xs/Table">
+            <xs:import namespace="http://datafed.net/xs/Lineage" schemaLocation="Lineage.xsd"/>
+            <xs:element name="Table" type="TableType"/>
+            <xs:complexType name="TableType">
+                <xs:sequence>
+                    <xs:element name="TableRef" type="TableRefType"/>
+                    <xs:element ref="lin:Statistics" minOccurs="0"/>
+                    <xs:element ref="lin:LineageList" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="TableRefType">
+                <xs:restriction base="xs:anyURI"/>
+            </xs:simpleType>
+        </xs:schema>
+    </types>
+    <message name="RenderSoapIn">
+        <part name="parameters" element="rml:Render"/>
+    </message>
+    <message name="RenderSoapOut">
+        <part name="parameters" element="rml:RenderResponse"/>
+    </message>
+    <portType name="RenderMapLocationSoap">
+        <operation name="Render">
+            <input message="rml:RenderSoapIn"/>
+            <output message="rml:RenderSoapOut"/>
+        </operation>
+    </portType>
+    <binding name="RenderMapLocationSoap" type="rml:RenderMapLocationSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="Render">
+            <soap:operation soapAction="http://datafed.net/RenderMapLocation/Render" style="document"/>
+            <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="RenderMapLocation">
+        <port name="RenderMapLocationSoap" binding="rml:RenderMapLocationSoap">
+            <soap:address location="http://ws.soatrader.com/wustl.edu/0.1/RenderMapLocation"/>
+        </port>
+    </service>
+</definitions>

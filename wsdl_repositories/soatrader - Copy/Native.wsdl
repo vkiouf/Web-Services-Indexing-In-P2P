@@ -1,0 +1,287 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://www.cuahsi.org/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.cuahsi.org/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://www.cuahsi.org/">
+         <s:element name="GetKeywords">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetKeywordsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetKeywordsResult" type="tns:Vocabulary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="Vocabulary">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Element" type="tns:ArrayOfString"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetHydrologicUnits">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetHydrologicUnitsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetHydrologicUnitsResult"
+                             type="tns:ArrayOfString"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStations">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SouthBoundLatitude" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="WestBoundLongitude" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="NorthBoundLatitude" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EastBoundLongitude" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Keyword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStationsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStationsResult" type="tns:ArrayOfStation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfStation">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Station" nillable="true"
+                          type="tns:Station"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="Station">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="StationID" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Lat" type="s:float"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Lon" type="s:float"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Organization" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="StationCode" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetStationsByHU">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="HydrologicUnitName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Keyword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStationsByHUResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStationsByHUResult"
+                             type="tns:ArrayOfStation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStationCatalog">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="StationID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStationCatalogResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStationCatalogResult"
+                             type="tns:ArrayOfStationMeasurementsCatalog"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfStationMeasurementsCatalog">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="StationMeasurementsCatalog"
+                          nillable="true"
+                          type="tns:StationMeasurementsCatalog"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="StationMeasurementsCatalog">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="SourceID" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VariableName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VariableCode" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetStationCatalogFiltered">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="StationID" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="Keyword" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetStationCatalogFilteredResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStationCatalogFilteredResult"
+                             type="tns:ArrayOfStationMeasurementsCatalog"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetKeywordsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetKeywords"/>
+  </wsdl:message>
+  <wsdl:message name="GetKeywordsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetKeywordsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetHydrologicUnitsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetHydrologicUnits"/>
+  </wsdl:message>
+  <wsdl:message name="GetHydrologicUnitsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetHydrologicUnitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStationsSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStations"/>
+  </wsdl:message>
+  <wsdl:message name="GetStationsSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStationsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStationsByHUSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStationsByHU"/>
+  </wsdl:message>
+  <wsdl:message name="GetStationsByHUSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStationsByHUResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStationCatalogSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStationCatalog"/>
+  </wsdl:message>
+  <wsdl:message name="GetStationCatalogSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStationCatalogResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStationCatalogFilteredSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStationCatalogFiltered"/>
+  </wsdl:message>
+  <wsdl:message name="GetStationCatalogFilteredSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStationCatalogFilteredResponse"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="NativeSoap" type="tns:NativeSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetKeywords">
+         <soap:operation soapAction="http://www.cuahsi.org/GetKeywords" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetHydrologicUnits">
+         <soap:operation soapAction="http://www.cuahsi.org/GetHydrologicUnits" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStations">
+         <soap:operation soapAction="http://www.cuahsi.org/GetStations" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStationsByHU">
+         <soap:operation soapAction="http://www.cuahsi.org/GetStationsByHU" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStationCatalog">
+         <soap:operation soapAction="http://www.cuahsi.org/GetStationCatalog" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStationCatalogFiltered">
+         <soap:operation soapAction="http://www.cuahsi.org/GetStationCatalogFiltered" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="Native">
+      <wsdl:port name="NativeSoap" binding="tns:NativeSoap">
+         <soap:address location="http://ws.soatrader.com/cae.drexel.edu/0.1/Native"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

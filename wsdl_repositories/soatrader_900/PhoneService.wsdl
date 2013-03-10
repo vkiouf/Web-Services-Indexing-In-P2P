@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="urn:ActionWebService"
+             xmlns:typens="urn:ActionWebService"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             name="Phone"
+             targetNamespace="urn:ActionWebService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+      <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:ActionWebService">
+         <xsd:complexType name="PhoneSecret">
+            <xsd:all>
+               <xsd:element name="secret" type="xsd:string"/>
+               <xsd:element name="message" type="xsd:string"/>
+               <xsd:element name="result" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+      </xsd:schema>
+  </types>
+  <message name="GetSecret">
+      <part name="key" type="xsd:string"/>
+      <part name="phone" type="xsd:string"/>
+      <part name="prompt" type="xsd:string"/>
+  </message>
+  <message name="GetSecretResponse">
+      <part name="return" type="typens:PhoneSecret"/>
+  </message>
+  <portType name="PhonePhonePort">
+      <operation name="GetSecret">
+         <input message="typens:GetSecret"/>
+         <output message="typens:GetSecretResponse"/>
+      </operation>
+  </portType>
+  <binding name="PhonePhoneBinding" type="typens:PhonePhonePort">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+      <operation name="GetSecret">
+         <soap:operation soapAction="/phone/api/GetSecret"/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="urn:ActionWebService"
+                       use="encoded"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="PhoneService">
+      <port name="PhonePhonePort" binding="typens:PhonePhoneBinding">
+         <soap:address location="http://ws.soatrader.com/teleauth.com/0.1/PhoneService"/>
+      </port>
+  </service>
+</definitions>

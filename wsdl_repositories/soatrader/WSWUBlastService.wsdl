@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://www.ebi.ac.uk/WSWUBlast"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             name="WSWUBlast"
+             targetNamespace="http://www.ebi.ac.uk/WSWUBlast">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	
+	  <documentation> 
+	Documentation for this service can be found at http://www.ebi.ac.uk/Tools/webservices
+	</documentation>
+	
+	  <types>
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 targetNamespace="http://ws.soatrader.com/"
+                 elementFormDefault="qualified">
+         <xs:element type="xs:string" name="SOATraderLicense"/>
+         <xs:element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <xs:complexType name="SOATraderUsageStatistics">
+            <xs:sequence>
+               <xs:element type="xs:decimal" name="HitsMade"/>
+               <xs:element type="xs:decimal" name="HitsLeft"/>
+            </xs:sequence>
+         </xs:complexType>
+      </xs:schema>
+		    <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+              targetNamespace="http://www.ebi.ac.uk/WSWUBlast">
+
+         <xsd:complexType name="inputParams">
+	           <xsd:all>
+	              <xsd:element name="program" nillable="false" type="xsd:string"/>
+	              <xsd:element name="database" nillable="false" type="xsd:string"/>
+	              <xsd:element name="matrix" nillable="true" type="xsd:string"/>	
+	              <xsd:element name="exp" nillable="true" type="xsd:float"/>
+	              <xsd:element name="echofilter" nillable="true" type="xsd:boolean"/>
+	              <xsd:element name="filter" nillable="true" type="xsd:string"/>
+	              <xsd:element name="numal" nillable="true" type="xsd:int"/>
+	              <xsd:element name="scores" nillable="true" type="xsd:int"/>
+	              <xsd:element name="sensitivity" nillable="true" type="xsd:string"/>
+	              <xsd:element name="sort" nillable="true" type="xsd:string"/>
+	              <xsd:element name="stats" nillable="true" type="xsd:string"/>
+	              <xsd:element name="strand" nillable="true" type="xsd:string"/>
+	              <xsd:element name="outformat" nillable="true" type="xsd:string"/>
+	              <xsd:element name="topcombon" nillable="true" type="xsd:int"/>
+	              <xsd:element name="async" nillable="true" type="xsd:boolean"/>
+	              <xsd:element name="email" nillable="false" type="xsd:string"/>
+	           </xsd:all>
+         </xsd:complexType>
+   
+         <xsd:complexType name="data">
+            <xsd:all>
+               <xsd:element name="type" type="xsd:string"/>
+               <xsd:element name="content" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+
+         <xsd:complexType name="ArrayOf_xsd_string">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+
+         <xsd:complexType name="WSArrayofFile">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="tns:WSFile[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+
+         <xsd:complexType name="WSArrayofData">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="tns:data[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+
+         <xsd:complexType name="WSFile">
+            <xsd:all>
+               <xsd:element name="type" type="xsd:string"/>
+               <xsd:element name="ext" type="xsd:string"/>
+            </xsd:all>
+         </xsd:complexType>
+
+
+      </schema>
+   </types>
+
+   <message name="statusRequest">
+      <part name="jobid" type="xsd:string"/>
+      <documentation> poll takes the jobid returned by the service on an asynchronous job submission.</documentation>
+   </message>
+   <message name="statusResponse">
+      <part name="status" type="xsd:string"/>
+      <documentation> poll returns the status of the job or if the job is finished, the result </documentation>
+   </message>
+   <message name="resultsRequest">
+      <part name="jobid" type="xsd:string">
+         <documentation> poll takes the jobid returned by the service on an asynchronous job submission.</documentation>
+      </part>
+   </message>
+   <message name="resultsResponse">
+      <part name="results" type="tns:WSArrayofFile"/>
+      <documentation> poll returns the status of the job or if the job is finished, the result </documentation>
+   </message>
+   <message name="pollRequest">
+      <part name="jobid" type="xsd:string"/>
+      <part name="type" type="xsd:string"/>
+      <documentation> poll takes the jobid returned by the service on an asynchronous job submission.</documentation>
+   </message>
+   <message name="pollResponse">
+      <part name="result" type="xsd:base64Binary"/>	
+      <documentation> poll returns the status of the job or if the job is finished, the result </documentation>
+   </message>
+   <message name="getIdsRequest">
+      <part name="jobid" type="xsd:string"/>
+   </message>
+   <message name="getIdsResponse">
+      <part name="result" type="tns:ArrayOf_xsd_string"/>	
+   </message>
+
+   <message name="blastp">
+      <part name="database" type="xsd:string"/>
+      <part name="sequence" type="xsd:string"/>
+      <part name="email" type="xsd:string"/>
+   </message>
+   <message name="blastpResponse">
+      <part name="jobid" type="xsd:string"/>	
+   </message>
+   <message name="blastn">
+      <part name="database" type="xsd:string"/>
+      <part name="sequence" type="xsd:string"/>
+      <part name="email" type="xsd:string"/>
+   </message>
+   <message name="blastnResponse">
+      <part name="jobid" type="xsd:string"/>	
+   </message>
+
+   <message name="getOutput">
+      <part name="jobid" type="xsd:string"/>
+   </message>
+   <message name="getOutputResponse">
+      <part name="result" type="xsd:string"/>	
+   </message>
+   <message name="getXML">
+      <part name="jobid" type="xsd:string"/>
+   </message>
+   <message name="getXMLResponse">
+      <part name="result" type="xsd:string"/>	
+   </message>
+
+   <message name="runWUBlastRequest">
+      <part name="params" type="tns:inputParams"/>
+      <part name="content" type="tns:WSArrayofData"/>
+      <documentation> </documentation> 
+   </message>
+	
+   <message name="runWUBlastResponse">
+      <part name="jobid" type="xsd:string"/>
+   </message>
+
+   <message name="polljobRequest">
+      <part name="jobid" type="xsd:string"/>
+      <part name="outformat" type="xsd:string"/>
+   </message>
+	
+   <message name="polljobResponse">
+      <part name="result" type="xsd:base64Binary"/>
+   </message>
+	
+   <message name="doWUBlastRequest">
+      <part name="params" type="tns:inputParams"/>
+      <part name="content" type="xsd:base64Binary"/>
+   </message>
+	
+   <message name="doWUBlastResponse">
+      <part name="result" type="xsd:base64Binary"/>
+   </message>
+	
+   <portType name="WSWUBlast">
+
+      <operation name="blastp" parameterOrder="database sequence email">
+         <input name="blastp" message="tns:blastp"/>
+         <output name="blastpResponse" message="tns:blastpResponse"/>
+      </operation>	
+      <operation name="blastn" parameterOrder="database sequence email">
+         <input name="blastn" message="tns:blastn"/>
+         <output name="blastnResponse" message="tns:blastnResponse"/>
+      </operation>
+      <operation name="getOutput" parameterOrder="jobid">
+         <input name="getOutput" message="tns:getOutput"/>
+         <output name="getOutputResponse" message="tns:getOutputResponse"/>
+      </operation>	
+
+      <operation name="getXML" parameterOrder="jobid">
+         <input name="getXML" message="tns:getXML"/>
+         <output name="getXMLResponse" message="tns:getXMLResponse"/>
+      </operation>	
+
+      <operation name="runWUBlast" parameterOrder="params content">
+         <input name="runWUBlastRequest" message="tns:runWUBlastRequest"/>
+         <output name="runWUBlastResponse" message="tns:runWUBlastResponse"/>
+      </operation>
+
+      <operation name="checkStatus" parameterOrder="jobid">
+         <input name="statusRequest" message="tns:statusRequest"/>
+         <output name="statusResponse" message="tns:statusResponse"/>
+      </operation>
+
+      <operation name="poll" parameterOrder="jobid type">
+         <input name="pollRequest" message="tns:pollRequest"/>
+         <output name="pollResponse" message="tns:pollResponse"/>
+      </operation>	
+
+      <operation name="getResults" parameterOrder="jobid">
+         <input name="resultsRequest" message="tns:resultsRequest"/>
+         <output name="resultsResponse" message="tns:resultsResponse"/>
+      </operation>
+
+      <operation name="getIds" parameterOrder="jobid">
+         <input name="getIdsRequest" message="tns:getIdsRequest"/>
+         <output name="getIdsResponse" message="tns:getIdsResponse"/>
+      </operation>
+
+      <operation name="polljob" parameterOrder="jobid outformat">
+         <input name="polljobRequest" message="tns:polljobRequest"/>
+         <output name="polljobResponse" message="tns:polljobResponse"/>
+      </operation>
+      <operation name="doWUBlast" parameterOrder="params content">
+         <input name="doWUBlastRequest" message="tns:doWUBlastRequest"/>
+         <output name="doWUBlastResponse" message="tns:doWUBlastResponse"/>
+      </operation>
+
+   </portType>
+	
+   <binding name="WSWUBlastSoapBinding" type="tns:WSWUBlast">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <operation name="runWUBlast">
+         <soap:operation soapAction="http://www.ebi.ac.uk/WSWUBlast#runWUBlast"/>
+         <input name="runWUBlastRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>			
+         </input>
+         <output name="runWUBlastResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="poll">
+         <soap:operation soapAction="http://www.ebi.ac.uk/WSWUBlast#poll"/>
+         <input name="pollRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </input>
+         <output name="pollResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </output>		
+      </operation>
+      <operation name="getIds">
+         <soap:operation soapAction="http://www.ebi.ac.uk/WSWUBlast#getIds"/>
+         <input name="getIdsRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </input>
+         <output name="getIdsResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </output>		
+      </operation>
+
+      <operation name="checkStatus">
+         <soap:operation soapAction="http://www.ebi.ac.uk/WSWUBlast#checkStatus"/>
+         <input name="statusRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </input>
+         <output name="statusResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </output>		
+      </operation>
+      <operation name="getResults">
+         <soap:operation soapAction="http://www.ebi.ac.uk/WSWUBlast#getResults"/>
+         <input name="resultsRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </input>
+         <output name="resultsResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="getOutput">
+         <soap:operation soapAction="http://www.ebi.ac.uk/WSWUBlast#getOutput"/>
+         <input name="getOutput">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </input>
+         <output name="getOutputResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="getXML">
+         <soap:operation soapAction="http://www.ebi.ac.uk/WSWUBlast#getXML"/>
+         <input name="getXML">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </input>
+         <output name="getXMLResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="blastp">
+         <soap:operation soapAction="http://www.ebi.ac.uk/WSWUBlast#blastp"/>
+         <input name="blastp">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </input>
+         <output name="blastpResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="blastn">
+         <soap:operation soapAction="http://www.ebi.ac.uk/WSWUBlast#blastn"/>
+         <input name="blastn">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </input>
+         <output name="blastnResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="polljob">
+         <soap:operation soapAction="http://www.ebi.ac.uk/WSWUBlast#polljob"/>
+         <input name="polljobRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </input>
+         <output name="polljobResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </output>
+      </operation>
+      <operation name="doWUBlast">
+         <soap:operation soapAction="http://www.ebi.ac.uk/WSWUBlast#doWUBlast"/>
+         <input name="doWUBlastRequest">
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </input>
+         <output name="doWUBlastResponse">
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                       namespace="http://www.ebi.ac.uk/WSWUBlast"
+                       use="encoded"/>
+         </output>
+      </operation>
+   </binding>
+	
+   <service name="WSWUBlastService">
+      <port name="WSWUBlast" binding="tns:WSWUBlastSoapBinding">
+         <soap:address location="http://ws.soatrader.com/ebi.ac.uk/0.1/WSWUBlastService"/>
+      </port>
+   </service>
+
+</definitions>

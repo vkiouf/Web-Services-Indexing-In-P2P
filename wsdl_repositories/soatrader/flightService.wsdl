@@ -1,0 +1,613 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://webservice.e1000e.com"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://webservice.e1000e.com">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://webservice.e1000e.com">
+         <s:element name="SearchFlight">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="sp" type="tns:AvSearchParam"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AvSearchParam">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UserPassword" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FromCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ArriveCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LeftDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Carrier" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Option" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Stop" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SearchFlightResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="SearchFlightResult"
+                             type="tns:flightAvDataSet"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="flightAvDataSet">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="HostCommand" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HostResult" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastErrorString" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Count" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="XMLDocument" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ds">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetTicketPrice">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="fpsp" type="tns:FlightPriceSearchParam"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="FlightPriceSearchParam">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UserPassword" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Carrier" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FromCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ArriveCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ClassCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FlightNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LeftDate" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetTicketPriceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetTicketPriceResult"
+                             type="tns:FlightPriceReturnValue"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="FlightPriceReturnValue">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="PriceY" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TPM" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Discount" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastErrorString" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetFlightList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="sp" type="tns:AvSearchParam"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFlightListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetFlightListResult"
+                             type="tns:flightAvDataSet"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFlightClassList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="sp" type="tns:FlightClassPriceSearchParam"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="FlightClassPriceSearchParam">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UserPassword" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UsableClass" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Carrier" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FromCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ArriveCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FlightNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LeftDate" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetFlightClassListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetFlightClassListResult"
+                             type="tns:FlightClassPriceReturnValue"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="FlightClassPriceReturnValue">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="LastErrorString" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="XMLDocument" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ticket_add">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="fi" type="tns:flight_info"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="pi" type="tns:passenger_info"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="flight_info">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="flightNo" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="equip" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="flightClass" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="airCompany" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="depatureDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="departureTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="departureCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="arriveCity" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="passenger_info">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="passenagerName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="passerType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CardTyp" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="currency" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="YPrice" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="discount" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="printedPrice" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="airdromeTax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="fuelTax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="contactPhone" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="insurance" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ticket_addResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ticket_addResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getTpmValue">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Tpm" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="leftdate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PassengerType" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getTpmValueResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getTpmValueResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetJijianFee">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="airCraftypeCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetJijianFeeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetJijianFeeResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="int" type="s:int"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified" targetNamespace="http://webservice.e1000e.com">
+         <s:element name="SearchFlight">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="sp" type="tns:AvSearchParam"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="AvSearchParam">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UserPassword" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FromCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ArriveCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LeftDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Carrier" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Option" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Stop" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="SearchFlightResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="SearchFlightResult"
+                             type="tns:flightAvDataSet"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="flightAvDataSet">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="HostCommand" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="HostResult" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastErrorString" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Count" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="XMLDocument" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ds">
+                  <s:complexType>
+                     <s:sequence>
+                        <s:element ref="s:schema"/>
+                        <s:any/>
+                     </s:sequence>
+                  </s:complexType>
+               </s:element>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetTicketPrice">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="fpsp" type="tns:FlightPriceSearchParam"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="FlightPriceSearchParam">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UserPassword" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Carrier" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FromCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ArriveCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ClassCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FlightNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LeftDate" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetTicketPriceResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetTicketPriceResult"
+                             type="tns:FlightPriceReturnValue"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="FlightPriceReturnValue">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="PriceY" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="TPM" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Discount" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LastErrorString" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetFlightList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="sp" type="tns:AvSearchParam"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFlightListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetFlightListResult"
+                             type="tns:flightAvDataSet"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetFlightClassList">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="sp" type="tns:FlightClassPriceSearchParam"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="FlightClassPriceSearchParam">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UserPassword" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="UsableClass" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Carrier" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FromCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ArriveCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="FlightNumber" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LeftDate" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetFlightClassListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetFlightClassListResult"
+                             type="tns:FlightClassPriceReturnValue"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="FlightClassPriceReturnValue">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="LastErrorString" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="XMLDocument" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ticket_add">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="fi" type="tns:flight_info"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="pi" type="tns:passenger_info"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="flight_info">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="flightNo" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="equip" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="flightClass" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="airCompany" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="depatureDate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="departureTime" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="departureCity" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="arriveCity" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="passenger_info">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="passenagerName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="passerType" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CardTyp" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CardID" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="currency" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="YPrice" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="discount" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="printedPrice" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="airdromeTax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="fuelTax" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="contactPhone" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="insurance" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="ticket_addResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="ticket_addResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getTpmValue">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="Tpm" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="leftdate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="PassengerType" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getTpmValueResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getTpmValueResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetJijianFee">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="airCraftypeCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="GetJijianFeeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="GetJijianFeeResult" type="s:int"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="int" type="s:int"/>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchFlightSoapIn">
+      <wsdl:part name="parameters" element="tns:SearchFlight"/>
+  </wsdl:message>
+  <wsdl:message name="SearchFlightSoapOut">
+      <wsdl:part name="parameters" element="tns:SearchFlightResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTicketPriceSoapIn">
+      <wsdl:part name="parameters" element="tns:GetTicketPrice"/>
+  </wsdl:message>
+  <wsdl:message name="GetTicketPriceSoapOut">
+      <wsdl:part name="parameters" element="tns:GetTicketPriceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFlightListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFlightList"/>
+  </wsdl:message>
+  <wsdl:message name="GetFlightListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFlightListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetFlightClassListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetFlightClassList"/>
+  </wsdl:message>
+  <wsdl:message name="GetFlightClassListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetFlightClassListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ticket_addSoapIn">
+      <wsdl:part name="parameters" element="tns:ticket_add"/>
+  </wsdl:message>
+  <wsdl:message name="ticket_addSoapOut">
+      <wsdl:part name="parameters" element="tns:ticket_addResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getTpmValueSoapIn">
+      <wsdl:part name="parameters" element="tns:getTpmValue"/>
+  </wsdl:message>
+  <wsdl:message name="getTpmValueSoapOut">
+      <wsdl:part name="parameters" element="tns:getTpmValueResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetJijianFeeSoapIn">
+      <wsdl:part name="parameters" element="tns:GetJijianFee"/>
+  </wsdl:message>
+  <wsdl:message name="GetJijianFeeSoapOut">
+      <wsdl:part name="parameters" element="tns:GetJijianFeeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getTpmValueHttpGetIn">
+      <wsdl:part name="Tpm" type="s:string"/>
+      <wsdl:part name="leftdate" type="s:string"/>
+      <wsdl:part name="PassengerType" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getTpmValueHttpGetOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="GetJijianFeeHttpGetIn">
+      <wsdl:part name="airCraftypeCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetJijianFeeHttpGetOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="getTpmValueHttpPostIn">
+      <wsdl:part name="Tpm" type="s:string"/>
+      <wsdl:part name="leftdate" type="s:string"/>
+      <wsdl:part name="PassengerType" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getTpmValueHttpPostOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  <wsdl:message name="GetJijianFeeHttpPostIn">
+      <wsdl:part name="airCraftypeCode" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetJijianFeeHttpPostOut">
+      <wsdl:part name="Body" element="tns:int"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="flightServiceSoap" type="tns:flightServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="SearchFlight">
+         <soap:operation soapAction="http://webservice.e1000e.com/SearchFlight" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetTicketPrice">
+         <soap:operation soapAction="http://webservice.e1000e.com/GetTicketPrice" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetFlightList">
+         <soap:operation soapAction="http://webservice.e1000e.com/GetFlightList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetFlightClassList">
+         <soap:operation soapAction="http://webservice.e1000e.com/GetFlightClassList" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="ticket_add">
+         <soap:operation soapAction="http://webservice.e1000e.com/ticket_add" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getTpmValue">
+         <soap:operation soapAction="http://webservice.e1000e.com/getTpmValue" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetJijianFee">
+         <soap:operation soapAction="http://webservice.e1000e.com/GetJijianFee" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="flightService">
+      <wsdl:port name="flightServiceSoap" binding="tns:flightServiceSoap">
+         <soap:address location="http://ws.soatrader.com/e1000e.com/0.1/flightService"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

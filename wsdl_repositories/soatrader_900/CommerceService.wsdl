@@ -1,0 +1,637 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="https://secure.acme.lt/apis/services/1.0/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="https://secure.acme.lt/apis/services/1.0/">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:documentation>Version 1.0</wsdl:documentation>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="https://secure.acme.lt/apis/services/1.0/">
+         <s:element name="GetProductMappingList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetProductMappingListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetProductMappingListResult"
+                             type="tns:ArrayOfProductMappingListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfProductMappingListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ProductMappingListItem"
+                          nillable="true"
+                          type="tns:ProductMappingListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ProductMappingListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CategoryId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SubCategoryId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VendorId" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="LicenseHeader" type="tns:LicenseHeader"/>
+         <s:complexType name="LicenseHeader">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+            </s:sequence>
+            <s:anyAttribute/>
+         </s:complexType>
+         <s:element name="GetProductList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetProductListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetProductListResult"
+                             type="tns:ArrayOfProductListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfProductListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ProductListItem" nillable="true"
+                          type="tns:ProductListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ProductListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ProductName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ProductVendorCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ProductCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductWarranty" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetStockList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetStockListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStockListResult"
+                             type="tns:ArrayOfStockListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfStockListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="StockListItem" nillable="true"
+                          type="tns:StockListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="StockListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DateDelivery" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StockQty" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetPriceList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetPriceListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPriceListResult"
+                             type="tns:ArrayOfPriceListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfPriceListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PriceListItem" nillable="true"
+                          type="tns:PriceListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PriceListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PriceUnit" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PricePack" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PackUnits" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetBarcodeList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetBarcodeListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetBarcodeListResult"
+                             type="tns:ArrayOfBarcodeListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfBarcodeListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BarcodeListItem" nillable="true"
+                          type="tns:BarcodeListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BarcodeListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Barcode" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetVendorList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetVendorListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetVendorListResult"
+                             type="tns:ArrayOfVendorListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfVendorListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="VendorListItem" nillable="true"
+                          type="tns:VendorListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="VendorListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="VendorId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VendorName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetCategoryList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetCategoryListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCategoryListResult"
+                             type="tns:ArrayOfCategoryListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCategoryListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CategoryListItem" nillable="true"
+                          type="tns:CategoryListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CategoryListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="CategoryId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CategoryName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetSubCategoryList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetSubCategoryListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSubCategoryListResult"
+                             type="tns:ArrayOfSubCategoryListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfSubCategoryListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SubCategoryListItem" nillable="true"
+                          type="tns:SubCategoryListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SubCategoryListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="SubCategoryId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SubCategoryName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="https://secure.acme.lt/apis/services/1.0/">
+         <s:element name="GetProductMappingList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetProductMappingListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetProductMappingListResult"
+                             type="tns:ArrayOfProductMappingListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfProductMappingListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ProductMappingListItem"
+                          nillable="true"
+                          type="tns:ProductMappingListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ProductMappingListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="CategoryId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="SubCategoryId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="VendorId" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="LicenseHeader" type="tns:LicenseHeader"/>
+         <s:complexType name="LicenseHeader">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="LicenseKey" type="s:string"/>
+            </s:sequence>
+            <s:anyAttribute/>
+         </s:complexType>
+         <s:element name="GetProductList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetProductListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetProductListResult"
+                             type="tns:ArrayOfProductListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfProductListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="ProductListItem" nillable="true"
+                          type="tns:ProductListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ProductListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ProductName" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ProductVendorCode" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ProductCode" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductWarranty" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetStockList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetStockListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetStockListResult"
+                             type="tns:ArrayOfStockListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfStockListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="StockListItem" nillable="true"
+                          type="tns:StockListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="StockListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="DateDelivery" type="s:dateTime"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StockQty" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetPriceList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetPriceListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetPriceListResult"
+                             type="tns:ArrayOfPriceListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfPriceListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="PriceListItem" nillable="true"
+                          type="tns:PriceListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="PriceListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PriceUnit" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PricePack" type="s:double"/>
+               <s:element minOccurs="1" maxOccurs="1" name="PackUnits" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetBarcodeList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetBarcodeListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetBarcodeListResult"
+                             type="tns:ArrayOfBarcodeListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfBarcodeListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="BarcodeListItem" nillable="true"
+                          type="tns:BarcodeListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="BarcodeListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="ProductId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Barcode" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetVendorList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetVendorListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetVendorListResult"
+                             type="tns:ArrayOfVendorListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfVendorListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="VendorListItem" nillable="true"
+                          type="tns:VendorListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="VendorListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="VendorId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="VendorName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetCategoryList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetCategoryListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetCategoryListResult"
+                             type="tns:ArrayOfCategoryListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfCategoryListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="CategoryListItem" nillable="true"
+                          type="tns:CategoryListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CategoryListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="CategoryId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="CategoryName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="GetSubCategoryList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="GetSubCategoryListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="GetSubCategoryListResult"
+                             type="tns:ArrayOfSubCategoryListItem"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfSubCategoryListItem">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="SubCategoryListItem" nillable="true"
+                          type="tns:SubCategoryListItem"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="SubCategoryListItem">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="SubCategoryId" type="s:int"/>
+               <s:element minOccurs="0" maxOccurs="1" name="SubCategoryName" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetProductMappingListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetProductMappingList"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductMappingListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetProductMappingListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductMappingListLicenseHeader">
+      <wsdl:part name="LicenseHeader" element="tns:LicenseHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetProductList"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetProductListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetProductListLicenseHeader">
+      <wsdl:part name="LicenseHeader" element="tns:LicenseHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetStockList"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetStockListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetStockListLicenseHeader">
+      <wsdl:part name="LicenseHeader" element="tns:LicenseHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetPriceList"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetPriceListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetPriceListLicenseHeader">
+      <wsdl:part name="LicenseHeader" element="tns:LicenseHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetBarcodeListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetBarcodeList"/>
+  </wsdl:message>
+  <wsdl:message name="GetBarcodeListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetBarcodeListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetBarcodeListLicenseHeader">
+      <wsdl:part name="LicenseHeader" element="tns:LicenseHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetVendorListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetVendorList"/>
+  </wsdl:message>
+  <wsdl:message name="GetVendorListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetVendorListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVendorListLicenseHeader">
+      <wsdl:part name="LicenseHeader" element="tns:LicenseHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetCategoryListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetCategoryList"/>
+  </wsdl:message>
+  <wsdl:message name="GetCategoryListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetCategoryListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetCategoryListLicenseHeader">
+      <wsdl:part name="LicenseHeader" element="tns:LicenseHeader"/>
+  </wsdl:message>
+  <wsdl:message name="GetSubCategoryListSoapIn">
+      <wsdl:part name="parameters" element="tns:GetSubCategoryList"/>
+  </wsdl:message>
+  <wsdl:message name="GetSubCategoryListSoapOut">
+      <wsdl:part name="parameters" element="tns:GetSubCategoryListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSubCategoryListLicenseHeader">
+      <wsdl:part name="LicenseHeader" element="tns:LicenseHeader"/>
+  </wsdl:message>
+  
+  <wsdl:binding name="CommerceServiceSoap" type="tns:CommerceServiceSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetProductMappingList">
+         <soap:operation soapAction="https://secure.acme.lt/apis/services/1.0/GetProductMappingList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetProductMappingListLicenseHeader" part="LicenseHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetProductList">
+         <soap:operation soapAction="https://secure.acme.lt/apis/services/1.0/GetProductList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetProductListLicenseHeader" part="LicenseHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetStockList">
+         <soap:operation soapAction="https://secure.acme.lt/apis/services/1.0/GetStockList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetStockListLicenseHeader" part="LicenseHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetPriceList">
+         <soap:operation soapAction="https://secure.acme.lt/apis/services/1.0/GetPriceList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetPriceListLicenseHeader" part="LicenseHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetBarcodeList">
+         <soap:operation soapAction="https://secure.acme.lt/apis/services/1.0/GetBarcodeList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetBarcodeListLicenseHeader" part="LicenseHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetVendorList">
+         <soap:operation soapAction="https://secure.acme.lt/apis/services/1.0/GetVendorList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetVendorListLicenseHeader" part="LicenseHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetCategoryList">
+         <soap:operation soapAction="https://secure.acme.lt/apis/services/1.0/GetCategoryList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetCategoryListLicenseHeader" part="LicenseHeader" use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetSubCategoryList">
+         <soap:operation soapAction="https://secure.acme.lt/apis/services/1.0/GetSubCategoryList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+            <soap:header message="tns:GetSubCategoryListLicenseHeader" part="LicenseHeader"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="CommerceService">
+      <wsdl:documentation>Version 1.0</wsdl:documentation>
+      <wsdl:port name="CommerceServiceSoap" binding="tns:CommerceServiceSoap">
+         <soap:address location="http://ws.soatrader.com/acme.lt/0.1/CommerceService"/>
+      </wsdl:port>
+    
+  </wsdl:service>
+</wsdl:definitions>

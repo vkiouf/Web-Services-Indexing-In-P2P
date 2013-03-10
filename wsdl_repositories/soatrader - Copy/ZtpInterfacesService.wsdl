@@ -1,0 +1,121 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:tns="http://myTargetNameSpace"
+                  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:impl="http://myImplNameSpace"
+                  xmlns:intf="http://myTargetNameSpace"
+                  xmlns:tns1="http://myPkgNameSpace"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://myTargetNameSpace">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+   <types xmlns="http://schemas.xmlsoap.org/wsdl/">
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://myPkgNameSpace">
+         <complexType name="ZtpInterface">
+            <sequence>
+               <element name="PRONUMBERS" nillable="true" type="tns1:PRONUMBERS"/>
+            </sequence>
+         </complexType>
+         <complexType name="PRONUMBERS">
+            <sequence>
+               <element name="STATUSCODE" nillable="true" type="xsd:string"/>
+               <element name="PRONUMBER" nillable="true" type="xsd:string"/>
+               <element name="ORIGINZIP" nillable="true" type="xsd:string"/>
+            </sequence>
+         </complexType>
+         <element name="ZtpInterface" nillable="true" type="tns1:ZtpInterface"/>
+      </schema>
+   </types>
+
+   <wsdl:message name="Exception">
+
+   </wsdl:message>
+
+   <wsdl:message name="zipToProSOAPApiRequest">
+
+      <wsdl:part name="zip" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="zipToProSOAPApiResponse">
+
+      <wsdl:part name="YELLOWFREIGHT" type="tns1:ZtpInterface"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ZtpInterfaces">
+
+      <wsdl:operation name="zipToProSOAPApi" parameterOrder="zip">
+
+         <wsdl:input message="intf:zipToProSOAPApiRequest"/>
+
+         <wsdl:output message="intf:zipToProSOAPApiResponse"/>
+
+         <wsdl:fault message="intf:Exception" name="Exception"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="servicesSoapBinding" type="intf:ZtpInterfaces">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="zipToProSOAPApi">
+
+         <wsdlsoap:operation soapAction="com.yell.ec.inter.yfsziptopro.http.controller.ZipToProSOAPApiController"/>
+
+         <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://myTargetNameSpace"
+                           use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                           namespace="http://myTargetNameSpace"
+                           use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ZtpInterfacesService">
+
+      <wsdl:port binding="intf:servicesSoapBinding" name="services">
+
+         <wsdlsoap:address location="http://ws.soatrader.com/myyellow.com/0.1/ZtpInterfacesService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.xignite.com/services/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://www.xignite.com/services/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Provides real-time access to BATS market data.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.xignite.com/services/">
+      <s:element name="GetLastSale">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLastSaleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLastSaleResult" type="tns:LastSaleQuote" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="LastSaleQuote">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Time" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Open" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Close" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="PreviousClose" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="High" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Low" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Last" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Change" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="PercentChange" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Volume" type="s:double" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="Common">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Outcome" type="tns:OutcomeTypes" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Identity" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Delay" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="OutcomeTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="Success" />
+          <s:enumeration value="SystemError" />
+          <s:enumeration value="RequestError" />
+          <s:enumeration value="RegistrationError" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="Header" type="tns:Header" />
+      <s:complexType name="Header">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Tracer" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="GetLastSaleByIdentifier">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Identifier" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="tns:IdentifierTypes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="IdentifierTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="Symbol" />
+          <s:enumeration value="CIK" />
+          <s:enumeration value="CUSIP" />
+          <s:enumeration value="ISIN" />
+          <s:enumeration value="Valoren" />
+          <s:enumeration value="SEDOL" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetLastSaleByIdentifierResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLastSaleByIdentifierResult" type="tns:LastSaleQuote" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLastSales">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Symbols" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLastSalesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLastSalesResult" type="tns:ArrayOfLastSaleQuote" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfLastSaleQuote">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="LastSaleQuote" nillable="true" type="tns:LastSaleQuote" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetLastSaleByIdentifiers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Identifiers" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IdentifierType" type="tns:IdentifierTypes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLastSaleByIdentifiersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLastSaleByIdentifiersResult" type="tns:ArrayOfLastSaleQuote" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListTradedSymbols">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="NumOfDays" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="StartSymbol" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndSymbol" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListTradedSymbolsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListTradedSymbolsResult" type="tns:SymbolList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="SymbolList">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Common">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Symbols" type="tns:ArrayOfSymbolInfo" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfSymbolInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SymbolInfo" nillable="true" type="tns:SymbolInfo" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SymbolInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="LastSaleQuote" nillable="true" type="tns:LastSaleQuote" />
+      <s:element name="ArrayOfLastSaleQuote" nillable="true" type="tns:ArrayOfLastSaleQuote" />
+      <s:element name="SymbolList" nillable="true" type="tns:SymbolList" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetLastSaleSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLastSale" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLastSaleResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifierSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLastSaleByIdentifier" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifierSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLastSaleByIdentifierResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifierHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSalesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLastSales" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSalesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLastSalesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSalesHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifiersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLastSaleByIdentifiers" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifiersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLastSaleByIdentifiersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifiersHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="ListTradedSymbolsSoapIn">
+    <wsdl:part name="parameters" element="tns:ListTradedSymbols" />
+  </wsdl:message>
+  <wsdl:message name="ListTradedSymbolsSoapOut">
+    <wsdl:part name="parameters" element="tns:ListTradedSymbolsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListTradedSymbolsHeader">
+    <wsdl:part name="Header" element="tns:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleHttpGetIn">
+    <wsdl:part name="Symbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleHttpGetOut">
+    <wsdl:part name="Body" element="tns:LastSaleQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifierHttpGetIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifierHttpGetOut">
+    <wsdl:part name="Body" element="tns:LastSaleQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSalesHttpGetIn">
+    <wsdl:part name="Symbols" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSalesHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLastSaleQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifiersHttpGetIn">
+    <wsdl:part name="Identifiers" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifiersHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLastSaleQuote" />
+  </wsdl:message>
+  <wsdl:message name="ListTradedSymbolsHttpGetIn">
+    <wsdl:part name="NumOfDays" type="s:string" />
+    <wsdl:part name="StartSymbol" type="s:string" />
+    <wsdl:part name="EndSymbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ListTradedSymbolsHttpGetOut">
+    <wsdl:part name="Body" element="tns:SymbolList" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleHttpPostIn">
+    <wsdl:part name="Symbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleHttpPostOut">
+    <wsdl:part name="Body" element="tns:LastSaleQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifierHttpPostIn">
+    <wsdl:part name="Identifier" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifierHttpPostOut">
+    <wsdl:part name="Body" element="tns:LastSaleQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSalesHttpPostIn">
+    <wsdl:part name="Symbols" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSalesHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLastSaleQuote" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifiersHttpPostIn">
+    <wsdl:part name="Identifiers" type="s:string" />
+    <wsdl:part name="IdentifierType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLastSaleByIdentifiersHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLastSaleQuote" />
+  </wsdl:message>
+  <wsdl:message name="ListTradedSymbolsHttpPostIn">
+    <wsdl:part name="NumOfDays" type="s:string" />
+    <wsdl:part name="StartSymbol" type="s:string" />
+    <wsdl:part name="EndSymbol" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ListTradedSymbolsHttpPostOut">
+    <wsdl:part name="Body" element="tns:SymbolList" />
+  </wsdl:message>
+  <wsdl:portType name="XigniteBATSLastSaleSoap">
+    <wsdl:operation name="GetLastSale">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns real time stock quote for a given stock ticker</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSaleSoapIn" />
+      <wsdl:output message="tns:GetLastSaleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifier">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a real-time quote for a security based on the last trade execution.</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSaleByIdentifierSoapIn" />
+      <wsdl:output message="tns:GetLastSaleByIdentifierSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSales">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a collection of real time stock quotes for a comma-separated list of stock quotes.</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSalesSoapIn" />
+      <wsdl:output message="tns:GetLastSalesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifiers">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a collection of real time stock quotes for a comma-separated list of stock quotes.</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSaleByIdentifiersSoapIn" />
+      <wsdl:output message="tns:GetLastSaleByIdentifiersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListTradedSymbols">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns all symbols and names that are traded recently</wsdl:documentation>
+      <wsdl:input message="tns:ListTradedSymbolsSoapIn" />
+      <wsdl:output message="tns:ListTradedSymbolsSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="XigniteBATSLastSaleHttpGet">
+    <wsdl:operation name="GetLastSale">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns real time stock quote for a given stock ticker</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSaleHttpGetIn" />
+      <wsdl:output message="tns:GetLastSaleHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifier">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a real-time quote for a security based on the last trade execution.</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSaleByIdentifierHttpGetIn" />
+      <wsdl:output message="tns:GetLastSaleByIdentifierHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSales">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a collection of real time stock quotes for a comma-separated list of stock quotes.</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSalesHttpGetIn" />
+      <wsdl:output message="tns:GetLastSalesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifiers">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a collection of real time stock quotes for a comma-separated list of stock quotes.</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSaleByIdentifiersHttpGetIn" />
+      <wsdl:output message="tns:GetLastSaleByIdentifiersHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListTradedSymbols">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns all symbols and names that are traded recently</wsdl:documentation>
+      <wsdl:input message="tns:ListTradedSymbolsHttpGetIn" />
+      <wsdl:output message="tns:ListTradedSymbolsHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="XigniteBATSLastSaleHttpPost">
+    <wsdl:operation name="GetLastSale">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns real time stock quote for a given stock ticker</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSaleHttpPostIn" />
+      <wsdl:output message="tns:GetLastSaleHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifier">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a real-time quote for a security based on the last trade execution.</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSaleByIdentifierHttpPostIn" />
+      <wsdl:output message="tns:GetLastSaleByIdentifierHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSales">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a collection of real time stock quotes for a comma-separated list of stock quotes.</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSalesHttpPostIn" />
+      <wsdl:output message="tns:GetLastSalesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifiers">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a collection of real time stock quotes for a comma-separated list of stock quotes.</wsdl:documentation>
+      <wsdl:input message="tns:GetLastSaleByIdentifiersHttpPostIn" />
+      <wsdl:output message="tns:GetLastSaleByIdentifiersHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListTradedSymbols">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns all symbols and names that are traded recently</wsdl:documentation>
+      <wsdl:input message="tns:ListTradedSymbolsHttpPostIn" />
+      <wsdl:output message="tns:ListTradedSymbolsHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="XigniteBATSLastSaleSoap" type="tns:XigniteBATSLastSaleSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLastSale">
+      <soap:operation soapAction="http://www.xignite.com/services/GetLastSale" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetLastSaleHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifier">
+      <soap:operation soapAction="http://www.xignite.com/services/GetLastSaleByIdentifier" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetLastSaleByIdentifierHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSales">
+      <soap:operation soapAction="http://www.xignite.com/services/GetLastSales" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetLastSalesHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifiers">
+      <soap:operation soapAction="http://www.xignite.com/services/GetLastSaleByIdentifiers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetLastSaleByIdentifiersHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListTradedSymbols">
+      <soap:operation soapAction="http://www.xignite.com/services/ListTradedSymbols" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ListTradedSymbolsHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteBATSLastSaleSoap12" type="tns:XigniteBATSLastSaleSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLastSale">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetLastSale" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetLastSaleHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifier">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetLastSaleByIdentifier" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetLastSaleByIdentifierHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSales">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetLastSales" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetLastSalesHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifiers">
+      <soap12:operation soapAction="http://www.xignite.com/services/GetLastSaleByIdentifiers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetLastSaleByIdentifiersHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListTradedSymbols">
+      <soap12:operation soapAction="http://www.xignite.com/services/ListTradedSymbols" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ListTradedSymbolsHeader" part="Header" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteBATSLastSaleHttpGet" type="tns:XigniteBATSLastSaleHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetLastSale">
+      <http:operation location="/GetLastSale" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifier">
+      <http:operation location="/GetLastSaleByIdentifier" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSales">
+      <http:operation location="/GetLastSales" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifiers">
+      <http:operation location="/GetLastSaleByIdentifiers" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListTradedSymbols">
+      <http:operation location="/ListTradedSymbols" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="XigniteBATSLastSaleHttpPost" type="tns:XigniteBATSLastSaleHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetLastSale">
+      <http:operation location="/GetLastSale" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifier">
+      <http:operation location="/GetLastSaleByIdentifier" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSales">
+      <http:operation location="/GetLastSales" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLastSaleByIdentifiers">
+      <http:operation location="/GetLastSaleByIdentifiers" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListTradedSymbols">
+      <http:operation location="/ListTradedSymbols" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="XigniteBATSLastSale">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Provides real-time access to BATS market data.</wsdl:documentation>
+    <wsdl:port name="XigniteBATSLastSaleSoap" binding="tns:XigniteBATSLastSaleSoap">
+      <soap:address location="http://www.xignite.com/xBATSLastSale.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteBATSLastSaleSoap12" binding="tns:XigniteBATSLastSaleSoap12">
+      <soap12:address location="http://www.xignite.com/xBATSLastSale.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteBATSLastSaleHttpGet" binding="tns:XigniteBATSLastSaleHttpGet">
+      <http:address location="http://www.xignite.com/xBATSLastSale.asmx" />
+    </wsdl:port>
+    <wsdl:port name="XigniteBATSLastSaleHttpPost" binding="tns:XigniteBATSLastSaleHttpPost">
+      <http:address location="http://www.xignite.com/xBATSLastSale.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

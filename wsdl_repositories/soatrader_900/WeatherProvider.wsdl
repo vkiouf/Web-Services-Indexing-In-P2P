@@ -1,0 +1,2273 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:s1="http://www.ist-mobilife.org/v1.0/context/AbstractTypes"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:tns="http://www.ist-mobilife.org/v1.0/context"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://www.ist-mobilife.org/v1.0/context">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://www.ist-mobilife.org/v1.0/context">
+         <s:element name="checkForNewSoftware">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="productCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="existingVersion" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="checkForNewSoftwareResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="checkForNewSoftwareResult"
+                             type="s:base64Binary"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="publishNewSoftware">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="productCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="version" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="productData" type="s:base64Binary"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="adminEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="adminEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="publishNewSoftwareResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="publishNewSoftwareResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContextByIdCsv">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameterName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContextByIdCsvResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getContextByIdCsvResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContextById">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameterName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntity" type="tns:entity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="entity" mixed="true">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ontologyRef" type="s:anyURI"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="id" type="s:string"/>
+            <s:attribute form="unqualified" name="name" type="s:string"/>
+            <s:attribute form="unqualified" name="key" type="s:string"/>
+            <s:attribute form="unqualified" name="type" type="tns:entityType"/>
+         </s:complexType>
+         <s:simpleType name="entityType">
+            <s:restriction base="s:string">
+               <s:enumeration value="thing"/>
+               <s:enumeration value="agent"/>
+               <s:enumeration value="person"/>
+               <s:enumeration value="group"/>
+               <s:enumeration value="organization"/>
+               <s:enumeration value="location"/>
+               <s:enumeration value="building"/>
+               <s:enumeration value="room"/>
+               <s:enumeration value="floor"/>
+               <s:enumeration value="vehicle"/>
+               <s:enumeration value="plane"/>
+               <s:enumeration value="car"/>
+               <s:enumeration value="bike"/>
+               <s:enumeration value="device"/>
+               <s:enumeration value="sensor"/>
+               <s:enumeration value="phone"/>
+               <s:enumeration value="pda"/>
+               <s:enumeration value="laptop"/>
+               <s:enumeration value="desktop"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="getContextByIdResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getContextByIdResult"
+                             type="tns:contextElement"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="contextElement">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="contextProviderAdvertisement"
+                          type="tns:contextProviderAdvertisement"/>
+               <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:entity"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="parameter" type="tns:parameter"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="contextProviderAdvertisement">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="url" type="s:anyURI"/>
+               <s:element minOccurs="0" maxOccurs="1" name="availableData" type="tns:ArrayOfParameter"/>
+               <s:element minOccurs="0" maxOccurs="1" name="featuringEntities" type="tns:ArrayOfEntity"/>
+               <s:element minOccurs="0" maxOccurs="1" name="options" type="tns:ArrayOfOption"/>
+               <s:element minOccurs="0" maxOccurs="1" name="policies" type="tns:ArrayOfPolicy"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfParameter">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="parameter" type="tns:parameter"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="parameter">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="ontologyRef" type="s:anyURI"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="parameter" type="tns:parameter"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="name" type="s:string"/>
+            <s:attribute form="unqualified" name="type" type="s:string"/>
+            <s:attribute form="unqualified" name="uom" type="s:string"/>
+            <s:attribute form="unqualified" name="value" type="s:string"/>
+            <s:attribute form="unqualified" name="confidence" type="s:double"/>
+            <s:attribute form="unqualified" name="accuracy" type="s:double"/>
+            <s:attribute form="unqualified" name="timestamp" type="s:dateTime"/>
+            <s:attribute form="unqualified" name="duration" type="s:dateTime"/>
+            <s:attribute form="unqualified" name="id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="ArrayOfEntity">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="entity" type="tns:entity"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="ArrayOfOption">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="option" type="tns:option"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="option">
+            <s:simpleContent>
+               <s:extension base="s:string">
+                  <s:attribute form="unqualified" name="name" type="tns:optionName"/>
+                  <s:attribute form="unqualified" name="uom" type="s:string"/>
+               </s:extension>
+            </s:simpleContent>
+         </s:complexType>
+         <s:simpleType name="optionName">
+            <s:restriction base="s:string">
+               <s:enumeration value="emailAdministrator"/>
+               <s:enumeration value="caching"/>
+               <s:enumeration value="cachingPeriod"/>
+               <s:enumeration value="format"/>
+               <s:enumeration value="authentication"/>
+               <s:enumeration value="encryption"/>
+               <s:enumeration value="compression"/>
+               <s:enumeration value="reasoningMechanism"/>
+               <s:enumeration value="modelType"/>
+               <s:enumeration value="caseSensitive"/>
+               <s:enumeration value="helpURL"/>
+               <s:enumeration value="clientURL"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:complexType name="ArrayOfPolicy">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="policy" type="tns:policy"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="policy">
+            <s:sequence>
+               <s:any minOccurs="0" maxOccurs="unbounded"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="id" type="s:string"/>
+         </s:complexType>
+         <s:element name="getContextSummaryCsv">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameterName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="startTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="endTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="summaryType" type="tns:summaryOperatorType"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="summaryValue" type="s:int"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="summarySortOrder" type="tns:attributeType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:simpleType name="summaryOperatorType">
+            <s:restriction base="s:string">
+               <s:enumeration value="none"/>
+               <s:enumeration value="min"/>
+               <s:enumeration value="max"/>
+               <s:enumeration value="average"/>
+               <s:enumeration value="variance"/>
+               <s:enumeration value="autocorrelation"/>
+               <s:enumeration value="magnitude"/>
+               <s:enumeration value="average_delta"/>
+               <s:enumeration value="min_count"/>
+               <s:enumeration value="max_count"/>
+               <s:enumeration value="unique_values"/>
+               <s:enumeration value="first"/>
+               <s:enumeration value="last"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="attributeType">
+            <s:restriction base="s:string">
+               <s:enumeration value="timestamp"/>
+               <s:enumeration value="value"/>
+               <s:enumeration value="accuracy"/>
+               <s:enumeration value="confidence"/>
+               <s:enumeration value="position"/>
+               <s:enumeration value="value_delta"/>
+               <s:enumeration value="timestamp_delta"/>
+               <s:enumeration value="dvalue_dtime"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="getContextSummaryCsvResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getContextSummaryCsvResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContextSummary">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameterName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="startTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="endTime" type="s:dateTime"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="summary" type="tns:summaryType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntity" type="tns:entity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="summaryType">
+            <s:attribute form="unqualified" name="operator" type="tns:summaryOperatorType"
+                         use="required"/>
+            <s:attribute form="unqualified" name="value" type="s:int"/>
+            <s:attribute form="unqualified" name="sort" type="tns:attributeType"/>
+         </s:complexType>
+         <s:element name="getContextSummaryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getContextSummaryResult"
+                             type="tns:ArrayOfContextElement"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfContextElement">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="contextElement" nillable="true"
+                          type="tns:contextElement"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="getContextSummaryXhtml">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="startTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="endTime" type="s:dateTime"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContextSummaryXhtmlResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getContextSummaryXhtmlResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContextSummaryRss">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="startTime" type="s:dateTime"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="endTime" type="s:dateTime"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContextSummaryRssResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getContextSummaryRssResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="drawContext">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="xparameterName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="yparameterName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="drawContextResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="drawContextResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="isAvailableContext">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameterName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="isAvailableContextResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="isAvailableContextResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="isFeaturingEntity">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="isFeaturingEntityResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="isFeaturingEntityResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="sendCommand">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="command" type="tns:contextProviderCommand"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="adminEntity" type="tns:entity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="contextProviderCommand">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="contextProviderAdvertisement"
+                          type="tns:contextProviderAdvertisement"/>
+               <s:element minOccurs="0" maxOccurs="1" name="entity" type="tns:entity"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="command" type="tns:command"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="command">
+            <s:attribute form="unqualified" name="name" type="tns:commandName" use="required"/>
+            <s:attribute form="unqualified" name="value" type="s:string"/>
+            <s:attribute form="unqualified" name="uom" type="s:string"/>
+         </s:complexType>
+         <s:simpleType name="commandName">
+            <s:restriction base="s:string">
+               <s:enumeration value="reset_to_default"/>
+               <s:enumeration value="set_caching_interval"/>
+               <s:enumeration value="start_caching"/>
+               <s:enumeration value="switch_off"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="sendCommandResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="sendCommandResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="removeSubscription">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="subscriptionId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntity" type="tns:entity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="removeSubscriptionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="removeSubscriptionResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="updateSubscription">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="subscriptionId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="subscription" type="tns:contextSubscription"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntity" type="tns:entity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="contextSubscription">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="contextProviderAdvertisement"
+                          type="tns:contextProviderAdvertisement"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="entity" type="tns:entity"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="parameter" type="tns:parameter"/>
+               <s:element minOccurs="0" maxOccurs="1" name="filter" type="tns:conditionType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="condition" type="tns:conditionType"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="summary" type="tns:summaryType"/>
+               <s:element minOccurs="0" maxOccurs="1" name="pushInterface" type="s:anyURI"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="id" type="s:string"/>
+         </s:complexType>
+         <s:complexType name="conditionType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="simpleCondition"
+                          type="tns:simpleCondition"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="logicalOperator"
+                         type="tns:conditionTypeLogicalOperator"
+                         use="required"/>
+         </s:complexType>
+         <s:complexType name="simpleCondition">
+            <s:attribute form="unqualified" name="parameter" type="s:string"/>
+            <s:attribute form="unqualified" name="attribute" type="tns:attributeType" use="required"/>
+            <s:attribute form="unqualified" name="comparisonOperator" type="tns:comparisonOperatorType"
+                         use="required"/>
+            <s:attribute form="unqualified" name="value" type="s:string"/>
+            <s:attribute form="unqualified" name="uom" type="s:string"/>
+         </s:complexType>
+         <s:simpleType name="comparisonOperatorType">
+            <s:restriction base="s:string">
+               <s:enumeration value="lt"/>
+               <s:enumeration value="gt"/>
+               <s:enumeration value="le"/>
+               <s:enumeration value="ge"/>
+               <s:enumeration value="eq"/>
+               <s:enumeration value="ne"/>
+               <s:enumeration value="contains"/>
+               <s:enumeration value="starts_with"/>
+               <s:enumeration value="ends_with"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:simpleType name="conditionTypeLogicalOperator">
+            <s:restriction base="s:string">
+               <s:enumeration value="or"/>
+               <s:enumeration value="and"/>
+            </s:restriction>
+         </s:simpleType>
+         <s:element name="updateSubscriptionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="updateSubscriptionResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="subscribeToContextCheck">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="returnedParameterName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="evaluatedParameterName" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="logicalOperator"
+                             type="tns:conditionTypeLogicalOperator"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="comparisonValue" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="pushUrl" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="subscribeToContextCheckResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="subscribeToContextCheckResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="subscribeToContextChange">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="returnedParameterName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="evaluatedParameterName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="deltaValue" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="pushUrl" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="subscribeToContextChangeResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="subscribeToContextChangeResult"
+                             type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="subscribeToContext">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="subscription" type="tns:contextSubscription"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntity" type="tns:entity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="subscribeToContextResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="subscribeToContextResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getEntityRelations">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="subjectEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="relationPredicate" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="relationStatus" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getEntityRelationsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getEntityRelationsResult"
+                             type="tns:ArrayOfEntityRelation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfEntityRelation">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="entityRelation" nillable="true"
+                          type="tns:entityRelation"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="entityRelation">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="subjectEntity" type="tns:entity"/>
+               <s:element minOccurs="0" maxOccurs="1" name="predicate" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="objectEntity" type="tns:entity"/>
+               <s:element minOccurs="0" maxOccurs="1" name="status" type="s:string"/>
+            </s:sequence>
+            <s:attribute form="unqualified" name="id" type="s:string"/>
+         </s:complexType>
+         <s:element name="removeEntityRelationCsv">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="subjectEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="subjectEntityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="objectEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="relationPredicate" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="removeEntityRelationCsvResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="removeEntityRelationCsvResult"
+                             type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="addEntityRelationCsv">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="subjectEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="subjectEntityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="objectEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="relationPredicate" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="addEntityRelationCsvResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="addEntityRelationCsvResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="removeEntityRelation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="relation" type="tns:entityRelation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="removeEntityRelationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="removeEntityRelationResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="addEntityRelation">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="relation" type="tns:entityRelation"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="addEntityRelationResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="addEntityRelationResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="removeEntityCsv">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="removeEntityCsvResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="removeEntityCsvResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="addEntityCsv">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityKey" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="entityType" type="tns:entityType"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityUri" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="addEntityCsvResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="addEntityCsvResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="removeEntity">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="existingEntity" type="tns:entity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="removeEntityResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="removeEntityResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="addEntity">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="newEntity" type="tns:entity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="addEntityResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="addEntityResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="pushNewContextCsv">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityKey" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="contextCsvString" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="returnData" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="pushNewContextCsvResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="pushNewContextCsvResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="pushNewContext">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="elms" type="tns:ArrayOfContextElement"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="returnData" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="pushNewContextResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="pushNewContextResult"
+                             type="tns:ArrayOfContextElement"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getLastContextsCsv">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityIds" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameterNames" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfString">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true"
+                          type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="getLastContextsCsvResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getLastContextsCsvResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getLastContextCsv">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameterName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getLastContextCsvResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getLastContextCsvResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getLastContexts">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityIds" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameterNames" type="tns:ArrayOfString"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getLastContextsResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getLastContextsResult"
+                             type="tns:ArrayOfContextElement"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getLastContext">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameterName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getLastContextResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getLastContextResult"
+                             type="tns:contextElement"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="whenLastContextUpdate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="entityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="parameterName" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityId" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntityKey" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="whenLastContextUpdateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="whenLastContextUpdateResult" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContextCsv">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="query" type="tns:contextQuery"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntity" type="tns:entity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="contextQuery">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="contextProviderAdvertisement"
+                          type="tns:contextProviderAdvertisement"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="entity" type="tns:entity"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="parameter" type="tns:parameter"/>
+               <s:element minOccurs="0" maxOccurs="1" name="filter" type="tns:conditionType"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="summary" type="tns:summaryType"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="getContextCsvResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getContextCsvResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContext">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="query" type="tns:contextQuery"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="requestingEntity" type="tns:entity"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getContextResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getContextResult"
+                             type="tns:ArrayOfContextElement"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getAdvertisement">
+            <s:complexType/>
+         </s:element>
+         <s:element name="getAdvertisementResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getAdvertisementResult"
+                             type="tns:contextProviderAdvertisement"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="isImplemented">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="methodName" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="isImplementedResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="isImplementedResult" type="s:boolean"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="base64Binary" nillable="true" type="s:base64Binary"/>
+         <s:element name="boolean" type="s:boolean"/>
+         <s:element name="string" nillable="true" type="s:string"/>
+         <s:element name="ArrayOfEntityRelation" nillable="true" type="tns:ArrayOfEntityRelation"/>
+         <s:element name="ArrayOfContextElement" nillable="true" type="tns:ArrayOfContextElement"/>
+         <s:element name="contextElement" nillable="true" type="tns:contextElement"/>
+         <s:element name="double" type="s:double"/>
+         <s:element name="contextProviderAdvertisement" nillable="true"
+                    type="tns:contextProviderAdvertisement"/>
+      </s:schema>
+      <s:schema targetNamespace="http://www.ist-mobilife.org/v1.0/context/AbstractTypes">
+         <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <s:complexType name="StringArray">
+            <s:complexContent mixed="false">
+               <s:restriction base="soapenc:Array">
+                  <s:sequence>
+                     <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string"/>
+                  </s:sequence>
+               </s:restriction>
+            </s:complexContent>
+         </s:complexType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="checkForNewSoftwareSoapIn">
+      <wsdl:part name="parameters" element="tns:checkForNewSoftware"/>
+  </wsdl:message>
+  <wsdl:message name="checkForNewSoftwareSoapOut">
+      <wsdl:part name="parameters" element="tns:checkForNewSoftwareResponse"/>
+  </wsdl:message>
+  <wsdl:message name="publishNewSoftwareSoapIn">
+      <wsdl:part name="parameters" element="tns:publishNewSoftware"/>
+  </wsdl:message>
+  <wsdl:message name="publishNewSoftwareSoapOut">
+      <wsdl:part name="parameters" element="tns:publishNewSoftwareResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getContextByIdCsvSoapIn">
+      <wsdl:part name="parameters" element="tns:getContextByIdCsv"/>
+  </wsdl:message>
+  <wsdl:message name="getContextByIdCsvSoapOut">
+      <wsdl:part name="parameters" element="tns:getContextByIdCsvResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getContextByIdSoapIn">
+      <wsdl:part name="parameters" element="tns:getContextById"/>
+  </wsdl:message>
+  <wsdl:message name="getContextByIdSoapOut">
+      <wsdl:part name="parameters" element="tns:getContextByIdResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryCsvSoapIn">
+      <wsdl:part name="parameters" element="tns:getContextSummaryCsv"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryCsvSoapOut">
+      <wsdl:part name="parameters" element="tns:getContextSummaryCsvResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummarySoapIn">
+      <wsdl:part name="parameters" element="tns:getContextSummary"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummarySoapOut">
+      <wsdl:part name="parameters" element="tns:getContextSummaryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryXhtmlSoapIn">
+      <wsdl:part name="parameters" element="tns:getContextSummaryXhtml"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryXhtmlSoapOut">
+      <wsdl:part name="parameters" element="tns:getContextSummaryXhtmlResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryRssSoapIn">
+      <wsdl:part name="parameters" element="tns:getContextSummaryRss"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryRssSoapOut">
+      <wsdl:part name="parameters" element="tns:getContextSummaryRssResponse"/>
+  </wsdl:message>
+  <wsdl:message name="drawContextSoapIn">
+      <wsdl:part name="parameters" element="tns:drawContext"/>
+  </wsdl:message>
+  <wsdl:message name="drawContextSoapOut">
+      <wsdl:part name="parameters" element="tns:drawContextResponse"/>
+  </wsdl:message>
+  <wsdl:message name="isAvailableContextSoapIn">
+      <wsdl:part name="parameters" element="tns:isAvailableContext"/>
+  </wsdl:message>
+  <wsdl:message name="isAvailableContextSoapOut">
+      <wsdl:part name="parameters" element="tns:isAvailableContextResponse"/>
+  </wsdl:message>
+  <wsdl:message name="isFeaturingEntitySoapIn">
+      <wsdl:part name="parameters" element="tns:isFeaturingEntity"/>
+  </wsdl:message>
+  <wsdl:message name="isFeaturingEntitySoapOut">
+      <wsdl:part name="parameters" element="tns:isFeaturingEntityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="sendCommandSoapIn">
+      <wsdl:part name="parameters" element="tns:sendCommand"/>
+  </wsdl:message>
+  <wsdl:message name="sendCommandSoapOut">
+      <wsdl:part name="parameters" element="tns:sendCommandResponse"/>
+  </wsdl:message>
+  <wsdl:message name="removeSubscriptionSoapIn">
+      <wsdl:part name="parameters" element="tns:removeSubscription"/>
+  </wsdl:message>
+  <wsdl:message name="removeSubscriptionSoapOut">
+      <wsdl:part name="parameters" element="tns:removeSubscriptionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="updateSubscriptionSoapIn">
+      <wsdl:part name="parameters" element="tns:updateSubscription"/>
+  </wsdl:message>
+  <wsdl:message name="updateSubscriptionSoapOut">
+      <wsdl:part name="parameters" element="tns:updateSubscriptionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextCheckSoapIn">
+      <wsdl:part name="parameters" element="tns:subscribeToContextCheck"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextCheckSoapOut">
+      <wsdl:part name="parameters" element="tns:subscribeToContextCheckResponse"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextChangeSoapIn">
+      <wsdl:part name="parameters" element="tns:subscribeToContextChange"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextChangeSoapOut">
+      <wsdl:part name="parameters" element="tns:subscribeToContextChangeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextSoapIn">
+      <wsdl:part name="parameters" element="tns:subscribeToContext"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextSoapOut">
+      <wsdl:part name="parameters" element="tns:subscribeToContextResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getEntityRelationsSoapIn">
+      <wsdl:part name="parameters" element="tns:getEntityRelations"/>
+  </wsdl:message>
+  <wsdl:message name="getEntityRelationsSoapOut">
+      <wsdl:part name="parameters" element="tns:getEntityRelationsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityRelationCsvSoapIn">
+      <wsdl:part name="parameters" element="tns:removeEntityRelationCsv"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityRelationCsvSoapOut">
+      <wsdl:part name="parameters" element="tns:removeEntityRelationCsvResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityRelationCsvSoapIn">
+      <wsdl:part name="parameters" element="tns:addEntityRelationCsv"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityRelationCsvSoapOut">
+      <wsdl:part name="parameters" element="tns:addEntityRelationCsvResponse"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityRelationSoapIn">
+      <wsdl:part name="parameters" element="tns:removeEntityRelation"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityRelationSoapOut">
+      <wsdl:part name="parameters" element="tns:removeEntityRelationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityRelationSoapIn">
+      <wsdl:part name="parameters" element="tns:addEntityRelation"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityRelationSoapOut">
+      <wsdl:part name="parameters" element="tns:addEntityRelationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityCsvSoapIn">
+      <wsdl:part name="parameters" element="tns:removeEntityCsv"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityCsvSoapOut">
+      <wsdl:part name="parameters" element="tns:removeEntityCsvResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityCsvSoapIn">
+      <wsdl:part name="parameters" element="tns:addEntityCsv"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityCsvSoapOut">
+      <wsdl:part name="parameters" element="tns:addEntityCsvResponse"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntitySoapIn">
+      <wsdl:part name="parameters" element="tns:removeEntity"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntitySoapOut">
+      <wsdl:part name="parameters" element="tns:removeEntityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addEntitySoapIn">
+      <wsdl:part name="parameters" element="tns:addEntity"/>
+  </wsdl:message>
+  <wsdl:message name="addEntitySoapOut">
+      <wsdl:part name="parameters" element="tns:addEntityResponse"/>
+  </wsdl:message>
+  <wsdl:message name="pushNewContextCsvSoapIn">
+      <wsdl:part name="parameters" element="tns:pushNewContextCsv"/>
+  </wsdl:message>
+  <wsdl:message name="pushNewContextCsvSoapOut">
+      <wsdl:part name="parameters" element="tns:pushNewContextCsvResponse"/>
+  </wsdl:message>
+  <wsdl:message name="pushNewContextSoapIn">
+      <wsdl:part name="parameters" element="tns:pushNewContext"/>
+  </wsdl:message>
+  <wsdl:message name="pushNewContextSoapOut">
+      <wsdl:part name="parameters" element="tns:pushNewContextResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsCsvSoapIn">
+      <wsdl:part name="parameters" element="tns:getLastContextsCsv"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsCsvSoapOut">
+      <wsdl:part name="parameters" element="tns:getLastContextsCsvResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextCsvSoapIn">
+      <wsdl:part name="parameters" element="tns:getLastContextCsv"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextCsvSoapOut">
+      <wsdl:part name="parameters" element="tns:getLastContextCsvResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsSoapIn">
+      <wsdl:part name="parameters" element="tns:getLastContexts"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsSoapOut">
+      <wsdl:part name="parameters" element="tns:getLastContextsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextSoapIn">
+      <wsdl:part name="parameters" element="tns:getLastContext"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextSoapOut">
+      <wsdl:part name="parameters" element="tns:getLastContextResponse"/>
+  </wsdl:message>
+  <wsdl:message name="whenLastContextUpdateSoapIn">
+      <wsdl:part name="parameters" element="tns:whenLastContextUpdate"/>
+  </wsdl:message>
+  <wsdl:message name="whenLastContextUpdateSoapOut">
+      <wsdl:part name="parameters" element="tns:whenLastContextUpdateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getContextCsvSoapIn">
+      <wsdl:part name="parameters" element="tns:getContextCsv"/>
+  </wsdl:message>
+  <wsdl:message name="getContextCsvSoapOut">
+      <wsdl:part name="parameters" element="tns:getContextCsvResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSoapIn">
+      <wsdl:part name="parameters" element="tns:getContext"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSoapOut">
+      <wsdl:part name="parameters" element="tns:getContextResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getAdvertisementSoapIn">
+      <wsdl:part name="parameters" element="tns:getAdvertisement"/>
+  </wsdl:message>
+  <wsdl:message name="getAdvertisementSoapOut">
+      <wsdl:part name="parameters" element="tns:getAdvertisementResponse"/>
+  </wsdl:message>
+  <wsdl:message name="isImplementedSoapIn">
+      <wsdl:part name="parameters" element="tns:isImplemented"/>
+  </wsdl:message>
+  <wsdl:message name="isImplementedSoapOut">
+      <wsdl:part name="parameters" element="tns:isImplementedResponse"/>
+  </wsdl:message>
+  <wsdl:message name="checkForNewSoftwareHttpGetIn">
+      <wsdl:part name="productCode" type="s:string"/>
+      <wsdl:part name="existingVersion" type="s:string"/>
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="entityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="checkForNewSoftwareHttpGetOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="publishNewSoftwareHttpGetIn">
+      <wsdl:part name="productCode" type="s:string"/>
+      <wsdl:part name="version" type="s:string"/>
+      <wsdl:part name="productData" type="s1:StringArray"/>
+      <wsdl:part name="adminEntityId" type="s:string"/>
+      <wsdl:part name="adminEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="publishNewSoftwareHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="getContextByIdCsvHttpGetIn">
+      <wsdl:part name="parameterName" type="s:string"/>
+      <wsdl:part name="id" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextByIdCsvHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryCsvHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="parameterName" type="s:string"/>
+      <wsdl:part name="startTime" type="s:string"/>
+      <wsdl:part name="endTime" type="s:string"/>
+      <wsdl:part name="summaryType" type="s:string"/>
+      <wsdl:part name="summaryValue" type="s:string"/>
+      <wsdl:part name="summarySortOrder" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryCsvHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryXhtmlHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="startTime" type="s:string"/>
+      <wsdl:part name="endTime" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryXhtmlHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryRssHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="startTime" type="s:string"/>
+      <wsdl:part name="endTime" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryRssHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="drawContextHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="xparameterName" type="s:string"/>
+      <wsdl:part name="yparameterName" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="drawContextHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="isAvailableContextHttpGetIn">
+      <wsdl:part name="parameterName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="isAvailableContextHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="isFeaturingEntityHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="isFeaturingEntityHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextCheckHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="returnedParameterName" type="s:string"/>
+      <wsdl:part name="evaluatedParameterName" type="s:string"/>
+      <wsdl:part name="logicalOperator" type="s:string"/>
+      <wsdl:part name="comparisonValue" type="s:string"/>
+      <wsdl:part name="pushUrl" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextCheckHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextChangeHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="returnedParameterName" type="s:string"/>
+      <wsdl:part name="evaluatedParameterName" type="s:string"/>
+      <wsdl:part name="deltaValue" type="s:string"/>
+      <wsdl:part name="pushUrl" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextChangeHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getEntityRelationsHttpGetIn">
+      <wsdl:part name="subjectEntityId" type="s:string"/>
+      <wsdl:part name="relationPredicate" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+      <wsdl:part name="relationStatus" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getEntityRelationsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfEntityRelation"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityRelationCsvHttpGetIn">
+      <wsdl:part name="subjectEntityId" type="s:string"/>
+      <wsdl:part name="subjectEntityKey" type="s:string"/>
+      <wsdl:part name="objectEntityId" type="s:string"/>
+      <wsdl:part name="relationPredicate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityRelationCsvHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityRelationCsvHttpGetIn">
+      <wsdl:part name="subjectEntityId" type="s:string"/>
+      <wsdl:part name="subjectEntityKey" type="s:string"/>
+      <wsdl:part name="objectEntityId" type="s:string"/>
+      <wsdl:part name="relationPredicate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityRelationCsvHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityCsvHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="entityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityCsvHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityCsvHttpGetIn">
+      <wsdl:part name="entityName" type="s:string"/>
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="entityKey" type="s:string"/>
+      <wsdl:part name="entityType" type="s:string"/>
+      <wsdl:part name="entityUri" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityCsvHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="pushNewContextCsvHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="entityKey" type="s:string"/>
+      <wsdl:part name="contextCsvString" type="s:string"/>
+      <wsdl:part name="returnData" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="pushNewContextCsvHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsCsvHttpGetIn">
+      <wsdl:part name="entityIds" type="s1:StringArray"/>
+      <wsdl:part name="parameterNames" type="s1:StringArray"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsCsvHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextCsvHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="parameterName" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextCsvHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsHttpGetIn">
+      <wsdl:part name="entityIds" type="s1:StringArray"/>
+      <wsdl:part name="parameterNames" type="s1:StringArray"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsHttpGetOut">
+      <wsdl:part name="Body" element="tns:ArrayOfContextElement"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="parameterName" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextHttpGetOut">
+      <wsdl:part name="Body" element="tns:contextElement"/>
+  </wsdl:message>
+  <wsdl:message name="whenLastContextUpdateHttpGetIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="parameterName" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="whenLastContextUpdateHttpGetOut">
+      <wsdl:part name="Body" element="tns:double"/>
+  </wsdl:message>
+  <wsdl:message name="getAdvertisementHttpGetIn"/>
+  <wsdl:message name="getAdvertisementHttpGetOut">
+      <wsdl:part name="Body" element="tns:contextProviderAdvertisement"/>
+  </wsdl:message>
+  <wsdl:message name="isImplementedHttpGetIn">
+      <wsdl:part name="methodName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="isImplementedHttpGetOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="checkForNewSoftwareHttpPostIn">
+      <wsdl:part name="productCode" type="s:string"/>
+      <wsdl:part name="existingVersion" type="s:string"/>
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="entityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="checkForNewSoftwareHttpPostOut">
+      <wsdl:part name="Body" element="tns:base64Binary"/>
+  </wsdl:message>
+  <wsdl:message name="publishNewSoftwareHttpPostIn">
+      <wsdl:part name="productCode" type="s:string"/>
+      <wsdl:part name="version" type="s:string"/>
+      <wsdl:part name="productData" type="s1:StringArray"/>
+      <wsdl:part name="adminEntityId" type="s:string"/>
+      <wsdl:part name="adminEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="publishNewSoftwareHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="getContextByIdCsvHttpPostIn">
+      <wsdl:part name="parameterName" type="s:string"/>
+      <wsdl:part name="id" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextByIdCsvHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryCsvHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="parameterName" type="s:string"/>
+      <wsdl:part name="startTime" type="s:string"/>
+      <wsdl:part name="endTime" type="s:string"/>
+      <wsdl:part name="summaryType" type="s:string"/>
+      <wsdl:part name="summaryValue" type="s:string"/>
+      <wsdl:part name="summarySortOrder" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryCsvHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryXhtmlHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="startTime" type="s:string"/>
+      <wsdl:part name="endTime" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryXhtmlHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryRssHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="startTime" type="s:string"/>
+      <wsdl:part name="endTime" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getContextSummaryRssHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="drawContextHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="xparameterName" type="s:string"/>
+      <wsdl:part name="yparameterName" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="drawContextHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="isAvailableContextHttpPostIn">
+      <wsdl:part name="parameterName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="isAvailableContextHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="isFeaturingEntityHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="isFeaturingEntityHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextCheckHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="returnedParameterName" type="s:string"/>
+      <wsdl:part name="evaluatedParameterName" type="s:string"/>
+      <wsdl:part name="logicalOperator" type="s:string"/>
+      <wsdl:part name="comparisonValue" type="s:string"/>
+      <wsdl:part name="pushUrl" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextCheckHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextChangeHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="returnedParameterName" type="s:string"/>
+      <wsdl:part name="evaluatedParameterName" type="s:string"/>
+      <wsdl:part name="deltaValue" type="s:string"/>
+      <wsdl:part name="pushUrl" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="subscribeToContextChangeHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getEntityRelationsHttpPostIn">
+      <wsdl:part name="subjectEntityId" type="s:string"/>
+      <wsdl:part name="relationPredicate" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+      <wsdl:part name="relationStatus" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getEntityRelationsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfEntityRelation"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityRelationCsvHttpPostIn">
+      <wsdl:part name="subjectEntityId" type="s:string"/>
+      <wsdl:part name="subjectEntityKey" type="s:string"/>
+      <wsdl:part name="objectEntityId" type="s:string"/>
+      <wsdl:part name="relationPredicate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityRelationCsvHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityRelationCsvHttpPostIn">
+      <wsdl:part name="subjectEntityId" type="s:string"/>
+      <wsdl:part name="subjectEntityKey" type="s:string"/>
+      <wsdl:part name="objectEntityId" type="s:string"/>
+      <wsdl:part name="relationPredicate" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityRelationCsvHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityCsvHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="entityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="removeEntityCsvHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityCsvHttpPostIn">
+      <wsdl:part name="entityName" type="s:string"/>
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="entityKey" type="s:string"/>
+      <wsdl:part name="entityType" type="s:string"/>
+      <wsdl:part name="entityUri" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="addEntityCsvHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:message name="pushNewContextCsvHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="entityKey" type="s:string"/>
+      <wsdl:part name="contextCsvString" type="s:string"/>
+      <wsdl:part name="returnData" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="pushNewContextCsvHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsCsvHttpPostIn">
+      <wsdl:part name="entityIds" type="s1:StringArray"/>
+      <wsdl:part name="parameterNames" type="s1:StringArray"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsCsvHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextCsvHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="parameterName" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextCsvHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsHttpPostIn">
+      <wsdl:part name="entityIds" type="s1:StringArray"/>
+      <wsdl:part name="parameterNames" type="s1:StringArray"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextsHttpPostOut">
+      <wsdl:part name="Body" element="tns:ArrayOfContextElement"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="parameterName" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="getLastContextHttpPostOut">
+      <wsdl:part name="Body" element="tns:contextElement"/>
+  </wsdl:message>
+  <wsdl:message name="whenLastContextUpdateHttpPostIn">
+      <wsdl:part name="entityId" type="s:string"/>
+      <wsdl:part name="parameterName" type="s:string"/>
+      <wsdl:part name="requestingEntityId" type="s:string"/>
+      <wsdl:part name="requestingEntityKey" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="whenLastContextUpdateHttpPostOut">
+      <wsdl:part name="Body" element="tns:double"/>
+  </wsdl:message>
+  <wsdl:message name="getAdvertisementHttpPostIn"/>
+  <wsdl:message name="getAdvertisementHttpPostOut">
+      <wsdl:part name="Body" element="tns:contextProviderAdvertisement"/>
+  </wsdl:message>
+  <wsdl:message name="isImplementedHttpPostIn">
+      <wsdl:part name="methodName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="isImplementedHttpPostOut">
+      <wsdl:part name="Body" element="tns:boolean"/>
+  </wsdl:message>
+  <wsdl:portType name="WeatherProviderSoap">
+      <wsdl:operation name="checkForNewSoftware">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED, MGT) To check if a new version of (client) software can be downloaded from the CP. Returns data if the available version is higher than the existing version on the client, or null otherwise. Version is formatted as majVersion.minVersion</documentation>
+         <wsdl:input message="tns:checkForNewSoftwareSoapIn"/>
+         <wsdl:output message="tns:checkForNewSoftwareSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="publishNewSoftware">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED, MGT) To put a new version of (client) software to be downloaded from the CP. Returns true if successfull. Version is formatted as majVersion.minVersion</documentation>
+         <wsdl:input message="tns:publishNewSoftwareSoapIn"/>
+         <wsdl:output message="tns:publishNewSoftwareSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContextByIdCsv">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED) To request context information referenced by unique ID in CSV.</documentation>
+         <wsdl:input message="tns:getContextByIdCsvSoapIn"/>
+         <wsdl:output message="tns:getContextByIdCsvSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContextById">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED) To request context information referenced by unique ID.</documentation>
+         <wsdl:input message="tns:getContextByIdSoapIn"/>
+         <wsdl:output message="tns:getContextByIdSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContextSummaryCsv">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED) To request a summary of context information in CSV.</documentation>
+         <wsdl:input message="tns:getContextSummaryCsvSoapIn"/>
+         <wsdl:output message="tns:getContextSummaryCsvSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContextSummary">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED) To request a summary of context information</documentation>
+         <wsdl:input message="tns:getContextSummarySoapIn"/>
+         <wsdl:output message="tns:getContextSummarySoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContextSummaryXhtml">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,OPTIONAL) To request a XHTML formatted string with a human readable summary based on the context data of the given period.</documentation>
+         <wsdl:input message="tns:getContextSummaryXhtmlSoapIn"/>
+         <wsdl:output message="tns:getContextSummaryXhtmlSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContextSummaryRss">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,OPTIONAL) To request a RSS formatted string with a human readable summary based on the context data of the given period.</documentation>
+         <wsdl:input message="tns:getContextSummaryRssSoapIn"/>
+         <wsdl:output message="tns:getContextSummaryRssSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="drawContext">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,OPTIONAL) To enable context graphs. Returns a string formatted like [(x0,y0),(x1,y1),...] which can be used to draw graphs.</documentation>
+         <wsdl:input message="tns:drawContextSoapIn"/>
+         <wsdl:output message="tns:drawContextSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="isAvailableContext">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED) To check if context information of this type can be obtained from this context provider</documentation>
+         <wsdl:input message="tns:isAvailableContextSoapIn"/>
+         <wsdl:output message="tns:isAvailableContextSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="isFeaturingEntity">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED) To check if context information for this entity can be obtained from this context provider</documentation>
+         <wsdl:input message="tns:isFeaturingEntitySoapIn"/>
+         <wsdl:output message="tns:isFeaturingEntitySoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="sendCommand">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED, RECOMMENDED, MGT) To send a command</documentation>
+         <wsdl:input message="tns:sendCommandSoapIn"/>
+         <wsdl:output message="tns:sendCommandSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="removeSubscription">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED, RECOMMENDED) To update an existing subscription identified by an id</documentation>
+         <wsdl:input message="tns:removeSubscriptionSoapIn"/>
+         <wsdl:output message="tns:removeSubscriptionSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateSubscription">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED, RECOMMENDED) To update an already existing subscription identified by an id</documentation>
+         <wsdl:input message="tns:updateSubscriptionSoapIn"/>
+         <wsdl:output message="tns:updateSubscriptionSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="subscribeToContextCheck">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED, RECOMMENDED) To subscribe to context updates when the context exceeds certain value, returns an id for the subscription</documentation>
+         <wsdl:input message="tns:subscribeToContextCheckSoapIn"/>
+         <wsdl:output message="tns:subscribeToContextCheckSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="subscribeToContextChange">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED, RECOMMENDED) To subscribe to context updates when there is a change in context, like a change of country or a change in temperature of more than 1 degree, returns an id for the subscription</documentation>
+         <wsdl:input message="tns:subscribeToContextChangeSoapIn"/>
+         <wsdl:output message="tns:subscribeToContextChangeSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="subscribeToContext">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED, RECOMMENDED) To subscribe to context updates in specific conditions, using filters and summaries, returns an id for the subscription</documentation>
+         <wsdl:input message="tns:subscribeToContextSoapIn"/>
+         <wsdl:output message="tns:subscribeToContextSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getEntityRelations">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED, MGT) To get all list of all relations of an entity. Valid key required for requester.</documentation>
+         <wsdl:input message="tns:getEntityRelationsSoapIn"/>
+         <wsdl:output message="tns:getEntityRelationsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="removeEntityRelationCsv">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED, MGT) To remove a relation between 2 entities. Valid key required for subject.</documentation>
+         <wsdl:input message="tns:removeEntityRelationCsvSoapIn"/>
+         <wsdl:output message="tns:removeEntityRelationCsvSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="addEntityRelationCsv">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED, MGT) To add an (ownership, friendship, ...) relation between entities. Valid key required for subject.</documentation>
+         <wsdl:input message="tns:addEntityRelationCsvSoapIn"/>
+         <wsdl:output message="tns:addEntityRelationCsvSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="removeEntityRelation">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED, MGT) To remove a relation between 2 entities. Valid key required for subject.</documentation>
+         <wsdl:input message="tns:removeEntityRelationSoapIn"/>
+         <wsdl:output message="tns:removeEntityRelationSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="addEntityRelation">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED, MGT) To add an (ownership, friendship, ...) relation between entities. Valid key required for subject.</documentation>
+         <wsdl:input message="tns:addEntityRelationSoapIn"/>
+         <wsdl:output message="tns:addEntityRelationSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="removeEntityCsv">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,REQUIRED, MGT) To remove an entity (user, device, vehicle, room, ...) to the CP. A valid key is required.</documentation>
+         <wsdl:input message="tns:removeEntityCsvSoapIn"/>
+         <wsdl:output message="tns:removeEntityCsvSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="addEntityCsv">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,REQUIRED, MGT) To add a new entity (user, device, vehicle, room, ...) to the CP. The key and name of the entity are required, the id will be assigned if missing.</documentation>
+         <wsdl:input message="tns:addEntityCsvSoapIn"/>
+         <wsdl:output message="tns:addEntityCsvSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="removeEntity">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,REQUIRED, MGT) To remove an entity (user, device, vehicle, room, ...) to the CP. A valid key is required.</documentation>
+         <wsdl:input message="tns:removeEntitySoapIn"/>
+         <wsdl:output message="tns:removeEntitySoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="addEntity">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,REQUIRED, MGT) To add a new entity (user, device, vehicle, room, ...) to the CP. The key and name of the entity are required, the id will be assigned if missing.</documentation>
+         <wsdl:input message="tns:addEntitySoapIn"/>
+         <wsdl:output message="tns:addEntitySoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="pushNewContextCsv">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(RECOMMENDED) Specific case of  pushContext, to push context information for a specific entity, formatted as CSV described in the cookbook. The output can be used to return augmented context information in CSV format.</documentation>
+         <wsdl:input message="tns:pushNewContextCsvSoapIn"/>
+         <wsdl:output message="tns:pushNewContextCsvSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="pushNewContext">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED) To push context updates. Requires a valid key in elm.entity</documentation>
+         <wsdl:input message="tns:pushNewContextSoapIn"/>
+         <wsdl:output message="tns:pushNewContextSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getLastContextsCsv">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,REQUIRED) Specific case of getContext to request the last known context information for a matrix of parameters and entities. The possible entities and parameters are described in the advertisement. CSV format as described in the cookbook.</documentation>
+         <wsdl:input message="tns:getLastContextsCsvSoapIn"/>
+         <wsdl:output message="tns:getLastContextsCsvSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getLastContextCsv">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,REQUIRED) Specific case of getContext to request the last known context information of a specific type and for a specific entity. The possible entities and parameters are described in the advertisement. CSV format as described in the cookbook.</documentation>
+         <wsdl:input message="tns:getLastContextCsvSoapIn"/>
+         <wsdl:output message="tns:getLastContextCsvSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getLastContexts">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,REQUIRED) Specific case of getContext to request the last known context information for a matrix of parameters and entities. The possible entities and parameters are described in the advertisement.</documentation>
+         <wsdl:input message="tns:getLastContextsSoapIn"/>
+         <wsdl:output message="tns:getLastContextsSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getLastContext">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,REQUIRED) Specific case of getContext to request the last known context information of a specific type and for a specific entity. The possible entities and parameters are described in the advertisement. If entityId or parameterName contains commas this must be interpreted as a comma-separated list of identities or names.</documentation>
+         <wsdl:input message="tns:getLastContextSoapIn"/>
+         <wsdl:output message="tns:getLastContextSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="whenLastContextUpdate">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,OPTIONAL) To check when a certain parameter was last updated. Returns the period in number of seconds.</documentation>
+         <wsdl:input message="tns:whenLastContextUpdateSoapIn"/>
+         <wsdl:output message="tns:whenLastContextUpdateSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContextCsv">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,RECOMMENDED) Most generic operation to request context information in CSV format.</documentation>
+         <wsdl:input message="tns:getContextCsvSoapIn"/>
+         <wsdl:output message="tns:getContextCsvSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getContext">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,REQUIRED) Most generic operation to request context information.</documentation>
+         <wsdl:input message="tns:getContextSoapIn"/>
+         <wsdl:output message="tns:getContextSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getAdvertisement">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(NOT IMPLEMENTED,REQUIRED) To request the advertisement of this specific context provider.</documentation>
+         <wsdl:input message="tns:getAdvertisementSoapIn"/>
+         <wsdl:output message="tns:getAdvertisementSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="isImplemented">
+         <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">(REQUIRED) To explicitly check if a method is implemented in the sense that it is also tested for correct behaviour.</documentation>
+         <wsdl:input message="tns:isImplementedSoapIn"/>
+         <wsdl:output message="tns:isImplementedSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="WeatherProviderSoap" type="tns:WeatherProviderSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="checkForNewSoftware">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/checkForNewSoftware"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="publishNewSoftware">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/publishNewSoftware"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContextByIdCsv">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getContextByIdCsv"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContextById">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getContextById"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContextSummaryCsv">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getContextSummaryCsv"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContextSummary">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getContextSummary"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContextSummaryXhtml">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getContextSummaryXhtml"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContextSummaryRss">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getContextSummaryRss"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="drawContext">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/drawContext"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="isAvailableContext">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/isAvailableContext"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="isFeaturingEntity">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/isFeaturingEntity"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="sendCommand">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/sendCommand"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="removeSubscription">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/removeSubscription"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateSubscription">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/updateSubscription"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="subscribeToContextCheck">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/subscribeToContextCheck"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="subscribeToContextChange">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/subscribeToContextChange"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="subscribeToContext">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/subscribeToContext"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getEntityRelations">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getEntityRelations"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="removeEntityRelationCsv">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/removeEntityRelationCsv"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="addEntityRelationCsv">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/addEntityRelationCsv"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="removeEntityRelation">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/removeEntityRelation"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="addEntityRelation">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/addEntityRelation"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="removeEntityCsv">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/removeEntityCsv"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="addEntityCsv">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/addEntityCsv"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="removeEntity">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/removeEntity"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="addEntity">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/addEntity"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="pushNewContextCsv">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/pushNewContextCsv"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="pushNewContext">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/pushNewContext"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getLastContextsCsv">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getLastContextsCsv"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getLastContextCsv">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getLastContextCsv"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getLastContexts">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getLastContexts"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getLastContext">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getLastContext"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="whenLastContextUpdate">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/whenLastContextUpdate"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContextCsv">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getContextCsv"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getContext">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getContext"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getAdvertisement">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/getAdvertisement"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="isImplemented">
+         <soap:operation soapAction="http://www.ist-mobilife.org/v1.0/context/isImplemented"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="WeatherProvider">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">This is only a proxy</documentation>
+      <wsdl:port name="WeatherProviderSoap" binding="tns:WeatherProviderSoap">
+         <soap:address location="http://ws.soatrader.com/telin.nl/0.1/WeatherProvider"/>
+      </wsdl:port>
+    
+    
+  </wsdl:service>
+</wsdl:definitions>

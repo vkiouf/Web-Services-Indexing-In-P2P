@@ -1,0 +1,322 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:tns="http://datafed.net/xs/Aggregator"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:agg="http://datafed.net/xs/Aggregator"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             targetNamespace="http://datafed.net/xs/Aggregator">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+	  <documentation>Performs aggregation operations on tables.</documentation>
+	  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <xs:schema xmlns:dp="http://datafed.net/xs/DataPrimitives"
+                 xmlns:tab="http://datafed.net/xs/Table"
+                 xmlns:tbl="http://datafed.net/xs/Table"
+                 xmlns="http://datafed.net/xs/Aggregator"
+                 elementFormDefault="qualified"
+                 targetNamespace="http://datafed.net/xs/Aggregator">
+			      <xs:import namespace="http://datafed.net/xs/DataPrimitives"
+                    schemaLocation="http://datafed.net/xs/DataPrimitives.xsd"/>
+			      <xs:import namespace="http://datafed.net/xs/Table"
+                    schemaLocation="http://geobrain.laits.gmu.edu/mpgc/Table.xsd"/>
+			      <xs:element name="TimeAggregate">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element ref="tbl:Table"/>
+						            <xs:element name="Settings" type="SettingsType"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:element name="SpaceAggregate">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element ref="tbl:Table"/>
+						            <xs:element name="Settings" type="SettingsType"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:element name="PeriodicAggregate">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element ref="tbl:Table"/>
+						            <xs:element name="Settings" type="SettingsType"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:element name="RangeAggregate">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element name="ReferenceTable" type="tbl:TableType"/>
+						            <xs:element name="ref_column" type="xs:string"/>
+						            <xs:element name="DataTable" type="tbl:TableType"/>
+						            <xs:element name="data_column" type="xs:string"/>
+						            <xs:element name="Settings" type="RangeSettingsType"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:element name="RegionAggregate">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element ref="tbl:Table"/>
+						            <xs:element name="Settings" type="SettingsType"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:element name="RegionFilter">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element ref="tbl:Table"/>
+						            <xs:element name="Settings" type="RegionFilterSettingsType"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:element name="LocationFilter">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element ref="tbl:Table"/>
+						            <xs:element name="Settings" type="LocationFilterSettingsType"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+			      <xs:complexType name="RegionFilterSettingsType">
+				        <xs:sequence>
+					          <xs:element name="dataset_abbr" type="dp:DatasetAbbrType"/>
+					          <xs:element name="data_columns" type="xs:string"/>
+					          <xs:element name="loc_code" type="dp:LocCodeType"/>
+				        </xs:sequence>
+			      </xs:complexType>
+			      <xs:complexType name="LocationFilterSettingsType">
+				        <xs:sequence>
+					          <xs:element name="dataset_abbr" type="dp:DatasetAbbrType"/>
+					          <xs:element name="data_columns" type="xs:string"/>
+					          <xs:element name="all_locations" type="xs:boolean"/>
+					          <xs:element name="loc_code" type="dp:LocCodeType"/>
+				        </xs:sequence>
+			      </xs:complexType>
+			      <xs:complexType name="SettingsType">
+				        <xs:sequence>
+					          <xs:element name="dataset_abbr" type="dp:DatasetAbbrType"/>
+					          <xs:element name="data_columns" type="xs:string"/>
+					          <xs:element name="agg_oper" type="operator_type" default="sum"/>
+					          <xs:element name="agg_limit" type="xs:float" default="50"/>
+					          <xs:element name="min_count" type="xs:float" default="75"/>
+				        </xs:sequence>
+			      </xs:complexType>
+			      <xs:simpleType name="operator_type">
+				        <xs:restriction base="xs:string">
+					          <xs:enumeration value="sum"/>
+					          <xs:enumeration value="count"/>
+					          <xs:enumeration value="avg"/>
+					          <xs:enumeration value="std"/>
+					          <xs:enumeration value="min"/>
+					          <xs:enumeration value="max"/>
+					          <xs:enumeration value="median"/>
+					          <xs:enumeration value="percentile"/>
+				        </xs:restriction>
+			      </xs:simpleType>
+			      <xs:complexType name="RangeSettingsType">
+				        <xs:sequence>
+					          <xs:element name="duration" type="xs:duration" default="P1D"/>
+					          <xs:element name="radius" type="xs:float" default="50"/>
+					          <xs:element name="min_sites" type="xs:int" default="1"/>
+					          <xs:element name="max_sites" type="xs:int" default="10"/>
+					          <xs:element name="aggregators" type="AggregatorsType"/>
+				        </xs:sequence>
+			      </xs:complexType>
+			      <xs:complexType name="AggregatorsType">
+				        <xs:sequence>
+					          <xs:element name="sum" type="xs:boolean" default="false"/>
+					          <xs:element name="count" type="xs:boolean" default="false"/>
+					          <xs:element name="avg" type="xs:boolean" default="true"/>
+					          <xs:element name="std" type="xs:boolean" default="false"/>
+					          <xs:element name="min" type="xs:boolean" default="false"/>
+					          <xs:element name="max" type="xs:boolean" default="false"/>
+					          <xs:element name="median" type="xs:boolean" default="false"/>
+					          <xs:element name="percentile" type="xs:boolean" default="false"/>
+					          <xs:element name="percentile_limit" type="xs:float" default="50"/>
+					          <xs:element name="min_space_dist" type="xs:boolean" default="false"/>
+					          <xs:element name="min_time_diff" type="xs:boolean" default="false"/>
+				        </xs:sequence>
+			      </xs:complexType>
+			      <xs:element name="Response">
+				        <xs:complexType>
+					          <xs:sequence>
+						            <xs:element ref="tbl:Table"/>
+					          </xs:sequence>
+				        </xs:complexType>
+			      </xs:element>
+		    </xs:schema>
+	  </types>
+	  <message name="TimeAggregateSoapIn">
+		    <part name="parameters" element="agg:TimeAggregate"/>
+	  </message>
+	  <message name="RegionAggregateSoapIn">
+		    <part name="parameters" element="agg:RegionAggregate"/>
+	  </message>
+	  <message name="RegionFilterSoapIn">
+		    <part name="parameters" element="agg:RegionFilter"/>
+	  </message>
+	  <message name="LocationFilterSoapIn">
+		    <part name="parameters" element="agg:LocationFilter"/>
+	  </message>
+	  <message name="SpaceAggregateSoapIn">
+		    <part name="parameters" element="agg:SpaceAggregate"/>
+	  </message>
+	  <message name="PeriodicAggregateSoapIn">
+		    <part name="parameters" element="agg:PeriodicAggregate"/>
+	  </message>
+	  <message name="RangeAggregateSoapIn">
+		    <part name="parameters" element="agg:RangeAggregate"/>
+	  </message>
+	  <message name="SoapOut">
+		    <part name="parameters" element="agg:Response"/>
+	  </message>
+	  <portType name="AggregatorSoap">
+		    <operation name="TimeAggregate">
+			      <input message="agg:TimeAggregateSoapIn"/>
+			      <output message="agg:SoapOut"/>
+		    </operation>
+		    <operation name="RegionAggregate">
+			      <input message="agg:RegionAggregateSoapIn"/>
+			      <output message="agg:SoapOut"/>
+		    </operation>
+		    <operation name="RegionFilter">
+			      <input message="agg:RegionFilterSoapIn"/>
+			      <output message="agg:SoapOut"/>
+		    </operation>
+		    <operation name="LocationFilter">
+			      <input message="agg:LocationFilterSoapIn"/>
+			      <output message="agg:SoapOut"/>
+		    </operation>
+		    <operation name="SpaceAggregate">
+			      <input message="agg:SpaceAggregateSoapIn"/>
+			      <output message="agg:SoapOut"/>
+		    </operation>
+		    <operation name="PeriodicAggregate">
+			      <input message="agg:PeriodicAggregateSoapIn"/>
+			      <output message="agg:SoapOut"/>
+		    </operation>
+		    <operation name="RangeAggregate">
+			      <input message="agg:RangeAggregateSoapIn"/>
+			      <output message="agg:SoapOut"/>
+		    </operation>
+	  </portType>
+	  <binding name="AggregatorSoap" type="agg:AggregatorSoap">
+		    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+		    <operation name="TimeAggregate">
+			      <documentation>Aggregates along time dimension, yielding an aggregated value in each location.</documentation>
+			      <soap:operation soapAction="http://datafed.net/Aggregator/TimeAggregate" style="document"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </output>
+		    </operation>
+		    <operation name="RegionAggregate">
+			      <documentation>For each time: Creates an aggregated value for a region from locations in that region.</documentation>
+			      <soap:operation soapAction="http://datafed.net/Aggregator/RegionAggregate" style="document"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </output>
+		    </operation>
+		    <operation name="RegionFilter">
+			      <documentation>Selects all the locations from a region.</documentation>
+			      <soap:operation soapAction="http://datafed.net/Aggregator/RegionFilter" style="document"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </output>
+		    </operation>
+		    <operation name="LocationFilter">
+			      <documentation>Selects data from one location if all_locations==false, else no-op</documentation>
+			      <soap:operation soapAction="http://datafed.net/Aggregator/LocationFilter" style="document"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </output>
+		    </operation>
+		    <operation name="SpaceAggregate">
+			      <documentation>Aggregates along location dimesion, yielding time series.</documentation>
+			      <soap:operation soapAction="http://datafed.net/Aggregator/SpaceAggregate" style="document"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </output>
+		    </operation>
+		    <operation name="PeriodicAggregate">
+			      <documentation>Changes the time dimension periodicity. Aggregates values in each period.</documentation>
+			      <soap:operation soapAction="http://datafed.net/Aggregator/PeriodicAggregate" style="document"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </output>
+		    </operation>
+		    <operation name="RangeAggregate">
+			      <documentation>grabs points around a reference point, from a lat/lon/time window.</documentation>
+			      <soap:operation soapAction="http://datafed.net/Aggregator/RangeAggregate" style="document"/>
+			      <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </input>
+			      <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </output>
+		    </operation>
+	  </binding>
+	  <service name="Aggregator">
+		    <port name="AggregatorSoap" binding="agg:AggregatorSoap">
+			      <soap:address location="http://ws.soatrader.com/laits.gmu.edu/0.1/Aggregator"/>
+         <!--<soap:address location="http://data.laits.gmu.edu:8442/Aggregator.asmx"/>-->
+		</port>
+	  </service>
+</definitions>

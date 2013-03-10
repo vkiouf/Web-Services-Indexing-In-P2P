@@ -1,0 +1,832 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soat="http://ws.soatrader.com/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:tns="http://www.pathfinder-xml.com/FlightHistoryService.wsdl"
+             xmlns:ns="http://pathfinder-xml/FlightHistoryService.xsd"
+             targetNamespace="http://www.pathfinder-xml.com/FlightHistoryService.wsdl">
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema elementFormDefault="qualified"
+                  targetNamespace="http://pathfinder-xml/FlightHistoryService.xsd">
+         <xsd:complexType name="AggregatedAirport">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="MetarReport" type="ns:MetarReport"/>
+               <xsd:element minOccurs="0" name="WeatherForecast" type="ns:WeatherForecast"/>
+               <xsd:element minOccurs="0" name="ClosedDelay" type="ns:ClosedDelay"/>
+               <xsd:element minOccurs="0" name="GeneralArrivalDelay" type="ns:GeneralArrivalDelay"/>
+               <xsd:element minOccurs="0" name="GeneralDepartureDelay" type="ns:GeneralDepartureDelay"/>
+               <xsd:element minOccurs="0" name="GroundDelay" type="ns:GroundDelay"/>
+               <xsd:element minOccurs="0" name="GroundStopDelay" type="ns:GroundStopDelay"/>
+            </xsd:sequence>
+            <xsd:attribute name="AirportCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="City" type="xsd:string" use="optional"/>
+            <xsd:attribute name="CountryCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="FAACode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="IATACode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ICAOCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="IsMajorAirport" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="Latitude" type="xsd:float" use="optional"/>
+            <xsd:attribute name="Longitude" type="xsd:float" use="optional"/>
+            <xsd:attribute name="Name" type="xsd:string" use="optional"/>
+            <xsd:attribute name="PostalCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="StateCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Street1" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Street2" type="xsd:string" use="optional"/>
+            <xsd:attribute name="WeatherStationCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="WeatherZone" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="Airline">
+            <xsd:attribute name="AirlineCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="IATACode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ICAOCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Name" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineContact">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirlineContactPoint"
+                            type="ns:AirlineContactPoint"/>
+            </xsd:sequence>
+            <xsd:attribute name="AirlineCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Description" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Name" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Type" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineContactPoint">
+            <xsd:attribute name="ContactingSituation" type="xsd:string" use="optional"/>
+            <xsd:attribute name="CountryCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Type" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Value" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineDetail">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" minOccurs="0" name="Airline" type="ns:Airline"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirlineContact"
+                            type="ns:AirlineContact"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineFlightHistory">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirlineFlightHistoryEvent"
+                            type="ns:AirlineFlightHistoryEvent"/>
+               <xsd:element name="Airline" type="ns:Airline"/>
+               <xsd:element name="Origin" type="ns:Airport"/>
+               <xsd:element name="Destination" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="AircraftType" type="xsd:string"/>
+            <xsd:attribute name="AirlineFlightHistoryId" type="xsd:int"/>
+            <xsd:attribute name="DataSource" type="xsd:string"/>
+            <xsd:attribute name="FlightHistoryId" type="xsd:int"/>
+            <xsd:attribute name="FlightNumber" type="xsd:string"/>
+            <xsd:attribute name="SegmentStatusCode" type="xsd:string"/>
+            <xsd:attribute name="SegmentStatus" type="xsd:string"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineFlightHistoryEvent">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirlineFlightHistoryMessage"
+                            type="ns:AirlineFlightHistoryMessage"/>
+            </xsd:sequence>
+            <xsd:attribute name="ActualArrival" type="xsd:dateTime"/>
+            <xsd:attribute name="ActualDeparture" type="xsd:dateTime"/>
+            <xsd:attribute name="AirlineFlightHistoryEventId" type="xsd:int"/>
+            <xsd:attribute name="AirlineFlightHistoryId" type="xsd:int"/>
+            <xsd:attribute name="ArrivalGate" type="xsd:string"/>
+            <xsd:attribute name="ArrivalTerminal" type="xsd:string"/>
+            <xsd:attribute name="BaggageClaim" type="xsd:string"/>
+            <xsd:attribute name="DateTimeRecorded" type="xsd:dateTime"/>
+            <xsd:attribute name="DepartureGate" type="xsd:string"/>
+            <xsd:attribute name="DepartureTerminal" type="xsd:string"/>
+            <xsd:attribute name="EstimatedArrival" type="xsd:dateTime"/>
+            <xsd:attribute name="EstimatedDeparture" type="xsd:dateTime"/>
+            <xsd:attribute name="RunwayArrival" type="xsd:dateTime"/>
+            <xsd:attribute name="RunwayDeparture" type="xsd:dateTime"/>
+            <xsd:attribute name="ScheduledArrival" type="xsd:dateTime"/>
+            <xsd:attribute name="ScheduledDeparture" type="xsd:dateTime"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirlineFlightHistoryMessage">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" minOccurs="0" name="Message" type="xsd:string"/>
+               <xsd:element maxOccurs="1" minOccurs="0" name="Status" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="AirlineFlightHistoryEventId" type="xsd:int"/>
+            <xsd:attribute name="AirlineFlightHistoryMessageId" type="xsd:int"/>
+            <xsd:attribute name="DateTimeMessageRecorded" type="xsd:dateTime"/>
+         </xsd:complexType>
+         <xsd:complexType name="Airport">
+            <xsd:attribute name="AirportCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="FAACode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="IATACode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ICAOCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Name" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirportClosure">
+            <xsd:sequence>
+               <xsd:element name="Airport" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="AirportClosureId" type="xsd:int"/>
+            <xsd:attribute name="CaptureTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EndTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EndingNasStatusId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="InvalidatedTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="InvalidatingAirportClosureId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="IsActive" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="OriginalNasStatusId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="ProjectedEndTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="Reason" type="xsd:string" use="optional"/>
+            <xsd:attribute name="StartTime" type="xsd:dateTime" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirportDeicing">
+            <xsd:sequence>
+               <xsd:element name="Airport" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="AcceptanceRate" type="xsd:int" use="optional"/>
+            <xsd:attribute name="AirportDeicingId" type="xsd:int"/>
+            <xsd:attribute name="CaptureTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="DepartureRate" type="xsd:int" use="optional"/>
+            <xsd:attribute name="EndTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EndingNasStatusId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="InvalidatedTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="InvalidatingAirportDeicingId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="IsActive" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="OriginalNasStatusId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="StartTime" type="xsd:dateTime" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirportDelay">
+            <xsd:sequence>
+               <xsd:element name="Airport" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="AirportDelayId" type="xsd:int"/>
+            <xsd:attribute name="CaptureTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EndTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EndingNasStatusId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="InvalidatedTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="InvalidatingAirportDelayId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="IsActive" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="MaxTime" type="xsd:int" use="optional"/>
+            <xsd:attribute name="MinTime" type="xsd:int" use="optional"/>
+            <xsd:attribute name="OriginalNasStatusId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="Reason" type="xsd:string" use="optional"/>
+            <xsd:attribute name="StartTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="Trend" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Type" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="AirportFlightObservation">
+            <xsd:sequence>
+               <xsd:element name="Airline" type="ns:Airline"/>
+               <xsd:element name="OriginAirport" type="ns:Airport"/>
+               <xsd:element name="DestinationAirport" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="ActualGate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ActualRunway" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="BaggageClaim" type="xsd:string" use="optional"/>
+            <xsd:attribute name="EstimatedGate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EstimatedRunway" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="FirstRequestDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="FlightHistoryId" type="xsd:int"/>
+            <xsd:attribute name="FlightNumber" type="xsd:string"/>
+            <xsd:attribute name="Gate" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Id" type="xsd:int"/>
+            <xsd:attribute name="LastUpdateDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="Notes" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ObservationType" type="xsd:string"/>
+            <xsd:attribute name="ScheduledGate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ScheduledRunway" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="Source" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Status" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Terminal" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="Arrival">
+            <xsd:sequence>
+               <xsd:element name="Airport" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="Date" type="xsd:dateTime"/>
+         </xsd:complexType>
+         <xsd:complexType name="BTSHistory">
+            <xsd:sequence>
+               <xsd:element name="Airline" type="ns:Airline"/>
+               <xsd:element name="Origin" type="ns:Airport"/>
+               <xsd:element name="Destination" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="ActualGateArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ActualGateDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ActualRunwayArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ActualRunwayDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="AirTime" type="xsd:int" use="optional"/>
+            <xsd:attribute name="ArrivalDelay15" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="ArrivalDelay30" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="ArrivalDelaySys15" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="ArrivalDelaySys30" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="ArrivalDelay" type="xsd:int" use="optional"/>
+            <xsd:attribute name="BTSHistoryId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="CancellationCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Cancelled" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="CarrierDelay" type="xsd:int" use="optional"/>
+            <xsd:attribute name="DepartureDelay15" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="DepartureDelay30" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="DepartureDelaySys15" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="DepartureDelaySys30" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="DepartureDelay" type="xsd:int" use="optional"/>
+            <xsd:attribute name="DistanceGroup" type="xsd:int" use="optional"/>
+            <xsd:attribute name="Distance" type="xsd:int" use="optional"/>
+            <xsd:attribute name="Diverted" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="FlightDate" type="xsd:dateTime" use="required"/>
+            <xsd:attribute name="FlightHistoryId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="FlightNumber" type="xsd:string" use="required"/>
+            <xsd:attribute name="LateAircraftDelay" type="xsd:int" use="optional"/>
+            <xsd:attribute name="NASDelay" type="xsd:int" use="optional"/>
+            <xsd:attribute name="ScheduledGateArrivalDate" type="xsd:dateTime" use="required"/>
+            <xsd:attribute name="ScheduledGateArrivalTimeBlock" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ScheduledGateDepartureDate" type="xsd:dateTime" use="required"/>
+            <xsd:attribute name="ScheduledGateDepartureTimeBlock" type="xsd:string" use="optional"/>
+            <xsd:attribute name="SecurityDelay" type="xsd:int" use="optional"/>
+            <xsd:attribute name="TailNumber" type="xsd:string" use="optional"/>
+            <xsd:attribute name="TaxiInTime" type="xsd:int" use="optional"/>
+            <xsd:attribute name="TaxiOutTime" type="xsd:int" use="optional"/>
+            <xsd:attribute name="WeatherDelay" type="xsd:int" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="ClosedDelay">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Description" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="Reason" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="EndTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="StartTime" type="xsd:dateTime" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="CriterionAirlines">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" name="InvalidAirline" type="ns:Airline"/>
+               <xsd:element maxOccurs="unbounded" name="ValidAirline" type="ns:Airline"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="Departure">
+            <xsd:sequence>
+               <xsd:element name="Airport" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="Date" type="xsd:dateTime"/>
+         </xsd:complexType>
+         <xsd:complexType name="Error">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" name="Message" type="xsd:string"/>
+               <xsd:element maxOccurs="1" name="StackTrace" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="MajorCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MinorCode" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="Estimate">
+            <xsd:attribute name="Date" type="xsd:string" use="required"/>
+            <xsd:attribute name="RainPercentage" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Temperature" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="FlightHistory">
+            <xsd:sequence>
+               <xsd:element name="Airline" type="ns:Airline"/>
+               <xsd:element name="Origin" type="ns:Airport"/>
+               <xsd:element name="Destination" type="ns:Airport"/>
+               <xsd:element minOccurs="0" name="Diverted" type="ns:Airport"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirlineFlightHistory"
+                            type="ns:AirlineFlightHistory"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="FlightRecord" type="ns:FlightRecord"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="BTSHistory" type="ns:BTSHistory"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="FlightScheduleEntry"
+                            type="ns:FlightScheduleEntry"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="FlightHistoryCodeshare"
+                            type="ns:FlightHistoryCodeshare"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="LennocFlightHistory"
+                            type="ns:LennocFlightHistory"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirportFlightObservation"
+                            type="ns:AirportFlightObservation"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="FlightHistoryEvent"
+                            type="ns:FlightHistoryEvent"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirportClosure"
+                            type="ns:AirportClosure"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirportDelay" type="ns:AirportDelay"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="GroundDelayProgram"
+                            type="ns:GroundDelayProgram"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="GroundStop" type="ns:GroundStop"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirportDeicing"
+                            type="ns:AirportDeicing"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="PossibleAirportClosure"
+                            type="ns:AirportClosure"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="PossibleAirportDelay"
+                            type="ns:AirportDelay"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="PossibleGroundDelayProgram"
+                            type="ns:GroundDelayProgram"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="PossibleGroundStop"
+                            type="ns:GroundStop"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="PossibleAirportDeicing"
+                            type="ns:AirportDeicing"/>
+            </xsd:sequence>
+            <xsd:attribute name="ActualAirTime" type="xsd:int" use="optional"/>
+            <xsd:attribute name="ActualAircraftType" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ActualBlockTime" type="xsd:int" use="optional"/>
+            <xsd:attribute name="ActualGateArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ActualGateDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ActualRunwayArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ActualRunwayDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ArrivalAirportTimeZoneOffset" type="xsd:int" use="optional"/>
+            <xsd:attribute name="ArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ArrivalGate" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ArrivalTerminal" type="xsd:string" use="optional"/>
+            <xsd:attribute name="BaggageClaim" type="xsd:string" use="optional"/>
+            <xsd:attribute name="CreatorCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="DepartureAirportTimeZoneOffset" type="xsd:int" use="optional"/>
+            <xsd:attribute name="DepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="DepartureGate" type="xsd:string" use="optional"/>
+            <xsd:attribute name="DepartureTerminal" type="xsd:string" use="optional"/>
+            <xsd:attribute name="DivertedAirportTimeZoneOffset" type="xsd:int" use="optional"/>
+            <xsd:attribute name="EstimatedGateArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EstimatedGateDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EstimatedRunwayArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EstimatedRunwayDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="FlightHistoryId" type="xsd:int" use="required"/>
+            <xsd:attribute name="FlightNumber" type="xsd:string" use="optional"/>
+            <xsd:attribute name="PublishedArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="PublishedDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ScheduledAirTime" type="xsd:int" use="optional"/>
+            <xsd:attribute name="ScheduledAircraftType" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ScheduledBlockTime" type="xsd:int" use="optional"/>
+            <xsd:attribute name="ScheduledGateArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ScheduledGateDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ScheduledRunwayArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ScheduledRunwayDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="StatusCode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Status" type="xsd:string" use="optional"/>
+            <xsd:attribute name="TailNumber" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="FlightHistoryCodeshare">
+            <xsd:sequence>
+               <xsd:element name="Airline" type="ns:Airline"/>
+            </xsd:sequence>
+            <xsd:attribute name="Designator" type="xsd:string" use="optional"/>
+            <xsd:attribute name="FlightHistoryCodeshareId" type="xsd:int"/>
+            <xsd:attribute name="FlightHistoryId" type="xsd:int"/>
+            <xsd:attribute name="FlightNumber" type="xsd:string" use="optional"/>
+            <xsd:attribute name="PublishedArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="PublishedDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="TailNumber" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="FlightHistoryEvent">
+            <xsd:attribute name="DataSource" type="xsd:string"/>
+            <xsd:attribute name="DataUpdated" type="xsd:string"/>
+            <xsd:attribute name="DateTimeRecorded" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="Event" type="xsd:string"/>
+         </xsd:complexType>
+         <xsd:complexType name="FlightHistoryGetHistoryInfo">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" minOccurs="0" name="SpecificationFlight"
+                            type="ns:SpecificationFlight"/>
+               <xsd:element maxOccurs="1" minOccurs="0" name="SpecificationDateRange"
+                            type="ns:SpecificationDateRange"/>
+               <xsd:element maxOccurs="1" minOccurs="0" name="FlightHistoryGetHistoryRequestedData"
+                            type="ns:FlightHistoryGetHistoryRequestedData"/>
+            </xsd:sequence>
+            <xsd:attribute name="Id" type="xsd:int" use="optional"/>
+            <xsd:attribute name="UpdateIfNeeded" type="xsd:boolean" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="FlightHistoryGetHistoryRequestedData">
+            <xsd:attribute name="ActualAirportDelays" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="AggregatedAirports" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="AirlineDetails" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="AirlineHistory" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="AirportObservations" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="Codeshares" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="Events" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="FlightRecords" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="LennocFlightHistories" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="MaxPositionalUpdates" type="xsd:int" use="optional"/>
+            <xsd:attribute name="PossibleAirportDelays" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="ScheduleEntries" type="xsd:boolean" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="FlightHistoryGetRecordsInfo">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="SpecificationDeparture"
+                            type="ns:SpecificationDeparture"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="SpecificationArrival"
+                            type="ns:SpecificationArrival"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="SpecificationFlight"
+                            type="ns:SpecificationFlight"/>
+               <xsd:element maxOccurs="1" minOccurs="0" name="SpecificationDateRange"
+                            type="ns:SpecificationDateRange"/>
+               <xsd:element minOccurs="0" name="CriterionAirlines" type="ns:CriterionAirlines"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="CriterionFlightStatus"
+                            type="xsd:string"/>
+               <xsd:element maxOccurs="1" minOccurs="0" name="FlightHistoryGetRecordsRequestedData"
+                            type="ns:FlightHistoryGetRecordsRequestedData"/>
+            </xsd:sequence>
+            <xsd:attribute name="CSVFormat" type="xsd:boolean"/>
+            <xsd:attribute name="Id" type="xsd:int" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="FlightHistoryGetRecordsRequestedData">
+            <xsd:attribute name="AggregatedAirports" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="AirlineDetails" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="CSVFormat" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="Codeshares" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="DesiredResults" type="xsd:int" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="FlightRecord">
+            <xsd:sequence>
+               <xsd:element name="Airline" type="ns:Airline"/>
+               <xsd:element name="Origin" type="ns:Airport"/>
+               <xsd:element name="Destination" type="ns:Airport"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="PositionalUpdates"
+                            type="ns:PositionalUpdate"/>
+            </xsd:sequence>
+            <xsd:attribute name="ActualArrival" type="xsd:dateTime"/>
+            <xsd:attribute name="ActualDeparture" type="xsd:dateTime"/>
+            <xsd:attribute name="AircraftType" type="xsd:string"/>
+            <xsd:attribute name="EstimatedArrival" type="xsd:dateTime"/>
+            <xsd:attribute name="EstimatedDeparture" type="xsd:dateTime"/>
+            <xsd:attribute name="FirstMessageTimestamp" type="xsd:dateTime"/>
+            <xsd:attribute name="FlightHistoryId" type="xsd:int"/>
+            <xsd:attribute name="FlightNumber" type="xsd:string"/>
+            <xsd:attribute name="FlightRecordId" type="xsd:int"/>
+            <xsd:attribute name="FlightStatusCode" type="xsd:string"/>
+            <xsd:attribute name="FlightStatus" type="xsd:string"/>
+            <xsd:attribute name="NumberOfAircraft" type="xsd:int"/>
+            <xsd:attribute name="RecordStatus" type="xsd:string"/>
+            <xsd:attribute name="RedirectedFromId" type="xsd:int"/>
+            <xsd:attribute name="RedirectedToId" type="xsd:int"/>
+            <xsd:attribute name="ScheduledArrival" type="xsd:dateTime"/>
+            <xsd:attribute name="ScheduledDeparture" type="xsd:dateTime"/>
+         </xsd:complexType>
+         <xsd:complexType name="FlightScheduleEntry">
+            <xsd:sequence>
+               <xsd:element name="Airline" type="ns:Airline"/>
+               <xsd:element name="Departure" type="ns:Departure"/>
+               <xsd:element name="Arrival" type="ns:Arrival"/>
+            </xsd:sequence>
+            <xsd:attribute name="AircraftTypeCode" type="xsd:string" use="required"/>
+            <xsd:attribute name="ArrivalAdjustmentIndicator" type="xsd:int" use="required"/>
+            <xsd:attribute name="ChangeOfEquipment" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="Comments" type="xsd:string" use="optional"/>
+            <xsd:attribute name="DaysOfOperation" type="xsd:string" use="required"/>
+            <xsd:attribute name="DiscontinueDate" type="xsd:dateTime"/>
+            <xsd:attribute name="EffectiveDate" type="xsd:dateTime"/>
+            <xsd:attribute name="ElapsedTime" type="xsd:int"/>
+            <xsd:attribute name="FlightNumber" type="xsd:string" use="required"/>
+            <xsd:attribute name="FlightScheduleEntryId" type="xsd:int"/>
+            <xsd:attribute name="IsCodeshareCommuter" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="NumberOfStops" type="xsd:int" use="required"/>
+            <xsd:attribute name="ScheduleVersionId" type="xsd:int"/>
+            <xsd:attribute name="ServiceClasses" type="xsd:string" use="required"/>
+            <xsd:attribute name="ServiceTypeCode" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="GeneralArrivalDelay">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Description" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="Reason" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="MaxTime" type="xsd:long" use="optional"/>
+            <xsd:attribute name="MinTime" type="xsd:long" use="optional"/>
+            <xsd:attribute name="Trend" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="GeneralDepartureDelay">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Description" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="Reason" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="MaxTime" type="xsd:long" use="optional"/>
+            <xsd:attribute name="MinTime" type="xsd:long" use="optional"/>
+            <xsd:attribute name="Trend" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="GroundDelay">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Description" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="Reason" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="AverageTime" type="xsd:long" use="optional"/>
+            <xsd:attribute name="MaxTime" type="xsd:long" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="GroundDelayProgram">
+            <xsd:sequence>
+               <xsd:element name="Airport" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="AdlTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ArrivalsEstimatedForEndTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ArrivalsEstimatedForStartTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="AverageDelay" type="xsd:float" use="optional"/>
+            <xsd:attribute name="CancelledTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="CancellingAdvisoryMessageId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="DatAppliesTo" type="xsd:string" use="optional"/>
+            <xsd:attribute name="DelayAssignmentMode" type="xsd:string" use="optional"/>
+            <xsd:attribute name="DelayLimit" type="xsd:int" use="optional"/>
+            <xsd:attribute name="EffectiveTimeEnd" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EffectiveTimeStart" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="GroundDelayProgramId" type="xsd:int"/>
+            <xsd:attribute name="InvalidatedTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="InvalidatingGroundDelayProgramId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="IsActive" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="IsProposed" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="MaximumDelay" type="xsd:int" use="optional"/>
+            <xsd:attribute name="OriginalAdvisoryMessageId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="Reason" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Remarks" type="xsd:string" use="optional"/>
+            <xsd:attribute name="SignatureTime" type="xsd:dateTime" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="GroundStop">
+            <xsd:sequence>
+               <xsd:element name="Airport" type="ns:Airport"/>
+            </xsd:sequence>
+            <xsd:attribute name="AdlTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="CancelledTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="CancellingAdvisoryMessageId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="EffectiveTimeEnd" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EffectiveTimeStart" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="GroundStopId" type="xsd:int"/>
+            <xsd:attribute name="GroundStopPeriodEndTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="GroundStopPeriodStartTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="InvalidatedTime" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="InvalidatingGroundStopId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="IsActive" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="IsProposed" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="NewAverageDelays" type="xsd:float" use="optional"/>
+            <xsd:attribute name="NewMaximumDelays" type="xsd:float" use="optional"/>
+            <xsd:attribute name="NewTotalDelays" type="xsd:float" use="optional"/>
+            <xsd:attribute name="OriginalAdvisoryMessageId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="PreviousAverageDelays" type="xsd:float" use="optional"/>
+            <xsd:attribute name="PreviousMaximumDelays" type="xsd:float" use="optional"/>
+            <xsd:attribute name="PreviousTotalDelays" type="xsd:float" use="optional"/>
+            <xsd:attribute name="ProbabilityOfExtension" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Reason" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Remarks" type="xsd:string" use="optional"/>
+            <xsd:attribute name="SignatureTime" type="xsd:dateTime" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="GroundStopDelay">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Description" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="Reason" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="EndTime" type="xsd:dateTime" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="LennocFlightHistory">
+            <xsd:sequence>
+               <xsd:element name="Airline" type="ns:Airline"/>
+               <xsd:element name="DepartureAirport" type="ns:Airport"/>
+               <xsd:element name="ArrivalAirport" type="ns:Airport"/>
+               <xsd:element minOccurs="0" name="OperatingAirline" type="ns:Airline"/>
+            </xsd:sequence>
+            <xsd:attribute name="ActualGateArrival" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ActualGateDeparture" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ActualRunwayArrival" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ActualRunwayDeparture" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ArrivalDateType" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ArrivalTerminal" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Codeshare" type="xsd:int" use="optional"/>
+            <xsd:attribute name="DepartureDateType" type="xsd:string" use="optional"/>
+            <xsd:attribute name="DepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="DepartureTerminal" type="xsd:string" use="optional"/>
+            <xsd:attribute name="EstimatedGateArrival" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EstimatedGateDeparture" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EstimatedRunwayArrival" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="EstimatedRunwayDeparture" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="FlightNumber" type="xsd:string"/>
+            <xsd:attribute name="FlightStatus" type="xsd:string"/>
+            <xsd:attribute name="HasStop" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="LastUpdateDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="LennocFlightHistoryId" type="xsd:int"/>
+            <xsd:attribute name="LennocId" type="xsd:int" use="optional"/>
+            <xsd:attribute name="LennocWebId" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MaxArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="MaxDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="MinArrivalDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="MinDepartureDate" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="OperatingFlightNumber" type="xsd:string" use="optional"/>
+            <xsd:attribute name="ScheduledGateArrival" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ScheduledGateDeparture" type="xsd:dateTime" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="Login">
+            <xsd:attribute name="AccountId" type="xsd:string" use="required"/>
+            <xsd:attribute name="Guid" type="xsd:string"/>
+            <xsd:attribute name="Password" type="xsd:string" use="required"/>
+            <xsd:attribute name="UserId" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="MetarReport">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Remark" type="xsd:string"/>
+               <xsd:element name="OriginalReport" type="xsd:string"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="SkyCondition" type="xsd:string"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="PresentWeatherCondition"
+                            type="xsd:string"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="RunwayGroup" type="ns:RunwayGroup"/>
+            </xsd:sequence>
+            <xsd:attribute name="Altimeter" type="xsd:float" use="optional"/>
+            <xsd:attribute name="DewPoint" type="xsd:int" use="optional"/>
+            <xsd:attribute name="IsVisibilityLessThan" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="IsWindDirectionVariable" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="IssueDate" type="xsd:dateTime" use="required"/>
+            <xsd:attribute name="ReportModifier" type="xsd:string" use="optional"/>
+            <xsd:attribute name="SeaLevelPressure" type="xsd:float" use="optional"/>
+            <xsd:attribute name="StationType" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Station" type="xsd:string" use="required"/>
+            <xsd:attribute name="Temperature" type="xsd:int" use="optional"/>
+            <xsd:attribute name="VariableWindDirection" type="xsd:string" use="optional"/>
+            <xsd:attribute name="Visibility" type="xsd:float" use="optional"/>
+            <xsd:attribute name="WindDirection" type="xsd:int" use="optional"/>
+            <xsd:attribute name="WindGusts" type="xsd:float" use="optional"/>
+            <xsd:attribute name="WindSpeed" type="xsd:float" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="PositionalUpdate">
+            <xsd:attribute name="Altitude" type="xsd:int"/>
+            <xsd:attribute name="Latitude" type="xsd:float"/>
+            <xsd:attribute name="Longitude" type="xsd:float"/>
+            <xsd:attribute name="Speed" type="xsd:int"/>
+            <xsd:attribute name="TimestampInArrivalTZ" type="xsd:dateTime"/>
+            <xsd:attribute name="TimestampInDepartureTZ" type="xsd:dateTime"/>
+            <xsd:attribute name="TimestampInUTC" type="xsd:dateTime"/>
+         </xsd:complexType>
+         <xsd:complexType name="RunwayGroup">
+            <xsd:attribute name="ApproachDirection" type="xsd:string" use="required"/>
+            <xsd:attribute name="IsVarying" type="xsd:boolean" use="required"/>
+            <xsd:attribute name="MaxPrefix" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MaxVisible" type="xsd:int" use="required"/>
+            <xsd:attribute name="MinPrefix" type="xsd:string" use="optional"/>
+            <xsd:attribute name="MinVisible" type="xsd:int" use="required"/>
+            <xsd:attribute name="RunwayNumber" type="xsd:int" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="SpecificationArrival">
+            <xsd:sequence>
+               <xsd:element name="Airport" type="ns:Airport"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="SpecificationDateRange">
+            <xsd:attribute name="ArrivalDateTimeMax" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="ArrivalDateTimeMin" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="DepartureDateTimeMax" type="xsd:dateTime" use="optional"/>
+            <xsd:attribute name="DepartureDateTimeMin" type="xsd:dateTime" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="SpecificationDeparture">
+            <xsd:sequence>
+               <xsd:element name="Airport" type="ns:Airport"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="SpecificationFlight">
+            <xsd:sequence>
+               <xsd:element maxOccurs="1" minOccurs="0" name="Airline" type="ns:Airline"/>
+            </xsd:sequence>
+            <xsd:attribute name="FlightNumber" type="xsd:string" use="optional"/>
+            <xsd:attribute name="SearchCodeshares" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="TailNumber" type="xsd:string" use="optional"/>
+         </xsd:complexType>
+         <xsd:complexType name="WeatherCityEstimate">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="Estimate" type="ns:Estimate"/>
+            </xsd:sequence>
+            <xsd:attribute name="City" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="WeatherDayForecast">
+            <xsd:sequence>
+               <xsd:element name="Forecast" type="xsd:string"/>
+            </xsd:sequence>
+            <xsd:attribute name="Day" type="xsd:string" use="required"/>
+            <xsd:attribute name="EndDate" type="xsd:dateTime" use="required"/>
+            <xsd:attribute name="StartDate" type="xsd:dateTime" use="required"/>
+         </xsd:complexType>
+         <xsd:complexType name="WeatherForecast">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="City" type="xsd:string"/>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="County" type="xsd:string"/>
+               <xsd:element maxOccurs="unbounded" name="WeatherDayForecast" type="ns:WeatherDayForecast"/>
+               <xsd:element maxOccurs="unbounded" name="WeatherCityEstimate" type="ns:WeatherCityEstimate"/>
+            </xsd:sequence>
+            <xsd:attribute name="Date" type="xsd:dateTime" use="required"/>
+            <xsd:attribute name="General" type="xsd:string" use="required"/>
+            <xsd:attribute name="Header" type="xsd:string" use="required"/>
+            <xsd:attribute name="Zone" type="xsd:string" use="required"/>
+         </xsd:complexType>
+         <xsd:element name="FlightHistoryGetHistoryRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+                  <xsd:element name="FlightHistoryGetHistoryInfo" type="ns:FlightHistoryGetHistoryInfo"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="FlightHistoryGetHistoryResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="FlightHistory"
+                               type="ns:FlightHistory"/>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="AggregatedAirport"
+                               type="ns:AggregatedAirport"/>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirlineDetail"
+                               type="ns:AirlineDetail"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="FlightHistoryGetRecordsRequest">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="Login" type="ns:Login"/>
+                  <xsd:element name="FlightHistoryGetRecordsInfo" type="ns:FlightHistoryGetRecordsInfo"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="FlightHistoryGetRecordsResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Error" type="ns:Error"/>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="FlightHistory"
+                               type="ns:FlightHistory"/>
+                  <xsd:element maxOccurs="1" minOccurs="0" name="Data" type="xsd:string"/>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="Flight" type="xsd:string"/>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="AggregatedAirport"
+                               type="ns:AggregatedAirport"/>
+                  <xsd:element maxOccurs="unbounded" minOccurs="0" name="AirlineDetail"
+                               type="ns:AirlineDetail"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+  </types>
+  <message name="FlightHistoryGetHistoryRequest">
+      <part element="ns:FlightHistoryGetHistoryRequest"
+            name="FlightHistoryGetHistoryRequest"/>
+  </message>
+  <message name="FlightHistoryGetHistoryResponse">
+      <part element="ns:FlightHistoryGetHistoryResponse"
+            name="FlightHistoryGetHistoryResponse"/>
+  </message>
+  <message name="FlightHistoryGetRecordsRequest">
+      <part element="ns:FlightHistoryGetRecordsRequest"
+            name="FlightHistoryGetRecordsRequest"/>
+  </message>
+  <message name="FlightHistoryGetRecordsResponse">
+      <part element="ns:FlightHistoryGetRecordsResponse"
+            name="FlightHistoryGetRecordsResponse"/>
+  </message>
+  <portType name="FlightHistoryGetHistoryPort">
+      <operation name="FlightHistoryGetHistoryOperation">
+         <input message="tns:FlightHistoryGetHistoryRequest"/>
+         <output message="tns:FlightHistoryGetHistoryResponse"/>
+      </operation>
+  </portType>
+  <portType name="FlightHistoryGetRecordsPort">
+      <operation name="FlightHistoryGetRecordsOperation">
+         <input message="tns:FlightHistoryGetRecordsRequest"/>
+         <output message="tns:FlightHistoryGetRecordsResponse"/>
+      </operation>
+  </portType>
+  <binding name="FlightHistoryGetHistorySOAPBinding"
+            type="tns:FlightHistoryGetHistoryPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="FlightHistoryGetHistoryOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <binding name="FlightHistoryGetRecordsSOAPBinding"
+            type="tns:FlightHistoryGetRecordsPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="FlightHistoryGetRecordsOperation">
+         <soap:operation/>
+         <input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </input>
+         <output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </output>
+      </operation>
+  </binding>
+  <service name="FlightHistoryService">
+      <port binding="tns:FlightHistoryGetHistorySOAPBinding"
+            name="FlightHistoryGetHistoryService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.1/FlightHistoryService"/>
+      </port>
+      <port binding="tns:FlightHistoryGetRecordsSOAPBinding"
+            name="FlightHistoryGetRecordsService">
+         <soap:address location="http://ws.soatrader.com/pathfinder-xml.com/0.1/FlightHistoryService"/>
+      </port>
+  </service>
+</definitions>

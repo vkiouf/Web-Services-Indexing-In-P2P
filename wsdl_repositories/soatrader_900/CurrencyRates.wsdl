@@ -1,0 +1,279 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="CurrencyRates">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns:soat="http://ws.soatrader.com/" xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="xs:string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="xs:decimal" name="HitsMade"/>
+               <element type="xs:decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema xmlns:s1="http://ws.strikeiron.com"
+                xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                xmlns:s="http://www.w3.org/2001/XMLSchema"
+                xmlns:si="http://www.strikeiron.com"
+                xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                xmlns:tns="CurrencyRates"
+                xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                elementFormDefault="qualified"
+                targetNamespace="CurrencyRates">
+         <s:element name="getRate">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="CurrencyCode" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getRateResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getRateResult" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getConversion">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="FromCurrencyCode" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="ToCurrencyCode" type="s:string"/>
+                  <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getConversionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="getConversionResult" type="s:double"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="getCurrenciesList">
+            <s:complexType/>
+         </s:element>
+         <s:element name="getCurrenciesListResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getCurrenciesListResult"
+                             type="tns:ArrayOfAnyType"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="ArrayOfAnyType">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="getCurrenciesListWithDescription">
+            <s:complexType/>
+         </s:element>
+         <s:element name="getCurrenciesListWithDescriptionResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="getCurrenciesListWithDescriptionResult"
+                             type="tns:ArrayOfAnyType"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+      </s:schema>
+      <s:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns1="http://ws.strikeiron.com"
+                xmlns:s1="http://ws.strikeiron.com"
+                xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                xmlns:s="http://www.w3.org/2001/XMLSchema"
+                xmlns:si="http://www.strikeiron.com"
+                xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                xmlns:tns="CurrencyRates"
+                xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified"
+                targetNamespace="http://ws.strikeiron.com">
+         <xs:element name="LicenseInfo" type="tns1:LicenseInfo"/>
+         <xs:complexType name="LicenseInfo">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UnregisteredUser" type="tns1:UnregisteredUser"/>
+               <xs:element minOccurs="0" name="RegisteredUser" type="tns1:RegisteredUser"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="UnregisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="EmailAddress" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="RegisteredUser">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="UserID" type="xs:string"/>
+               <xs:element minOccurs="0" name="Password" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="SubscriptionInfo" type="tns1:SubscriptionInfo"/>
+         <xs:complexType name="SubscriptionInfo">
+            <xs:sequence>
+               <xs:element name="LicenseStatusCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseStatus" type="xs:string"/>
+               <xs:element name="LicenseActionCode" type="xs:int"/>
+               <xs:element minOccurs="0" name="LicenseAction" type="xs:string"/>
+               <xs:element name="RemainingHits" type="xs:int"/>
+               <xs:element name="Amount" type="xs:decimal"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:element name="GetRemainingHits">
+            <xs:complexType/>
+         </xs:element>
+         <xs:element name="GetRemainingHitsResponse">
+            <xs:complexType/>
+         </xs:element>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getRateSoapIn">
+      <wsdl:part name="parameters" element="tns:getRate"/>
+  </wsdl:message>
+  <wsdl:message name="getRateSoapOut">
+      <wsdl:part name="parameters" element="tns:getRateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getConversionSoapIn">
+      <wsdl:part name="parameters" element="tns:getConversion"/>
+  </wsdl:message>
+  <wsdl:message name="getConversionSoapOut">
+      <wsdl:part name="parameters" element="tns:getConversionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getCurrenciesListSoapIn">
+      <wsdl:part name="parameters" element="tns:getCurrenciesList"/>
+  </wsdl:message>
+  <wsdl:message name="getCurrenciesListSoapOut">
+      <wsdl:part name="parameters" element="tns:getCurrenciesListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getCurrenciesListWithDescriptionSoapIn">
+      <wsdl:part name="parameters" element="tns:getCurrenciesListWithDescription"/>
+  </wsdl:message>
+  <wsdl:message name="getCurrenciesListWithDescriptionSoapOut">
+      <wsdl:part name="parameters" element="tns:getCurrenciesListWithDescriptionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapIn">
+      <wsdl:part name="parameters" element="s1:GetRemainingHits"/>
+  </wsdl:message>
+  <wsdl:message name="GetRemainingHitsSoapOut">
+      <wsdl:part name="parameters" element="s1:GetRemainingHitsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LicenseInfoMessage">
+      <wsdl:part name="LicenseInfo" element="s1:LicenseInfo"/>
+  </wsdl:message>
+  <wsdl:message name="SubscriptionInfoMessage">
+      <wsdl:part name="SubscriptionInfo" element="s1:SubscriptionInfo"/>
+  </wsdl:message>
+  <wsdl:portType name="CurrencyRatesSoap">
+      <wsdl:operation name="getRate">
+         <wsdl:documentation>Get Currency Rates</wsdl:documentation>
+         <wsdl:input message="tns:getRateSoapIn"/>
+         <wsdl:output message="tns:getRateSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getCurrenciesList">
+         <wsdl:documentation>Get Currency List</wsdl:documentation>
+         <wsdl:input message="tns:getCurrenciesListSoapIn"/>
+         <wsdl:output message="tns:getCurrenciesListSoapOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <wsdl:input message="tns:GetRemainingHitsSoapIn"/>
+         <wsdl:output message="tns:GetRemainingHitsSoapOut"/>
+      </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CurrencyRatesSoap" type="tns:CurrencyRatesSoap">
+      <soap:binding xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                    transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="getRate">
+         <soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         soapAction="CurrencyRates/getRate"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         message="tns:LicenseInfoMessage"
+                         part="LicenseInfo"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         message="tns:SubscriptionInfoMessage"
+                         part="SubscriptionInfo"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getCurrenciesList">
+         <soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         soapAction="CurrencyRates/getCurrenciesList"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         message="tns:LicenseInfoMessage"
+                         part="LicenseInfo"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         message="tns:SubscriptionInfoMessage"
+                         part="SubscriptionInfo"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRemainingHits">
+         <soap:operation xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         soapAction="http://ws.strikeiron.com/HouseofDev/currencyrates/CurrencyRates/GetRemainingHits"/>
+         <wsdl:input>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" part="SOATraderLicense"
+                         message="tns:SOATraderLicense"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         message="tns:LicenseInfoMessage"
+                         part="LicenseInfo"
+                         use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         part="SOATraderUsageStatistics"
+                         message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" use="literal"/>
+            <soap:header xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                         message="tns:SubscriptionInfoMessage"
+                         part="SubscriptionInfo"
+                         use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CurrencyRates">
+      <wsdl:port name="CurrencyRatesSoap" binding="tns:CurrencyRatesSoap">
+         <soap:address xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                       location="http://ws.soatrader.com/strikeiron.com/0.5/CurrencyRates"/>
+      </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

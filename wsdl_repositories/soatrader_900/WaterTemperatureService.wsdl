@@ -1,0 +1,106 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://opendap.co-ops.nos.noaa.gov/axis/webservices/watertemperature/wsdl"
+                  xmlns:watertemperature="http://opendap.co-ops.nos.noaa.gov/axis/webservices/watertemperature/wsdl"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  targetNamespace="http://opendap.co-ops.nos.noaa.gov/axis/webservices/watertemperature/wsdl">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+
+	  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+		    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+                  targetNamespace="http://opendap.co-ops.nos.noaa.gov/axis/webservices/watertemperature/wsdl">
+
+			      <xsd:element name="Parameters">
+				        <xsd:complexType>
+					          <xsd:sequence>
+						            <xsd:element name="stationId" type="xsd:string"/>
+						            <xsd:element name="beginDate" type="xsd:string"/>
+						            <xsd:element name="endDate" type="xsd:string"/>
+						            <xsd:element name="timeZone" type="xsd:int"/>
+					          </xsd:sequence>
+				        </xsd:complexType>
+			      </xsd:element>
+
+			      <xsd:complexType name="Data">
+				        <xsd:sequence>
+					          <xsd:element name="timeStamp" type="xsd:string"/>
+					          <xsd:element name="WT" type="xsd:double"/>
+					          <xsd:element name="X" type="xsd:int"/>
+					          <xsd:element name="N" type="xsd:int"/>
+					          <xsd:element name="R" type="xsd:int"/>
+				        </xsd:sequence>
+			      </xsd:complexType>
+
+			      <xsd:complexType name="item">
+				        <xsd:sequence>
+					          <xsd:element name="item" type="watertemperature:Data" maxOccurs="unbounded"/>
+				        </xsd:sequence>
+			      </xsd:complexType>
+
+			      <xsd:element name="WaterTemperatureMeasurements">
+				        <xsd:complexType>
+					          <xsd:sequence>
+						            <xsd:element name="data" type="watertemperature:item"/>
+					          </xsd:sequence>
+				        </xsd:complexType>
+			      </xsd:element>
+
+		    </xsd:schema>
+	  </wsdl:types>
+
+	  <wsdl:message name="Parameters">
+		    <wsdl:part name="parameters" element="watertemperature:Parameters"/>
+	  </wsdl:message>
+
+	  <wsdl:message name="WaterTemperatureMeasurements">
+		    <wsdl:part name="WaterTemperatureMeasurements"
+                 element="watertemperature:WaterTemperatureMeasurements"/>
+	  </wsdl:message>
+
+	  <wsdl:portType name="WaterTemperaturePortType">
+		    <wsdl:operation name="getWaterTemperature">
+			      <wsdl:input message="watertemperature:Parameters"/>
+			      <wsdl:output message="watertemperature:WaterTemperatureMeasurements"/>
+		    </wsdl:operation>
+	  </wsdl:portType>
+
+	  <wsdl:binding name="WaterTemperatureBinding" type="watertemperature:WaterTemperaturePortType">
+		    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <wsdl:operation name="getWaterTemperature">
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+	  </wsdl:binding>
+
+	  <wsdl:service name="WaterTemperatureService">
+		    <wsdl:port name="WaterTemperature" binding="watertemperature:WaterTemperatureBinding">
+			      <soap:address location="http://ws.soatrader.com/nos.noaa.gov/0.4/WaterTemperatureService"/>
+		    </wsdl:port>
+	  </wsdl:service>
+
+</wsdl:definitions>

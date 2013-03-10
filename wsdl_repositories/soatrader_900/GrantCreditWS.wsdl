@@ -1,0 +1,77 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/"
+                  xmlns:tns="http://bpms.intalio.com/tools/webservices/rules/GrantCredit"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:ns0="http://bpms.intalio.com/tools/webservices/rules/GrantCredit"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  targetNamespace="http://bpms.intalio.com/tools/webservices/rules/GrantCredit"
+                  name="GrantCreditService">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <xsd:schema elementFormDefault="qualified"
+                  targetNamespace="http://bpms.intalio.com/tools/webservices/rules/GrantCredit">
+        <xsd:element name="Person">
+            <xsd:complexType>
+	              <xsd:sequence>
+	                <xsd:element name="Name" type="xsd:string"/>
+	                <xsd:element name="Age" type="xsd:int"/>
+	                <xsd:element name="CreditGranted" type="xsd:boolean"/>
+	              </xsd:sequence>
+	           </xsd:complexType>
+        </xsd:element>
+      </xsd:schema>  
+  </wsdl:types>
+  <wsdl:message name="EvaluateRuleRequest">
+		    <wsdl:part name="InputParameters" element="ns0:Person"/>
+  </wsdl:message>
+  <wsdl:message name="EvaluateRuleResponse">
+		    <wsdl:part name="Response" element="ns0:Person"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="CreditService">
+      <wsdl:operation name="GrantCredit">
+			      <wsdl:input message="ns0:EvaluateRuleRequest"/>
+			      <wsdl:output message="ns0:EvaluateRuleResponse"/>
+	     </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CreditServiceSOAPBinding" type="ns0:CreditService">
+		    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		    <wsdl:operation name="GrantCredit">
+		       <soap:operation soapAction="GrantCredit" style="document"/>
+			      <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:input>
+			      <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+				        <soap:body use="literal"/>
+			      </wsdl:output>
+		    </wsdl:operation>
+    </wsdl:binding>
+	  <wsdl:service name="GrantCreditWS">
+		    <wsdl:port name="CreditService" binding="ns0:CreditServiceSOAPBinding">
+			      <soap:address location="http://ws.soatrader.com/intalio.com/0.1/GrantCreditWS"/>
+		    </wsdl:port>
+	  </wsdl:service>
+</wsdl:definitions>

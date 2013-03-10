@@ -1,0 +1,240 @@
+<wsdl:definitions xmlns:soat="http://ws.soatrader.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="http://Office.Microsoft.Com/Research"
+                  xmlns:s1="http://microsoft.com/wsdl/types/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  targetNamespace="http://Office.Microsoft.Com/Research">
+   <wsdl:message name="SOATraderLicense">
+      <wsdl:part element="soat:SOATraderLicense" name="SOATraderLicense"/>
+   </wsdl:message>
+   <wsdl:message name="SOATraderUsageStatistics">
+      <wsdl:part element="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+   </wsdl:message>
+  <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema"
+              targetNamespace="http://ws.soatrader.com/"
+              elementFormDefault="qualified">
+         <element type="string" name="SOATraderLicense"/>
+         <element type="soat:SOATraderUsageStatistics" name="SOATraderUsageStatistics"/>
+         <complexType name="SOATraderUsageStatistics">
+            <sequence>
+               <element type="decimal" name="HitsMade"/>
+               <element type="decimal" name="HitsLeft"/>
+            </sequence>
+         </complexType>
+      </schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://Office.Microsoft.Com/Research">
+         <s:import namespace="http://microsoft.com/wsdl/types/"/>
+         <s:element name="DDSQuery">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="symbol" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="language" type="s:string"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="iSrc" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="DDSQueryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="DDSQueryResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Query">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="SearchRequest"
+                             type="tns:CSearchRequestPacket"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:complexType name="CSearchRequestPacket">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Envelope" type="tns:CSearchRequestEnvelope"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Request" type="tns:CRequest"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CSearchRequestEnvelope">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="RequestId" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Tracking" type="tns:CTracking"/>
+               <s:element minOccurs="0" maxOccurs="1" name="ReturnFormat" type="tns:CReturnFormat"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Timeout" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CTracking">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Origin" type="s1:guid"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Destination" type="s1:guid"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CReturnFormat">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="ParentalControl" type="s:boolean"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CRequest">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Query" type="tns:CQuery"/>
+               <s:element minOccurs="0" maxOccurs="unbounded" name="Destinations"
+                          type="tns:CSearchRequestDestination"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CQuery">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="LanguageDisplay" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Original" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Parameters" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Parental" type="s:boolean"/>
+               <s:element minOccurs="0" maxOccurs="1" name="RequeryContext" type="s:string"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CSearchRequestDestination">
+            <s:sequence>
+               <s:element minOccurs="0" maxOccurs="1" name="Destination" type="tns:CService"/>
+            </s:sequence>
+         </s:complexType>
+         <s:complexType name="CService">
+            <s:sequence>
+               <s:element minOccurs="1" maxOccurs="1" name="Id" type="s1:guid"/>
+               <s:element minOccurs="0" maxOccurs="1" name="Parameters" type="s:string"/>
+               <s:element minOccurs="1" maxOccurs="1" name="StartAt" type="s:int"/>
+               <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int"/>
+            </s:sequence>
+         </s:complexType>
+         <s:element name="QueryResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="1" maxOccurs="1" name="QueryResult" type="s:int"/>
+                  <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="Ping">
+            <s:complexType/>
+         </s:element>
+         <s:element name="PingResponse">
+            <s:complexType>
+               <s:sequence>
+                  <s:element minOccurs="0" maxOccurs="1" name="PingResult" type="s:string"/>
+               </s:sequence>
+            </s:complexType>
+         </s:element>
+         <s:element name="string" nillable="true" type="s:string"/>
+      </s:schema>
+      <s:schema elementFormDefault="qualified"
+                targetNamespace="http://microsoft.com/wsdl/types/">
+         <s:simpleType name="guid">
+            <s:restriction base="s:string">
+               <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+            </s:restriction>
+         </s:simpleType>
+      </s:schema>
+  </wsdl:types>
+  <wsdl:message name="DDSQuerySoapIn">
+      <wsdl:part name="parameters" element="tns:DDSQuery"/>
+  </wsdl:message>
+  <wsdl:message name="DDSQuerySoapOut">
+      <wsdl:part name="parameters" element="tns:DDSQueryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="QuerySoapIn">
+      <wsdl:part name="parameters" element="tns:Query"/>
+  </wsdl:message>
+  <wsdl:message name="QuerySoapOut">
+      <wsdl:part name="parameters" element="tns:QueryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PingSoapIn">
+      <wsdl:part name="parameters" element="tns:Ping"/>
+  </wsdl:message>
+  <wsdl:message name="PingSoapOut">
+      <wsdl:part name="parameters" element="tns:PingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="DDSQueryHttpGetIn">
+      <wsdl:part name="symbol" type="s:string"/>
+      <wsdl:part name="language" type="s:string"/>
+      <wsdl:part name="iSrc" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="DDSQueryHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="PingHttpGetIn"/>
+  <wsdl:message name="PingHttpGetOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="DDSQueryHttpPostIn">
+      <wsdl:part name="symbol" type="s:string"/>
+      <wsdl:part name="language" type="s:string"/>
+      <wsdl:part name="iSrc" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="DDSQueryHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="PingHttpPostIn"/>
+  <wsdl:message name="PingHttpPostOut">
+      <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  
+  
+  
+  <wsdl:binding name="MoneyCentralRemoteSoap" type="tns:MoneyCentralRemoteSoap">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="DDSQuery">
+         <soap:operation soapAction="http://Office.Microsoft.Com/Research/DDSQuery" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Query">
+         <soap:operation soapAction="http://Office.Microsoft.Com/Research/Query" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="Ping">
+         <soap:operation soapAction="http://Office.Microsoft.Com/Research/Ping" style="document"/>
+         <wsdl:input>
+            <soap:header part="SOATraderLicense" message="tns:SOATraderLicense" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header part="SOATraderUsageStatistics" message="tns:SOATraderUsageStatistics"
+                         use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  
+  <wsdl:service name="MoneyCentralRemote">
+      <wsdl:port name="MoneyCentralRemoteSoap" binding="tns:MoneyCentralRemoteSoap">
+         <soap:address location="http://ws.soatrader.com/microsoft.com/0.1/MoneyCentralRemote"/>
+      </wsdl:port>
+    
+    
+    
+  </wsdl:service>
+</wsdl:definitions>
